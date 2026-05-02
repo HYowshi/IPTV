@@ -1,8 +1,6 @@
 #EXTM3U
 
 # ================= VTV =================
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="test 1.vn@HD",test 1 (1080p)
-https://vod-bp.vieon.vn/feac6068d78d37cc487cd9fdbe410e85/1777819032000/ott-vod-202603/vod/2026/03/13/8c92a219-4db1-4ed1-bf10-fbf022a9759b/media-video-hvc1-3.mp4
 #EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",VTV1 (1080p)
 https://vtvgolive-vtv.vtvdigital.vn/FnzboLUZP6PJ5sThcAWqyg/1777735323/vtvgo/vtv1-720p.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5ac4a9fb-6da7-4785-aab5-ae85e471d869.jpg?width=500" tvg-id="VTV2.vn@HD",VTV2 (1080p)
