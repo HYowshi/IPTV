@@ -1,8 +1,8 @@
 #EXTM3U
 
 # ================= VTV =================
-#EXTINF:-1 tvg-id="boxmovie1" group-title="📦| Phim" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3b/BOXMOVIE1.jpg", Box Movie 1
-https://s7.edge.cdn.sctvonline.vn/cdn-cgi/edge/v2/e4.endpoint.cdn.sctvonline.vn/nginx.s7.edge.cdn.sctvonline.vn/hls/boxmovie/01.m3u8
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",VTV1 HBO (1080p)
+https://livevlisctcdnw.seenow.vn/mean/BM1/manifest.mpd
 #EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",VTV1 (1080p)
 https://live.fptplay53.net/fnxch2/vtv1hd_abr.smil/chunklist_b4200000.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5ac4a9fb-6da7-4785-aab5-ae85e471d869.jpg?width=500" tvg-id="VTV2.vn@HD",VTV2 (1080p)
@@ -37,40 +37,40 @@ https://live.thvli.vn/thvl1/playlist.m3u8
 https://live.thvli.vn/thvl2/playlist.m3u8
 
 # ================= SCTV =================
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="SCTV1.vn@SD",SCTV1 (720p)
+#EXTINF:-1 group-title="Khác" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv1.png" tvg-id="SCTV1.vn@SD",SCTV1 (720p)
 https://liveh12.vtvprime.vn/hls/SCTV1/index.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="SCTV2.vn@SD",SCTV2 (720p)
+#EXTINF:-1 group-title="Khác" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv2.png" tvg-id="SCTV2.vn@SD",SCTV2 (720p)
 https://liveh12.vtvprime.vn/hls/SCTV2/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv3.png" tvg-id="sctv3hd",SCTV3
-https://liveh34.vtvprime.vn/hls/SCTV3/03.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="SCTV4.vn@SD",SCTV4 (720p)
-https://liveh12.vtvprime.vn/hls/SCTV4/index.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV3/index.m3u8
+#EXTINF:-1 group-title="Khác" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv5.png" tvg-id="SCTV5.vn@SD",SCTV5 (720p)
+https://liveh12.vtvprime.vn/hls/SCTV5/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv7.webp" tvg-id="sctv7hd",SCTV7
-https://liveh34.vtvprime.vn/hls/SCTV7/03.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV7/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv8.png" tvg-id="sctv8hd",SCTV8
-https://liveh34.vtvprime.vn/hls/SCTV8/03.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV8/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV10.jpg" tvg-id="sctv10hd",SCTV10
 https://liveh34.vtvprime.vn/hls/SCTV10/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv11.png" tvg-id="sctv11hd",SCTV11
-https://liveh34.vtvprime.vn/hls/SCTV11/03.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV11/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv12.png" tvg-id="sctv12hd",SCTV12
-https://liveh34.vtvprime.vn/hls/SCTV12/03.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV12/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv13.png" tvg-id="sctv13hd",SCTV13
-https://liveh34.vtvprime.vn/hls/SCTV13/03.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV13/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv14.png" tvg-id="sctv14hd",SCTV14
-https://liveh34.vtvprime.vn/hls/SCTV14/03.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="SCTV16.vn@SD",SCTV16 (720p)
-https://liveh34.vtvprime.vn/hls/SCTV16/03.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV14/index.m3u8
+#EXTINF:-1 group-title="Khác" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv14.png" tvg-id="SCTV16.vn@SD",SCTV16 (720p)
+https://liveh34.vtvprime.vn/hls/SCTV16/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv19.png" tvg-id="sctv19hd",SCTV19
-https://liveh34.vtvprime.vn/hls/SCTV19/03.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV19/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV20.png" tvg-id="sctv20hd",SCTV20
-https://liveh34.vtvprime.vn/hls/SCTV20/03.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV20/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV21.png" tvg-id="sctv21hd",SCTV21 - Việt Nam Ký Ức
-https://liveh34.vtvprime.vn/hls/SCTV21/03.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV21/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV22.png" tvg-id="sctv22hd",:SCTV22
-https://liveh34.vtvprime.vn/hls/SCTV22/04.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV22/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctvpth.png" tvg-id="sctvhdpth",SCTV Phim Tổng Hợp
-https://liveh12.vtvprime.vn/hls/SCTVPHIM/03.m3u8
+https://liveh12.vtvprime.vn/hls/SCTVPHIM/index.m3u8
 
 # ================= HTV & HANOI TV =================
 #EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HTV7.vn@HD",HTV7 HD (1080p)
