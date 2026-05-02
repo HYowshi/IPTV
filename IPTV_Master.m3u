@@ -25,8 +25,10 @@ https://vtvgolive-ssaimh.vtvdigital.vn/t3u0pH1L7Vw4FyeAiXUXvg/1777736458/manifes
 https://vtvgolive-ott3.vtvdigital.vn/live/dongnai1tv/chunklist_2.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250805/2025080516/RgEOYY7utX-DONGNAI2-THUMBNAIL-KENHVTVgo-500x281.webp" tvg-id="ĐN2.vn@HD",ĐN2 HD (1080p)
 https://vtvgolive-ott3.vtvdigital.vn/live/dongnai2tv/chunklist_2.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="THVL1.vn@HD",THVL 1 (1080p)
+#EXTINF:-1 group-title="Khác" tvg-logo="http://static3.thvli.vn/assets/thumbnail/2025/09/12/pbe9c6gh_button_thvl1.png" tvg-id="THVL1.vn@HD",THVL 1 (1080p)
 https://live.thvli.vn/thvl1/playlist.m3u8
+#EXTINF:-1 group-title="Khác" tvg-logo="http://static3.thvli.vn/assets/thumbnail/2025/09/12/0tgz7o5c_button_thvl2.png" tvg-id="THVL2.vn@HD",THVL 2 (1080p)
+https://live.thvli.vn/thvl2/playlist.m3u8
 
 # ================= SCTV =================
 #EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="SCTV1.vn@SD",SCTV1 (720p)
