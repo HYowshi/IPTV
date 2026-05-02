@@ -13,8 +13,12 @@ https://vtvgolive-vtv.vtvdigital.vn/mnYS-Nwy9DEl2Qyy3A5aOg/1777736275/vtvgo/vtv4
 https://liveh12.vtvprime.vn/hls/VTV5_TN/index.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/fe6f00dd-e418-44bf-9c0a-ae47cec1a67c.jpg?width=500" tvg-id="vtv7.vn@HD",VTV7 HD (1080p)
 https://live.fptplay53.net/fnxhd1/vtv7hd_vhls.smil/chunklist.m3u8
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/447aba67-bee4-443a-ac5b-f6e457ff4abe.jpg?width=500" tvg-id="vtv8.vn@HD",VTV8 (1080p)
+https://vtvgolive-vtv.vtvdigital.vn/57Ww-CmB971qyarlS26syw/1777744132/vtvgo/vtv8-720p.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/7f951ab0-a128-44a9-84cd-ba8faf108ad3.jpg?width=500" tvg-id="vtv9.vn@HD",VTV9 (1080p)
 https://live.fptplay53.net/fnxhd1/vtv9_vhls.smil/chunklist.m3u8
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20260330/2026033009/1lmelwJ48A-VTV10-THUMBNAIL-KENH-VTVgo-480x270.webp" tvg-id="vtv10.vn@HD",VTV10 (1080p)
+https://vtvgolive-vtv.vtvdigital.vn/Pft1TDvnJHR8_6lR-pzeHg/1777744264/vtvgo/vtv6-720p.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250905/2025090515/S1CWNGr2gI-VIETNAMTODAY-THUMBNAIL-KENHVTVgo-500x281.webp" tvg-id="vietnamtoday.vn@HD",VietNam today (1080p)
 https://vtvgolive-ssaimh.vtvdigital.vn/t3u0pH1L7Vw4FyeAiXUXvg/1777736458/manifest/vietnamtoday/playlist_720p.m3u8
 
