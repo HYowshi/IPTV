@@ -1,21 +1,21 @@
 #EXTM3U
 
 # ================= VTV =================
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="VTV1.vn@HD",VTV1 (1080p)
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",VTV1 (1080p)
 https://vtvgolive-vtv.vtvdigital.vn/FnzboLUZP6PJ5sThcAWqyg/1777735323/vtvgo/vtv1-720p.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="VTV2.vn@HD",VTV2 (1080p)
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5ac4a9fb-6da7-4785-aab5-ae85e471d869.jpg?width=500" tvg-id="VTV2.vn@HD",VTV2 (1080p)
 https://vtvgolive-vtv.vtvdigital.vn/cRWqhDnU2_kthHTTu97tTA/1777735478/vtvgo/vtv2-720p.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="VTV3.vn@HD",VTV3 (1080p)
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/292a3f4e-c6ee-4858-9c49-f61dde69a854.jpg?width=500" tvg-id="VTV3.vn@HD",VTV3 (1080p)
 https://vtvgolive-vtv.vtvdigital.vn/JDMqQOI2y5ae8f473zCanQ/1777735528/vtvgo/vtv3-720p.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="VTV4.vn@HD",VTV4 (1080p)
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/f161041d-3a3f-4c0a-88f2-ae97f8052ee7.jpg?width=500" tvg-id="VTV4.vn@HD",VTV4 (1080p)
 https://vtvgolive-vtv.vtvdigital.vn/mnYS-Nwy9DEl2Qyy3A5aOg/1777736275/vtvgo/vtv4-720p.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="VTV5.vn@HD",VTV5 (1080p)
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/d84c3036-3cc4-4c45-911f-8d1c5025cd93.jpg?width=500" tvg-id="VTV5.vn@HD",VTV5 (1080p)
 https://liveh12.vtvprime.vn/hls/VTV5_TN/index.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="vtv7.vn@HD",VTV7 HD (1080p)
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/fe6f00dd-e418-44bf-9c0a-ae47cec1a67c.jpg?width=500" tvg-id="vtv7.vn@HD",VTV7 HD (1080p)
 https://live.fptplay53.net/fnxhd1/vtv7hd_vhls.smil/chunklist.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="vtv9.vn@HD",VTV9 (1080p)
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/7f951ab0-a128-44a9-84cd-ba8faf108ad3.jpg?width=500" tvg-id="vtv9.vn@HD",VTV9 (1080p)
 https://live.fptplay53.net/fnxhd1/vtv9_vhls.smil/chunklist.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="vietnamtoday.vn@HD",VietNam today (1080p)
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250905/2025090515/S1CWNGr2gI-VIETNAMTODAY-THUMBNAIL-KENHVTVgo-500x281.webp" tvg-id="vietnamtoday.vn@HD",VietNam today (1080p)
 https://vtvgolive-ssaimh.vtvdigital.vn/t3u0pH1L7Vw4FyeAiXUXvg/1777736458/manifest/vietnamtoday/playlist_720p.m3u8
 
 # ================= SCTV =================
