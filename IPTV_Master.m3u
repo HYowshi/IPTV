@@ -21,6 +21,12 @@ https://live.fptplay53.net/fnxhd1/vtv9_vhls.smil/chunklist.m3u8
 https://vtvgolive-vtv.vtvdigital.vn/Pft1TDvnJHR8_6lR-pzeHg/1777744264/vtvgo/vtv6-720p.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250905/2025090515/S1CWNGr2gI-VIETNAMTODAY-THUMBNAIL-KENHVTVgo-500x281.webp" tvg-id="vietnamtoday.vn@HD",VietNam today (1080p)
 https://vtvgolive-ssaimh.vtvdigital.vn/t3u0pH1L7Vw4FyeAiXUXvg/1777736458/manifest/vietnamtoday/playlist_720p.m3u8
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250805/2025080516/CNUBvVy56R-DONGNAI1-THUMBNAIL-KENHVTVgo-500x281.webp" tvg-id="ĐN1.vn@HD",ĐN1 HD (1080p)
+https://vtvgolive-ott3.vtvdigital.vn/live/dongnai1tv/chunklist_2.m3u8
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250805/2025080516/RgEOYY7utX-DONGNAI2-THUMBNAIL-KENHVTVgo-500x281.webp" tvg-id="ĐN2.vn@HD",ĐN2 HD (1080p)
+https://vtvgolive-ott3.vtvdigital.vn/live/dongnai2tv/chunklist_2.m3u8
+#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="THVL1.vn@HD",THVL 1 (1080p)
+https://live.thvli.vn/thvl1/playlist.m3u8
 
 # ================= SCTV =================
 #EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="SCTV1.vn@SD",SCTV1 (720p)
