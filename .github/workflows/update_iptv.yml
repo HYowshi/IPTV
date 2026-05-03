@@ -1,44 +1,50 @@
-name: Tự động cập nhật IPTV
+name: Tự động cập nhật IPTV Việt Nam
 
-# 1. Cài đặt thời gian chạy
+# 1. Lịch trình chạy
 on:
   schedule:
-    # Chạy tự động vào lúc 0:00 (UTC) mỗi ngày. Bạn có thể đổi giờ nếu muốn.
-    - cron: '0 0 * * *'
-  # Cho phép bạn có thể bấm nút "Run workflow" để chạy thủ công bất cứ lúc nào
+    # Chạy vào lúc 00:00 giờ VN (tương đương 17:00 UTC) hàng ngày
+    - cron: '0 17 * * *'
+  # Cho phép chạy thủ công bằng nút "Run workflow"
   workflow_dispatch:
 
-# 2. Các bước thực hiện
 jobs:
-  update-playlist:
-    runs-on: ubuntu-latest # Chạy trên máy chủ ảo hệ điều hành Ubuntu
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-      # Bước 2.1: Lấy mã nguồn của bạn về máy chủ ảo
-      - name: Lấy mã nguồn
+      # Bước 2: Lấy mã nguồn từ repo về máy ảo
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      # Bước 2.2: Cài đặt môi trường Python
-      - name: Cài đặt Python
+      # Bước 3: Thiết lập Python
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      # Bước 2.3: Cài đặt các thư viện phụ thuộc (M3U_list.py cần thư viện 'requests')
-      - name: Cài đặt thư viện
+      # Bước 4: Cài đặt các thư viện cần thiết
+      - name: Install dependencies
         run: |
-          pip install requests
+          pip install requests aiohttp pytz tqdm
 
-      # Bước 2.4: Chạy tệp Python của bạn
-      - name: Chạy mã nguồn M3U_list.py
-        run: python M3U_list.py
-
-      # Bước 2.5: Lưu (commit) tệp output.m3u mới và đẩy (push) ngược lại lên GitHub
-      - name: Lưu và đẩy kết quả lên GitHub
+      # Bước 5: Chạy quy trình xử lý kênh
+      # Thứ tự: Cào Xtream -> Lọc VN/HBO -> Dọn dẹp & Sắp xếp
+      - name: Run IPTV Scripts
         run: |
-          git config --global user.name 'GitHub Action Bot'
-          git config --global user.email 'action@github.com'
-          git add output.m3u
-          # Nếu có thay đổi thì lưu lại, nếu không có thay đổi thì bỏ qua để tránh lỗi
-          git commit -m "Tự động cập nhật danh sách kênh mới" || echo "Không có cập nhật mới"
+          # 1. Lấy kênh từ server Xtream (Nếu bạn dùng file này)
+          python Xtreamlist2M3u_backup2.py || echo "Tiếp tục bước sau..."
+          
+          # 2. Lọc kênh Việt Nam & HBO và sắp xếp
+          # Lưu ý: Thay tên file bằng file lọc tôi đã viết cho bạn
+          python M3U_list_VN.py
+
+      # Bước 6: Lưu kết quả và đẩy lên GitHub
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name 'IPTV-Bot'
+          git config --global user.email 'bot@github.com'
+          # Thay 'Vietnam_HBO_Only.m3u' bằng tên file đầu ra của bạn
+          git add Vietnam_HBO_Only.m3u
+          git commit -m "Cập nhật danh sách kênh VN & HBO mới nhất: $(date)" || echo "Không có thay đổi"
           git push
