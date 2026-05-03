@@ -157,90 +157,12 @@ https://streaming.tuyenquangtv.vn/channel/tuyenquang/playlist.m3u8
 # ================= RẠP PHIM & PHIM LẺ =================
 #EXTINF:-1 group-title="Rạp Phim" tvg-logo="https://img-ali1.tv360.vn/image1/2025/12/31/19/1767185202351/540d7e229911_640_360.png" tvg-id="tv360hoathinh",Hoạt hình
 https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/hoat-hinh/KenhCoBan.m3u8
-#EXTINF:-1 group-title="Rạp Phim" tvg-logo="https://img-ali1.tv360.vn/image1/2025/12/31/18/1767180734794/7cda83f18b5d_640_360.png" tvg-id="tv360phimviet",Phim Việt
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/phim-viet/KenhCoBan.m3u8
-#EXTINF:-1 group-title="Rạp Phim" tvg-logo="https://img-ali1.tv360.vn/image1/2025/03/24/23/1742835081398/4e6776be1efd_640_360.png" tvg-id="tv360aumy",Phim Âu Mỹ
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/phim-au-my/KenhCoBan.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2025/08/28/bo-tu-bao-thu-fpt-play-1756374565016_Landscape.jpg" tvg-id="",Bộ Tứ Báo Thủ
-https://s6.kkphimplayer6.com/20250901/2RZvePPZ/3500kb/hls/index.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/03/27/cuc-vang-cua-ngoai-fpt-play-1774595783778_Landscape.jpg" tvg-id="",Cục Vàng Của Ngoại
-https://s6.kkphimplayer6.com/20260403/6UwV8LAv/3500kb/hls/index.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://kenh14cdn.com/203336854389633024/2025/5/24/ngangcc690d7e-1620-4524-aafa-a7496c81f6f6-174807929920015425666-1748084313655-17480843144601375971451.jpg" tvg-id="",Doraemon Movie 44: Nobita và cuộc phiêu lưu vào thế giới trong tranh (bản lồng tiếng)
-https://s6.kkphimplayer6.com/20250827/JfkCJsGc/3500kb/hls/index.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://kenh14cdn.com/203336854389633024/2025/5/24/ngangcc690d7e-1620-4524-aafa-a7496c81f6f6-174807929920015425666-1748084313655-17480843144601375971451.jpg" tvg-id="",Doraemon Movie 44: Nobita và cuộc phiêu lưu vào thế giới trong tranh (bản vietsub)
-https://dl.dropboxusercontent.com/scl/fi/yvvlntkqerm1xvlhbfadc/Xem-Phim-Doraemon-Movie-44-Nobita-V-Cu-c-Phi-u-L-u-V-o-Th-Gi-i-Trong-Tranh-Doraemon-the-Movie-Nobitas-Art-World-Tales-Vietsub-RoPhim.mp4?rlkey=z2dujfvestltu7lpcaz2x1fnw&e=1&st=1drx6hkz&dl=0
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://tintuc-divineshop.cdn.vccloud.vn/wp-content/uploads/2025/08/164142635_khe-uoc-ban-dau.webp" tvg-id="",Khế Ước Bán Dâu
-https://s6.kkphimplayer6.com/20260118/tdyKqxYZ/3500kb/hls/index.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://haniff.vn/wp-content/uploads/2024/10/Lam-giau-voi-ma-2.jpg" tvg-id="",Làm Giàu Với Ma (Betting With Ghost)
-https://s4.phim1280.tv/20250323/KmdatGKe/3000kb/hls/index.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2025/12/30/lam-giau-voi-ma-cuoc-chien-hot-xoan-fpt-play-1767066672824_Landscape.jpg" tvg-id="",Làm Giàu Với Ma Phần 2: Cuộc Chiến Hột Xoàn
-https://vip.opstream90.com/20260102/21537_fe1af53e/3000k/hls/mixed.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://hnm.1cdn.vn/thumbs/600x315/2025/05/08/mmdb_poster_first-look_2000x2500px.jpg" tvg-id="",Mang Mẹ Đi Bỏ
-https://vip.opstream90.com/20251129/18758_e33bdf72/3000k/hls/mixed.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://i.imgur.com/q05fNtW.png" tvg-id="",Mưa Trên Cánh Bướm
-https://s6.kkphimplayer6.com/20250918/48nrktLm/3500kb/hls/index.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://baokhanhhoa.vn/file/e7837c02857c8ca30185a8c39b582c03/112025/1_20251116070652.jpg" tvg-id="",Mưa Đỏ
-https://vip.opstream90.com/20251118/17952_7bf57028/3000k/hls/mixed.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://assets.glxplay.io/images/w700/title/ngay-xua-co-mot-chuyen-tinh_web_backdrop_8b7a5b8cbb5fe245d3a6f7aea524c796.jpg" tvg-id="",Ngày Xưa Có Một Chuyện Tình
-https://s6.kkphimplayer6.com/20250901/w8LN0LND/3500kb/hls/index.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/27/quy-nhap-trang-fpt-play-1769508575571_Landscape.jpg" tvg-id="",Quỷ Nhập Tràng
-https://s6.kkphimplayer6.com/20260129/HDz8Fu0F/3500kb/hls/index.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://thegioidienanh.vn/stores/news_dataimages/2025/092025/14/13/in_social/tay-anh-giu-mot-vi-sao-payoff-poster-social-khoi-chieu-0310202520250914134014.jpg" tvg-id="",Tay Anh Giữ Một Vì Sao
-https://vip.opstream90.com/20260102/21538_3a9ba451/3000k/hls/mixed.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/03/13/thien-duong-mau-fpt-play-1773396128871_Landscape.jpg" tvg-id="",Thiên Đường Máu
-https://s6.kkphimplayer6.com/20260320/02bq9QLy/3500kb/hls/index.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2025/09/29/tham-tu-kien-ky-an-khong-dau-fpt-play-1759139646462_Landscape.jpg" tvg-id="",Thám Tử Kiên: Kỳ Án Không Đầu
-https://s6.kkphimplayer6.com/20251010/86AEDncn/3500kb/hls/index.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/Th%E1%BA%BF%20H%E1%BB%87%20K%E1%BB%B3%20T%C3%ADch.jpg" tvg-id="",Thế Hệ Kỳ Tích
-https://rumble.com/hls-vod/745t9a/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://cdn-images.vtv.vn/zoom/554_346/66349b6076cb4dee98746cf1/2025/09/19/truy-tim-long-dien-huong-67756442926310209483416-92025497027105625698228.jpg" tvg-id="",Truy Tìm Long Diên Hương
-https://rumble.com/hls-vod/74h9mw/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2025/12/26/trai-tim-que-quat-fpt-play-1766744170691_Landscape.jpg" tvg-id="",Trái Tim Què Quặt
-https://s6.kkphimplayer6.com/20251228/0HQf0tP2/3500kb/hls/index.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/23/tu-chien-tren-khong-fpt-play-1769164011330_Landscape.jpg" tvg-id="",Tử Chiến Trên Không
-https://rumble.com/hls-vod/72x1ns/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/03/13/ut-lan-oan-linh-giu-cua-fpt-play-1773395168032_Background_origin.jpg" tvg-id="",Út Lan: Oán Linh Giữ Của
-https://vip.opstream90.com/20260213/24963_b4f6926d/3000k/hls/mixed.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://daknong.1cdn.vn/2025/02/06/den-am-hon-review-phim-va-lich-chieu-tai-viet-nam.jpg" tvg-id="",Đèn Âm Hồn: Người Con Gái Nam Xương
-https://s6.kkphimplayer6.com/20250811/miyJKDrj/3500kb/hls/index.m3u8
-
-# --- ANIME OSHI NO KO (Phần 3) ---
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/12/dua-con-cua-than-tuong-phan-3-fpt-play-1768204408459_Background_origin.jpg" tvg-id="",Oshi No Ko Phần 3 - Tập 1
-https://rumble.com/hls-vod/72av32/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/12/dua-con-cua-than-tuong-phan-3-fpt-play-1768204408459_Background_origin.jpg" tvg-id="",Oshi No Ko Phần 3 - Tập 2
-https://rumble.com/hls-vod/72nhy6/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/12/dua-con-cua-than-tuong-phan-3-fpt-play-1768204408459_Background_origin.jpg" tvg-id="",Oshi No Ko Phần 3 - Tập 3
-https://rumble.com/hls-vod/73bg84/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/12/dua-con-cua-than-tuong-phan-3-fpt-play-1768204408459_Background_origin.jpg" tvg-id="",Oshi No Ko Phần 3 - Tập 4
-https://rumble.com/hls-vod/73gpe4/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/12/dua-con-cua-than-tuong-phan-3-fpt-play-1768204408459_Background_origin.jpg" tvg-id="",Oshi No Ko Phần 3 - Tập 5
-https://rumble.com/hls-vod/73uq6q/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/12/dua-con-cua-than-tuong-phan-3-fpt-play-1768204408459_Background_origin.jpg" tvg-id="",Oshi No Ko Phần 3 - Tập 6
-https://vip.opstream90.com/20260219/25424_5534491f/3000k/hls/mixed.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/12/dua-con-cua-than-tuong-phan-3-fpt-play-1768204408459_Background_origin.jpg" tvg-id="",Oshi No Ko Phần 3 - Tập 7
-https://rumble.com/hls-vod/74da00/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/12/dua-con-cua-than-tuong-phan-3-fpt-play-1768204408459_Background_origin.jpg" tvg-id="",Oshi No Ko Phần 3 - Tập 8
-https://vip.opstream90.com/20260305/26504_404d52bf/3000k/hls/mixed.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/12/dua-con-cua-than-tuong-phan-3-fpt-play-1768204408459_Background_origin.jpg" tvg-id="",Oshi No Ko Phần 3 - Tập 9
-https://vip.opstream90.com/20260312/26990_72417e4a/3000k/hls/mixed.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/12/dua-con-cua-than-tuong-phan-3-fpt-play-1768204408459_Background_origin.jpg" tvg-id="",Oshi No Ko Phần 3 - Tập 10
-https://rumble.com/hls-vod/757w6u/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/01/12/dua-con-cua-than-tuong-phan-3-fpt-play-1768204408459_Background_origin.jpg" tvg-id="",Oshi No Ko Phần 3 - Tập 11
-https://rumble.com/hls-vod/75uhgc/playlist.m3u8
-
-# --- PHIM HÙNG LONG PHONG BÁ (Phần 4) ---
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/02/11/hung-long-phong-ba-4-fpt-play-1770804850859_Landscape.jpg" tvg-id="",Hùng Long Phong Bá Phần 4 - Tập 1
-https://rumble.com/hls-vod/73gr0i/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/02/11/hung-long-phong-ba-4-fpt-play-1770804850859_Landscape.jpg" tvg-id="",Hùng Long Phong Bá Phần 4 - Tập 2
-https://rumble.com/hls-vod/73k35o/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/02/11/hung-long-phong-ba-4-fpt-play-1770804850859_Landscape.jpg" tvg-id="",Hùng Long Phong Bá Phần 4 - Tập 3
-https://rumble.com/hls-vod/73os1q/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/02/11/hung-long-phong-ba-4-fpt-play-1770804850859_Landscape.jpg" tvg-id="",Hùng Long Phong Bá Phần 4 - Tập 4
-https://rumble.com/hls-vod/73s4u6/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/02/11/hung-long-phong-ba-4-fpt-play-1770804850859_Landscape.jpg" tvg-id="",Hùng Long Phong Bá Phần 4 - Tập 5
-https://rumble.com/hls-vod/73txdq/playlist.m3u8
-#EXTINF:-1 group-title="LIVE EVENTS 🔴" tvg-logo="https://images.fptplay53.net/media/OTT/VOD/2026/02/11/hung-long-phong-ba-4-fpt-play-1770804850859_Landscape.jpg" tvg-id="",Hùng Long Phong Bá Phần 4 - Tập Cuối
-https://rumble.com/hls-vod/73vrdu/playlist.m3u8
+#EXTINF:-1 group-title="Rạp Phim" tvg-logo="" tvg-id="tv360hoathinh",Box Movie
+https://toiyeuvietnam.dpdns.org/Start/VMT0678_BoxMovie
+#EXTINF:-1 group-title="Rạp Phim" tvg-logo="" tvg-id="tv360hoathinh",Hollywood
+https://toiyeuvietnam.dpdns.org/Start/VMT0678_HW
+#EXTINF:-1 group-title="Rạp Phim" tvg-logo="" tvg-id="tv360hoathinh",TVB VN
+https://amg01868-amg01868c3-tvbanywhere-us-4491.playouts.now.amagi.tv/playlist1080p.m3u8
 
 # ================= SỰ KIỆN KHÁC =================
 #EXTINF:-1 group-title="Sự Kiện VTVPrime" tvg-logo="https://vtvprime.vn/sideLogoBig.png" tvg-id="",Sự Kiện VTVPrime 11
