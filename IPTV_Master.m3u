@@ -1,6 +1,8 @@
 #EXTM3U
 
 # ================= VTV =================
+#EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250905/2025090515/S1CWNGr2gI-VIETNAMTODAY-THUMBNAIL-KENHVTVgo-500x281.webp" tvg-id="vietnamtoday.vn@HD",VietNam today (1080p)
+https://live.fptplay53.net/fnxhd1/vntoday_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",VTV1 (1080p)
 https://live.fptplay53.net/fnxch2/vtv1hd_abr.smil/chunklist_b4200000.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5ac4a9fb-6da7-4785-aab5-ae85e471d869.jpg?width=500" tvg-id="VTV2.vn@HD",VTV2 (1080p)
@@ -23,8 +25,6 @@ https://live.fptplay53.net/fnxhd1/vtv7hd_vhls.smil/chunklist_b5000000.m3u8
 https://live.fptplay53.net/epzhd1/vtv8hd_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/7f951ab0-a128-44a9-84cd-ba8faf108ad3.jpg?width=500" tvg-id="vtv9.vn@HD",VTV9 (1080p)
 https://live.fptplay53.net/fnxhd1/vtv9_vhls.smil/chunklist.m3u8
-#EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250905/2025090515/S1CWNGr2gI-VIETNAMTODAY-THUMBNAIL-KENHVTVgo-500x281.webp" tvg-id="vietnamtoday.vn@HD",VietNam today (1080p)
-https://live.fptplay53.net/fnxhd1/vntoday_vhls.smil/chunklist_b5000000.m3u8
 
 # ================= Hoạt Hình =================
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://tse3.mm.bing.net/th/id/OIP.AX78m3fFwp8t--tU-jLE1wHaHk?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" tvg-id="VTV1.vn@HD",Doremon (1080p)
@@ -70,18 +70,24 @@ https://liveh34.vtvprime.vn/hls/SCTV22/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctvpth.png" tvg-id="sctvhdpth",SCTV Phim Tổng Hợp
 https://liveh12.vtvprime.vn/hls/SCTVPHIM/index.m3u8
 
-# ================= HTV & HANOI TV =================
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HTV7.vn@HD",HTV4
+# ================= HTV =================
+#EXTINF:-1 group-title="HTV" tvg-logo="" tvg-id="HTV2.vn@HD",HTV2
+https://live.fptplay53.net/epzhd1/htv2hd_vhls.smil/chunklist.m3u8
+#EXTINF:-1 group-title="HTV" tvg-logo="" tvg-id="HTV3.vn@HD",HTV3
+https://liveh12.vtvprime.vn/hls/HTV3/index.m3u8
+#EXTINF:-1 group-title="HTV" tvg-logo="" tvg-id="HTV7.vn@HD",HTV4
 https://liveh12.vtvprime.vn/hls/HTVKey/index.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HTV7.vn@HD",HTV7 HD (1080p)
+#EXTINF:-1 group-title="HTV" tvg-logo="" tvg-id="HTV7.vn@HD",HTV7 HD (1080p)
 https://liveh12.vtvprime.vn/hls/HTV7HD/index.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HTV7.vn@HD",HTV9 HD (1080p)
+#EXTINF:-1 group-title="HTV" tvg-logo="" tvg-id="HTV7.vn@HD",HTV9 HD (1080p)
 https://live.fptplay53.net/epzhd1/htv9hd_vhls.smil/chunklist.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HanoiTV1.vn@SD",HanoiTV1 (720p)
+
+# ================= HANOI TV =================
+#EXTINF:-1 group-title="HANOI TV" tvg-logo="" tvg-id="HanoiTV1.vn@SD",HanoiTV1 (720p)
 https://liveh34.vtvprime.vn/hls/HANOI1TV/index.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HanoiTV2.vn@SD",HanoiTV2 (1080p) [Geo-blocked]
+#EXTINF:-1 group-title="HANOI TV" tvg-logo="" tvg-id="HanoiTV2.vn@SD",HanoiTV2 (1080p) [Geo-blocked]
 https://cloudstreamhntv.tek4tv.vn/live/smil:HN2.smil/playlist.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HanoiTV2.vn@SD",HanoiTV2 (720p)
+#EXTINF:-1 group-title="HANOI TV" tvg-logo="" tvg-id="HanoiTV2.vn@SD",HanoiTV2 (720p)
 https://liveh34.vtvprime.vn/hls/HANOI2TV/index.m3u8
 
 # ================= ĐỊA PHƯƠNG =================
