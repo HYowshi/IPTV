@@ -97,16 +97,12 @@ https://liveh12.vtvprime.vn/hls/SCTVPHIM/index.m3u8
 # ================= HTV =================
 #EXTINF:-1 group-title="HTV" tvg-logo="https://img-zlr1.tv360.vn/image1/2023/04/03/16/1680514594557/ab2557f0b015_640_360.png" tvg-id="HTV2.vn@HD",HTV Thể Thao
 https://live.fptplay53.net/epzhd1/htvcthethao_vhls.smil/chunklist_b5000000.m3u8
-#EXTINF:-1 group-title="HTV" tvg-logo="https://s7771.cdn.mytvnet.vn/vimages/8c/ce/ee/e7/79/98/8cee7-phtv1hd-channel-unkn.png" tvg-id="HTV1.vn@HD",HTV1
-https://vietanhtv.id.vn/tv360/190/index.m3u8
 #EXTINF:-1 group-title="HTV" tvg-logo="https://s7768.cdn.mytvnet.vn/vimages/a0/07/73/39/9e/e6/a0739-phtv2hd-channel-unkn.png" tvg-id="HTV2.vn@HD",HTV2
 https://live.fptplay53.net/epzhd1/htv2hd_vhls.smil/chunklist.m3u8
 #EXTINF:-1 group-title="HTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/HTV3.jpg" tvg-id="HTV3.vn@HD",HTV3
 https://liveh12.vtvprime.vn/hls/HTV3/index.m3u8
 #EXTINF:-1 group-title="HTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/HTV4.jpg" tvg-id="HTV4.vn@HD",HTV4
 https://liveh12.vtvprime.vn/hls/HTVKey/index.m3u8
-#EXTINF:-1 group-title="HTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/HTV5.jpg" tvg-id="HTV5.vn@HD",HTV5
-https://vietanhtv.id.vn/tv360/151/index.m3u8
 #EXTINF:-1 group-title="HTV" tvg-logo="https://img-zlr1.tv360.vn/image1/2020_09_23/1600822381421/47d2615f6141_640_360.png" tvg-id="HTV7.vn@HD",HTV7 HD (1080p)
 https://liveh12.vtvprime.vn/hls/HTV7HD/index.m3u8
 #EXTINF:-1 group-title="HTV" tvg-logo="https://img-zlr1.tv360.vn/image1/2020_09_23/1600822390705/a9fc59138d3b_640_360.png" tvg-id="HTV9.vn@HD",HTV9 HD (1080p)
@@ -203,6 +199,8 @@ https://amg01868-amg01868c3-tvbanywhere-us-4491.playouts.now.amagi.tv/playlist10
 https://liveh34.vtvprime.vn/hls/HGTV/03.m3u8
 
 # ================= QUỐC TẾ =================
+#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://i.vimeocdn.com/video/852785228-36403e3d29153c02a4acfcf0ca4182b0be0bef3e5b43355eafc33614ee972a9b-d?f=webp" tvg-id="afnhd", Davinci HD
+https://live.fptplay53.net/fnxhd2/davincihd_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://i.vimeocdn.com/video/852785228-36403e3d29153c02a4acfcf0ca4182b0be0bef3e5b43355eafc33614ee972a9b-d?f=webp" tvg-id="afnhd", Asian Food Network
 https://live.fptplay53.net/fnxhd2/afchd_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Aljazeera_eng.svg/1280px-Aljazeera_eng.svg.png" tvg-id="",Al Jazeera English
