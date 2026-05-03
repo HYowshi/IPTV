@@ -9,7 +9,7 @@ from urllib.parse import unquote, urljoin
 CHECK_HEALTH = True   # False: tắt kiểm tra link sống (chạy rất nhanh), True: bật kiểm tra (chậm hơn)
 ENABLE_EPG = True     # False: tắt tải EPG (tăng tốc), True: bật tải EPG (chậm hơn)
 SPECIAL_URL = "https://raw.githubusercontent.com/t23-02/bongda/refs/heads/main/bongda.m3u"
-s
+
 # Danh sách kênh VTV (chuẩn)
 VTV_CHANNELS = [
     "VTV1", "VTV2", "VTV3", "VTV4", "VTV5", "VTV6", "VTV7", "VTV8", "VTV9",
