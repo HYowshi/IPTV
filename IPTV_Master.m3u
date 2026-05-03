@@ -1,6 +1,8 @@
 #EXTM3U
 
 # ================= VTV =================
+#EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",HVTV1 (1080p)
+https://1011154949.vnns.net/CDN-FPT/HTVC-PHIM-HD-ABR/HTV-ABR/HTVC-PHIM-HD-1080p/chunks.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",VTV1 (1080p)
 https://live.fptplay53.net/fnxch2/vtv1hd_abr.smil/chunklist_b4200000.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5ac4a9fb-6da7-4785-aab5-ae85e471d869.jpg?width=500" tvg-id="VTV2.vn@HD",VTV2 (1080p)
@@ -93,10 +95,8 @@ https://tv.angiangtv.vn/live/kgtv2/kgtv2.m3u8
 https://tv.angiangtv.vn/live/kgtv3/kgtv3.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/BTVBACNINH.jpg" tvg-id="bacninh",BTV - Báo và PTTH Bắc Ninh
 https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/bac-ninh/KenhCoBan.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="CaoBangTV.vn@SD",Cao Bằng TV (720p)
+#EXTINF:-1 group-title="Địa phương" tvg-logo="https://img-ali1.tv360.vn/image1/2024/10/07/16/1728292499129/aeb3499f5824_640_360.png" tvg-id="CaoBangTV.vn@SD",Cao Bằng TV (720p)
 https://stream.thingnet.vn/live/smil:CRTV.smil/chunklist.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://img-ali1.tv360.vn/image1/2024/10/07/16/1728292499129/aeb3499f5824_640_360.png" tvg-id="",Cao Bằng
-https://stream.thingnet.vn/live/smil:CRTV.smil/playlist.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="CanThoTV.vn@SD",Cần Thơ TV1 (1080p)
 https://live.canthotv.vn/live/tv/chunklist.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="CanThoTV.vn@SD",Cần Thơ TV2 (1080p)
