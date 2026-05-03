@@ -41,8 +41,6 @@ https://liveh12.vtvprime.vn/hls/SCTV1/index.m3u8
 https://liveh12.vtvprime.vn/hls/SCTV2/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv3.png" tvg-id="sctv3hd",SCTV3
 https://liveh34.vtvprime.vn/hls/SCTV3/index.m3u8
-#EXTINF:-1 group-title="Khác" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv5.png" tvg-id="SCTV5.vn@SD",SCTV5 (720p)
-https://liveh34.vtvprime.vn/hls/SCTV5/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv7.webp" tvg-id="sctv7hd",SCTV7
 https://liveh34.vtvprime.vn/hls/SCTV7/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv8.png" tvg-id="sctv8hd",SCTV8
@@ -71,8 +69,12 @@ https://liveh34.vtvprime.vn/hls/SCTV22/index.m3u8
 https://liveh12.vtvprime.vn/hls/SCTVPHIM/index.m3u8
 
 # ================= HTV & HANOI TV =================
+#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HTV7.vn@HD",HTV4
+https://liveh12.vtvprime.vn/hls/HTVKey/index.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HTV7.vn@HD",HTV7 HD (1080p)
 https://liveh12.vtvprime.vn/hls/HTV7HD/index.m3u8
+#EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HTV7.vn@HD",HTV9 HD (1080p)
+https://live.fptplay53.net/epzhd1/htv9hd_vhls.smil/chunklist.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HanoiTV1.vn@SD",HanoiTV1 (720p)
 https://liveh34.vtvprime.vn/hls/HANOI1TV/index.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="" tvg-id="HanoiTV2.vn@SD",HanoiTV2 (1080p) [Geo-blocked]
@@ -156,7 +158,7 @@ https://streaming.tuyenquangtv.vn/channel/tuyenquang/playlist.m3u8
 
 # ================= RẠP PHIM & PHIM LẺ =================
 #EXTINF:-1 group-title="Rạp Phim" tvg-logo="" tvg-id="tv360hoathinh",Box Movie
-https://toiyeuvietnam.dpdns.org/Start/VMT0678_BoxMovie
+https://toiyeuvietnam.dpdns.org//Stream/index.php?proxy=1&id=VMT0678_BoxMovie&file=stream_0_02786.ts%3Fu%3Dadmin%26p%3D39eddec4e84a8f5e97ed0ec6c7c158003926f811da6ea071d581eca33905652b%26uid%3D3334624728
 #EXTINF:-1 group-title="Rạp Phim" tvg-logo="" tvg-id="tv360hoathinh",Hollywood
 https://toiyeuvietnam.dpdns.org/Start/VMT0678_HW
 #EXTINF:-1 group-title="Rạp Phim" tvg-logo="" tvg-id="tv360hoathinh",TVB VN
