@@ -156,14 +156,6 @@ https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/tuyen-quang/KenhCoBan.m3u
 #EXTINF:-1 group-title="Địa phương" tvg-logo="https://img-zlr1.tv360.vn/image1/2023/05/10/03/1683663305895/0f3f1e5bd284_640_360.png" tvg-id="",Tuyên Quang
 https://streaming.tuyenquangtv.vn/channel/tuyenquang/playlist.m3u8
 
-# ================= RẠP PHIM & PHIM LẺ =================
-#EXTINF:-1 group-title="Rạp Phim" tvg-logo="" tvg-id="tv360hoathinh",Box Movie
-https://toiyeuvietnam.dpdns.org//Stream/index.php?proxy=1&id=VMT0678_BoxMovie&file=stream_0_02786.ts%3Fu%3Dadmin%26p%3D39eddec4e84a8f5e97ed0ec6c7c158003926f811da6ea071d581eca33905652b%26uid%3D3334624728
-#EXTINF:-1 group-title="Rạp Phim" tvg-logo="" tvg-id="tv360hoathinh",Hollywood
-https://toiyeuvietnam.dpdns.org/Start/VMT0678_HW
-#EXTINF:-1 group-title="Rạp Phim" tvg-logo="" tvg-id="tv360hoathinh",TVB VN
-https://amg01868-amg01868c3-tvbanywhere-us-4491.playouts.now.amagi.tv/playlist1080p.m3u8
-
 # ================= SỰ KIỆN KHÁC =================
 #EXTINF:-1 group-title="Sự Kiện VTVPrime" tvg-logo="https://vtvprime.vn/sideLogoBig.png" tvg-id="",Sự Kiện VTVPrime 11
 https://liveh34byt.vtvprime.vn/hls/SKSS1/04.m3u8
@@ -187,20 +179,6 @@ https://eventcdn02-nowe.akamaized.net/hls/CH621/index.m3u8
 https://eventcdn02-nowe.akamaized.net/hls/CH622/index.m3u8
 #EXTINF:-1 group-title="⚽| Thể thao quốc tế" tvg-logo="https://images.now-tv.com/shares/channelPreview/img/en_hk/color/ch623_1920_1080" tvg-id="",Now Sport EPL 3
 https://eventcdn02-nowe.akamaized.net/hls/CH623/index.m3u8
-#EXTINF:-1 group-title="THỂ THAO QUỐC TẾ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/1/1a/Canal%2B_Sport_2015.png" tvg-id="",Canal+ Sport
-http://line.watchtivo-8k.com:80/play/live.php?mac=00:1A:79:3F:0C:96&stream=958758&extension=ts&play_token=MskDtCSrpn
-#EXTINF:-1 group-title="THỂ THAO QUỐC TẾ" tvg-logo="https://r2.thesportsdb.com/images/media/channel/logo/p5csyn1620551587.png" tvg-id="skyf1",Sky Sport F1
-http://line.watchtivo-8k.com:80/play/live.php?mac=00:1A:79:3F:0C:96&stream=1149423&extension=ts&play_token=1jkVQWGCqc
-#EXTINF:-1 group-title="THỂ THAO QUỐC TẾ" tvg-logo="https://e0.365dm.com/24/01/2048x1152/skysports-sky-sports-tennis_6437040.jpg" tvg-id="skytennis",Sky Sport Tennis
-http://line.watchtivo-8k.com:80/play/live.php?mac=00:1A:79:3F:0C:96&stream=1149433&extension=ts&play_token=Y1kv3yxPS8
-#EXTINF:-1 group-title="THỂ THAO QUỐC TẾ" tvg-logo="https://media.info/l/o/1/1539.1690027797.png" tvg-id="tnt1",TNT Sports 1 4Mbps for 4G
-http://line.watchtivo-8k.com:80/play/live.php?mac=00:1A:79:3F:0C:96&stream=894977&extension=ts&play_token=W2HvDO5iES
-#EXTINF:-1 group-title="THỂ THAO QUỐC TẾ" tvg-logo="https://media.info/l/o/1/1540.1690027877.png" tvg-id="tnt2",TNT Sports 2 4Mbps for 4G
-http://line.watchtivo-8k.com:80/play/live.php?mac=00:1A:79:3F:0C:96&stream=1091517&extension=ts&play_token=zKzxFKTNmb
-#EXTINF:-1 group-title="THỂ THAO QUỐC TẾ" tvg-logo="https://media.info/l/o/5/5712.1690027954.png" tvg-id="tnt3",TNT Sports 3 4Mbps for 4G
-http://line.watchtivo-8k.com:80/play/live.php?mac=00:1A:79:3F:0C:96&stream=894979&extension=ts&play_token=RLLwKaJKqY
-#EXTINF:-1 group-title="THỂ THAO QUỐC TẾ" tvg-logo="https://media.info/l/o/1/1491.1690027975.png" tvg-id="tnt4",TNT Sports 4 4Mbps for 4G
-http://line.watchtivo-8k.com:80/play/live.php?mac=00:1A:79:3F:0C:96&stream=894980&extension=ts&play_token=4ofwEIdTU4
 
 # ================= QUỐC TẾ =================
 #EXTINF:-1 group-title="TVB" tvg-logo="https://tvbaw-na.s3.us-west-1.amazonaws.com/hb/TVB%20Vietnam%20Banner_Side.jpg" tvg-id="tvbvn",TVB VIỆT NAM
