@@ -35,10 +35,13 @@ jobs:
       - name: Run Sorter
         run: python VTV_sort.py
 
+      - name: Cleanup Intermediate Files
+        run: rm -f Sports_Playlist.m3u output.m3u
+
       - name: Commit and Push
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add Vietnam_HBO_Final.m3u Sports_Playlist.m3u output.m3u
+          git add Vietnam_HBO_Final.m3u
           git commit -m "Auto-update IPTV playlist" || exit 0
           git push
