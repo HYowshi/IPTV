@@ -42,7 +42,7 @@ https://liveh12.vtvprime.vn/hls/SCTV2/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv3.png" tvg-id="sctv3hd",SCTV3
 https://liveh34.vtvprime.vn/hls/SCTV3/index.m3u8
 #EXTINF:-1 group-title="Khác" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv5.png" tvg-id="SCTV5.vn@SD",SCTV5 (720p)
-https://liveh12.vtvprime.vn/hls/SCTV5/index.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV5/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv7.webp" tvg-id="sctv7hd",SCTV7
 https://liveh34.vtvprime.vn/hls/SCTV7/index.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv8.png" tvg-id="sctv8hd",SCTV8
@@ -153,8 +153,6 @@ https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/tuyen-quang/KenhCoBan.m3u
 https://streaming.tuyenquangtv.vn/channel/tuyenquang/playlist.m3u8
 
 # ================= RẠP PHIM & PHIM LẺ =================
-#EXTINF:-1 group-title="Rạp Phim" tvg-logo="https://img-ali1.tv360.vn/image1/2025/12/31/19/1767185202351/540d7e229911_640_360.png" tvg-id="tv360hoathinh",Hoạt hình
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/hoat-hinh/KenhCoBan.m3u8
 #EXTINF:-1 group-title="Rạp Phim" tvg-logo="" tvg-id="tv360hoathinh",Box Movie
 https://toiyeuvietnam.dpdns.org/Start/VMT0678_BoxMovie
 #EXTINF:-1 group-title="Rạp Phim" tvg-logo="" tvg-id="tv360hoathinh",Hollywood
@@ -175,12 +173,6 @@ https://liveh34byt.vtvprime.vn/hls/SKSS4/04.m3u8
 https://liveh34byt.vtvprime.vn/hls/SKSS5/04.m3u8
 #EXTINF:-1 group-title="Sự Kiện VTVPrime" tvg-logo="https://vtvprime.vn/sideLogoBig.png" tvg-id="",Sự Kiện VTVPrime 16
 https://liveh34byt.vtvprime.vn/hls/SKSS6/04.m3u8
-#EXTINF:-1 group-title="Sự Kiện" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/ninochannel1.jpg" tvg-id="",Nino Channel
-http://livesv2.onnanetwork.xyz/hls/ninochannel/index.m3u8
-#EXTINF:-1 group-title="Sự Kiện" tvg-logo="https://onnaonlinetv.xyz/thumbnail/oni1.png" tvg-id="",ONi1
-https://1.org.vn/oni1/?/index.m3u8
-#EXTINF:-1 group-title="Sự Kiện" tvg-logo="https://onnaonlinetv.xyz/thumbnail/oni2.png" tvg-id="",ONi2
-https://1.org.vn/oni2hd/?/index.m3u8
 
 # ================= THỂ THAO =================
 #EXTINF:-1 group-title="Kênh thể thao" tvg-logo="https://image.xumo.com/v1/channels/channel/99991785/600x337.webp?type=channelTile" tvg-id="",BeIN Sports Xtra
