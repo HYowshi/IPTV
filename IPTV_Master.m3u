@@ -47,8 +47,20 @@ https://live.fptplay53.net/epzhd1/vtv8hd_vhls.smil/chunklist_b5000000.m3u8
 https://live.fptplay53.net/fnxhd1/vtv9_vhls.smil/chunklist.m3u8
 
 # ================= Hoạt Hình =================
-#EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://tse3.mm.bing.net/th/id/OIP.AX78m3fFwp8t--tU-jLE1wHaHk?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" tvg-id="VTV1.vn@HD",Doremon (1080p)
+#EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/2391927.jpg" tvg-id="",Conan (1080p)
+https://www.youtube.com/watch?v=DPRZWLasTkE
+#EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/889165.jpg" tvg-id="",Doremon (1080p)
 https://www.youtube.com/watch?v=nY2upofLh5o
+#EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/1198080.jpg" tvg-id="",Tom and Jerry (1080p)
+https://www.youtube.com/live/400k2SKoeh4?si=iiEXqrHW_DaHnWJU
+#EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/2076353.jpg" tvg-id="",Mr.Bean (1080p)
+https://www.youtube.com/watch?v=lCp-9YihW-c
+#EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/1675031.jpg" tvg-id="",OGGY (1080p)
+https://www.youtube.com/watch?v=n4lcJjsMEb0
+#EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/188527.jpg" tvg-id="",MINIONS (1080p)
+https://www.youtube.com/watch?v=btP-bWKDVik
+#EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/155078.jpg" tvg-id="",Adventure Time (1080p)
+https://www.youtube.com/watch?v=1oDs_W730cw
 
 # ================= THVL =================
 #EXTINF:-1 group-title="THVL" tvg-logo="http://static3.thvli.vn/assets/thumbnail/2025/09/12/pbe9c6gh_button_thvl1.png" tvg-id="THVL1.vn@HD",THVL 1 (1080p)
@@ -123,24 +135,12 @@ https://liveh34.vtvprime.vn/hls/HANOI2TV/index.m3u8
 https://vtvgolive-ott3.vtvdigital.vn/live/dongnai1tv/chunklist_2.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250805/2025080516/RgEOYY7utX-DONGNAI2-THUMBNAIL-KENHVTVgo-500x281.webp" tvg-id="ĐN2.vn@HD",ĐN2 HD (1080p)
 https://vtvgolive-ott3.vtvdigital.vn/live/dongnai2tv/chunklist_2.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/ĐNNRTV3.png" tvg-id="ĐN2.vn@HD",ĐN3 HD (1080p)
-https://1.org.vn/dnrtv3
-#EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="angiangtv1.vn@HD",An Giang TV 1
-https://tv.angiangtv.vn/live/kgtv/kgtv.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="angiangtv2.vn@HD",An Giang TV 2
-https://tv.angiangtv.vn/live/kgtv2/kgtv2.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="angiangtv3.vn@HD",An Giang TV 3
-https://tv.angiangtv.vn/live/kgtv3/kgtv3.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/BTVBACNINH.jpg" tvg-id="bacninh",BTV - Báo và PTTH Bắc Ninh
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/bac-ninh/KenhCoBan.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="https://img-ali1.tv360.vn/image1/2024/10/07/16/1728292499129/aeb3499f5824_640_360.png" tvg-id="CaoBangTV.vn@SD",Cao Bằng TV (720p)
 https://stream.thingnet.vn/live/smil:CRTV.smil/chunklist.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="CanThoTV.vn@SD",Cần Thơ TV1 (1080p)
 https://live.canthotv.vn/live/tv/chunklist.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="CanThoTV.vn@SD",Cần Thơ TV2 (1080p)
 https://live.canthotv.vn/cs2/live.stream/playlist.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="CanThoTV3.vn@SD",Cần Thơ TV3 (1080p)
-https://live.canthotv.vn/cs3/tv/chunklist.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="DienBienTV.vn@SD",Điện Biên TV (406p)
 https://truyenhinh.vnptvas.vn/live.m3u8?c=vstv362&deviceId=&deviceType=&gcId=1532&location=NA&pkg=pkg11.hni&q=high&requestTime=1586309420781&time=1586395820&token=LX-ibJYRUq9pflRtYAxfYQ&type=tv&userId=
 #EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="DakLakTV.vn@HD",Đắk Lắk TV (720p)
@@ -151,40 +151,22 @@ https://liveh34.vtvprime.vn/hls/DONGTHAPTV/index.m3u8
 https://618b88f69e53b.streamlock.net/THDT2/thdttv2/chunklist.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="https://img-ali1.tv360.vn/image1/2025/09/16/10/1757993795684/45f17a4f3b90_640_360.png" tvg-id="",Miền Tây
 https://618b88f69e53b.streamlock.net/THDT2/thdttv2/playlist.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/GTVGIALAI.png" tvg-id="gialai",GTV - Báo và PTTH Gia Lai
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/gia-lai/KenhCoBan.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="HaTinhTV.vn@SD",Hà Tĩnh TV (720p)
 https://wse.hatinhtv.net/live/httv1/chunklist.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://upload.wikimedia.org/wikipedia/vi/9/90/THP-Logo.png" tvg-id="haiphong",THP HD - Báo và PTTH Hải Phòng
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/hai-phong/KenhCoBan.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://img-zlr1.tv360.vn/image1/2020_09_23/1600823412691/61627b84a612_640_360.png" tvg-id="hitv",HiTV
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/hitv/KenhCoBan.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://hungyentv.vn/templates/frontend/hytv/Assets/img/truyenhinh.jpg" tvg-id="hungyen",HYTV HD - Báo và PTTH Hưng Yên
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/hung-yen/KenhCoBan.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/KTV_KhanhHoa.png" tvg-id="khanhhoa",KTV HD - Báo và PTTH Khánh Hòa
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/khanh-hoa/KenhCoBan.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="LaoCaiTV.vn@HD",Lào Cai TV (1080p)
 https://live.baolaocai.vn/channel2/stream.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="LamDongTV.vn@SD",Lâm Đồng TV (480p)
 http://118.107.85.5:1935/live/smil:LTV.smil/chunklist.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="https://img-ali1.tv360.vn/image1/2023/05/16/03/1684183176485/baf863bc2690_640_360.png" tvg-id="langson",Lạng SƠn
 https://stream.langsontv.vn/live/285c78da0c246524c90917842f8de03bd21/playlist.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://img-zlr1.tv360.vn/image1/2023/05/16/02/168417957456/7016ca1be5fa_640_360.png" tvg-id="phutho",PTV HD - Báo và PTTH Phú Thọ
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/phu-tho/KenhCoBan.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/QNgTV2_QuangNgai.png" tvg-id="quangngai2",QNgTV2 - Báo và PTTH Quảng Ngãi
-https://sgclient.duckdns.org/source/vieon.m3u8?id=quangngai2
 #EXTINF:-1 group-title="Địa phương" tvg-logo="https://media.baoquangninh.vn/upload/files/logo/QTV1.jpg" tvg-id="quangninh1",QTV1 HD - Báo và PTTH Quảng Ninh
 https://live.baoquangninh.vn/qtvlive/tv1live.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo=" https://i.ytimg.com/vi/cTNt-U1akXw/hq720.jpg" tvg-id="quangninh3",QTV3 HD - Báo và PTTH Quảng Ninh
 https://live.baoquangninh.vn/qtvlive/tv3live.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://media.sonlatv.vn/upload/files/image/Back-TH-1.jpg" tvg-id="sonla",STV HD - Báo và PTTH Sơn La
-https://cdn.sonlatv.vn/live/28595222e707a364251b8724717894baa46/chunklist.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="ThaiNguyenTV.vn@SD",Thái Nguyên TV (720p)
 https://streaming.thainguyentv.vn/hls/livestream.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="" tvg-id="TayNinhTV.vn@SD",Tây Ninh TV (720p)
 https://live-hq.evgcdn.net/live/2851dc2c9af68834814a89e61db0faee561/chunklist.m3u8
-#EXTINF:-1 group-title="Địa phương" tvg-logo="https://img-zlr1.tv360.vn/image1/2023/05/10/03/1683663305895/0f3f1e5bd284_640_360.png" tvg-id="tuyenquang",TTV HD - Báo và PTTH Tuyên Quang
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/tuyen-quang/KenhCoBan.m3u8
 
 # ================= THỂ THAO =================
 #EXTINF:-1 group-title="Kênh thể thao" tvg-logo="https://image.xumo.com/v1/channels/channel/99991785/600x337.webp?type=channelTile" tvg-id="",BeIN Sports Xtra
@@ -203,8 +185,6 @@ https://amg01868-amg01868c3-tvbanywhere-us-4491.playouts.now.amagi.tv/playlist10
 https://liveh34.vtvprime.vn/hls/HGTV/03.m3u8
 
 # ================= QUỐC TẾ =================
-#EXTINF:-1 group-title="Quốc Tế" tvg-id="music-box" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/music-box/KenhBoSung.png" tvg-id="musicbox",Music box
-https://toiyeuvietnam.dpdns.org/OnliveTV/music-box/Free.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://images.fptplay53.net/media/channels/icon_channel_da-vinci-learning_165655659384.png" tvg-id="davincihd", Davinci HD
 https://live.fptplay53.net/fnxhd2/davincihd_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://i.vimeocdn.com/video/852785228-36403e3d29153c02a4acfcf0ca4182b0be0bef3e5b43355eafc33614ee972a9b-d?f=webp" tvg-id="afnhd", Asian Food Network
