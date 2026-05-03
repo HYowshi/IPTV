@@ -1,11 +1,13 @@
 #EXTM3U
 
 # ================= Kênh đặc biệt =================
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://vtvprime.vn/sideLogoBig.png" tvg-id="",Sự Kiện
+https://pop17-ec2-ateme.tv360.vn/tok_eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOiIxNzc3ODU5MDU1Iiwic2lwIjoiIiwicGF0aCI6Ii9saXZlL2Vkcy80MjcvSExTX0NsZWFuX01ITl8ycy8iLCJzZXNzaW9uX2Nkbl9pZCI6IjJlYjM4Y2ZkZmU2NDllMmQiLCJzZXNzaW9uX2lkIjoiIiwiY2xpZW50X2lkIjoiIiwiZGV2aWNlX2lkIjoiIiwibWF4X3Nlc3Npb25zIjowLCJzZXNzaW9uX2R1cmF0aW9uIjowLCJ1cmwiOiJodHRwczovLzE3Mi4yNC4xNjguMTY0Iiwic2Vzc2lvbl90aW1lb3V0IjowLCJhdWQiOiI2NyIsInNvdXJjZXMiOlsyMTIsNDY0LDQ2Nyw0NjldfQ==.z85o95WF8V5J58KV3u6kQJCraQmfQ-6G5-413LpLOsNjSWjSxVyp5U4Nd2N5RcTzL6RvIQdxtvELxVx_zts_9Q==/live/eds/427/HLS_Clean_MHN_2s/index.m3u8?uid=266607
 #EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250905/2025090515/S1CWNGr2gI-VIETNAMTODAY-THUMBNAIL-KENHVTVgo-500x281.webp" tvg-id="vietnamtoday.vn@HD",VietNam today (1080p)
 https://live.fptplay53.net/fnxhd1/vntoday_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://img.vtvprime.vn/07qhv2sD9t_A4BNGmPkgSXbPK6H2KXoi7VRKtjnDTOQ/rs:fit:836:468/czM6Ly9wcmQtc24taW1hZ2VzL2NoYW5uZWwvMzc0ZjViMTMtMTJiNC00YWM5LWFjOTYtODUxOWUwYWE3ZGJiLnBuZw==.png" tvg-id="",QPVN
 https://live.fptplay53.net/fnxhd2/quocphongvnhd_vhls.smil/chunklist_b5000000.m3u8
-#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/antv/KenhCoBan.png" tvg-id="AnNinhTV.vn@HD",ANTV (1080p)
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="" tvg-id="AnNinhTV.vn@HD",ANTV (1080p)
 https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8
 #EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://vtvprime.vn/sideLogoBig.png" tvg-id="",Sự Kiện VTVPrime 11
 https://liveh34byt.vtvprime.vn/hls/SKSS1/04.m3u8
@@ -199,6 +201,8 @@ https://amg01868-amg01868c3-tvbanywhere-us-4491.playouts.now.amagi.tv/playlist10
 https://liveh34.vtvprime.vn/hls/HGTV/03.m3u8
 
 # ================= QUỐC TẾ =================
+#EXTINF:-1 group-title="Quốc Tế" tvg-id="music-box" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/music-box/KenhBoSung.png" tvg-id="musicbox",Music box
+https://toiyeuvietnam.dpdns.org/OnliveTV/music-box/Free.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://images.fptplay53.net/media/channels/icon_channel_da-vinci-learning_165655659384.png" tvg-id="davincihd", Davinci HD
 https://live.fptplay53.net/fnxhd2/davincihd_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://i.vimeocdn.com/video/852785228-36403e3d29153c02a4acfcf0ca4182b0be0bef3e5b43355eafc33614ee972a9b-d?f=webp" tvg-id="afnhd", Asian Food Network
