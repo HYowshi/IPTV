@@ -27,7 +27,7 @@ jobs:
           pip install requests aiohttp pytz tqdm
 
       - name: Run Xtream Fetcher
-        run: python Xtream2M3u.py
+        run: python Xtreamlist2M3u.py
 
       - name: Run M3U Processor
         run: python M3U_list.py
