@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Phim.tv - Trung tâm giải trí đa phương tiện. Xem phim và truyền hình trực tuyến chất lượng cao.">
+    <meta name="theme-color" content="#050505">
+    <meta property="og:title" content="Phim.tv - Trung Tâm Giải Trí">
+    <meta property="og:description" content="Trải nghiệm xem phim và truyền hình đỉnh cao với Phim.tv">
+    <meta property="og:type" content="website">
+    <title>Phim.tv - Chọn Dịch Vụ</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body class="entry-body" data-tauri-drag-region>
+    <div class="ambient-glow glow-1" aria-hidden="true"></div>
+    <div class="ambient-glow glow-2" aria-hidden="true"></div>
+
+    <main>
+        <button id="btn-exit-main" class="btn-exit" data-tauri-drag-region="false" aria-label="Thoát ứng dụng">
+            <i class="fa-solid fa-power-off" aria-hidden="true"></i> Thoát Ứng Dụng
+        </button>
+
+        <header class="entry-header" data-tauri-drag-region>
+            <h1>TRUNG TÂM GIẢI TRÍ</h1>
+            <p>Vui lòng chọn nền tảng bạn muốn trải nghiệm</p>
+        </header>
+
+        <nav class="entry-container" aria-label="Danh mục dịch vụ">
+            <a href="truyenhinh/truyenhinh.html" class="entry-box tv-accent" aria-label="Mở truyền hình">
+                <div class="icon-wrapper" aria-hidden="true">
+                    <i class="fa-solid fa-tv entry-icon-v2"></i>
+                </div>
+                <span class="entry-text">Coi Truyền Hình</span>
+                <span class="entry-desc">Hàng trăm kênh chất lượng HD</span>
+            </a>
+
+            <a href="phim/phim.html" class="entry-box movie-accent" aria-label="Mở xem phim">
+                <div class="icon-wrapper" aria-hidden="true">
+                    <i class="fa-solid fa-clapperboard entry-icon-v2"></i>
+                </div>
+                <span class="entry-text">Xem Phim</span>
+                <span class="entry-desc">Kho phim bom tấn cập nhật liên tục</span>
+            </a>
+        </nav>
+    </main>
+</body>
+</html>

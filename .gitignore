@@ -1,0 +1,12 @@
+# Node.js
+node_modules/
+dist/
+package-lock.json
+
+# Tauri & Rust
+src-tauri/target/
+**/*.rs.bk
+
+# OS
+.DS_Store
+Thumbs.db
