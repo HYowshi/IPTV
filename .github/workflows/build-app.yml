@@ -30,6 +30,9 @@ jobs:
       - name: Install Frontend Dependencies
         run: npm install
 
+      - name: Init Tauri Android
+        run: npm run tauri android init
+
       - name: Build Tauri APK
         run: npm run tauri android build
 
