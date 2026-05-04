@@ -433,7 +433,7 @@ body.theater-mode .watch-episode-section {
 }
 
 /* Làm mờ thay vì ẩn hoàn toàn để chống kẹt cache trên App */
-.skeleton img {
+img.skeleton {
     opacity: 0.01;
 }
 

@@ -503,6 +503,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         videoPlayerGlobal.addEventListener('dblclick', async () => {
+            const customContainer = document.getElementById('custom-video-container');
             if (window.__TAURI__ && window.__TAURI__.window) {
                 try {
                     const appWindow = await window.__TAURI__.window.getCurrentWindow();
@@ -510,14 +511,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     await appWindow.setFullscreen(!isFull);
                 } catch (e) {
                     if (!document.fullscreenElement) {
-                        if (videoPlayerGlobal.requestFullscreen) await videoPlayerGlobal.requestFullscreen().catch(()=>{});
+                        if (customContainer.requestFullscreen) await customContainer.requestFullscreen().catch(()=>{});
                     } else {
                         if (document.exitFullscreen) await document.exitFullscreen().catch(()=>{});
                     }
                 }
             } else {
                 if (!document.fullscreenElement) {
-                    if (videoPlayerGlobal.requestFullscreen) await videoPlayerGlobal.requestFullscreen().catch(()=>{});
+                    if (customContainer.requestFullscreen) await customContainer.requestFullscreen().catch(()=>{});
                 } else {
                     if (document.exitFullscreen) await document.exitFullscreen().catch(()=>{});
                 }
@@ -550,17 +551,18 @@ document.addEventListener("DOMContentLoaded", () => {
             videoPlayer.currentTime -= 10;
         } else if (e.code === 'KeyF') {
             e.preventDefault();
+            const customContainer = document.getElementById('custom-video-container');
             if (window.__TAURI__ && window.__TAURI__.window) {
                 window.__TAURI__.window.getCurrentWindow().then(appWindow => {
                     appWindow.isFullscreen().then(isFull => {
                         appWindow.setFullscreen(!isFull).catch(()=>{
-                            if (!document.fullscreenElement && videoPlayer.requestFullscreen) videoPlayer.requestFullscreen().catch(()=>{});
+                            if (!document.fullscreenElement && customContainer.requestFullscreen) customContainer.requestFullscreen().catch(()=>{});
                             else if (document.exitFullscreen) document.exitFullscreen().catch(()=>{});
                         });
                     }).catch(()=>{});
                 }).catch(()=>{});
             } else {
-                if (!document.fullscreenElement && videoPlayer.requestFullscreen) videoPlayer.requestFullscreen().catch(()=>{});
+                if (!document.fullscreenElement && customContainer.requestFullscreen) customContainer.requestFullscreen().catch(()=>{});
                 else if (document.exitFullscreen) document.exitFullscreen().catch(()=>{});
             }
         } else if (e.code === 'ArrowUp') {
@@ -1323,9 +1325,9 @@ function initSpatialNavigation() {
         const arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
         if (!arrowKeys.includes(e.key)) return;
 
-        if (document.activeElement && document.activeElement.id === 'searchInput') {
-            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') return;
-        }
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        const isInput = activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select' || document.activeElement.isContentEditable;
+        if (isInput) return;
 
         const focusables = Array.from(document.querySelectorAll('.movie-card, .btn-play, .btn-primary, .btn-more, .btn-server, .btn-episode, nav a, .sidebar-list li, #searchInput, .btn-page'));
         const currentFocus = document.activeElement;
