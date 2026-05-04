@@ -754,19 +754,18 @@ function navigateToHome(e) {
         const overlay = document.getElementById('next-ep-overlay');
         if (overlay) overlay.style.display = 'none';
     }
+
+    currentFilterEndpoint = "";
+    currentFilterSlug = "";
+    currentFilterTitle = "";
+    currentFilterPage = 1;
+
+    document.getElementById('heroBanner').style.display = 'flex';
+    document.getElementById('home-view').style.display = 'block';
+    document.getElementById('filter-view').style.display = 'none';
+    document.getElementById('advanced-filter-bar').style.display = 'none';
+    document.querySelector('.main-container').classList.add('with-hero');
     
-    if (currentFilterEndpoint !== "") {
-        document.getElementById('heroBanner').style.display = 'none';
-        document.getElementById('home-view').style.display = 'none';
-        document.getElementById('filter-view').style.display = 'block';
-        document.querySelector('.main-container').classList.remove('with-hero');
-    } else {
-        document.getElementById('heroBanner').style.display = 'flex';
-        document.getElementById('home-view').style.display = 'block';
-        document.getElementById('filter-view').style.display = 'none';
-        document.getElementById('advanced-filter-bar').style.display = 'none';
-        document.querySelector('.main-container').classList.add('with-hero');
-    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
