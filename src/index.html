@@ -16,8 +16,20 @@
     <script src="script.js" defer></script>
 </head>
 <body class="entry-body" data-tauri-drag-region>
+    
     <div class="ambient-glow glow-1" aria-hidden="true"></div>
     <div class="ambient-glow glow-2" aria-hidden="true"></div>
+
+    <div id="disclaimer-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2><i class="fa-solid fa-triangle-exclamation"></i> THÔNG BÁO QUAN TRỌNG</h2>
+            <div class="modal-text">
+                <p>Ứng dụng này cung cấp môi trường giải trí và tổng hợp các nội dung từ môi trường internet.</p>
+                <p>Chúng tôi không lưu trữ bất kỳ tệp tin truyền thông nào trên máy chủ và không chịu trách nhiệm pháp lý về các vấn đề liên quan. Bằng việc nhấn "Đồng ý", bạn xác nhận đã hiểu rõ các điều khoản sử dụng ứng dụng này.</p>
+            </div>
+            <button id="btn-accept-disclaimer" class="modal-btn">Tôi Đã Hiểu & Đồng Ý</button>
+        </div>
+    </div>
 
     <main>
         <button id="btn-exit-main" class="btn-exit" data-tauri-drag-region="false" aria-label="Thoát ứng dụng">

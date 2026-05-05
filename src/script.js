@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     let isNavigating = false;
+    let isModalOpen = true;
 
     const safeAddListener = (element, event, handler) => {
         if (element) {
@@ -30,6 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener('keydown', (e) => {
         if (isNavigating) return;
+
+        if (isModalOpen) {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                exitTauriApp();
+            }
+            return; 
+        }
 
         if (e.key === 'Escape') {
             e.preventDefault();
@@ -157,9 +166,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    if (entryBoxes.length > 0) {
+    if (entryBoxes.length > 0 && !isModalOpen) {
         if (!document.activeElement || document.activeElement === document.body) {
             entryBoxes[0]?.focus();
         }
+    }
+
+    const modalOverlay = document.getElementById('disclaimer-modal');
+    const btnAccept = document.getElementById('btn-accept-disclaimer');
+
+    if (modalOverlay && btnAccept) {
+        btnAccept.focus();
+
+        safeAddListener(btnAccept, 'click', (e) => {
+            e.preventDefault();
+            modalOverlay.classList.add('hidden');
+            isModalOpen = false;
+            
+            setTimeout(() => {
+                modalOverlay.style.display = 'none';
+                if (entryBoxes.length > 0) {
+                    entryBoxes[0]?.focus();
+                }
+            }, 500);
+        });
     }
 });

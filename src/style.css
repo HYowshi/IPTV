@@ -296,3 +296,96 @@ body.entry-body.fade-out {
 .is-navigating {
   pointer-events: none;
 }
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.modal-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+    border: 1px solid rgba(249, 25, 66, 0.2);
+    border-top: 4px solid #f91942;
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 30px rgba(249, 25, 66, 0.15);
+    transform: translateY(0) scale(1);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-overlay.hidden .modal-content {
+    transform: translateY(-50px) scale(0.9);
+}
+
+.modal-content h2 {
+    color: #f91942;
+    margin-bottom: 25px;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.modal-content h2 i {
+    margin-right: 10px;
+}
+
+.modal-text {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px 25px;
+    border-radius: 12px;
+    margin-bottom: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modal-content p {
+    color: #cccccc;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.modal-content p:last-child {
+    margin-bottom: 0;
+}
+
+.modal-btn {
+    background: rgba(249, 25, 66, 0.2);
+    border: 1px solid rgba(249, 25, 66, 0.5);
+    color: white;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.modal-btn:hover, .modal-btn:focus {
+    background: rgba(249, 25, 66, 0.4);
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(249, 25, 66, 0.3);
+    border-color: #f91942;
+}

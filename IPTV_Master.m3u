@@ -1,26 +1,52 @@
 #EXTM3U
 
 # ================= Kênh đặc biệt =================
-#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://img-ali1.tv360.vn/image1/2024/09/30/22/1727709197325/1be646ba55c5_640_360.png" tvg-id="",TV 360
-https://pop17-ec2-ateme.tv360.vn/tok_eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOiIxNzc3ODU5MDU1Iiwic2lwIjoiIiwicGF0aCI6Ii9saXZlL2Vkcy80MjcvSExTX0NsZWFuX01ITl8ycy8iLCJzZXNzaW9uX2Nkbl9pZCI6IjJlYjM4Y2ZkZmU2NDllMmQiLCJzZXNzaW9uX2lkIjoiIiwiY2xpZW50X2lkIjoiIiwiZGV2aWNlX2lkIjoiIiwibWF4X3Nlc3Npb25zIjowLCJzZXNzaW9uX2R1cmF0aW9uIjowLCJ1cmwiOiJodHRwczovLzE3Mi4yNC4xNjguMTY0Iiwic2Vzc2lvbl90aW1lb3V0IjowLCJhdWQiOiI2NyIsInNvdXJjZXMiOlsyMTIsNDY0LDQ2Nyw0NjldfQ==.z85o95WF8V5J58KV3u6kQJCraQmfQ-6G5-413LpLOsNjSWjSxVyp5U4Nd2N5RcTzL6RvIQdxtvELxVx_zts_9Q==/live/eds/427/HLS_Clean_MHN_2s/index.m3u8?uid=266607
 #EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250905/2025090515/S1CWNGr2gI-VIETNAMTODAY-THUMBNAIL-KENHVTVgo-500x281.webp" tvg-id="vietnamtoday.vn@HD",VietNam today (1080p)
 https://live.fptplay53.net/fnxhd1/vntoday_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://img.vtvprime.vn/07qhv2sD9t_A4BNGmPkgSXbPK6H2KXoi7VRKtjnDTOQ/rs:fit:836:468/czM6Ly9wcmQtc24taW1hZ2VzL2NoYW5uZWwvMzc0ZjViMTMtMTJiNC00YWM5LWFjOTYtODUxOWUwYWE3ZGJiLnBuZw==.png" tvg-id="",QPVN
 https://live.fptplay53.net/fnxhd2/quocphongvnhd_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="" tvg-id="AnNinhTV.vn@HD",ANTV (1080p)
 https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8
-#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://vtvprime.vn/sideLogoBig.png" tvg-id="",Sự Kiện VTVPrime 11
-https://liveh34byt.vtvprime.vn/hls/SKSS1/04.m3u8
-#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://vtvprime.vn/sideLogoBig.png" tvg-id="",Sự Kiện VTVPrime 12
-https://liveh34byt.vtvprime.vn/hls/SKSS2/04.m3u8
-#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://vtvprime.vn/sideLogoBig.png" tvg-id="",Sự Kiện VTVPrime 13
-https://liveh34byt.vtvprime.vn/hls/SKSS3/04.m3u8
-#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://vtvprime.vn/sideLogoBig.png" tvg-id="",Sự Kiện VTVPrime 14
-https://liveh34byt.vtvprime.vn/hls/SKSS4/04.m3u8
-#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://vtvprime.vn/sideLogoBig.png" tvg-id="",Sự Kiện VTVPrime 15
-https://liveh34byt.vtvprime.vn/hls/SKSS5/04.m3u8
-#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://vtvprime.vn/sideLogoBig.png" tvg-id="",Sự Kiện VTVPrime 16
-https://liveh34byt.vtvprime.vn/hls/SKSS6/04.m3u8
+
+# ================= ON TV ================
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-16-hd/KenhCoBan.png" tvg-id="",On Football HD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-16-hd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-3-on-sports/KenhCoBan.png" tvg-id="",On Sports
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-3-on-sports/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-18-on-sports-news/KenhCoBan.png" tvg-id="",On Sports News
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-18-on-sports-news/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-23-golf-channel/KenhCoBan.png" tvg-id="",On Golf Channel
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-23-golf-channel/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-6-on-sports/KenhCoBan.png" tvg-id="",On Sports +
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-6-on-sports/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-1-vie-giai-tri-hd/KenhCoBan.png" tvg-id="",On Vie Giải Trí HD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-1-vie-giai-tri-hd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab10-on-cine-hd/KenhCoBan.png" tvg-id="",On Cine HD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab10-on-cine-hd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab19-vie-dramas/KenhCoBan.png" tvg-id="",On Vie Dramas
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab19-vie-dramas/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-8-bi-bi-sd/KenhCoBan.png" tvg-id="",On Bibi SD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-8-bi-bi-sd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-21-cartoon-kids-hd/KenhCoBan.png" tvg-id="",On Cartoon Kids HD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-21-cartoon-kids-hd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-4-on-movies/KenhCoBan.png" tvg-id="",On Movies
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-4-on-movies/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-5-e-channel-hd/KenhCoBan.png" tvg-id="",On E Channel HD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-5-e-channel-hd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-12-styletv-hd/KenhCoBan.png" tvg-id="",On StyleTV HD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-12-styletv-hd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab15-on-music/KenhCoBan.png"" tvg-id="",On Music
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab15-on-music/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab17-trending-tv/KenhCoBan.png" tvg-id="",On Trending TV
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab17-trending-tv/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-20-v-family-hd/KenhCoBan.png" tvg-id="",On V Family HD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-20-v-family-hd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-22-life-tv-hd/KenhCoBan.png" tvg-id="",On Life TV HD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-22-life-tv-hd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtvcab-9-infotv-hd/KenhCoBan.png" tvg-id="",On InfoTV HD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtvcab-9-infotv-hd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Kênh đặc biệt" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/o2tv/KenhCoBan.png" tvg-id="",On O2TV
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/o2tv/KenhCoBan.m3u8
 
 # ================= VTV =================
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",VTV1 (1080p)
@@ -109,7 +135,7 @@ https://liveh34.vtvprime.vn/hls/SCTV22/index.m3u8
 https://liveh12.vtvprime.vn/hls/SCTVPHIM/index.m3u8
 
 # ================= HTV =================
-#EXTINF:-1 group-title="HTV" tvg-logo="https://img-zlr1.tv360.vn/image1/2023/04/03/16/1680514594557/ab2557f0b015_640_360.png" tvg-id="HTV2.vn@HD",HTV Thể Thao
+#EXTINF:-1 group-title="HTV" tvg-logo="https://img-zlr1.tv360.vn/image1/2023/04/03/16/1680514594557/ab2557f0b015_640_360.png" tvg-id="HTVTheThao.vn@HD",HTV Thể Thao
 https://live.fptplay53.net/epzhd1/htvcthethao_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="HTV" tvg-logo="https://s7768.cdn.mytvnet.vn/vimages/a0/07/73/39/9e/e6/a0739-phtv2hd-channel-unkn.png" tvg-id="HTV2.vn@HD",HTV2
 https://live.fptplay53.net/epzhd1/htv2hd_vhls.smil/chunklist.m3u8
@@ -183,21 +209,33 @@ https://eventcdn02-nowe.akamaized.net/hls/CH623/index.m3u8
 https://amg01868-amg01868c3-tvbanywhere-us-4491.playouts.now.amagi.tv/playlist1080p.m3u8
 #EXTINF:-1 group-title="Phim" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/Logo/refs/heads/main/hgtv.png" tvg-id="hgtv",HGTV
 https://liveh34.vtvprime.vn/hls/HGTV/03.m3u8
+#EXTINF:-1 group-title="Phim" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/kix/KenhCoBan.png" tvg-id="Kix",Kix
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/kix/KenhCoBan.m3u8
 
 # ================= QUỐC TẾ =================
-#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://images.fptplay53.net/media/channels/icon_channel_da-vinci-learning_165655659384.png" tvg-id="davincihd", Davinci HD
+#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/outdoor-hd/KenhCoBan.png" tvg-id="", Outdoor HD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/outdoor-hd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/channel-news-asia/KenhCoBan.png" tvg-id="", Channel News Asia
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/channel-news-asia/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/nhk/KenhCoBan.png" tvg-id="", NHK
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/nhk/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/kbs-world/KenhCoBan.png" tvg-id="", KBS World
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/kbs-world/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/history-hd/KenhCoBan.png" tvg-id="", History HD
+https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/history-hd/KenhCoBan.m3u8
+#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://images.fptplay53.net/media/channels/icon_channel_da-vinci-learning_165655659384.png" tvg-id="", Davinci HD
 https://live.fptplay53.net/fnxhd2/davincihd_vhls.smil/chunklist_b5000000.m3u8
-#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://i.vimeocdn.com/video/852785228-36403e3d29153c02a4acfcf0ca4182b0be0bef3e5b43355eafc33614ee972a9b-d?f=webp" tvg-id="afnhd", Asian Food Network
+#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://i.vimeocdn.com/video/852785228-36403e3d29153c02a4acfcf0ca4182b0be0bef3e5b43355eafc33614ee972a9b-d?f=webp" tvg-id="", Asian Food Network
 https://live.fptplay53.net/fnxhd2/afchd_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Aljazeera_eng.svg/1280px-Aljazeera_eng.svg.png" tvg-id="",Al Jazeera English
 https://live-hls-web-aje-gcp.thehlive.com/AJE/01.m3u8
-#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://cdn.hqth.me/logo/thumbs/213.png" tvg-id="bbcworldnews",BBC World News
+#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://cdn.hqth.me/logo/thumbs/213.png" tvg-id="",BBC World News
 http://cdns.jp-primehome.com:8000/zhongying/live/playlist.m3u8?cid=cs15
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://i.ytimg.com/vi/twB_6GV5AM8/hq720.jpg" tvg-id="",CGTN
 https://english-livebkali.cgtn.com/live/encgtn_0.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://i.ytimg.com/vi/QbB9p0LDAyE/maxresdefault.jpg" tvg-id="",CGTN Documentary
 https://english-livebkali.cgtn.com/live/doccgtn_0.m3u8
-#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://m.media-amazon.com/images/I/81oryzEMf-L.png" tvg-id="france24eng",France 24
+#EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://m.media-amazon.com/images/I/81oryzEMf-L.png" tvg-id="",France 24
 https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_5000.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/425e1955860511.59ae62ac642ba.png" tvg-id="",TRT World
 https://tv-trtworld.medya.trt.com.tr/master_1080.m3u8
