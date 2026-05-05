@@ -1,17 +1,22 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body.entry-body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100dvh;
     background: #050505;
     font-family: 'Segoe UI', Roboto, sans-serif;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     position: relative;
-    user-select: none;
     -webkit-user-select: none;
+    user-select: none;
     transition: opacity 0.5s ease;
     opacity: 1;
 }
@@ -21,14 +26,21 @@ body.entry-body.fade-out {
 }
 
 .ambient-glow {
-    position: absolute;
+    position: fixed;
     width: 600px;
     height: 600px;
     border-radius: 50%;
-    filter: blur(100px);
+    filter: blur(80px);
+    will-change: transform;
     z-index: 0;
     opacity: 0.4;
-    animation: drift 15s infinite alternate ease-in-out;
+    animation: drift 20s infinite alternate ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-glow {
+    animation: none;
+  }
 }
 
 .glow-1 {
@@ -69,6 +81,7 @@ body.entry-body.fade-out {
     z-index: 10;
     display: flex;
     align-items: center;
+    user-select: none;
     gap: 10px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -117,8 +130,9 @@ body.entry-body.fade-out {
 .entry-container {
     display: flex;
     gap: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
     z-index: 1;
-    perspective: 1000px;
 }
 
 .entry-box {
@@ -126,22 +140,29 @@ body.entry-body.fade-out {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 320px;
-    height: 400px;
-    background: rgba(20, 20, 20, 0.6);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    width: min(320px, 90vw);
+    height: auto;
+    aspect-ratio: 4/5;
     border-radius: 24px;
     text-decoration: none;
     color: white;
-    transition: border-color 0.4s, box-shadow 0.4s;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     position: relative;
-    overflow: hidden;
+    user-select: none;
     transform-style: preserve-3d;
-    will-change: transform, opacity;
+    position: relative;
+    z-index: 1;
+    will-change: transform;
     opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .entry-container {
+    gap: 20px;
+  }
+
+  .entry-header h1 {
+    font-size: 32px;
+  }
 }
 
 .entry-box:nth-child(1) {
@@ -155,22 +176,39 @@ body.entry-body.fade-out {
 .entry-box::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; height: 100%;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.4s;
-    z-index: 0;
+    inset: 0;
+    background: rgba(20, 20, 20, 0.85); 
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: inherit;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    transform: translateZ(-1px);
+    z-index: -1;
+    transition: transform 0.4s, opacity 0.4s, box-shadow 0.4s, border-color 0.4s;
+}
+
+@supports (backdrop-filter: blur(25px)) {
+  .entry-box::before {
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+  }
+}
+
+.entry-box:hover::before {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, transparent 100%), rgba(20, 20, 20, 0.6);
 }
 
 .entry-box::after {
     content: '';
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    inset: 0;
     background: radial-gradient(circle 250px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent);
     opacity: 0;
     transition: opacity 0.4s;
     pointer-events: none;
-    z-index: 0;
+    border-radius: inherit;
+    transform: translateZ(-1px);
+    z-index: -1;
 }
 
 .entry-box:hover::before,
@@ -178,12 +216,12 @@ body.entry-body.fade-out {
     opacity: 1;
 }
 
-.tv-accent:hover {
+.tv-accent:hover::before {
     border-color: rgba(0, 242, 254, 0.5);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(0, 242, 254, 0.2);
 }
 
-.movie-accent:hover {
+.movie-accent:hover::before {
     border-color: rgba(249, 25, 66, 0.5);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(249, 25, 66, 0.2);
 }
@@ -212,7 +250,7 @@ body.entry-body.fade-out {
     background: linear-gradient(to bottom, #ffffff, #888888);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    transition: all 0.4s;
+    transition: transform 0.4s, opacity 0.4s, box-shadow 0.4s;
 }
 
 .tv-accent:hover .entry-icon-v2 {
@@ -253,4 +291,8 @@ body.entry-body.fade-out {
 
 .entry-box:hover .entry-desc {
     transform: translateZ(25px);
+}
+
+.is-navigating {
+  pointer-events: none;
 }

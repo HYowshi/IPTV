@@ -21,15 +21,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-function getTauriInvoke() {
-    if (window.__TAURI__) {
-        if (window.__TAURI__.core && window.__TAURI__.core.invoke) return window.__TAURI__.core.invoke;
-        if (window.__TAURI__.invoke) return window.__TAURI__.invoke;
-    }
-    return null;
-}
-
 function initUIEvents() {
+    const transitionLinks = document.querySelectorAll('.transition-link');
+    transitionLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            const targetUrl = link.getAttribute('href');
+            if (targetUrl && targetUrl !== '#') {
+                document.body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = targetUrl; 
+                }, 500);
+            }
+        });
+    });
+
     const btnBack = document.getElementById('btn-back-tv');
     const watchView = document.getElementById('watch-view');
     const videoPlayer = document.getElementById('tv-player');
@@ -91,7 +97,6 @@ function initUIEvents() {
     const btnPlayPause = document.getElementById('btn-play-pause');
     const btnMute = document.getElementById('btn-mute');
     const volumeSlider = document.getElementById('volume-slider');
-    const btnFullscreen = document.getElementById('btn-fullscreen');
     let isPlaying = true;
 
     if (btnPlayPause) {
@@ -206,52 +211,6 @@ function initUIEvents() {
                 }
             }
         });
-    }
-
-    const toggleFullscreen = () => {
-        const watchView = document.getElementById('watch-view');
-        
-        if (window.__TAURI__ && window.__TAURI__.window) {
-            window.__TAURI__.window.getCurrentWindow().then(appWindow => {
-                appWindow.isFullscreen().then(isFull => {
-                    appWindow.setFullscreen(!isFull);
-                    const icon = btnFullscreen ? btnFullscreen.querySelector('span') : null;
-                    if (icon) icon.innerText = !isFull ? 'fullscreen_exit' : 'fullscreen';
-                });
-            });
-            return;
-        }
-
-        const isFull = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-        
-        if (!isFull) {
-            if (watchView.requestFullscreen) watchView.requestFullscreen().catch(()=>{});
-            else if (watchView.webkitRequestFullscreen) watchView.webkitRequestFullscreen();
-            else if (watchView.mozRequestFullScreen) watchView.mozRequestFullScreen();
-            else if (watchView.msRequestFullscreen) watchView.msRequestFullscreen();
-        } else {
-            if (document.exitFullscreen) document.exitFullscreen().catch(()=>{});
-            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-            else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
-            else if (document.msExitFullscreen) document.msExitFullscreen();
-        }
-    };
-
-    if (btnFullscreen) {
-        btnFullscreen.addEventListener('click', toggleFullscreen);
-
-        const updateFullscreenIcon = () => {
-            const icon = btnFullscreen.querySelector('span');
-            if (icon) {
-                const isFull = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-                icon.innerText = isFull ? 'fullscreen_exit' : 'fullscreen';
-            }
-        };
-
-        document.addEventListener('fullscreenchange', updateFullscreenIcon);
-        document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
-        document.addEventListener('mozfullscreenchange', updateFullscreenIcon);
-        document.addEventListener('MSFullscreenChange', updateFullscreenIcon);
     }
 
     const handleActivity = () => {
@@ -390,9 +349,6 @@ function initUIEvents() {
                     e.preventDefault();
                     if (videoPlayer.paused) videoPlayer.play().catch(()=>{});
                     else videoPlayer.pause();
-                } else if (e.code === 'KeyF') {
-                    e.preventDefault();
-                    toggleFullscreen();
                 }
             }
         }
@@ -644,17 +600,7 @@ function formatTime(ms) {
 }
 
 function getCurrentEpgTime() {
-    const realNow = Date.now();
-    const epgStart = new Date(2026, 3, 19).getTime();
-    const epgEnd = new Date(2026, 3, 22, 23, 59, 59).getTime();
-
-    if (realNow >= epgStart && realNow <= epgEnd) {
-        return realNow;
-    }
-
-    const d = new Date();
-    const fakeNow = new Date(2026, 3, 19, d.getHours(), d.getMinutes(), d.getSeconds()).getTime();
-    return fakeNow;
+    return Date.now();
 }
 
 function updateHeroBanner(channel, category) {
@@ -912,8 +858,9 @@ function playChannel(channel) {
                 enableWorker: true,
                 lowLatencyMode: true
             });
-            tvHlsInstance.loadSource(streamUrl);
-            tvHlsInstance.attachMedia(videoPlayer);
+            const proxiedUrl = `http://127.0.0.1:1420/proxy?url=${encodeURIComponent(streamUrl)}`;
+            tvHlsInstance.loadSource(proxiedUrl);
+            tvHlsInstance.attachMedia(videoPlayer); 
             
             tvHlsInstance.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
                 const levels = data.levels;
@@ -978,12 +925,12 @@ function initSpatialNavigation() {
             }
         }
 
-        const focusables = Array.from(document.querySelectorAll('.sidebar-item, .btn-watch, .channel-card, #tv-search-input'));
+        const focusables = Array.from(document.querySelectorAll('.switch-item, .btn-exit-header, .btn-watch, .channel-card, #tv-search-input'));
         const currentFocus = document.activeElement;
 
         if (!currentFocus || !focusables.includes(currentFocus)) {
             e.preventDefault();
-            const startElement = document.querySelector('.sidebar-item.active') || focusables[0];
+            const startElement = document.querySelector('.switch-item.active') || focusables[0];
             if (startElement) startElement.focus();
             return;
         }

@@ -11,33 +11,18 @@
 </head>
 <body>
     <div class="tv-app">
-        <aside class="tv-sidebar">
-            <div class="sidebar-top">
-                <a href="../index.html" class="sidebar-item">
-                    <span class="material-symbols-rounded">home</span>
-                    <span class="sidebar-text">Trang chủ</span>
-                </a>
-                <a href="#" class="sidebar-item active">
-                    <span class="material-symbols-rounded">tv</span>
-                    <span class="sidebar-text">Truyền hình</span>
-                </a>
-                <a href="../phim/phim.html" class="sidebar-item">
-                    <span class="material-symbols-rounded">movie</span>
-                    <span class="sidebar-text">Phim Ảnh</span>
-                </a>
-            </div>
-            <div class="sidebar-bottom">
-                <a href="#" class="sidebar-item">
-                    <span class="material-symbols-rounded">settings</span>
-                    <span class="sidebar-text">Cài đặt</span>
-                </a>
-            </div>
-        </aside>
-
         <main class="tv-main">
-            <header class="tv-header">
-                <div class="tv-logo">
-                    <span class="material-symbols-rounded" style="color: #00f2fe; margin-right: 5px;">tv</span> TRUYỀN HÌNH<span style="color: #00f2fe;">.TV</span>
+            <header class="tv-header" data-tauri-drag-region>
+                <div class="tv-header-left" data-tauri-drag-region>
+                    <div class="tv-logo">
+                        <span class="material-symbols-rounded" style="color: #00f2fe; margin-right: 5px;">tv</span> TRUYỀN HÌNH<span style="color: #00f2fe;">.TV</span>
+                    </div>
+                    <nav class="unified-nav">
+                        <div class="platform-switch tv-active">
+                            <a href="../phim/phim.html" class="switch-item transition-link"><span class="material-symbols-rounded">movie</span> Phim Ảnh</a>
+                            <a href="#" class="switch-item active"><span class="material-symbols-rounded">tv</span> Truyền hình</a>
+                        </div>
+                    </nav>
                 </div>
                 <div class="tv-header-right">
                     <div class="tv-search" id="tv-search-container">
@@ -45,9 +30,7 @@
                         <input type="text" id="tv-search-input" placeholder="Tìm kiếm kênh...">
                     </div>
                     <div class="tv-clock" id="tv-clock">00:00</div>
-                    <div class="tv-profile">
-                        <img src="https://ui-avatars.com/api/?name=User&background=00f2fe&color=fff" alt="Profile">
-                    </div>
+                    <a href="../index.html" class="btn-exit-header transition-link"><span class="material-symbols-rounded">logout</span> Thoát</a>
                 </div>
             </header>
 
@@ -55,9 +38,9 @@
                 <div class="hero-backdrop" id="hero-backdrop"></div>
                 <div class="hero-overlay"></div>
                 <div class="hero-content">
-                    <div class="hero-badge" id="hero-category">KÊNH QUỐC GIA</div>
-                    <h1 id="hero-title">VTV3 HD</h1>
-                    <p id="hero-desc">Kênh truyền hình giải trí tổng hợp Đài Truyền hình Việt Nam. Phát sóng các chương trình gameshow, phim truyện, thể thao đặc sắc.</p>
+                    <div class="hero-badge" id="hero-category">ĐANG TẢI...</div>
+                    <h1 id="hero-title">Đang đồng bộ dữ liệu</h1>
+                    <p id="hero-desc">Vui lòng chờ trong giây lát để hệ thống tải danh sách kênh và lịch phát sóng thực tế.</p>
                     <div class="hero-actions" style="display: flex; gap: 15px;">
                         <button class="btn-watch" id="btn-watch-channel">
                             <span class="material-symbols-rounded">play_arrow</span> Xem Kênh Này
@@ -103,9 +86,6 @@
                         <button id="btn-play-pause" class="control-btn"><span class="material-symbols-rounded">pause</span></button>
                         <button id="btn-mute" class="control-btn"><span class="material-symbols-rounded">volume_up</span></button>
                         <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="1">
-                    </div>
-                    <div class="controls-right">
-                        <button id="btn-fullscreen" class="control-btn"><span class="material-symbols-rounded">fullscreen</span></button>
                     </div>
                 </div>
             </div>

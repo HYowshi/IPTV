@@ -5,7 +5,6 @@ const TMDB_BACKDROP_BASE = "https://image.tmdb.org/t/p/original";
 const TMDB_GALLERY_BASE = "https://image.tmdb.org/t/p/w780";
 const ERROR_IMAGE = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22450%22 viewBox=%220 0 300 450%22%3E%3Crect width=%22300%22 height=%22450%22 fill=%22%231a1a1a%22/%3E%3Crect width=%22300%22 height=%22450%22 fill=%22none%22 stroke=%22%23333%22 stroke-width=%224%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23666%22 font-family=%22sans-serif%22 font-size=%2220%22 font-weight=%22bold%22 text-anchor=%22middle%22 dy=%22.3em%22%3ELỗi Ảnh%3C/text%3E%3C/svg%3E";
 
-let pythonBridge = null;
 let currentFilterEndpoint = "";
 let currentFilterSlug = "";
 let currentFilterTitle = "";
@@ -13,6 +12,7 @@ let currentFilterPage = 1;
 let totalFilterPages = 1;
 let currentMovieData = null;
 let imageDomain = IMAGE_BASE_URL;
+let currentSearchId = 0;
 
 let categoriesMap = new Map();
 let countriesMap = new Map();
@@ -21,81 +21,61 @@ let watchHistoryCache = null;
 let hlsInstance = null;
 let nextEpTimer = null;
 let apiCache = new Map();
-
-class TauriHlsLoader {
-    constructor(config) {
-        this.context = null;
-        this.callbacks = null;
-        this.stats = { trequest: 0, tfirst: 0, tload: 0, loaded: 0, total: 0 };
-    }
-    destroy() {}
-    abort() {}
-    async load(context, config, callbacks) {
-        this.context = context;
-        this.callbacks = callbacks;
-        this.stats.trequest = performance.now();
-
-        try {
-            let response;
-            if (window.__TAURI__ && window.__TAURI__.http) {
-                response = await window.__TAURI__.http.fetch(context.url, { method: 'GET' });
-            } else {
-                response = await fetch(context.url);
-            }
-
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
-            }
-
-            this.stats.tfirst = performance.now();
-            let data;
-            
-            if (context.responseType === 'arraybuffer') {
-                data = await response.arrayBuffer();
-                this.stats.loaded = data.byteLength;
-                this.stats.total = data.byteLength;
-            } else {
-                data = await response.text();
-                this.stats.loaded = data.length;
-                this.stats.total = data.length;
-            }
-
-            this.stats.tload = performance.now();
-
-            callbacks.onSuccess({
-                url: response.url,
-                data: data,
-                status: response.status,
-                statusText: response.statusText,
-            }, this.stats, context, null);
-
-        } catch (error) {
-            callbacks.onError({ code: 0, text: error.message }, context, null);
-        }
-    }
-}
+const CACHE_PREFIX = 'phim_api_cache_';
+const CACHE_TTL = 5 * 60 * 1000;
 
 async function fetchWithCache(url, retries = 3, timeout = 8000) {
-    if (apiCache.has(url)) {
-        return apiCache.get(url);
+    const isMovieDetail = url.includes('/phim/');
+    
+    if (!isMovieDetail) {
+        const memCache = apiCache.get(url);
+        if (memCache && Date.now() - memCache.time < CACHE_TTL) {
+            return memCache.data;
+        }
+        
+        try {
+            const sessionCacheStr = sessionStorage.getItem(CACHE_PREFIX + url);
+            if (sessionCacheStr) {
+                const sessionCache = JSON.parse(sessionCacheStr);
+                if (Date.now() - sessionCache.time < CACHE_TTL) {
+                    apiCache.set(url, sessionCache);
+                    return sessionCache.data;
+                } else {
+                    sessionStorage.removeItem(CACHE_PREFIX + url);
+                }
+            }
+        } catch (e) {}
     }
     
     for (let i = 0; i < retries; i++) {
         try {
-            let data = null;
-            if (window.__TAURI__ && window.__TAURI__.http) {
-                const response = await window.__TAURI__.http.fetch(url, { method: 'GET' });
-                if (!response.ok) throw new Error("HTTP error via Tauri");
-                data = await response.json();
-            } else {
-                const controller = new AbortController();
-                const id = setTimeout(() => controller.abort(), timeout);
-                const response = await fetch(url, { signal: controller.signal });
-                clearTimeout(id);
-                if (!response.ok) throw new Error(response.statusText);
-                data = await response.json();
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+            const response = await fetch(url, { signal: controller.signal });
+            clearTimeout(id);
+            
+            if (!response.ok) {
+                throw new Error(response.statusText);
             }
-            apiCache.set(url, data);
+            
+            const data = await response.json();
+            
+            if (!isMovieDetail) {
+                const cacheData = { data: data, time: Date.now() };
+                apiCache.set(url, cacheData);
+                try {
+                    sessionStorage.setItem(CACHE_PREFIX + url, JSON.stringify(cacheData));
+                } catch (e) {
+                    if (e.name === 'QuotaExceededError') {
+                        Object.keys(sessionStorage).forEach(key => {
+                            if (key.startsWith(CACHE_PREFIX)) {
+                                sessionStorage.removeItem(key);
+                            }
+                        });
+                        sessionStorage.setItem(CACHE_PREFIX + url, JSON.stringify(cacheData));
+                    }
+                }
+            }
             return data;
         } catch (error) {
             if (i === retries - 1) {
@@ -128,13 +108,11 @@ function getImageUrl(domain, path) {
         return cleanPath.replace("http://", "https://");
     }
     
-    // Xử lý chống lặp nếu cả domain và path đều chứa uploads/movies
     if (cleanDomain.includes("uploads/movies") && cleanPath.startsWith("uploads/movies/")) {
         cleanPath = cleanPath.replace("uploads/movies/", "");
     }
     
-    // BÙ ĐẮP THƯ MỤC: Nếu API v1 trả về domain cụt, tự động chèn thêm thư mục chứa ảnh
-    if (!cleanDomain.includes("uploads/movies") && !cleanPath.startsWith("uploads/movies/")) {
+    if (!cleanDomain.includes("uploads/movies") && !cleanPath.includes("uploads/movies")) {
         cleanDomain += "/uploads/movies";
     }
     
@@ -165,18 +143,26 @@ function formatResponse(res) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    initSpatialNavigation();
-
-    if (typeof qt !== 'undefined') {
-        new QWebChannel(qt.webChannelTransport, function (channel) {
-            pythonBridge = channel.objects.python_bridge;
+    const transitionLinks = document.querySelectorAll('.transition-link');
+    transitionLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetUrl = link.getAttribute('href');
+            if (targetUrl && targetUrl !== '#') {
+                document.body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 500);
+            }
         });
-    }
+    });
+
+    initSpatialNavigation();
 
     const videoPlayerNode = document.getElementById('video-player');
     if (videoPlayerNode) {
         videoPlayerNode.addEventListener('ended', () => {
-            let isAutoplayOn = localStorage.getItem('phimtv_autoplay') !== 'false';
+            let isAutoplayOn = localStorage.getItem('phimtv_autoplay') === 'true';
             if (!isAutoplayOn) {
                 return;
             }
@@ -239,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
             videoPlayer.load();
         }
         if (hlsInstance) {
-            hlsInstance.destroy();
+            try { hlsInstance.destroy(); } catch(e){}
             hlsInstance = null;
         }
         if (nextEpTimer) {
@@ -413,24 +399,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         fullscreenBtn.addEventListener('click', async () => {
-            if (window.__TAURI__ && window.__TAURI__.window) {
-                try {
-                    const appWindow = await window.__TAURI__.window.getCurrentWindow();
-                    const isFull = await appWindow.isFullscreen();
-                    await appWindow.setFullscreen(!isFull);
-                } catch (e) {
-                    if (!document.fullscreenElement) {
-                        if (customVideoContainer.requestFullscreen) await customVideoContainer.requestFullscreen().catch(()=>{});
-                    } else {
-                        if (document.exitFullscreen) await document.exitFullscreen().catch(()=>{});
-                    }
-                }
+            const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+            if (!isFullscreen) {
+                if (customVideoContainer.requestFullscreen) await customVideoContainer.requestFullscreen().catch(()=>{});
+                else if (customVideoContainer.webkitRequestFullscreen) await customVideoContainer.webkitRequestFullscreen().catch(()=>{});
+                else if (customVideoContainer.msRequestFullscreen) await customVideoContainer.msRequestFullscreen().catch(()=>{});
             } else {
-                if (!document.fullscreenElement) {
-                    if (customVideoContainer.requestFullscreen) await customVideoContainer.requestFullscreen().catch(()=>{});
-                } else {
-                    if (document.exitFullscreen) await document.exitFullscreen().catch(()=>{});
-                }
+                if (document.exitFullscreen) await document.exitFullscreen().catch(()=>{});
+                else if (document.webkitExitFullscreen) await document.webkitExitFullscreen().catch(()=>{});
+                else if (document.msExitFullscreen) await document.msExitFullscreen().catch(()=>{});
             }
         });
     }
@@ -482,7 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const btnAutoplayToggle = document.getElementById('btn-autoplay-toggle');
     if (btnAutoplayToggle) {
-        let isAutoplayOn = localStorage.getItem('phimtv_autoplay') !== 'false';
+        let isAutoplayOn = localStorage.getItem('phimtv_autoplay') === 'true';
         btnAutoplayToggle.innerHTML = isAutoplayOn ? '<i class="fa-solid fa-repeat"></i> Tự động: BẬT' : '<i class="fa-solid fa-repeat"></i> Tự động: TẮT';
         
         btnAutoplayToggle.addEventListener('click', () => {
@@ -504,23 +481,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
         videoPlayerGlobal.addEventListener('dblclick', async () => {
             const customContainer = document.getElementById('custom-video-container');
+            const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
             if (window.__TAURI__ && window.__TAURI__.window) {
                 try {
-                    const appWindow = await window.__TAURI__.window.getCurrentWindow();
-                    const isFull = await appWindow.isFullscreen();
-                    await appWindow.setFullscreen(!isFull);
+                    const customContainer = document.getElementById('custom-video-container');
+
+                    const isFullscreen =
+                        document.fullscreenElement ||
+                        document.webkitFullscreenElement ||
+                        document.msFullscreenElement;
+
+                    if (!isFullscreen) {
+                        if (customContainer.requestFullscreen) {
+                            await customContainer.requestFullscreen().catch(()=>{});
+                        } else if (customContainer.webkitRequestFullscreen) {
+                            await customContainer.webkitRequestFullscreen().catch(()=>{});
+                        } else if (customContainer.msRequestFullscreen) {
+                            await customContainer.msRequestFullscreen().catch(()=>{});
+                        }
+                    } else {
+                        if (document.exitFullscreen) {
+                            await document.exitFullscreen().catch(()=>{});
+                        } else if (document.webkitExitFullscreen) {
+                            await document.webkitExitFullscreen().catch(()=>{});
+                        } else if (document.msExitFullscreen) {
+                            await document.msExitFullscreen().catch(()=>{});
+                        }
+                    }
                 } catch (e) {
-                    if (!document.fullscreenElement) {
+                    if (!isFullscreen) {
                         if (customContainer.requestFullscreen) await customContainer.requestFullscreen().catch(()=>{});
+                        else if (customContainer.webkitRequestFullscreen) await customContainer.webkitRequestFullscreen().catch(()=>{});
+                        else if (customContainer.msRequestFullscreen) await customContainer.msRequestFullscreen().catch(()=>{});
                     } else {
                         if (document.exitFullscreen) await document.exitFullscreen().catch(()=>{});
+                        else if (document.webkitExitFullscreen) await document.webkitExitFullscreen().catch(()=>{});
+                        else if (document.msExitFullscreen) await document.msExitFullscreen().catch(()=>{});
                     }
                 }
             } else {
-                if (!document.fullscreenElement) {
+                if (!isFullscreen) {
                     if (customContainer.requestFullscreen) await customContainer.requestFullscreen().catch(()=>{});
+                    else if (customContainer.webkitRequestFullscreen) await customContainer.webkitRequestFullscreen().catch(()=>{});
+                    else if (customContainer.msRequestFullscreen) await customContainer.msRequestFullscreen().catch(()=>{});
                 } else {
                     if (document.exitFullscreen) await document.exitFullscreen().catch(()=>{});
+                    else if (document.webkitExitFullscreen) await document.webkitExitFullscreen().catch(()=>{});
+                    else if (document.msExitFullscreen) await document.msExitFullscreen().catch(()=>{});
                 }
             }
         });
@@ -551,19 +558,9 @@ document.addEventListener("DOMContentLoaded", () => {
             videoPlayer.currentTime -= 10;
         } else if (e.code === 'KeyF') {
             e.preventDefault();
-            const customContainer = document.getElementById('custom-video-container');
-            if (window.__TAURI__ && window.__TAURI__.window) {
-                window.__TAURI__.window.getCurrentWindow().then(appWindow => {
-                    appWindow.isFullscreen().then(isFull => {
-                        appWindow.setFullscreen(!isFull).catch(()=>{
-                            if (!document.fullscreenElement && customContainer.requestFullscreen) customContainer.requestFullscreen().catch(()=>{});
-                            else if (document.exitFullscreen) document.exitFullscreen().catch(()=>{});
-                        });
-                    }).catch(()=>{});
-                }).catch(()=>{});
-            } else {
-                if (!document.fullscreenElement && customContainer.requestFullscreen) customContainer.requestFullscreen().catch(()=>{});
-                else if (document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+            const btnFullscreen = document.getElementById('fullscreen-btn');
+            if (btnFullscreen) {
+                btnFullscreen.click();
             }
         } else if (e.code === 'ArrowUp') {
             e.preventDefault();
@@ -746,7 +743,7 @@ function navigateToHome(e) {
         videoPlayer.load();
     }
     if (hlsInstance) {
-        hlsInstance.destroy();
+        try { hlsInstance.destroy(); } catch(e){}
         hlsInstance = null;
     }
     if (nextEpTimer) {
@@ -791,7 +788,7 @@ async function loadFilterData(endpointType, slug, titleText, page) {
     document.getElementById('home-view').style.display = 'none';
     document.getElementById('detail-view').style.display = 'none';
     document.getElementById('watch-view').style.display = 'none';
-    document.getElementById('advanced-filter-bar').style.display = 'none';
+    document.getElementById('advanced-filter-bar').style.display = 'flex';
     document.getElementById('video-player').src = "";
     document.getElementById('filter-view').style.display = 'block';
     document.querySelector('.main-container').classList.remove('with-hero');
@@ -810,9 +807,10 @@ async function loadFilterData(endpointType, slug, titleText, page) {
     paginationContainer.style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
+    const searchId = ++currentSearchId;
+
     try {
         let url = '';
-        // Bẻ lái lọc Năm sang API Tìm kiếm vì máy chủ OPhim không có thư mục tĩnh cho Năm
         if (endpointType === 'search' || endpointType === 'nam') {
             url = `${API_BASE_URL}/v1/api/tim-kiem?keyword=${encodeURIComponent(slug)}&limit=24&page=${page}`;
         } else if (endpointType === 'new') {
@@ -825,22 +823,35 @@ async function loadFilterData(endpointType, slug, titleText, page) {
 
         const res = await fetchWithCache(url);
         
+        if (searchId !== currentSearchId) return;
+        if (!res) throw new Error("API null");
+        
         const formatted = formatResponse(res);
         const items = formatted.items;
-        imageDomain = formatted.domain.endsWith('/') ? formatted.domain : formatted.domain + '/';
+        const localDomain = formatted.domain.endsWith('/') ? formatted.domain : formatted.domain + '/';
 
         const dataObj = res?.data || res;
-        totalFilterPages = dataObj?.params?.pagination?.totalPages || dataObj?.pagination?.totalPages || 1;
+        let paginationObj = dataObj?.params?.pagination || dataObj?.pagination;
+        if (paginationObj) {
+            if (paginationObj.totalPages) {
+                totalFilterPages = paginationObj.totalPages;
+            } else if (paginationObj.totalItems && paginationObj.totalItemsPerPage) {
+                totalFilterPages = Math.ceil(paginationObj.totalItems / paginationObj.totalItemsPerPage);
+            } else {
+                totalFilterPages = 1;
+            }
+        } else {
+            totalFilterPages = 1;
+        }
         
         extractFiltersFromMovies(items);
 
-        // Với phân trang, luôn dọn sạch thẻ phim cũ trước khi nạp trang mới
         gridElement.innerHTML = "";
         if (items.length === 0) {
             gridElement.innerHTML = "<div style='color: white; padding: 20px; width: 100%; text-align: center;'>Không tìm thấy tác phẩm nào.</div>";
         }
         
-        renderMoviesCardsAppend(items, gridElement);
+        renderMoviesCardsAppend(items, gridElement, false, localDomain);
         
         if (totalFilterPages > 1) {
             paginationContainer.style.display = 'flex';
@@ -866,7 +877,9 @@ async function loadFilterData(endpointType, slug, titleText, page) {
             fetchWithCache(nextUrl).catch(() => {});
         }
     } catch (error) {
-        gridElement.innerHTML = `<div style='color: #f91942; padding: 20px; width: 100%; text-align: center;'>Lỗi tải dữ liệu.</div>`;
+        if (searchId === currentSearchId) {
+            gridElement.innerHTML = `<div style='color: #f91942; padding: 20px; width: 100%; text-align: center;'>Lỗi tải dữ liệu.</div>`;
+        }
     }
 }
 
@@ -877,7 +890,7 @@ function renderMoviesCards(movies, containerId, isHorizontal = false) {
     renderMoviesCardsAppend(movies, container, isHorizontal);
 }
 
-function renderMoviesCardsAppend(movies, container, isHorizontal = false) {
+function renderMoviesCardsAppend(movies, container, isHorizontal = false, domain = imageDomain) {
     const fragment = document.createDocumentFragment();
 
     movies.forEach(movie => {
@@ -886,7 +899,7 @@ function renderMoviesCardsAppend(movies, container, isHorizontal = false) {
         card.tabIndex = 0;
         
         const imagePath = isHorizontal ? (movie.thumb_url || movie.poster_url) : (movie.poster_url || movie.thumb_url);
-        const imgUrl = getImageUrl(imageDomain, imagePath);
+        const imgUrl = getImageUrl(domain, imagePath);
         const episodeCurrent = movie.episode_current || "Full";
 
         card.innerHTML = `
@@ -1030,12 +1043,14 @@ async function showMovieDetails(slug) {
         }
         let lastWatchedEp = watchHistoryCache[slug];
         
-        if (lastWatchedEp && btnContinue) {
-            btnContinue.style.display = 'inline-flex';
-            btnContinue.innerHTML = `<i class="fa-solid fa-play"></i> TIẾP TỤC XEM TẬP ${lastWatchedEp.name}`;
-            btnContinue.onclick = () => openWatchView(lastWatchedEp);
-        } else if (btnContinue) {
-            btnContinue.style.display = 'none';
+        if (btnContinue) {
+            if (lastWatchedEp) {
+                btnContinue.style.display = 'inline-flex';
+                btnContinue.innerHTML = `<i class="fa-solid fa-play"></i> TIẾP TỤC XEM TẬP ${lastWatchedEp.name}`;
+                btnContinue.onclick = () => openWatchView(lastWatchedEp);
+            } else {
+                btnContinue.style.display = 'none';
+            }
         }
         
         const categories = currentMovieData.category ? currentMovieData.category.map(c => c.name).join(', ') : "Đang cập nhật";
@@ -1214,19 +1229,23 @@ function updateWatchViewPlayer(ep, btnElement) {
     localStorage.setItem('phimtv_history', JSON.stringify(watchHistoryCache));
 
     if (hlsInstance) {
-        hlsInstance.destroy();
+        try { hlsInstance.destroy(); } catch(e){}
+        hlsInstance = null;
     }
+
+    videoPlayer.src = "";
+    videoPlayer.load();
 
     let streamUrl = ep.link_m3u8;
-    if (streamUrl.startsWith("http://") && (!window.__TAURI__ || !Hls.isSupported())) {
-        streamUrl = streamUrl.replace("http://", "https://");
+    if (streamUrl.startsWith("http://")) {
+        streamUrl = streamUrl.replace(/^http:/, "https:");
     }
 
-    if (Hls.isSupported()) {
-        let hlsConfig = {};
-        if (window.__TAURI__) {
-            hlsConfig = { loader: TauriHlsLoader };
-        }
+    if (window.Hls && Hls.isSupported()) {
+        let hlsConfig = {
+            fragLoadingMaxRetry: 5,
+            manifestLoadingMaxRetry: 3
+        };
         hlsInstance = new Hls(hlsConfig);
         hlsInstance.loadSource(streamUrl);
         hlsInstance.attachMedia(videoPlayer);
@@ -1254,31 +1273,76 @@ function updateWatchViewPlayer(ep, btnElement) {
                 qualitySetting.style.display = 'none';
             }
 
-            videoPlayer.play().catch(()=>{});
+            videoPlayer.muted = false;
+
+            const playPromise = videoPlayer.play();
+
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        videoLoader.style.display = 'none';
+                        videoPlayer.style.opacity = '1';
+                    })
+                    .catch(() => {
+                        videoPlayer.muted = true;
+
+                        videoPlayer.play().then(() => {
+                            videoLoader.style.display = 'none';
+                            videoPlayer.style.opacity = '1';
+                        });
+                    });
+            }
         });
         hlsInstance.on(Hls.Events.ERROR, function (event, data) {
+            console.log("HLS ERROR:", data);
             if (data.fatal) {
-                if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                    console.error("Lỗi tải phim từ máy chủ:", data);
-                    alert("Không thể tải luồng phim này. Vui lòng thử đổi sang Server khác.");
-                } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-                    hlsInstance.recoverMediaError();
-                } else {
-                    hlsInstance.destroy();
+                switch (data.type) {
+                    case Hls.ErrorTypes.NETWORK_ERROR:
+                        console.warn("Lỗi mạng, đang thử tải lại luồng...");
+                        hlsInstance.startLoad();
+                        break;
+                    case Hls.ErrorTypes.MEDIA_ERROR:
+                        console.warn("Lỗi media, đang khôi phục video...");
+                        hlsInstance.recoverMediaError();
+                        break;
+                    default:
+                        console.error("Lỗi HLS nghiêm trọng, hủy tiến trình.");
+                        try { hlsInstance.destroy(); } catch(e){}
+                        hlsInstance = null;
+                        alert("Không thể tải luồng phim này. Vui lòng thử đổi sang Server khác.");
+                        break;
                 }
             }
         });
     } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
         videoPlayer.src = streamUrl;
-        videoPlayer.addEventListener('loadedmetadata', function() {
-            videoLoader.style.display = 'none';
-            videoPlayer.style.opacity = '1';
+
+        videoPlayer.addEventListener('loadedmetadata', function () {
             videoPlayer.currentTime = savedTime;
-            videoPlayer.play().catch(()=>{});
+
+            videoPlayer.muted = false;
+
+            const playPromise = videoPlayer.play();
+
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        videoLoader.style.display = 'none';
+                        videoPlayer.style.opacity = '1';
+                    })
+                    .catch(() => {
+                        videoPlayer.muted = true;
+
+                        videoPlayer.play().then(() => {
+                            videoLoader.style.display = 'none';
+                            videoPlayer.style.opacity = '1';
+                        });
+                    });
+            }
         });
     }
 
-    videoPlayer.addEventListener('timeupdate', () => {
+    videoPlayer.ontimeupdate = () => {
         if (!watchHistoryCache) {
             watchHistoryCache = JSON.parse(localStorage.getItem('phimtv_history')) || {};
         }
@@ -1286,7 +1350,7 @@ function updateWatchViewPlayer(ep, btnElement) {
             watchHistoryCache[currentMovieData.slug].currentTime = videoPlayer.currentTime;
             localStorage.setItem('phimtv_history', JSON.stringify(watchHistoryCache));
         }
-    });
+    };
 
     document.getElementById('watch-view').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
@@ -1328,7 +1392,7 @@ function initSpatialNavigation() {
         const isInput = activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select' || document.activeElement.isContentEditable;
         if (isInput) return;
 
-        const focusables = Array.from(document.querySelectorAll('.movie-card, .btn-play, .btn-primary, .btn-more, .btn-server, .btn-episode, nav a, .sidebar-list li, #searchInput, .btn-page'));
+        const focusables = Array.from(document.querySelectorAll('.movie-card, .btn-play, .btn-primary, .btn-more, .btn-server, .btn-episode, .switch-item, .dropdown > a, .btn-exit-header, .sidebar-list li, #searchInput, .btn-page'));
         const currentFocus = document.activeElement;
 
         if (!currentFocus || !focusables.includes(currentFocus)) {

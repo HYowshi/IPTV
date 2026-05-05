@@ -39,7 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (entryBoxes.length === 0) return;
         
-        const activeIndex = entryBoxes.indexOf(document.activeElement);
+        const activeEl = document.activeElement;
+        const activeIndex = entryBoxes.findIndex(box => box.contains(activeEl));
         const total = entryBoxes.length;
         
         if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
@@ -62,31 +63,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
         safeAddListener(box, 'click', (e) => {
             e.preventDefault();
-            if (isNavigating || box.dataset.loading === 'true') {
-                return;
-            }
+            if (isNavigating) return;
             isNavigating = true;
             box.dataset.loading = 'true';
-            document.body.style.pointerEvents = 'none';
+            document.body.classList.add('is-navigating');
             
             const targetUrl = box.getAttribute('href');
             document.body.classList.add('fade-out');
             
-            setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 500);
+            const onTransitionEnd = (event) => {
+                if (event.propertyName === 'opacity' && event.target === document.body) {
+                    document.body.removeEventListener('transitionend', onTransitionEnd);
+                    window.location.href = targetUrl;
+                }
+            };
+
+            document.body.addEventListener('transitionend', onTransitionEnd);
         });
 
         safeAddListener(box, 'mouseenter', () => {
             if (isNavigating) return;
+            box.focus();
             cachedRect = box.getBoundingClientRect();
-            box.style.transition = `none`;
+            box.style.transition = 'none'; 
+            box.style.willChange = 'transform';
         });
 
         safeAddListener(box, 'mousemove', (e) => {
             if (isNavigating || !cachedRect) return;
             if (!isTicking) {
                 window.requestAnimationFrame(() => {
+                    if (!cachedRect) {
+                        isTicking = false;
+                        return;
+                    }
                     const x = e.clientX - cachedRect.left;
                     const y = e.clientY - cachedRect.top;
                     
@@ -110,8 +120,20 @@ document.addEventListener("DOMContentLoaded", () => {
         safeAddListener(box, 'mouseleave', () => {
             if (isNavigating) return;
             cachedRect = null;
-            box.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            
+            if (document.activeElement === box) {
+                box.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.05, 1.05, 1.05)`;
+            } else {
+                box.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            }
+            
             box.style.transition = `transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)`;
+
+            setTimeout(() => {
+                if (!box.matches(':hover') && document.activeElement !== box) {
+                    box.style.willChange = 'auto';
+                }
+            }, 500);
         });
 
         safeAddListener(box, 'focus', () => {
@@ -136,6 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (entryBoxes.length > 0) {
-        entryBoxes[0].focus();
+        if (!document.activeElement || document.activeElement === document.body) {
+            entryBoxes[0]?.focus();
+        }
     }
 });
