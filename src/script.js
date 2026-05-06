@@ -1,6 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
     let isNavigating = false;
     let isModalOpen = true;
+    let idleTime = 0;
+    let particleInterval = null;
+    let currentSeasonEffect = -1;
+
+    const getBaseSeason = () => {
+        const m = new Date().getMonth();
+        if (m >= 0 && m <= 2) return 0;
+        if (m >= 3 && m <= 5) return 1;
+        if (m >= 6 && m <= 8) return 2;
+        return 3;
+    };
+
+    const seasonsMap = ['spring', 'summer', 'autumn', 'winter'];
+
+    setInterval(() => {
+        if (isNavigating) return;
+        idleTime++;
+
+        let targetSeasonLevel = -1;
+        if (idleTime >= 240) targetSeasonLevel = 3;
+        else if (idleTime >= 180) targetSeasonLevel = 2;
+        else if (idleTime >= 120) targetSeasonLevel = 1;
+        else if (idleTime >= 60) targetSeasonLevel = 0;
+
+        if (targetSeasonLevel !== -1 && targetSeasonLevel !== currentSeasonEffect) {
+            currentSeasonEffect = targetSeasonLevel;
+            const baseSeason = getBaseSeason();
+            const activeSeason = seasonsMap[(baseSeason + targetSeasonLevel) % 4];
+            
+            const container = document.getElementById('easter-egg-container');
+            if (!container) return;
+            container.innerHTML = '';
+            if (particleInterval) clearInterval(particleInterval);
+
+            particleInterval = setInterval(() => {
+                const el = document.createElement('div');
+                el.classList.add('particle', `particle-${activeSeason}`);
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                
+                if (activeSeason === 'autumn' || activeSeason === 'spring') {
+                    el.style.width = el.style.height = (Math.random() * 10 + 10) + 'px';
+                } else if (activeSeason === 'summer') {
+                    el.style.width = el.style.height = (Math.random() * 5 + 3) + 'px';
+                    el.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                } else {
+                    el.style.width = el.style.height = (Math.random() * 6 + 2) + 'px';
+                }
+
+                container.appendChild(el);
+                setTimeout(() => {
+                    if (el.parentNode) el.remove();
+                }, 6000);
+            }, 300);
+        }
+    }, 1000);
 
     const safeAddListener = (element, event, handler) => {
         if (element) {
@@ -166,20 +222,36 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    const modalOverlay = document.getElementById('disclaimer-modal');
+    const btnAccept = document.getElementById('btn-accept-disclaimer');
+    const btnDecline = document.getElementById('btn-decline-disclaimer');
+
+    if (localStorage.getItem('phimtv_disclaimer_accepted') === 'true') {
+        isModalOpen = false;
+        if (modalOverlay) {
+            modalOverlay.style.display = 'none';
+        }
+    }
+
     if (entryBoxes.length > 0 && !isModalOpen) {
         if (!document.activeElement || document.activeElement === document.body) {
             entryBoxes[0]?.focus();
         }
     }
 
-    const modalOverlay = document.getElementById('disclaimer-modal');
-    const btnAccept = document.getElementById('btn-accept-disclaimer');
-
-    if (modalOverlay && btnAccept) {
+    if (modalOverlay && btnAccept && isModalOpen) {
         btnAccept.focus();
+
+        if (btnDecline) {
+            safeAddListener(btnDecline, 'click', (e) => {
+                e.preventDefault();
+                exitTauriApp();
+            });
+        }
 
         safeAddListener(btnAccept, 'click', (e) => {
             e.preventDefault();
+            localStorage.setItem('phimtv_disclaimer_accepted', 'true');
             modalOverlay.classList.add('hidden');
             isModalOpen = false;
             
