@@ -23,6 +23,7 @@ url = "2"
 tiny_http = "0.12"
 reqwest = { version = "0.11", features = ["blocking"] }
 urlencoding = "2.1"
+openssl = { version = "0.10", features = ["vendored"] }
 
 [profile.release]
 panic = "abort"
@@ -31,7 +32,6 @@ lto = true
 opt-level = "s"
 strip = true
 
-# ĐOẠN THÊM MỚI: Tối ưu hóa tốc độ biên dịch khi đang lập trình (lệnh dev)
 [profile.dev]
-opt-level = 0 # Mức 0: Bỏ qua tối ưu hóa dung lượng để biên dịch nhanh nhất có thể
-debug = true  # Giữ lại toàn bộ thông tin gỡ lỗi để dễ dàng tìm lỗi
+opt-level = 0
+debug = true 
