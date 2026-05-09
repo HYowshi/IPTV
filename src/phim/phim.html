@@ -1,65 +1,103 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
     <link rel="preconnect" href="https://ophim1.com">
     <link rel="preconnect" href="https://img.ophim.live">
+    <link rel="preconnect" href="https://phimimg.com">
     <link rel="preconnect" href="https://image.tmdb.org">
+    <link rel="dns-prefetch" href="https://img.ophim.live">
+    <link rel="dns-prefetch" href="https://phimimg.com">
     <title>Phim.tv - Giao diện Web</title>
     <link rel="stylesheet" href="phim.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap">
+    <script src="../platform.js"></script>
+    <script src="hls.min.js"></script>
 </head>
+
 <body>
-    <div id="light-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; pointer-events: none;"></div>
+    <div id="light-overlay"></div>
     <header data-tauri-drag-region>
         <div class="header-left" data-tauri-drag-region>
-            <div class="logo" onclick="navigateToHome(event)"><span class="logo-icon"><i class="fa-solid fa-play"></i></span> Phim<span class="text-accent">.tv</span></div>
+            <div class="logo" onclick="navigateToHome(event)"><span class="logo-icon"><span
+                        class="material-symbols-rounded" style="font-size:20px;">play_arrow</span></span> Phim<span class="text-accent">.tv</span></div>
             <nav class="unified-nav">
                 <div class="platform-switch">
-                    <a href="#" class="switch-item active" onclick="navigateToHome(event)"><i class="fa-solid fa-film"></i> Phim Ảnh</a>
-                    <a href="../truyenhinh/truyenhinh.html" class="switch-item transition-link"><i class="fa-solid fa-tv"></i> Truyền hình</a>
+                    <a href="#" class="switch-item active" onclick="navigateToHome(event)"><span
+                            class="material-symbols-rounded">movie</span> Phim Ảnh</a>
+                    <a href="../truyenhinh/truyenhinh.html" class="switch-item transition-link"><span
+                            class="material-symbols-rounded">tv</span> Truyền hình</a>
                 </div>
-                
+
                 <div class="nav-separator"></div>
-                
+
                 <div class="dropdown">
-                    <a href="#">Danh sách <span class="dropdown-icon"><i class="fa-solid fa-chevron-down"></i></span></a>
+                    <a href="#">Danh sách <span class="dropdown-icon"><span
+                                class="material-symbols-rounded" style="font-size:14px;">expand_more</span></span></a>
                     <div class="dropdown-content">
-                        <a href="#" onclick="event.preventDefault(); loadFilterData('new', '', 'Phim mới cập nhật', 1);">Phim mới cập nhật</a>
-                        <a href="#" onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-bo', 'Phim bộ', 1);">Phim bộ</a>
-                        <a href="#" onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-le', 'Phim lẻ', 1);">Phim lẻ</a>
-                        <a href="#" onclick="event.preventDefault(); loadFilterData('danh-sach', 'hoat-hinh', 'Hoạt hình', 1);">Hoạt hình</a>
-                        <a href="#" onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-vietsub', 'Phim Vietsub', 1);">Phim Vietsub</a>
-                        <a href="#" onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-thuyet-minh', 'Phim Thuyết minh', 1);">Phim Thuyết minh</a>
-                        <a href="#" onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-long-tieng', 'Phim Lồng tiếng', 1);">Phim Lồng tiếng</a>
-                        <a href="#" onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-bo-dang-chieu', 'Phim bộ đang chiếu', 1);">Phim bộ đang chiếu</a>
-                        <a href="#" onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-bo-hoan-tat', 'Phim bộ hoàn tất', 1);">Phim bộ hoàn tất</a>
-                        <a href="#" onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-sap-chieu', 'Phim sắp chiếu', 1);">Phim sắp chiếu</a>
+                        <a href="#"
+                            onclick="event.preventDefault(); loadFilterData('new', '', 'Phim mới cập nhật', 1);">Phim
+                            mới cập nhật</a>
+                        <a href="#"
+                            onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-bo', 'Phim bộ', 1);">Phim
+                            bộ</a>
+                        <a href="#"
+                            onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-le', 'Phim lẻ', 1);">Phim
+                            lẻ</a>
+                        <a href="#"
+                            onclick="event.preventDefault(); loadFilterData('danh-sach', 'hoat-hinh', 'Hoạt hình', 1);">Hoạt
+                            hình</a>
+                        <a href="#"
+                            onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-vietsub', 'Phim Vietsub', 1);">Phim
+                            Vietsub</a>
+                        <a href="#"
+                            onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-thuyet-minh', 'Phim Thuyết minh', 1);">Phim
+                            Thuyết minh</a>
+                        <a href="#"
+                            onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-long-tieng', 'Phim Lồng tiếng', 1);">Phim
+                            Lồng tiếng</a>
+                        <a href="#"
+                            onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-bo-dang-chieu', 'Phim bộ đang chiếu', 1);">Phim
+                            bộ đang chiếu</a>
+                        <a href="#"
+                            onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-bo-hoan-tat', 'Phim bộ hoàn tất', 1);">Phim
+                            bộ hoàn tất</a>
+                        <a href="#"
+                            onclick="event.preventDefault(); loadFilterData('danh-sach', 'phim-sap-chieu', 'Phim sắp chiếu', 1);">Phim
+                            sắp chiếu</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="#">Thể loại <span class="dropdown-icon"><i class="fa-solid fa-chevron-down"></i></span></a>
+                    <a href="#">Thể loại <span class="dropdown-icon"><span class="material-symbols-rounded" style="font-size:14px;">expand_more</span></span></a>
                     <div class="dropdown-content" id="category-list"></div>
                 </div>
                 <div class="dropdown">
-                    <a href="#">Quốc gia <span class="dropdown-icon"><i class="fa-solid fa-chevron-down"></i></span></a>
+                    <a href="#">Quốc gia <span class="dropdown-icon"><span class="material-symbols-rounded" style="font-size:14px;">expand_more</span></span></a>
                     <div class="dropdown-content" id="country-list"></div>
                 </div>
                 <div class="dropdown">
-                    <a href="#">Năm <span class="dropdown-icon"><i class="fa-solid fa-chevron-down"></i></span></a>
+                    <a href="#">Năm <span class="dropdown-icon"><span class="material-symbols-rounded" style="font-size:14px;">expand_more</span></span></a>
                     <div class="dropdown-content" id="year-list"></div>
                 </div>
             </nav>
         </div>
-        <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+        <div class="header-right">
             <div class="search-box">
                 <input type="text" placeholder="Tìm kiếm tác phẩm..." id="searchInput">
-                <button class="icon-btn" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button class="icon-btn" id="searchBtn"><span class="material-symbols-rounded" style="font-size:18px;">search</span></button>
             </div>
-            <a href="../index.html" class="btn-exit-header transition-link"><i class="fa-solid fa-right-from-bracket"></i> Thoát</a>
+            <a href="../index.html" class="btn-exit-header transition-link"><span
+                    class="material-symbols-rounded" style="font-size:18px;">logout</span> Thoát</a>
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
         </div>
     </header>
 
@@ -71,19 +109,23 @@
         <div class="hero-content">
             <h1 id="hero-title" class="animate-fade-up"></h1>
             <div class="hero-meta animate-fade-up" style="animation-delay: 0.1s;">
-                <span class="text-accent"><i class="fa-solid fa-star"></i> 8.0</span> | <span class="badge-outline" id="hero-year"></span> | <span class="badge-outline">HD</span>
+                <span class="text-accent"><span class="material-symbols-rounded" style="font-size:16px;">star</span> 8.0</span> | <span class="badge-outline"
+                    id="hero-year"></span> | <span class="badge-outline">HD</span>
             </div>
             <p id="hero-desc" class="animate-fade-up" style="animation-delay: 0.2s;"></p>
             <div class="hero-info animate-fade-up" style="animation-delay: 0.3s;">
                 <p><strong>Trạng thái:</strong> Tác phẩm điện ảnh nổi bật</p>
             </div>
-            <button class="btn-play animate-fade-up" id="hero-btn" style="animation-delay: 0.4s;"><span class="play-icon"><i class="fa-solid fa-play"></i></span> THƯỞNG THỨC</button>
-        </div>
-    </section>
+                    <button class="btn-play animate-fade-up" id="hero-btn" style="animation-delay: 0.4s;"><span
+                            class="play-icon"><span class="material-symbols-rounded" style="font-size:16px;">play_arrow</span></span> THƯỞNG THỨC</button>
+                    <button class="btn-random animate-fade-up" id="btn-random-movie" style="animation-delay: 0.5s;"><span
+                            class="material-symbols-rounded" style="font-size:16px;">casino</span> XEM GÌ HÔM NAY?</button>
+                </div>
+            </section>
 
     <main class="main-container with-hero" id="main-content" style="display: none;">
         <div class="left-column">
-            
+
             <div class="filter-bar-container glass-panel" id="advanced-filter-bar" style="display: none;">
                 <select id="filter-category"></select>
                 <select id="filter-country"></select>
@@ -93,7 +135,8 @@
 
             <div id="home-view">
                 <div class="movie-section">
-                    <h2 class="section-title"><span class="text-accent"><i class="fa-solid fa-fire"></i></span> Xu hướng mới <span class="btn-more" id="btn-more-new">Khám phá</span></h2>
+                    <h2 class="section-title"><span class="text-accent"><span class="material-symbols-rounded" style="font-size:20px;">local_fire_department</span></span> Xu hướng
+                        mới <span class="btn-more" id="btn-more-new">Khám phá</span></h2>
                     <div class="movie-grid" id="grid-new-update"></div>
                 </div>
 
@@ -103,12 +146,14 @@
                 </div>
 
                 <div class="movie-section">
-                    <h2 class="section-title"><span class="text-accent">❖</span> Phim dài tập <span class="btn-more" id="btn-more-series">Khám phá</span></h2>
+                    <h2 class="section-title"><span class="text-accent">❖</span> Phim dài tập <span class="btn-more"
+                            id="btn-more-series">Khám phá</span></h2>
                     <div class="movie-grid" id="grid-series"></div>
                 </div>
 
                 <div class="movie-section">
-                    <h2 class="section-title"><span class="text-accent">❖</span> Phim điện ảnh <span class="btn-more" id="btn-more-movies">Khám phá</span></h2>
+                    <h2 class="section-title"><span class="text-accent">❖</span> Phim điện ảnh <span class="btn-more"
+                            id="btn-more-movies">Khám phá</span></h2>
                     <div class="movie-grid" id="grid-movies"></div>
                 </div>
             </div>
@@ -119,18 +164,22 @@
                     <div class="movie-grid" id="grid-filter"></div>
                     <div class="pagination-container" id="pagination-container" style="display: none;">
                         <div class="pagination-controls">
-                            <button class="btn-page" id="btn-prev-page"><i class="fa-solid fa-chevron-left"></i> Trước</button>
+                            <button class="btn-page" id="btn-prev-page"><span class="material-symbols-rounded" style="font-size:16px;">chevron_left</span>
+                                Trước</button>
                             <span class="page-info">
-                                Trang <input type="number" id="input-page-jump" min="1" value="1"> / <span id="total-pages-display">1</span>
+                                Trang <input type="number" id="input-page-jump" min="1" value="1"> / <span
+                                    id="total-pages-display">1</span>
                             </span>
-                            <button class="btn-page" id="btn-next-page">Sau <i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="btn-page" id="btn-next-page">Sau <span
+                                    class="material-symbols-rounded" style="font-size:16px;">chevron_right</span></button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div id="detail-view" style="display: none;">
-                <button class="btn-back" onclick="navigateToHome(event)"><i class="fa-solid fa-arrow-left"></i> Trở về bộ sưu tập</button>
+                <button class="btn-back" onclick="navigateToHome(event)"><span class="material-symbols-rounded" style="font-size:18px;">arrow_back</span> Trở về
+                    bộ sưu tập</button>
                 <div class="detail-header glass-panel">
                     <div class="detail-poster-wrapper">
                         <img id="detail-poster" src="" alt="Poster">
@@ -143,13 +192,18 @@
                             <span class="badge-outline" id="detail-lang"></span>
                             <span class="badge-outline" id="detail-year"></span>
                         </div>
-                        
-                        <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 25px; align-items: center;">
-                            <button id="btn-watch-now" class="btn-play" style="display: none; padding: 10px 25px; font-size: 13px; border-radius: 30px;"><i class="fa-solid fa-play"></i> XEM NGAY</button>
-                            <button id="btn-continue-watch" class="btn-primary" style="display: none; padding: 10px 25px; font-size: 13px; border-radius: 30px;"></button>
-                            <a href="#" target="_blank" class="btn-secondary" id="detail-trailer" style="display: none; text-decoration: none;">XEM TRAILER</a>
+
+                        <div
+                            style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 25px; align-items: center;">
+                            <button id="btn-watch-now" class="btn-play"
+                                style="display: none; padding: 10px 25px; font-size: 13px; border-radius: 30px;"><span
+                                    class="material-symbols-rounded" style="font-size:16px;">play_arrow</span> XEM NGAY</button>
+                            <button id="btn-continue-watch" class="btn-primary"
+                                style="display: none; padding: 10px 25px; font-size: 13px; border-radius: 30px;"></button>
+                            <a href="#" target="_blank" class="btn-secondary" id="detail-trailer"
+                                style="display: none; text-decoration: none;">XEM TRAILER</a>
                         </div>
-                        
+
                         <p id="detail-content"></p>
                         <div class="detail-extra">
                             <p><strong>Thể loại:</strong> <span id="detail-categories"></span></p>
@@ -164,7 +218,7 @@
                     <h2 class="section-title">Hình ảnh</h2>
                     <div class="gallery-scroll-wrapper" id="detail-gallery"></div>
                 </div>
-                
+
                 <div class="movie-section" style="margin-top: 40px;">
                     <div id="server-list" class="server-list"></div>
                     <h2 class="section-title">Chọn phân đoạn</h2>
@@ -173,52 +227,81 @@
             </div>
 
             <div id="watch-view" style="display: none;">
-                <button class="btn-back" id="btn-back-watch"><i class="fa-solid fa-arrow-left"></i> Trở về thông tin phim</button>
+                <button class="btn-back" id="btn-back-watch"><span class="material-symbols-rounded" style="font-size:18px;">arrow_back</span> Trở về thông tin
+                    phim</button>
                 <div class="watch-container glass-panel">
                     <div class="player-section">
                         <div class="iframe-container" id="custom-video-container">
-                            <div id="video-loader" class="video-loader"><div class="spinner"></div></div>
+                            <div id="video-loader" class="video-loader">
+                                <div class="spinner"></div>
+                            </div>
                             <video id="video-player" crossorigin playsinline></video>
                             <div class="custom-controls" id="custom-controls">
-                                <div class="progress-container" id="progress-container">
-                                    <div class="progress-bar" id="progress-bar"></div>
-                                </div>
+                                    <div class="progress-container" id="progress-container">
+                                        <div class="progress-buffered" id="progress-buffered"></div>
+                                        <div class="progress-bar" id="progress-bar"></div>
+                                        <div class="progress-hover-time" id="progress-hover-time">00:00</div>
+                                    </div>
                                 <div class="controls-main">
                                     <div class="controls-left">
-                                        <button class="control-btn" id="play-pause-btn"><i class="fa-solid fa-play"></i></button>
-                                        <div class="volume-container">
-                                            <button class="control-btn" id="mute-btn"><i class="fa-solid fa-volume-high"></i></button>
-                                            <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="1">
+                                        <button class="control-btn" id="play-pause-btn"><span
+                                                class="material-symbols-rounded">play_arrow</span></button>
+                                        <div class="volume-container" id="volume-container">
+                                            <button class="control-btn" id="mute-btn"><span
+                                                    class="material-symbols-rounded">volume_up</span></button>
+                                            <div class="volume-track">
+                                                <input type="range" id="volume-slider" min="0" max="1" step="0.05"
+                                                    value="1">
+                                                <span class="volume-percent" id="volume-percent">100</span>
+                                            </div>
                                         </div>
-                                        <span class="time-display"><span id="current-time">00:00</span> / <span id="duration">00:00</span></span>
+                                        <span class="time-display"><span id="current-time">00:00</span> / <span
+                                                id="duration">00:00</span></span>
                                     </div>
                                     <div class="controls-right">
                                         <div class="settings-container">
-                                            <button class="control-btn" id="settings-btn"><i class="fa-solid fa-gear"></i></button>
-                                            <div class="settings-menu" id="settings-menu">
-                                                <div class="setting-item">
-                                                    <span>Tốc độ</span>
-                                                    <select id="speed-selector" class="setting-select">
-                                                        <option value="0.5">0.5x</option>
-                                                        <option value="1" selected>Chuẩn</option>
-                                                        <option value="1.25">1.25x</option>
-                                                        <option value="1.5">1.5x</option>
-                                                        <option value="2">2x</option>
-                                                    </select>
-                                                </div>
-                                                <div class="setting-item" id="quality-setting" style="display: none;">
-                                                    <span>Chất lượng</span>
-                                                    <select id="quality-selector" class="setting-select"></select>
-                                                </div>
-                                            </div>
+                                            <button class="control-btn" id="settings-btn"><span
+                                                    class="material-symbols-rounded">settings</span></button>
+                                    <div class="settings-menu" id="settings-menu">
+                                        <div class="setting-item" id="quality-setting" style="display: none;">
+                                            <span>Chất lượng</span>
+                                            <select id="quality-selector" class="setting-select"></select>
                                         </div>
-                                        <button class="control-btn" id="fullscreen-btn"><i class="fa-solid fa-expand"></i></button>
+                                        <div class="setting-item">
+                                            <span>Tốc độ</span>
+                                            <select id="speed-selector" class="setting-select">
+                                                <option value="0.5">0.5x</option>
+                                                <option value="0.75">0.75x</option>
+                                                <option value="1" selected>Chuẩn</option>
+                                                <option value="1.25">1.25x</option>
+                                                <option value="1.5">1.5x</option>
+                                                <option value="2">2x</option>
+                                            </select>
+                                        </div>
+                                        <div class="setting-divider"></div>
+                                        <div class="setting-item setting-toggle" id="setting-autoplay">
+                                            <span>Tự động phát tập sau</span>
+                                            <span class="toggle-status" id="setting-autoplay-status">BẬT</span>
+                                        </div>
+                                        <div class="setting-item setting-toggle" id="setting-theater">
+                                            <span>Chế độ rạp hát</span>
+                                            <span class="toggle-status" id="setting-theater-status">TẮT</span>
+                                        </div>
+                                        <div class="setting-item setting-toggle" id="setting-lights">
+                                            <span>Tắt đèn</span>
+                                            <span class="toggle-status" id="setting-lights-status">TẮT</span>
+                                        </div>
+                                    </div>
+                                        </div>
+                                        <button class="control-btn" id="fullscreen-btn"><span
+                                                class="material-symbols-rounded">fullscreen</span></button>
                                     </div>
                                 </div>
                             </div>
                             <div id="next-ep-overlay" class="next-ep-overlay">
                                 <h3>Chuẩn bị phát tập tiếp theo</h3>
-                                <h4 id="next-ep-name" style="color: #f91942; font-size: 24px; margin-bottom: 20px;"></h4>
+                                <h4 id="next-ep-name" style="color: #f91942; font-size: 24px; margin-bottom: 20px;">
+                                </h4>
                                 <div class="countdown-circle">
                                     <span id="countdown-number">5</span>
                                 </div>
@@ -230,20 +313,14 @@
                         </div>
                         <div class="player-controls" style="position: relative; z-index: 1001;">
                             <h2 id="watch-title"></h2>
-                            <div style="display: flex; gap: 10px;">
-                                <button class="btn-secondary" id="btn-prev-ep" style="display: none;"><i class="fa-solid fa-backward-step"></i> Tập trước</button>
-                                <button class="btn-secondary" id="btn-next-ep" style="display: none;">Tập sau <i class="fa-solid fa-forward-step"></i></button>
-                                <button class="btn-secondary" id="btn-theater-toggle"><i class="fa-solid fa-expand"></i> Mở rộng</button>
-                                <button class="btn-secondary" id="btn-pip-toggle"><i class="fa-solid fa-clone"></i> Thu nhỏ</button>
-                                <button class="btn-secondary" id="btn-light-toggle"><i class="fa-solid fa-lightbulb"></i> Tắt đèn</button>
-                                <select id="speed-control" class="btn-secondary" style="outline: none; background-color: rgba(255,255,255,0.1); cursor: pointer; appearance: none; padding-right: 15px;">
-                                    <option value="0.5" style="background: #111;">0.5x</option>
-                                    <option value="1" style="background: #111;" selected>1.0x</option>
-                                    <option value="1.25" style="background: #111;">1.25x</option>
-                                    <option value="1.5" style="background: #111;">1.5x</option>
-                                    <option value="2" style="background: #111;">2.0x</option>
-                                </select>
-                                <button class="btn-secondary" id="btn-autoplay-toggle">🔁 Tự động: BẬT</button>
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button class="btn-secondary" id="btn-prev-ep" style="display: none;"><span
+                                        class="material-symbols-rounded" style="font-size:16px;">skip_previous</span> Tập trước</button>
+                                <button class="btn-secondary" id="btn-next-ep" style="display: none;">Tập sau <span
+                                        class="material-symbols-rounded" style="font-size:16px;">skip_next</span></button>
+                                <button class="btn-secondary" id="btn-pip-toggle"><span class="material-symbols-rounded" style="font-size:16px;">picture_in_picture_alt</span> Thu
+                                    nhỏ</button>
+                                <button class="btn-secondary" id="btn-watch-party"><span class="material-symbols-rounded" style="font-size:16px;">group</span> Xem nhóm</button>
                             </div>
                         </div>
                     </div>
@@ -273,12 +350,61 @@
                 <ul class="sidebar-list rank-list" id="sidebar-top-movies"></ul>
             </div>
 
-             <div class="sidebar-widget glass-panel">
+            <div class="sidebar-widget glass-panel">
                 <h3>Tuyệt tác truyền hình</h3>
                 <div class="top-series-grid" id="sidebar-top-series"></div>
-             </div>
+            </div>
         </div>
     </main>
+    <!-- Watch Party Modal -->
+    <div id="watch-party-modal" class="wp-modal-overlay" style="display:none;">
+        <div class="wp-modal-content glass-panel">
+            <button class="wp-modal-close" id="btn-close-wp-modal">&times;</button>
+            <h2><span class="material-symbols-rounded" style="color:#f91942;font-size:28px;">group</span> Chế độ xem nhóm</h2>
+            <p class="wp-subtitle">Đồng bộ phát lại giữa các tab trên cùng trình duyệt</p>
+            
+            <div id="wp-create-section" class="wp-section">
+                <button id="btn-create-room" class="btn-play" style="width:100%;justify-content:center;padding:12px 24px;font-size:13px;">
+                    <span class="material-symbols-rounded" style="font-size:18px;">add_circle</span> Tạo phòng mới
+                </button>
+            </div>
+
+            <div class="wp-divider"><span>hoặc</span></div>
+
+            <div id="wp-join-section" class="wp-section">
+                <div class="wp-join-row">
+                    <input type="text" id="wp-room-input" placeholder="Nhập mã phòng..." maxlength="20">
+                    <button id="btn-join-room" class="btn-secondary" style="padding:10px 20px;">Tham gia</button>
+                </div>
+            </div>
+
+            <div id="wp-room-info" style="display:none;" class="wp-section">
+                <div class="wp-room-display">
+                    <span class="wp-room-label">Mã phòng:</span>
+                    <div class="wp-room-code-row">
+                        <span id="wp-room-code-text" class="wp-room-code"></span>
+                        <button id="btn-copy-room" class="btn-secondary" style="padding:8px 16px;font-size:12px;">
+                            <span class="material-symbols-rounded" style="font-size:14px;">content_copy</span> Sao chép
+                        </button>
+                    </div>
+                </div>
+                <div class="wp-status-bar">
+                    <span class="wp-status-dot"></span>
+                    <span id="wp-status">Đang chờ đồng bộ...</span>
+                </div>
+                <button id="btn-leave-room" class="btn-secondary" style="width:100%;padding:10px;font-size:12px;margin-top:10px;">Rời phòng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PiP Indicator -->
+    <div id="pip-indicator" class="pip-indicator" style="display:none;">
+        <span class="material-symbols-rounded" style="font-size:16px;">picture_in_picture_alt</span>
+        <span id="pip-title">Đang phát thu nhỏ</span>
+        <button id="pip-return" class="pip-return-btn"><span class="material-symbols-rounded" style="font-size:16px;">open_in_full</span></button>
+    </div>
+
     <script src="phim.js"></script>
 </body>
+
 </html>

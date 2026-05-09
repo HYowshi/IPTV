@@ -32,6 +32,7 @@ body.fade-out {
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
+/* ==================== MAIN ==================== */
 .tv-main {
     flex: 1;
     display: flex;
@@ -50,6 +51,7 @@ body.fade-out {
     border-radius: 10px;
 }
 
+/* ==================== HEADER ==================== */
 .tv-header {
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -68,6 +70,7 @@ body.fade-out {
     display: flex;
     align-items: center;
     gap: 10px;
+    white-space: nowrap;
 }
 
 .tv-header-left {
@@ -82,6 +85,7 @@ body.fade-out {
     gap: 15px;
 }
 
+/* ==================== SEARCH ==================== */
 .tv-search {
     display: flex;
     align-items: center;
@@ -114,12 +118,168 @@ body.fade-out {
     padding-left: 10px;
 }
 
+/* ==================== CLOCK ==================== */
 .tv-clock {
     font-size: 18px;
     font-weight: 600;
     letter-spacing: 1px;
 }
 
+/* ==================== NAVIGATION ==================== */
+.unified-nav {
+    display: flex;
+    align-items: center;
+}
+
+@keyframes switchGlow {
+    0%, 100% { box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4); }
+    50% { box-shadow: 0 4px 25px rgba(0, 242, 254, 0.6), 0 0 40px rgba(0, 242, 254, 0.15); }
+}
+
+@keyframes switchGlowRed {
+    0%, 100% { box-shadow: 0 4px 15px rgba(249, 25, 66, 0.4); }
+    50% { box-shadow: 0 4px 25px rgba(249, 25, 66, 0.6), 0 0 40px rgba(249, 25, 66, 0.15); }
+}
+
+.platform-switch {
+    display: flex;
+    position: relative;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.platform-switch:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+}
+
+.platform-switch::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    background: linear-gradient(135deg, #f91942 0%, #ff4070 100%);
+    border-radius: 25px;
+    transition: transform 0.5s cubic-bezier(0.68, -0.15, 0.265, 1.35), background 0.4s, box-shadow 0.4s;
+    box-shadow: 0 4px 15px rgba(249, 25, 66, 0.4);
+    z-index: 0;
+    animation: switchGlowRed 3s ease-in-out infinite;
+}
+
+.platform-switch.tv-active::before {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    transform: translateX(100%);
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+    animation: switchGlow 3s ease-in-out infinite;
+}
+
+.switch-item {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 0;
+    width: 140px;
+    color: #666;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border-radius: 25px;
+    transition: color 0.4s, text-shadow 0.4s, transform 0.3s;
+    cursor: pointer;
+}
+
+.switch-item .material-symbols-rounded {
+    font-size: 18px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.switch-item:hover {
+    color: #bbb;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.switch-item:hover .material-symbols-rounded {
+    transform: scale(1.15);
+}
+
+.switch-item.active {
+    color: #fff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.switch-item.active .material-symbols-rounded {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+}
+
+/* ==================== EXIT BUTTON ==================== */
+.btn-exit-header { 
+    display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); 
+    border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 8px 20px; 
+    border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; 
+    transition: all 0.3s; white-space: nowrap;
+}
+.btn-exit-header:hover { 
+    background: rgba(249, 25, 66, 0.2); border-color: #f91942; color: #f91942; 
+}
+.btn-exit-header .material-symbols-rounded { font-size: 18px; }
+
+/* ==================== HAMBURGER BUTTON ==================== */
+.hamburger-btn-tv {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+.hamburger-btn-tv:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(0, 242, 254, 0.5);
+}
+.hamburger-btn-tv:focus-visible {
+    outline: 2px solid #00f2fe;
+    outline-offset: 2px;
+}
+.hamburger-line-tv {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+.hamburger-btn-tv.active .hamburger-line-tv:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger-btn-tv.active .hamburger-line-tv:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+.hamburger-btn-tv.active .hamburger-line-tv:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ==================== HERO ==================== */
 .tv-hero {
     position: relative;
     height: 70vh;
@@ -183,6 +343,7 @@ body.fade-out {
     text-shadow: 0 2px 5px rgba(0,0,0,0.8);
 }
 
+/* ==================== WATCH BUTTON ==================== */
 .btn-watch {
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     color: #000;
@@ -233,6 +394,7 @@ body.fade-out {
     outline: none;
 }
 
+/* ==================== CHANNELS CONTAINER ==================== */
 .tv-channels-container {
     padding: 20px 30px 50px 30px; 
     position: relative;
@@ -263,12 +425,14 @@ body.fade-out {
     border-radius: 2px;
 }
 
+/* ==================== CHANNEL SCROLL ==================== */
 .channel-scroll-wrapper {
     display: flex;
     gap: 20px;
     overflow-x: auto;
     padding: 20px; 
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 }
 
 .channel-scroll-wrapper::-webkit-scrollbar {
@@ -287,6 +451,7 @@ body.fade-out {
     box-shadow: 0 0 10px #00f2fe;
 }
 
+/* ==================== CHANNEL CARD ==================== */
 @keyframes pulse-border {
     0% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7); }
     70% { box-shadow: 0 0 0 10px rgba(0, 242, 254, 0); }
@@ -324,6 +489,10 @@ body.fade-out {
     animation: spin 1s linear infinite;
 }
 
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 #tv-player::-webkit-media-controls-timeline,
 #tv-player::-webkit-media-controls-current-time-display,
 #tv-player::-webkit-media-controls-time-remaining-display {
@@ -345,6 +514,7 @@ body.fade-out {
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
 }
 
 .channel-card .logo-container {
@@ -397,6 +567,11 @@ body.fade-out {
     color: #aaa;
     margin-top: 10px;
     z-index: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+    text-align: center;
 }
 
 .channel-card:focus {
@@ -424,6 +599,7 @@ body.fade-out {
     transition: all 0.1s !important;
 }
 
+/* ==================== OSD ==================== */
 .tv-osd {
     position: absolute;
     bottom: 40px;
@@ -442,6 +618,7 @@ body.fade-out {
     transform: translateX(-50px);
     transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     min-width: 500px;
+    max-width: 80vw;
 }
 .tv-osd.show {
     opacity: 1;
@@ -474,86 +651,26 @@ body.fade-out {
     font-weight: 600;
 }
 
-.entry-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: radial-gradient(circle at center, #111 0%, #000 100%);
-}
-.entry-container {
-    display: flex;
-    gap: 50px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.entry-box {
-    background: rgba(20, 20, 20, 0.8);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    padding: 50px;
-    text-align: center;
-    text-decoration: none;
-    color: white;
-    width: 300px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-.entry-box:hover {
-    transform: translateY(-15px) scale(1.05);
-}
-.tv-accent:hover {
-    border-color: #00f2fe;
-    box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15);
-}
-.movie-accent:hover {
-    border-color: #f91942;
-    box-shadow: 0 20px 40px rgba(249, 25, 66, 0.15);
-}
-.icon-wrapper {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255,255,255,0.05);
-    font-size: 40px;
-    transition: transform 0.4s;
-}
-.tv-accent .icon-wrapper { color: #00f2fe; }
-.movie-accent .icon-wrapper { color: #f91942; }
-.entry-box:hover .icon-wrapper {
-    transform: scale(1.2);
-    background: rgba(255,255,255,0.1);
-}
-.entry-text {
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-.entry-desc {
-    font-size: 14px;
-    color: #aaa;
-}
-
+/* ==================== PLAYER CONTROLS ==================== */
 .tv-controls {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 20px 30px;
-    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
     z-index: 10001;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.4s ease, transform 0.4s ease;
+    flex-direction: column;
+}
+
+.tv-controls-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px 14px;
 }
 
 .top-controls {
@@ -611,6 +728,7 @@ body.fade-out {
 
 #volume-slider {
     -webkit-appearance: none;
+    appearance: none;
     width: 100px;
     height: 4px;
     background: rgba(255,255,255,0.3);
@@ -637,6 +755,7 @@ body.fade-out {
     transform: scale(1.3);
 }
 
+/* ==================== QUICK SIDEBAR ==================== */
 .quick-sidebar {
     position: absolute;
     top: 0;
@@ -733,96 +852,714 @@ body.fade-out {
     color: #fff;
 }
 
-@media (max-width: 768px) {
-    .tv-app { flex-direction: column; }
-    .tv-main { padding-bottom: 0; }
-    .tv-header { padding: 15px 20px; flex-direction: column; gap: 15px; align-items: stretch; }
-    .tv-header-left { flex-direction: column; gap: 15px; }
-    .tv-logo { font-size: 16px; justify-content: center; }
-    .unified-nav { justify-content: center; }
-    .tv-header-right { justify-content: space-between; }
-    .tv-clock { display: none; }
-    .tv-search:focus-within input, .tv-search input:not(:placeholder-shown) { width: 130px; }
-    .tv-hero { padding: 80px 20px 30px 20px; min-height: auto; height: auto; align-items: flex-start; }
-    .hero-content { margin-top: 20px; }
-    .hero-content h1 { font-size: 32px; }
-    .hero-content p { font-size: 13px; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    .hero-actions { display: flex !important; flex-direction: column; gap: 10px !important; }
-    .btn-watch { width: 100%; justify-content: center; padding: 12px 20px; }
-    .tv-channels-container { padding: 20px; margin-top: 10px; }
-    .channel-card { min-width: 140px; height: 80px; }
-    .channel-scroll-wrapper { padding-bottom: 30px; }
-    .tv-osd { top: 70px; right: 15px; left: 15px; transform: translateY(-50px); flex-direction: column; text-align: center; gap: 10px; }
-    .tv-osd.show { transform: translateY(0); }
+/* ==================== TOAST NOTIFICATIONS ==================== */
+#tv-toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
 }
 
-.unified-nav {
+.tv-toast {
     display: flex;
     align-items: center;
-}
-
-.platform-switch {
-    display: flex;
-    position: relative;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 30px;
-    padding: 4px;
+    gap: 12px;
+    padding: 14px 24px;
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: auto;
+    min-width: 250px;
+    max-width: 400px;
 }
 
-.platform-switch::before {
-    content: '';
+.tv-toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.tv-toast .material-symbols-rounded {
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.tv-toast-info {
+    border-left: 4px solid #00f2fe;
+}
+.tv-toast-info .material-symbols-rounded { color: #00f2fe; }
+
+.tv-toast-success {
+    border-left: 4px solid #4caf50;
+}
+.tv-toast-success .material-symbols-rounded { color: #4caf50; }
+
+.tv-toast-error {
+    border-left: 4px solid #f91942;
+}
+.tv-toast-error .material-symbols-rounded { color: #f91942; }
+
+/* ==================== ERROR OVERLAY ==================== */
+#tv-error-overlay {
     position: absolute;
-    top: 4px;
-    left: 4px;
-    width: calc(50% - 4px);
-    height: calc(100% - 8px);
-    background: linear-gradient(135deg, #f91942 0%, #ff004f 100%);
-    border-radius: 25px;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s;
-    box-shadow: 0 4px 15px rgba(249, 25, 66, 0.4);
-    z-index: 0;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10003;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-.platform-switch.tv-active::before {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    transform: translateX(100%);
-    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+#tv-error-overlay .btn-watch {
+    padding: 12px 30px;
+    font-size: 15px;
 }
 
-.switch-item {
+/* ==================== FILTER BAR ==================== */
+.tv-filter-bar {
+    display: flex;
+    gap: 10px;
+    padding: 10px 30px 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
     position: relative;
-    z-index: 1;
+    z-index: 10;
+}
+
+.tv-filter-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.tv-filter-tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    color: #888;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    flex-shrink: 0;
+}
+
+.tv-filter-tab .material-symbols-rounded {
+    font-size: 18px;
+}
+
+.tv-filter-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ccc;
+}
+
+.tv-filter-tab.active {
+    background: rgba(0, 242, 254, 0.15);
+    border-color: #00f2fe;
+    color: #00f2fe;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+}
+
+/* ==================== LAST WATCHED BANNER ==================== */
+.tv-last-watched-banner {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 30px;
+    margin: 0 30px 15px;
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.08) 0%, rgba(79, 172, 254, 0.05) 100%);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10;
+}
+
+.tv-last-watched-banner:hover {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.15) 0%, rgba(79, 172, 254, 0.1) 100%);
+    border-color: rgba(0, 242, 254, 0.4);
+    box-shadow: 0 8px 30px rgba(0, 242, 254, 0.15);
+}
+
+.tv-last-watched-banner img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #fff;
+    padding: 3px;
+    flex-shrink: 0;
+}
+
+.banner-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.banner-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #00f2fe;
+    margin-bottom: 4px;
+}
+
+.banner-channel {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.banner-play {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    border: none;
+    border-radius: 20px;
+    color: #000;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.banner-play:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(0, 242, 254, 0.4);
+}
+
+.banner-close {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 8px 0;
-    width: 140px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
     color: #888;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.banner-close:hover {
+    background: rgba(249, 25, 66, 0.2);
+    border-color: #f91942;
+    color: #f91942;
+}
+
+.banner-close .material-symbols-rounded {
+    font-size: 18px;
+}
+
+/* ==================== RECENT BADGE ==================== */
+.recent-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 9px;
+    font-weight: 800;
+    color: #000;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* ==================== CHANNEL LETTER AVATAR ==================== */
+.channel-letter-avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(79, 172, 254, 0.2));
+    border: 2px solid rgba(0, 242, 254, 0.3);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 900;
+    color: #00f2fe;
+    z-index: 2;
+    letter-spacing: 1px;
+}
+
+/* ==================== PiP ACTIVE STATE ==================== */
+.control-btn.pip-active {
+    color: #00f2fe;
+    background: rgba(0, 242, 254, 0.2);
+    border-radius: 50%;
+}
+
+/* ==================== ENTRY BOXES (unused but kept) ==================== */
+.entry-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: radial-gradient(circle at center, #111 0%, #000 100%);
+}
+.entry-container {
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.entry-box {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 50px;
+    text-align: center;
     text-decoration: none;
+    color: white;
+    width: 300px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.entry-box:hover {
+    transform: translateY(-15px) scale(1.05);
+}
+.tv-accent:hover {
+    border-color: #00f2fe;
+    box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15);
+}
+.movie-accent:hover {
+    border-color: #f91942;
+    box-shadow: 0 20px 40px rgba(249, 25, 66, 0.15);
+}
+.icon-wrapper {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    font-size: 40px;
+    transition: transform 0.4s;
+}
+.tv-accent .icon-wrapper { color: #00f2fe; }
+.movie-accent .icon-wrapper { color: #f91942; }
+.entry-box:hover .icon-wrapper {
+    transform: scale(1.2);
+    background: rgba(255,255,255,0.1);
+}
+.entry-text {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+.entry-desc {
     font-size: 14px;
-    font-weight: 600;
-    border-radius: 25px;
-    transition: color 0.4s;
+    color: #aaa;
 }
 
-.switch-item:hover {
-    color: #fff;
+/* ==================== RESPONSIVE: LARGE TABLET ==================== */
+@media (max-width: 1200px) {
+    .tv-header { padding: 20px 30px; }
+    .tv-header-left { gap: 25px; }
+    .tv-hero { padding: 40px 30px; }
+    .hero-content h1 { font-size: 50px; }
+    .tv-channels-container { padding: 20px; }
+    .channel-card { min-width: 200px; }
 }
 
-.switch-item.active {
-    color: #fff;
+/* ==================== RESPONSIVE: TABLET ==================== */
+@media (max-width: 1024px) {
+    .tv-header { padding: 15px 20px; }
+    .tv-header-left { gap: 15px; }
+    .tv-logo { font-size: 20px; }
+    .hero-content h1 { font-size: 42px; }
+    .hero-content p { font-size: 14px; }
+    .tv-channels-container { padding: 15px; margin-top: -30px; }
+    .channel-card { min-width: 180px; height: 110px; }
+    .channel-card .logo-container { width: 60px; height: 60px; }
+    .channel-scroll-wrapper { gap: 15px; padding: 15px; }
+    .row-title { font-size: 18px; }
+    .tv-osd { min-width: 350px; padding: 20px 30px; }
+    .tv-osd img { width: 60px; height: 60px; }
+    .tv-osd-info h2 { font-size: 26px; }
+    .tv-osd-info p { font-size: 15px; }
+    .quick-sidebar { width: 300px; }
 }
 
-/* Nút Thoát */
-.btn-exit-header { 
-    display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); 
-    border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 8px 20px; 
-    border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; 
-    transition: all 0.3s; margin-left: 10px; 
+/* ==================== RESPONSIVE: MOBILE ==================== */
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+        height: auto;
+    }
+    .tv-app {
+        height: auto;
+    }
+    .tv-main {
+        overflow-y: auto;
+    }
+
+    /* Header */
+    .tv-header {
+        position: sticky;
+        padding: 10px 15px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .tv-header-left {
+        gap: 10px;
+    }
+    .tv-logo {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+    .unified-nav .platform-switch { display: none; }
+    
+    .tv-header-right {
+        gap: 8px;
+    }
+    .tv-clock { display: none; }
+    .btn-exit-header { display: none; }
+    .hamburger-btn-tv { display: flex; }
+    
+    .tv-search {
+        padding: 6px 12px;
+        flex: 1;
+    }
+    .tv-search:focus-within input, .tv-search input:not(:placeholder-shown) {
+        width: 100%;
+        padding-left: 8px;
+    }
+    .tv-search input {
+        font-size: 14px;
+    }
+
+    /* Hero */
+    .tv-hero {
+        height: auto;
+        min-height: 300px;
+        padding: 70px 15px 30px 15px;
+        align-items: flex-start;
+    }
+    .hero-content {
+        max-width: 100%;
+    }
+    .hero-content h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+    .hero-content p {
+        font-size: 13px;
+        margin-bottom: 20px;
+        display: -webkit-box;
+        line-clamp: 3;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .hero-actions {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    .btn-watch {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+    .hero-badge {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    /* Channels */
+    .tv-channels-container {
+        padding: 10px 10px 30px 10px;
+        margin-top: 0;
+    }
+    .channel-row {
+        margin-bottom: 15px;
+    }
+    .row-title {
+        font-size: 16px;
+        padding: 0 10px;
+        margin-bottom: 8px;
+    }
+    .row-title::before {
+        width: 3px;
+        height: 16px;
+    }
+    .channel-scroll-wrapper {
+        gap: 12px;
+        padding: 10px;
+    }
+    .channel-card {
+        min-width: 130px;
+        height: 90px;
+        border-radius: 12px;
+    }
+    .channel-card .logo-container {
+        width: 45px;
+        height: 45px;
+        margin-bottom: 5px;
+    }
+    .channel-card .logo-container img {
+        width: 35px !important;
+        height: 35px !important;
+    }
+    .channel-logo {
+        font-size: 22px;
+    }
+    .channel-name {
+        font-size: 11px;
+        margin-top: 5px;
+        max-width: 110px;
+    }
+    .channel-card:hover {
+        transform: translateY(-5px) scale(1.03);
+    }
+    .channel-card:focus {
+        transform: translateY(-8px) scale(1.05);
+    }
+
+    /* OSD */
+    .tv-osd {
+        top: 60px;
+        right: 10px;
+        left: 10px;
+        bottom: auto;
+        min-width: auto;
+        max-width: none;
+        transform: translateY(-30px);
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        padding: 15px;
+        border-left: none;
+        border-top: 4px solid #00f2fe;
+        border-radius: 12px;
+    }
+    .tv-osd.show {
+        transform: translateY(0);
+    }
+    .tv-osd img {
+        width: 50px;
+        height: 50px;
+    }
+    .tv-osd-info h2 {
+        font-size: 20px;
+    }
+    .tv-osd-info p {
+        font-size: 13px;
+        max-width: 100%;
+    }
+
+    /* Filter Bar */
+    .tv-filter-bar {
+        padding: 8px 10px 0;
+        gap: 8px;
+    }
+    .tv-filter-tab {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    .tv-filter-tab .material-symbols-rounded {
+        font-size: 16px;
+    }
+
+    /* Last Watched Banner */
+    .tv-last-watched-banner {
+        margin: 0 10px 10px;
+        padding: 12px 15px;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .tv-last-watched-banner img {
+        width: 40px;
+        height: 40px;
+    }
+    .banner-channel {
+        font-size: 14px;
+    }
+    .banner-play {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+    .banner-close {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* Toast */
+    #tv-toast-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+    .tv-toast {
+        min-width: auto;
+        max-width: none;
+        font-size: 13px;
+        padding: 12px 16px;
+    }
+
+    /* Player Controls */
+    .tv-controls-main {
+        padding: 6px 12px 10px;
+    }
+    .controls-left {
+        gap: 10px;
+    }
+    .controls-right {
+        gap: 8px;
+    }
+    .control-btn {
+        font-size: 20px;
+    }
+    #volume-slider {
+        width: 50px;
+    }
+    /* Quick Sidebar */
+    .quick-sidebar {
+        width: min(300px, 80vw);
+        padding: 20px 15px;
+    }
+    .quick-sidebar-title {
+        font-size: 18px;
+    }
+    .quick-channel-item {
+        padding: 8px 10px;
+        gap: 10px;
+    }
+    .quick-channel-item img {
+        width: 30px;
+        height: 30px;
+    }
+    .quick-channel-item .material-symbols-rounded {
+        font-size: 24px;
+    }
+    .quick-channel-item span {
+        font-size: 13px;
+    }
+
+    /* Top Controls */
+    #top-controls {
+        top: 10px !important;
+        left: 10px !important;
+        gap: 8px !important;
+    }
+    #btn-back-tv {
+        padding: 8px 14px !important;
+        font-size: 13px !important;
+    }
+    #tv-quality-selector {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+    }
 }
-.btn-exit-header:hover { 
-    background: rgba(249, 25, 66, 0.2); border-color: #f91942; color: #f91942; 
+
+/* ==================== RESPONSIVE: SMALL MOBILE ==================== */
+@media (max-width: 380px) {
+    .tv-header {
+        padding: 8px 10px;
+    }
+    .tv-logo {
+        font-size: 14px;
+    }
+    .hero-content h1 {
+        font-size: 22px;
+    }
+    .channel-card {
+        min-width: 110px;
+        height: 80px;
+    }
+    .channel-card .logo-container {
+        width: 38px;
+        height: 38px;
+    }
+    .channel-name {
+        font-size: 10px;
+        max-width: 95px;
+    }
+    .btn-watch {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    .row-title {
+        font-size: 14px;
+    }
 }
-.btn-exit-header .material-symbols-rounded { font-size: 18px; }
+
+/* ==================== RESPONSIVE: LANDSCAPE MOBILE ==================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .tv-hero {
+        min-height: auto;
+        padding: 60px 20px 20px;
+    }
+    .hero-content h1 {
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+    .hero-content p {
+        display: none;
+    }
+    .hero-actions {
+        flex-direction: row !important;
+    }
+    .btn-watch {
+        width: auto;
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+    .tv-channels-container {
+        padding: 10px;
+    }
+    .channel-card {
+        min-width: 150px;
+        height: 80px;
+    }
+}
+
+/* ==================== RESPONSIVE: WIDE DESKTOP ==================== */
+@media (min-width: 1600px) {
+    .tv-header { padding: 35px 60px; }
+    .tv-hero { padding: 60px; }
+    .hero-content h1 { font-size: 72px; }
+    .hero-content p { font-size: 18px; }
+    .channel-card { min-width: 280px; height: 150px; }
+    .channel-card .logo-container { width: 90px; height: 90px; }
+    .channel-name { font-size: 15px; max-width: 220px; }
+    .tv-channels-container { padding: 30px 40px 60px; }
+}

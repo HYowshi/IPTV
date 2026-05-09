@@ -10,8 +10,9 @@
     <meta property="og:description" content="Trải nghiệm xem phim và truyền hình đỉnh cao với Phim.tv">
     <meta property="og:type" content="website">
     <title>Phim.tv - Chọn Dịch Vụ</title>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=swap">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
@@ -23,34 +24,43 @@
     <div id="easter-egg-container" aria-hidden="true"></div>
 
     <div id="disclaimer-modal" class="modal-overlay">
-        <div class="modal-content">
-            <h2><i class="fa-solid fa-triangle-exclamation"></i> MIỄN TRỪ TRÁCH NHIỆM</h2>
+    <div class="modal-content">
+            <h2><span class="material-symbols-rounded modal-warning-icon">warning</span> MIỄN TRỪ TRÁCH NHIỆM</h2>
             <div class="modal-text">
                 <p>Ứng dụng này hoạt động độc lập như một công cụ tìm kiếm tự động, chỉ tổng hợp các liên kết (link) đang tồn tại công khai trên Internet.</p>
                 <p>Chúng tôi KHÔNG lưu trữ, tải lên hay phân phối bất kỳ tệp tin truyền thông, video hoặc luồng phát sóng (stream) nào trên hệ thống máy chủ của mình. Mọi quyền sở hữu trí tuệ và bản quyền nội dung thuộc về chủ sở hữu hợp pháp.</p>
                 <p>Người dùng tự chịu hoàn toàn trách nhiệm pháp lý đối với việc truy cập và sử dụng các nội dung này. Việc tiếp tục sử dụng ứng dụng đồng nghĩa với việc bạn từ bỏ mọi quyền khiếu nại đối với đội ngũ phát triển.</p>
             </div>
+            <label class="disclaimer-checkbox" id="disclaimer-checkbox-label">
+                <input type="checkbox" id="disclaimer-checkbox">
+                <span class="checkmark"></span>
+                <span>Tôi đã đọc kỹ và hiểu rõ nội dung trên</span>
+            </label>
             <div class="modal-actions">
                 <button id="btn-decline-disclaimer" class="modal-btn btn-decline">Thoát Ứng Dụng</button>
-                <button id="btn-accept-disclaimer" class="modal-btn">Tôi Đã Hiểu & Đồng Ý</button>
+                <button id="btn-accept-disclaimer" class="modal-btn" disabled>
+                    <span id="btn-accept-text">Tôi Đã Hiểu & Đồng Ý</span>
+                    <span id="btn-accept-timer"></span>
+                </button>
             </div>
         </div>
     </div>
 
     <main>
         <button id="btn-exit-main" class="btn-exit" data-tauri-drag-region="false" aria-label="Thoát ứng dụng">
-            <i class="fa-solid fa-power-off" aria-hidden="true"></i> Thoát Ứng Dụng
+            <span class="material-symbols-rounded btn-exit-icon">power_settings_new</span> Thoát Ứng Dụng
         </button>
 
         <header class="entry-header" data-tauri-drag-region>
             <h1>TRUNG TÂM GIẢI TRÍ</h1>
-            <p>Vui lòng chọn nền tảng bạn muốn trải nghiệm</p>
+            <p id="greeting-text">Vui lòng chọn nền tảng bạn muốn trải nghiệm</p>
         </header>
 
         <nav class="entry-container" aria-label="Danh mục dịch vụ">
             <a href="truyenhinh/truyenhinh.html" class="entry-box tv-accent" aria-label="Mở truyền hình">
                 <div class="icon-wrapper" aria-hidden="true">
-                    <i class="fa-solid fa-tv entry-icon-v2"></i>
+                    <div class="icon-glow tv-glow"></div>
+                    <span class="material-symbols-rounded entry-icon-v2">live_tv</span>
                 </div>
                 <span class="entry-text">Coi Truyền Hình</span>
                 <span class="entry-desc">Hàng trăm kênh chất lượng HD</span>
@@ -58,7 +68,8 @@
 
             <a href="phim/phim.html" class="entry-box movie-accent" aria-label="Mở xem phim">
                 <div class="icon-wrapper" aria-hidden="true">
-                    <i class="fa-solid fa-clapperboard entry-icon-v2"></i>
+                    <div class="icon-glow movie-glow"></div>
+                    <span class="material-symbols-rounded entry-icon-v2">theaters</span>
                 </div>
                 <span class="entry-text">Xem Phim</span>
                 <span class="entry-desc">Kho phim bom tấn cập nhật liên tục</span>

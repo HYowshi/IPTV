@@ -1,7 +1,9 @@
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body.entry-body {
@@ -25,6 +27,7 @@ body.entry-body.fade-out {
     opacity: 0;
 }
 
+/* ==================== AMBIENT GLOW ==================== */
 .ambient-glow {
     position: fixed;
     width: 600px;
@@ -38,9 +41,9 @@ body.entry-body.fade-out {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ambient-glow {
-    animation: none;
-  }
+    .ambient-glow {
+        animation: none;
+    }
 }
 
 .glow-1 {
@@ -57,21 +60,52 @@ body.entry-body.fade-out {
 }
 
 @keyframes drift {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(50px, 50px) scale(1.1); }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(50px, 50px) scale(1.1);
+    }
 }
 
 @keyframes revealIn {
-    0% { opacity: 0; transform: scale(0.95) translateY(20px); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
+    0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 @keyframes borderPulse {
-    0% { border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 0 0 0 rgba(249, 25, 66, 0); }
-    50% { border-color: rgba(249, 25, 66, 0.6); box-shadow: 0 0 15px rgba(249, 25, 66, 0.3); }
-    100% { border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 0 0 0 rgba(249, 25, 66, 0); }
+    0% {
+        border-color: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 0 0 rgba(249, 25, 66, 0);
+    }
+
+    50% {
+        border-color: rgba(249, 25, 66, 0.6);
+        box-shadow: 0 0 15px rgba(249, 25, 66, 0.3);
+    }
+
+    100% {
+        border-color: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 0 0 rgba(249, 25, 66, 0);
+    }
 }
 
+/* ==================== MATERIAL SYMBOLS ==================== */
+.material-symbols-rounded {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    user-select: none;
+    vertical-align: middle;
+}
+
+/* ==================== EXIT BUTTON ==================== */
 .btn-exit {
     position: absolute;
     top: 30px;
@@ -96,8 +130,9 @@ body.entry-body.fade-out {
     animation: revealIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.6s, borderPulse 3s infinite 1.4s;
 }
 
-.btn-exit i {
+.btn-exit-icon {
     color: #f91942;
+    font-size: 20px;
     pointer-events: none;
 }
 
@@ -108,12 +143,14 @@ body.entry-body.fade-out {
     box-shadow: 0 10px 20px rgba(249, 25, 66, 0.2);
 }
 
+/* ==================== HEADER ==================== */
 .entry-header {
     text-align: center;
     margin-bottom: 60px;
     z-index: 1;
     opacity: 0;
     animation: revealIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    padding: 0 20px;
 }
 
 @keyframes shimmerText {
@@ -121,32 +158,55 @@ body.entry-body.fade-out {
     100% { background-position: 200% center; }
 }
 
+@keyframes titleGlow {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0)) drop-shadow(0 0 8px rgba(249, 25, 66, 0)); }
+    50% { filter: drop-shadow(0 0 18px rgba(0, 242, 254, 0.45)) drop-shadow(0 0 18px rgba(249, 25, 66, 0.45)); }
+}
+
+@keyframes greetingSlideIn {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
 .entry-header h1 {
     font-size: 46px;
     font-weight: 900;
-    letter-spacing: 2px;
-    background: linear-gradient(90deg, #aaaaaa 0%, #ffffff 20%, #aaaaaa 40%);
-    background-size: 200% auto;
+    letter-spacing: 3px;
+    background: linear-gradient(
+        90deg,
+        #666666 0%,
+        #aaaaaa 15%,
+        #ffffff 30%,
+        #00f2fe 50%,
+        #ffffff 70%,
+        #aaaaaa 85%,
+        #666666 100%
+    );
+    background-size: 300% auto;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 15px;
     text-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
-    animation: shimmerText 5s linear infinite;
+    animation: shimmerText 4s linear infinite, titleGlow 4s ease-in-out infinite;
 }
 
 .entry-header p {
     color: #aaaaaa;
     font-size: 16px;
     letter-spacing: 0.5px;
+    opacity: 0;
+    animation: greetingSlideIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.4s;
 }
 
+/* ==================== ENTRY CONTAINER ==================== */
 .entry-container {
     display: flex;
     gap: 50px;
     flex-wrap: wrap;
     justify-content: center;
     z-index: 1;
+    padding: 0 20px;
 }
 
 .entry-box {
@@ -163,20 +223,9 @@ body.entry-body.fade-out {
     position: relative;
     user-select: none;
     transform-style: preserve-3d;
-    position: relative;
     z-index: 1;
     will-change: transform;
     opacity: 0;
-}
-
-@media (max-width: 768px) {
-  .entry-container {
-    gap: 20px;
-  }
-
-  .entry-header h1 {
-    font-size: 32px;
-  }
 }
 
 .entry-box:nth-child(1) {
@@ -191,7 +240,7 @@ body.entry-body.fade-out {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(20, 20, 20, 0.85); 
+    background: rgba(20, 20, 20, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: inherit;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
@@ -201,22 +250,22 @@ body.entry-body.fade-out {
 }
 
 @supports (backdrop-filter: blur(25px)) {
-  .entry-box::before {
-    background: rgba(20, 20, 20, 0.6);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-  }
+    .entry-box::before {
+        background: rgba(20, 20, 20, 0.6);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+    }
 }
 
 .entry-box:hover::before {
-    background: linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, transparent 100%), rgba(20, 20, 20, 0.6);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 0%, transparent 100%), rgba(20, 20, 20, 0.6);
 }
 
 .entry-box::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle 250px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent);
+    background: radial-gradient(circle 250px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.06), transparent);
     opacity: 0;
     transition: opacity 0.4s;
     pointer-events: none;
@@ -240,70 +289,131 @@ body.entry-body.fade-out {
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(249, 25, 66, 0.2);
 }
 
+/* ==================== ICON ==================== */
 .icon-wrapper {
     width: 120px;
     height: 120px;
-    background: rgba(255,255,255,0.02);
+    background: rgba(255, 255, 255, 0.02);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 35px;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s;
-    border: 1px solid rgba(255,255,255,0.03);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s, box-shadow 0.4s;
+    border: 1px solid rgba(255, 255, 255, 0.03);
     transform: translateZ(30px);
+    position: relative;
+    overflow: hidden;
 }
 
 .entry-box:hover .icon-wrapper {
     transform: translateZ(50px) scale(1.1);
-    background: rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Icon glow effect behind icon */
+.icon-glow {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    filter: blur(20px);
+    z-index: 0;
+}
+
+.tv-glow {
+    background: radial-gradient(circle, rgba(0, 242, 254, 0.5), transparent 70%);
+}
+
+.movie-glow {
+    background: radial-gradient(circle, rgba(249, 25, 66, 0.5), transparent 70%);
+}
+
+.entry-box:hover .icon-glow {
+    opacity: 1;
 }
 
 .entry-icon-v2 {
     font-size: 55px;
-    background: linear-gradient(to bottom, #ffffff, #888888);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: transform 0.4s, opacity 0.4s, box-shadow 0.4s;
-    display: inline-block;
+    color: #888888;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1;
     transform-origin: center center;
 }
 
-@keyframes jellyBounce {
-    0% { transform: scale(1, 1); }
-    30% { transform: scale(1.25, 0.75); }
-    40% { transform: scale(0.75, 1.25); }
-    60% { transform: scale(1.1, 0.9); }
-    80% { transform: scale(0.95, 1.05); }
-    100% { transform: scale(1, 1); }
+@keyframes iconPulseTV {
+    0% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(0.85);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+    75% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
-@keyframes clapperAction {
-    0% { transform: rotate(0deg) scale(1); }
-    20% { transform: rotate(-20deg) scale(1.1); }
-    40% { transform: rotate(15deg) scale(1.1); }
-    60% { transform: rotate(-10deg) scale(1.1); }
-    80% { transform: rotate(5deg) scale(1.1); }
-    100% { transform: rotate(0deg) scale(1); }
+@keyframes iconBounceMovie {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    20% {
+        transform: scale(1.2) rotate(-8deg);
+    }
+
+    40% {
+        transform: scale(0.9) rotate(6deg);
+    }
+
+    60% {
+        transform: scale(1.1) rotate(-4deg);
+    }
+
+    80% {
+        transform: scale(0.95) rotate(2deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
 }
 
 .tv-accent:hover .entry-icon-v2 {
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    -webkit-background-clip: text;
-    background-clip: text;
-    filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.6));
-    animation: jellyBounce 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    color: #00f2fe;
+    filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.7)) drop-shadow(0 0 10px rgba(0, 242, 254, 0.4));
+    animation: iconPulseTV 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.tv-accent:hover .icon-wrapper {
+    border-color: rgba(0, 242, 254, 0.3);
+    box-shadow: 0 0 30px rgba(0, 242, 254, 0.2), inset 0 0 30px rgba(0, 242, 254, 0.05);
 }
 
 .movie-accent:hover .entry-icon-v2 {
-    background: linear-gradient(135deg, #ff0844, #ffb199);
-    -webkit-background-clip: text;
-    background-clip: text;
-    filter: drop-shadow(0 0 20px rgba(255, 8, 68, 0.6));
-    animation: clapperAction 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    color: #f91942;
+    filter: drop-shadow(0 0 25px rgba(249, 25, 66, 0.7)) drop-shadow(0 0 10px rgba(249, 25, 66, 0.4));
+    animation: iconBounceMovie 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
+.movie-accent:hover .icon-wrapper {
+    border-color: rgba(249, 25, 66, 0.3);
+    box-shadow: 0 0 30px rgba(249, 25, 66, 0.2), inset 0 0 30px rgba(249, 25, 66, 0.05);
+}
+
+/* ==================== ENTRY TEXT ==================== */
 .entry-text {
     font-size: 28px;
     font-weight: 800;
@@ -333,9 +443,18 @@ body.entry-body.fade-out {
 }
 
 .is-navigating {
-  pointer-events: none;
+    pointer-events: none;
 }
 
+/* ==================== MODAL WARNING ICON ==================== */
+.modal-warning-icon {
+    color: #f91942;
+    font-size: 32px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* ==================== MODAL ==================== */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -351,6 +470,7 @@ body.entry-body.fade-out {
     z-index: 9999;
     opacity: 1;
     transition: opacity 0.5s ease;
+    padding: 20px;
 }
 
 .modal-overlay.hidden {
@@ -365,12 +485,14 @@ body.entry-body.fade-out {
     padding: 40px;
     border-radius: 20px;
     max-width: 600px;
-    width: 90%;
+    width: 100%;
     text-align: center;
     color: #fff;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 30px rgba(249, 25, 66, 0.15);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(249, 25, 66, 0.15);
     transform: translateY(0) scale(1);
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .modal-overlay.hidden .modal-content {
@@ -422,11 +544,73 @@ body.entry-body.fade-out {
     outline: none;
 }
 
-.modal-btn:hover, .modal-btn:focus {
+.modal-btn:hover,
+.modal-btn:focus {
     background: rgba(249, 25, 66, 0.4);
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(249, 25, 66, 0.3);
     border-color: #f91942;
+}
+
+/* ==================== DISCLAIMER CHECKBOX ==================== */
+.disclaimer-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #ccc;
+    user-select: none;
+    transition: color 0.3s;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.disclaimer-checkbox:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.disclaimer-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.disclaimer-checkbox .checkmark {
+    width: 22px;
+    height: 22px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.disclaimer-checkbox .checkmark::after {
+    content: '';
+    width: 6px;
+    height: 11px;
+    border: solid #000;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg) scale(0) translate(-1px, -1px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.disclaimer-checkbox input:checked+.checkmark {
+    background: #f91942;
+    border-color: #f91942;
+    box-shadow: 0 0 12px rgba(249, 25, 66, 0.4);
+}
+
+.disclaimer-checkbox input:checked+.checkmark::after {
+    opacity: 1;
+    transform: rotate(45deg) scale(1) translate(-1px, -1px);
 }
 
 .modal-actions {
@@ -434,6 +618,100 @@ body.entry-body.fade-out {
     gap: 15px;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+}
+
+.modal-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.modal-btn .btn-accept-timer {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-left: 4px;
+}
+
+#btn-accept-timer {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-left: 4px;
+}
+
+/* ==================== FOCUS STATES ==================== */
+.tv-accent:focus-visible {
+    outline: 2px solid rgba(0, 242, 254, 0.8);
+    outline-offset: 4px;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.05, 1.05, 1.05);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 242, 254, 0.3);
+}
+
+.tv-accent:focus-visible::before {
+    border-color: rgba(0, 242, 254, 0.5);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(0, 242, 254, 0.2);
+}
+
+.tv-accent:focus-visible .entry-icon-v2 {
+    color: #00f2fe;
+    filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.5));
+}
+
+.tv-accent:focus-visible .icon-wrapper {
+    border-color: rgba(0, 242, 254, 0.3);
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.15);
+}
+
+.movie-accent:focus-visible {
+    outline: 2px solid rgba(249, 25, 66, 0.8);
+    outline-offset: 4px;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.05, 1.05, 1.05);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 25px rgba(249, 25, 66, 0.3);
+}
+
+.movie-accent:focus-visible::before {
+    border-color: rgba(249, 25, 66, 0.5);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(249, 25, 66, 0.2);
+}
+
+.movie-accent:focus-visible .entry-icon-v2 {
+    color: #f91942;
+    filter: drop-shadow(0 0 20px rgba(249, 25, 66, 0.5));
+}
+
+.movie-accent:focus-visible .icon-wrapper {
+    border-color: rgba(249, 25, 66, 0.3);
+    box-shadow: 0 0 25px rgba(249, 25, 66, 0.15);
+}
+
+.btn-exit:focus-visible {
+    outline: 2px solid #f91942;
+    outline-offset: 4px;
+}
+
+.modal-btn:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+    transform: scale(1.05);
+}
+
+/* ==================== RIPPLE EFFECT ==================== */
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.entry-box .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+    z-index: 10;
 }
 
 .btn-decline {
@@ -442,13 +720,15 @@ body.entry-body.fade-out {
     color: #aaaaaa;
 }
 
-.btn-decline:hover, .btn-decline:focus {
+.btn-decline:hover,
+.btn-decline:focus {
     background: rgba(255, 255, 255, 0.1);
     border-color: #aaaaaa;
     color: #ffffff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
+/* ==================== EASTER EGG CONTAINER ==================== */
 #easter-egg-container {
     position: fixed;
     top: 0;
@@ -466,59 +746,459 @@ body.entry-body.fade-out {
     will-change: transform, opacity;
 }
 
+/* ==================== SPRING - Hoa anh đào ==================== */
 .particle-spring {
-    background: #ffb7c5;
-    border-radius: 50% 0 50% 50%;
-    top: -20px;
-    animation: fallSway linear forwards;
+    top: -30px;
+    animation: springFall linear forwards;
 }
 
+.particle-spring.petal-pink {
+    background: linear-gradient(135deg, #ffb7c5, #ff8fa3);
+    border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+    box-shadow: 0 0 6px rgba(255, 183, 197, 0.4);
+}
+
+.particle-spring.petal-white {
+    background: linear-gradient(135deg, #fff0f3, #ffe0e6);
+    border-radius: 50% 0 80% 55% / 80% 0 55% 50%;
+    box-shadow: 0 0 4px rgba(255, 240, 243, 0.3);
+}
+
+.particle-spring.petal-light {
+    background: linear-gradient(135deg, #ffc8d6, #ffb3c1);
+    border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+    box-shadow: 0 0 5px rgba(255, 200, 214, 0.35);
+}
+
+/* ==================== SUMMER - Đom đóm ==================== */
 .particle-summer {
-    background: #eaff00;
-    border-radius: 50%;
     bottom: -20px;
-    box-shadow: 0 0 10px #eaff00;
     animation: floatUp ease-in forwards;
-}
-
-.particle-autumn {
-    background: #ff7b00;
-    border-radius: 0 50% 50% 50%;
-    top: -20px;
-    animation: fallSpin linear forwards;
-}
-
-.particle-winter {
-    background: #fff;
     border-radius: 50%;
+}
+
+.particle-summer.firefly-yellow {
+    background: radial-gradient(circle, #fff7a1 20%, #eaff00 60%, transparent 100%);
+    box-shadow: 0 0 8px 3px rgba(234, 255, 0, 0.6), 0 0 20px 6px rgba(234, 255, 0, 0.2);
+}
+
+.particle-summer.firefly-green {
+    background: radial-gradient(circle, #c8ff68 20%, #7dff3a 60%, transparent 100%);
+    box-shadow: 0 0 8px 3px rgba(125, 255, 58, 0.5), 0 0 20px 6px rgba(125, 255, 58, 0.15);
+}
+
+.particle-summer.firefly-white {
+    background: radial-gradient(circle, #ffffff 20%, #e0f0ff 60%, transparent 100%);
+    box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.5), 0 0 15px 4px rgba(200, 230, 255, 0.15);
+}
+
+/* ==================== AUTUMN - Lá rơi ==================== */
+.particle-autumn {
+    top: -30px;
+    animation: autumnFall linear forwards;
+}
+
+.particle-autumn.leaf-orange {
+    background: linear-gradient(135deg, #ff7b00, #ff5500);
+    border-radius: 2px 80% 2px 80%;
+    box-shadow: 0 0 4px rgba(255, 123, 0, 0.3);
+}
+
+.particle-autumn.leaf-red {
+    background: linear-gradient(135deg, #d4380d, #a8071a);
+    border-radius: 80% 2px 80% 2px;
+    box-shadow: 0 0 4px rgba(212, 56, 13, 0.3);
+}
+
+.particle-autumn.leaf-gold {
+    background: linear-gradient(135deg, #ffc53d, #faad14);
+    border-radius: 50% 2px 50% 2px;
+    box-shadow: 0 0 4px rgba(255, 197, 61, 0.3);
+}
+
+.particle-autumn.leaf-brown {
+    background: linear-gradient(135deg, #ad6800, #874d00);
+    border-radius: 2px 60% 2px 60%;
+    box-shadow: 0 0 3px rgba(173, 104, 0, 0.2);
+}
+
+/* ==================== WINTER - Tuyết rơi ==================== */
+.particle-winter {
     top: -20px;
-    box-shadow: 0 0 5px #fff;
-    animation: fallStraight linear forwards;
+    animation: winterFall linear forwards;
+    border-radius: 50%;
 }
 
-@keyframes fallSway {
-    0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
-    10% { opacity: 0.8; }
-    90% { opacity: 0.8; }
-    100% { transform: translateY(110vh) rotate(360deg) translateX(100px); opacity: 0; }
+.particle-winter.snow-white {
+    background: radial-gradient(circle, #ffffff 30%, rgba(255, 255, 255, 0.6) 100%);
+    box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.4), 0 0 12px 2px rgba(200, 220, 255, 0.15);
 }
 
-@keyframes fallSpin {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.8; }
-    90% { opacity: 0.8; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+.particle-winter.snow-sparkle {
+    background: radial-gradient(circle, #ffffff 20%, rgba(220, 235, 255, 0.8) 100%);
+    box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.5), 0 0 16px 4px rgba(180, 210, 255, 0.2);
 }
 
-@keyframes fallStraight {
-    0% { transform: translateY(0); opacity: 0; }
-    10% { opacity: 0.6; }
-    90% { opacity: 0.6; }
-    100% { transform: translateY(110vh); opacity: 0; }
+.particle-winter.snow-small {
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
 }
 
+/* ==================== ANIMATIONS ==================== */
+
+/* Spring: Hoa anh đào rơi lả tả theo gió */
+@keyframes springFall {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg) scale(0.6);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 0.9;
+    }
+
+    25% {
+        transform: translateY(25vh) translateX(40px) rotate(90deg) scale(1);
+    }
+
+    50% {
+        transform: translateY(50vh) translateX(-20px) rotate(200deg) scale(0.95);
+        opacity: 0.85;
+    }
+
+    75% {
+        transform: translateY(75vh) translateX(30px) rotate(300deg) scale(0.9);
+    }
+
+    95% {
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: translateY(110vh) translateX(10px) rotate(400deg) scale(0.7);
+        opacity: 0;
+    }
+}
+
+/* Summer: Đom đóm bay lên với ánh sáng nhấp nháy */
 @keyframes floatUp {
-    0% { transform: translateY(0) scale(1); opacity: 0; }
-    50% { transform: translateY(-50vh) scale(1.5); opacity: 0.8; }
-    100% { transform: translateY(-110vh) scale(1); opacity: 0; }
+    0% {
+        transform: translateY(0) translateX(0) scale(0.3);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateY(-10vh) translateX(5px) scale(0.8);
+    }
+
+    30% {
+        transform: translateY(-30vh) translateX(-15px) scale(1);
+        opacity: 0.9;
+    }
+
+    50% {
+        transform: translateY(-50vh) translateX(10px) scale(1.1);
+        opacity: 0.7;
+    }
+
+    70% {
+        transform: translateY(-70vh) translateX(-8px) scale(0.9);
+        opacity: 0.5;
+    }
+
+    85% {
+        transform: translateY(-90vh) translateX(12px) scale(0.7);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(-110vh) translateX(0) scale(0.4);
+        opacity: 0;
+    }
+}
+
+/* Autumn: Lá rơi xoay tròn theo gió */
+@keyframes autumnFall {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 0.85;
+    }
+
+    20% {
+        transform: translateY(20vh) translateX(-30px) rotate(180deg) scale(1);
+    }
+
+    40% {
+        transform: translateY(40vh) translateX(25px) rotate(360deg) scale(0.95);
+    }
+
+    60% {
+        transform: translateY(60vh) translateX(-15px) rotate(540deg) scale(0.9);
+        opacity: 0.75;
+    }
+
+    80% {
+        transform: translateY(80vh) translateX(20px) rotate(680deg) scale(0.85);
+    }
+
+    95% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(110vh) translateX(5px) rotate(780deg) scale(0.6);
+        opacity: 0;
+    }
+}
+
+/* Winter: Tuyết rơi nhẹ nhàng với gió nhẹ */
+@keyframes winterFall {
+    0% {
+        transform: translateY(0) translateX(0) scale(0.4);
+        opacity: 0;
+    }
+
+    8% {
+        opacity: 0.8;
+    }
+
+    20% {
+        transform: translateY(20vh) translateX(15px) scale(0.9);
+    }
+
+    40% {
+        transform: translateY(40vh) translateX(-10px) scale(1);
+        opacity: 0.7;
+    }
+
+    60% {
+        transform: translateY(60vh) translateX(12px) scale(0.95);
+    }
+
+    80% {
+        transform: translateY(80vh) translateX(-5px) scale(0.85);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateY(110vh) translateX(8px) scale(0.6);
+        opacity: 0;
+    }
+}
+
+/* ==================== RESPONSIVE: TABLET ==================== */
+@media (max-width: 1024px) {
+    .entry-container {
+        gap: 30px;
+    }
+
+    .entry-header h1 {
+        font-size: 38px;
+    }
+
+    .btn-exit {
+        top: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+}
+
+/* ==================== RESPONSIVE: MOBILE ==================== */
+@media (max-width: 768px) {
+    .entry-container {
+        gap: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .entry-header {
+        margin-bottom: 40px;
+    }
+
+    .entry-header h1 {
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+    .entry-header p {
+        font-size: 14px;
+    }
+
+    .entry-box {
+        width: min(300px, 88vw);
+        aspect-ratio: 3/4;
+        border-radius: 20px;
+    }
+
+    .icon-wrapper {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 25px;
+    }
+
+    .entry-icon-v2 {
+        font-size: 42px;
+    }
+
+    .entry-text {
+        font-size: 22px;
+    }
+
+    .entry-desc {
+        font-size: 13px;
+        padding: 0 20px;
+    }
+
+    .btn-exit {
+        top: 15px;
+        right: 15px;
+        padding: 8px 16px;
+        font-size: 12px;
+        gap: 6px;
+    }
+
+    .btn-exit i {
+        font-size: 12px;
+    }
+
+    .modal-content {
+        padding: 25px 20px;
+        border-radius: 16px;
+    }
+
+    .modal-content h2 {
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+
+    .modal-content p {
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .modal-text {
+        padding: 15px;
+        margin-bottom: 25px;
+    }
+
+    .disclaimer-checkbox {
+        font-size: 13px;
+        padding: 8px 12px;
+        gap: 10px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    .ambient-glow {
+        width: 350px;
+        height: 350px;
+        filter: blur(60px);
+        opacity: 0.25;
+    }
+}
+
+/* ==================== RESPONSIVE: SMALL MOBILE ==================== */
+@media (max-width: 380px) {
+    .entry-header h1 {
+        font-size: 24px;
+    }
+
+    .entry-box {
+        width: min(280px, 92vw);
+        aspect-ratio: 1/1;
+    }
+
+    .icon-wrapper {
+        width: 75px;
+        height: 75px;
+        margin-bottom: 20px;
+    }
+
+    .entry-icon-v2 {
+        font-size: 36px;
+    }
+
+    .entry-text {
+        font-size: 20px;
+    }
+
+    .btn-exit {
+        padding: 7px 12px;
+        font-size: 11px;
+    }
+}
+
+/* ==================== RESPONSIVE: LANDSCAPE MOBILE ==================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .entry-container {
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .entry-box {
+        width: min(220px, 40vw);
+        aspect-ratio: 4/3;
+    }
+
+    .entry-header {
+        margin-bottom: 20px;
+    }
+
+    .entry-header h1 {
+        font-size: 24px;
+    }
+
+    .icon-wrapper {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 15px;
+    }
+
+    .entry-icon-v2 {
+        font-size: 30px;
+    }
+
+    .entry-text {
+        font-size: 18px;
+    }
+
+    .entry-desc {
+        font-size: 12px;
+    }
+}
+
+/* ==================== RESPONSIVE: VERY TALL SCREENS ==================== */
+@media (min-height: 900px) and (min-width: 769px) {
+    .entry-box {
+        width: min(350px, 90vw);
+    }
+
+    .icon-wrapper {
+        width: 130px;
+        height: 130px;
+        margin-bottom: 40px;
+    }
+
+    .entry-icon-v2 {
+        font-size: 60px;
+    }
+
+    .entry-text {
+        font-size: 30px;
+    }
 }
