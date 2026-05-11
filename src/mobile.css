@@ -189,6 +189,7 @@
         line-height: 1.6;
         margin-bottom: 16px;
         display: -webkit-box;
+        line-clamp: 3;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
@@ -269,6 +270,7 @@
     .hero-content p {
         font-size: 12px;
         line-height: 1.5;
+        line-clamp: 2;
         -webkit-line-clamp: 2;
     }
 
