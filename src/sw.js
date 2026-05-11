@@ -44,7 +44,9 @@ const STATIC_ASSETS = [
   '/phim/js/player.js',
   '/phim/js/home.js',
   '/phim/js/main.js',
-  '/phim/hls.min.js'
+  '/phim/hls.min.js',
+  '/fonts/material-symbols.css',
+  '/fonts/material-symbols-rounded.ttf'
 ];
 
 // Install: cache static assets
