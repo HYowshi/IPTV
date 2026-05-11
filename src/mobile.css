@@ -1,0 +1,59 @@
+/* ==================== MOBILE LANDSCAPE FULLSCREEN ==================== */
+#watch-view.landscape-mode {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 99999 !important;
+    background: #000 !important;
+}
+
+#watch-view.landscape-mode #tv-player,
+#watch-view.landscape-mode #video-player {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+}
+
+#watch-view.landscape-mode .tv-osd {
+    padding: 20px 30px;
+    min-width: auto;
+    max-width: 70vw;
+}
+
+#watch-view.landscape-mode .tv-osd img {
+    width: 50px;
+    height: 50px;
+}
+
+#watch-view.landscape-mode .tv-osd-info h2 {
+    font-size: 22px;
+}
+
+#watch-view.landscape-mode .tv-osd-info p {
+    font-size: 14px;
+}
+
+#watch-view.landscape-mode #btn-back-tv,
+#watch-view.landscape-mode #btn-back-watch {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+#watch-view.landscape-mode .tv-controls-main {
+    padding: 4px 16px 8px;
+}
+
+#watch-view.landscape-mode .control-btn {
+    font-size: 20px;
+}
+
+#watch-view.landscape-mode .quick-sidebar {
+    display: none !important;
+}
+
+#watch-view.landscape-mode #tv-quality-selector {
+    font-size: 12px;
+    padding: 6px 12px;
+}

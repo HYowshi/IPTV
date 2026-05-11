@@ -102,4 +102,37 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.style.display = 'none';
         });
     }
+
+    // Fix fullscreen for mobile: use CSS class + orientation lock instead of Fullscreen API
+    if (p.isMobile) {
+        // Override fullscreen buttons to use CSS-based fullscreen (already 100vw x 100vh)
+        document.addEventListener('click', (e) => {
+            const fsBtn = e.target.closest('#btn-fullscreen-tv, #fullscreen-btn');
+            if (!fsBtn) return;
+
+            const watchView = document.getElementById('watch-view');
+            if (!watchView || watchView.style.display !== 'block') return;
+
+            // Prevent the original handler from also firing
+            e.stopImmediatePropagation();
+
+            const isLand = watchView.classList.contains('landscape-mode');
+            try {
+                if (!isLand) {
+                    if (screen.orientation && screen.orientation.lock) {
+                        screen.orientation.lock('landscape').catch(() => {});
+                    }
+                    watchView.classList.add('landscape-mode');
+                } else {
+                    if (screen.orientation && screen.orientation.unlock) {
+                        screen.orientation.unlock();
+                    }
+                    watchView.classList.remove('landscape-mode');
+                }
+            } catch (e) {}
+
+            const icon = fsBtn.querySelector('span');
+            if (icon) icon.textContent = watchView.classList.contains('landscape-mode') ? 'fullscreen_exit' : 'fullscreen';
+        }, true); // capture phase to intercept before original handler
+    }
 });
