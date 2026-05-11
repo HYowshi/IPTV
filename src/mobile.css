@@ -218,3 +218,136 @@
         margin-top: 0;
     }
 }
+
+/* ==================== TRUYENHINH MOBILE OPTIMIZATIONS ==================== */
+@media (max-width: 768px) {
+    /* Safe area insets */
+    .tv-header {
+        padding-top: max(10px, env(safe-area-inset-top));
+    }
+
+    .tv-channels-container {
+        padding-bottom: max(30px, env(safe-area-inset-bottom));
+    }
+
+    /* Channel cards: better touch targets */
+    .channel-card {
+        min-width: 140px;
+        height: 95px;
+        border-radius: 14px;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .channel-card:active {
+        transform: scale(0.95) !important;
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+        border-color: rgba(0, 242, 254, 0.5);
+    }
+
+    /* Channel scroll: snap scrolling for better UX */
+    .channel-scroll-wrapper {
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px 10px;
+    }
+
+    .channel-card {
+        scroll-snap-align: start;
+    }
+
+    /* Hero: compact on mobile */
+    .tv-hero {
+        min-height: 250px;
+        padding: 60px 15px 25px;
+    }
+
+    .hero-content h1 {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+
+    .hero-content p {
+        font-size: 12px;
+        line-height: 1.5;
+        -webkit-line-clamp: 2;
+    }
+
+    .hero-actions {
+        flex-direction: column !important;
+        gap: 8px !important;
+        width: 100%;
+    }
+
+    .btn-watch {
+        width: 100%;
+        justify-content: center;
+        padding: 11px 18px;
+        font-size: 13px;
+    }
+
+    /* Player: show controls on tap */
+    #watch-view {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    #watch-view.show-ui .tv-controls,
+    #watch-view.show-ui .top-controls {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* OSD: smaller on mobile */
+    .tv-osd {
+        padding: 12px;
+        gap: 8px;
+        top: 50px;
+        left: 8px;
+        right: 8px;
+    }
+
+    .tv-osd img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .tv-osd-info h2 {
+        font-size: 16px;
+    }
+
+    .tv-osd-info p {
+        font-size: 12px;
+    }
+
+    /* Player controls: larger touch targets */
+    .tv-controls .control-btn {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Quick sidebar: full height on mobile */
+    .quick-sidebar {
+        width: min(280px, 85vw);
+        padding: 20px 12px;
+    }
+
+    .quick-sidebar-title {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    /* Filter tabs: horizontal scroll */
+    .tv-filter-bar {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding: 6px 10px;
+    }
+
+    .tv-filter-tab {
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+}
