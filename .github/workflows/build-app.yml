@@ -14,8 +14,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
+
+      - name: Install Frontend Dependencies
+        run: npm ci
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -39,9 +42,6 @@ jobs:
       - name: Install Android NDK
         run: sdkmanager "ndk;27.0.12077973"
 
-      - name: Install Frontend Dependencies
-        run: npm install
-
       - name: Init Tauri Android
         run: npm run tauri android init
 
@@ -64,8 +64,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
+
+      - name: Install Frontend Dependencies
+        run: npm ci
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -74,9 +77,6 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           workspaces: src-tauri -> target
-
-      - name: Install Frontend Dependencies
-        run: npm install
 
       - name: Build Tauri Windows
         run: npm run tauri build
