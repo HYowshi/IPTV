@@ -1012,7 +1012,7 @@ body.entry-body.fade-out {
 /* ==================== RESPONSIVE: MOBILE ==================== */
 @media (max-width: 768px) {
     body.entry-body {
-        justify-content: flex-start;
+        justify-content: center;
         padding-top: env(safe-area-inset-top, 20px);
         padding-bottom: env(safe-area-inset-bottom, 20px);
     }
