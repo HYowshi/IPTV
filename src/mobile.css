@@ -382,13 +382,42 @@ body.fullscreen-active {
     height: 100% !important;
 }
 
-/* Hide hero and main content when fullscreen */
+/* Hide hero, sidebar, light overlay when fullscreen
+   NOTE: Do NOT hide .main-container or #main-content
+   because watch-view is a child of them! */
 body.fullscreen-active .hero,
-body.fullscreen-active .main-container,
-body.fullscreen-active #main-content,
 body.fullscreen-active #heroBanner,
 body.fullscreen-active .right-column,
-body.fullscreen-active #light-overlay {
+body.fullscreen-active #light-overlay,
+body.fullscreen-active .mobile-nav-overlay,
+body.fullscreen-active .mobile-nav-panel,
+body.fullscreen-active .mobile-nav-panel-tv {
+    display: none !important;
+}
+
+/* In fullscreen, reset main-container and left-column */
+body.fullscreen-active .main-container,
+body.fullscreen-active #main-content {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+}
+
+/* In fullscreen, make left-column fill everything */
+body.fullscreen-active .left-column {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Hide filter bar, home-view, detail-view in fullscreen */
+body.fullscreen-active #home-view,
+body.fullscreen-active #filter-view,
+body.fullscreen-active #detail-view,
+body.fullscreen-active .filter-bar-container {
     display: none !important;
 }
 
@@ -433,6 +462,21 @@ body.fullscreen-active #watch-view .watch-container {
     max-height: 100% !important;
     background: transparent !important;
     border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Reset glass-panel in fullscreen */
+body.fullscreen-active .glass-panel,
+body.fullscreen-active .watch-container.glass-panel {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 /* Player section fills entire container */
@@ -479,11 +523,11 @@ body.fullscreen-active .custom-controls:focus-within {
 
 /* In fullscreen, show controls initially for a few seconds */
 body.fullscreen-active #watch-view.landscape-mode .custom-controls {
-    animation: showControlsTemporary 0.3s ease forwards;
+    animation: showControlsTemporary 3s ease forwards;
 }
 
 @keyframes showControlsTemporary {
-    0% { opacity: 1; pointer-events: auto; }
+    0%, 70% { opacity: 1; pointer-events: auto; }
     100% { opacity: 0; pointer-events: none; }
 }
 
