@@ -360,7 +360,8 @@ body.fullscreen-active .tv-header,
 body.fullscreen-active .btn-exit,
 body.fullscreen-active .btn-exit-header,
 body.fullscreen-active .hamburger-btn,
-body.fullscreen-active .hamburger-btn-tv {
+body.fullscreen-active .hamburger-btn-tv,
+body.fullscreen-active .btn-back {
     display: none !important;
     visibility: hidden !important;
 }
@@ -372,8 +373,10 @@ body.fullscreen-active #watch-view {
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
+    height: 100dvh !important;
     z-index: 99999 !important;
     background: #000 !important;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left) !important;
 }
 
 #watch-view.landscape-mode #tv-player,
@@ -390,6 +393,7 @@ body.fullscreen-active #watch-view .watch-container {
     padding: 0 !important;
     gap: 0 !important;
     height: 100vh !important;
+    height: 100dvh !important;
 }
 
 #watch-view.landscape-mode .watch-sidebar,
@@ -407,5 +411,40 @@ body.fullscreen-active #watch-view .iframe-container {
     border-radius: 0 !important;
     padding-bottom: 0 !important;
     height: 100vh !important;
+    height: 100dvh !important;
     width: 100% !important;
+}
+
+/* In fullscreen, always show controls on tap (not just hover) */
+body.fullscreen-active .custom-controls {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+body.fullscreen-active .iframe-container:hover .custom-controls,
+body.fullscreen-active #custom-video-container.show-controls .custom-controls,
+body.fullscreen-active .custom-controls:focus-within {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+/* In fullscreen, show controls initially for a few seconds */
+body.fullscreen-active #watch-view.landscape-mode .custom-controls {
+    animation: showControlsTemporary 0.3s ease forwards;
+}
+
+@keyframes showControlsTemporary {
+    0% { opacity: 1; pointer-events: auto; }
+    100% { opacity: 0; pointer-events: none; }
+}
+
+/* Safe area insets for mobile devices with navbar/notch */
+@media (max-width: 768px) {
+    .watch-container {
+        padding-bottom: max(30px, env(safe-area-inset-bottom)) !important;
+    }
+    
+    .player-controls {
+        padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+    }
 }

@@ -196,6 +196,14 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     safeAddListener('btn-back-watch', 'click', () => {
+        // Exit fullscreen if active (native or simulated)
+        document.body.classList.remove('fullscreen-active');
+        const headerEl = document.querySelector('header');
+        if (headerEl) headerEl.style.display = '';
+        if (document.fullscreenElement || document.webkitFullscreenElement) {
+            try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) { }
+        }
+
         document.getElementById('watch-view').style.display = 'none';
         document.getElementById('detail-view').style.display = 'block';
         window.scrollTo(0, 0);
@@ -207,13 +215,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const overlay = document.getElementById('next-ep-overlay');
             if (overlay) overlay.style.display = 'none';
         }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    safeAddListener('searchBtn', 'click', handleSearch);
-
-    let searchDebounceTimer;
-    safeAddListener('searchInput', 'input', (e) => {
         clearTimeout(searchDebounceTimer);
         searchDebounceTimer = setTimeout(() => {
             if (e.target.value.trim() !== "") handleSearch();
@@ -419,14 +420,69 @@ document.addEventListener("DOMContentLoaded", () => {
         updateVolumeUI();
 
         // ==================== FULLSCREEN ====================
+        const header = document.querySelector('header');
+
         const updateFullscreenIcon = () => {
             const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
-            if (isFs) { fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen_exit</span>'; fullscreenBtn.classList.add('fs-active'); }
-            else { fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen</span>'; fullscreenBtn.classList.remove('fs-active'); }
+            if (isFs) {
+                fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen_exit</span>';
+                fullscreenBtn.classList.add('fs-active');
+                document.body.classList.add('fullscreen-active');
+                if (header) header.style.display = 'none';
+            } else {
+                fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen</span>';
+                fullscreenBtn.classList.remove('fs-active');
+                document.body.classList.remove('fullscreen-active');
+                if (header) header.style.display = '';
+            }
         };
-        fullscreenBtn.addEventListener('click', () => toggleFullscreen(customVideoContainer));
-        document.addEventListener('fullscreenchange', updateFullscreenIcon);
-        document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
+
+        const toggleMobileFullscreen = async () => {
+            const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+            if (!isFs) {
+                // Always apply simulated fullscreen on mobile to ensure header hides
+                document.body.classList.add('fullscreen-active');
+                if (header) header.style.display = 'none';
+                fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen_exit</span>';
+                fullscreenBtn.classList.add('fs-active');
+                // Also try native fullscreen
+                try { await toggleFullscreen(customVideoContainer); } catch(e) {}
+            } else {
+                // Exit both native and simulated fullscreen
+                document.body.classList.remove('fullscreen-active');
+                if (header) header.style.display = '';
+                fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen</span>';
+                fullscreenBtn.classList.remove('fs-active');
+                try { await toggleFullscreen(customVideoContainer); } catch(e) {}
+            }
+        };
+
+        // Override the exit fullscreen to also clean up mobile fullscreen
+        const exitMobileFullscreen = () => {
+            if (document.body.classList.contains('fullscreen-active')) {
+                document.body.classList.remove('fullscreen-active');
+                if (header) header.style.display = '';
+                fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen</span>';
+                fullscreenBtn.classList.remove('fs-active');
+            }
+        };
+
+        fullscreenBtn.addEventListener('click', toggleMobileFullscreen);
+        document.addEventListener('fullscreenchange', () => {
+            updateFullscreenIcon();
+            // If exiting fullscreen via native API, clean up mobile fullscreen too
+            const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+            if (!isFs) {
+                exitMobileFullscreen();
+            }
+        });
+        document.addEventListener('webkitfullscreenchange', () => {
+            updateFullscreenIcon();
+            const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+            if (!isFs) {
+                exitMobileFullscreen();
+            }
+        });
     }
 
     if (btnPipToggle && videoPlayerGlobal) {

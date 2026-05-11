@@ -281,6 +281,7 @@ function initUIEvents() {
     // ==================== FULLSCREEN ====================
     const btnFullscreen = document.getElementById('btn-fullscreen-tv');
     if (btnFullscreen) {
+        const tvHeader = document.querySelector('.tv-header');
         btnFullscreen.addEventListener('click', () => {
             const fsElement = watchView;
             const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
@@ -289,10 +290,14 @@ function initUIEvents() {
                     if (fsElement.requestFullscreen) fsElement.requestFullscreen();
                     else if (fsElement.webkitRequestFullscreen) fsElement.webkitRequestFullscreen();
                     else if (fsElement.msRequestFullscreen) fsElement.msRequestFullscreen();
+                    // Hide header on fullscreen enter
+                    if (tvHeader) tvHeader.style.display = 'none';
                 } else {
                     if (document.exitFullscreen) document.exitFullscreen();
                     else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
                     else if (document.msExitFullscreen) document.msExitFullscreen();
+                    // Show header on fullscreen exit
+                    if (tvHeader) tvHeader.style.display = '';
                 }
             } catch (e) { }
         });
@@ -301,6 +306,8 @@ function initUIEvents() {
             const icon = btnFullscreen.querySelector('span');
             const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
             if (icon) icon.textContent = isFs ? 'fullscreen_exit' : 'fullscreen';
+            // Also hide/show header based on fullscreen state
+            if (tvHeader) tvHeader.style.display = isFs ? 'none' : '';
         };
         document.addEventListener('fullscreenchange', updateFullscreenIcon);
         document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);

@@ -135,19 +135,42 @@ document.addEventListener('DOMContentLoaded', () => {
             e.stopImmediatePropagation();
 
             const isLand = watchView.classList.contains('landscape-mode');
-            try {
-                if (!isLand) {
+            const header = document.querySelector('header');
+            if (!isLand) {
+                // Apply CSS-based fullscreen + landscape
+                watchView.classList.add('landscape-mode');
+                document.body.classList.add('fullscreen-active');
+                if (header) header.style.display = 'none';
+                // Lock screen orientation to landscape
+                try {
                     if (screen.orientation && screen.orientation.lock) {
                         screen.orientation.lock('landscape').catch(() => {});
                     }
-                    watchView.classList.add('landscape-mode');
-                } else {
+                } catch (e) {}
+                // Also try native fullscreen (triggers rotation on some Android WebViews)
+                try {
+                    if (watchView.requestFullscreen) watchView.requestFullscreen().catch(() => {});
+                    else if (watchView.webkitRequestFullscreen) watchView.webkitRequestFullscreen();
+                } catch (e) {}
+            } else {
+                // Exit fullscreen
+                watchView.classList.remove('landscape-mode');
+                document.body.classList.remove('fullscreen-active');
+                if (header) header.style.display = '';
+                // Unlock orientation
+                try {
                     if (screen.orientation && screen.orientation.unlock) {
                         screen.orientation.unlock();
                     }
-                    watchView.classList.remove('landscape-mode');
-                }
-            } catch (e) {}
+                } catch (e) {}
+                // Exit native fullscreen
+                try {
+                    if (document.fullscreenElement || document.webkitFullscreenElement) {
+                        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+                        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                    }
+                } catch (e) {}
+            }
 
             const icon = fsBtn.querySelector('span');
             if (icon) icon.textContent = watchView.classList.contains('landscape-mode') ? 'fullscreen_exit' : 'fullscreen';
