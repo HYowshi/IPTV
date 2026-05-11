@@ -54,22 +54,26 @@ jobs:
       - name: Init Tauri Android
         run: npm run tauri android init
 
-      - name: Restore or Generate Signing Keystore
+      - name: Restore Signing Keystore
         run: |
           if [ -n "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" ]; then
             echo "🔑 Restoring keystore from GitHub secret..."
             echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > phimtv-release.jks
+            echo "✅ Keystore restored successfully"
           else
-            echo "⚠️ No ANDROID_KEYSTORE_BASE64 secret found. Generating new keystore..."
-            keytool -genkeypair -v \
-              -keystore phimtv-release.jks \
-              -keyalg RSA -keysize 2048 -validity 10000 \
-              -alias phimtv \
-              -storepass phimtv2026 -keypass phimtv2026 \
-              -dname "CN=PhimTV, OU=App, O=PhimTV, L=HCM, ST=VN, C=VN"
-            echo "⚠️ IMPORTANT: Save this keystore as a GitHub secret for consistent signing!"
-            echo "   Run: base64 -w 0 phimtv-release.jks"
-            echo "   Then add the output as ANDROID_KEYSTORE_BASE64 in repo Settings > Secrets"
+            echo "❌ FATAL: ANDROID_KEYSTORE_BASE64 secret not found!"
+            echo ""
+            echo "To set up signing keystore (one-time setup):"
+            echo "  1. Generate keystore locally:"
+            echo "     keytool -genkeypair -v -keystore phimtv-release.jks -keyalg RSA -keysize 2048 -validity 10000 -alias phimtv -storepass phimtv2026 -keypass phimtv2026 -dname \"CN=PhimTV, OU=App, O=PhimTV, L=HCM, ST=VN, C=VN\""
+            echo "  2. Encode to base64:"
+            echo "     base64 -w 0 phimtv-release.jks"
+            echo "  3. Add to GitHub repo:"
+            echo "     Settings > Secrets and variables > Actions > New secret"
+            echo "     Name: ANDROID_KEYSTORE_BASE64"
+            echo "     Value: <paste base64 output>"
+            echo ""
+            exit 1
           fi
 
       - name: Build Tauri APK (release)
@@ -124,13 +128,6 @@ jobs:
             exit 1
           fi
 
-      - name: Upload Keystore (first run only)
-        if: failure() && !secrets.ANDROID_KEYSTORE_BASE64
-        run: |
-          echo "::warning::Keystore was generated. Save it for future builds:"
-          echo "  base64 -w 0 phimtv-release.jks > keystore_base64.txt"
-          echo "  Then add as ANDROID_KEYSTORE_BASE64 secret in GitHub repo settings."
-
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -140,9 +137,31 @@ jobs:
       - name: Build Summary
         if: success()
         run: |
+          APK_DIR="src-tauri/gen/android/app/build/outputs/apk/universal/release"
+          SIGNED="$APK_DIR/PhimTV-v${{ steps.version.outputs.version }}.apk"
+          BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/*/ | sort -V | tail -1)
           echo "## ✅ Android Build Successful" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📱 App Identity" >> $GITHUB_STEP_SUMMARY
+          echo "- **App Name:** Phim.tv" >> $GITHUB_STEP_SUMMARY
+          echo "- **Package:** com.phimtv.app" >> $GITHUB_STEP_SUMMARY
           echo "- **Version:** ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Artifact:** PhimTV-Android-v${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Min SDK:** 24 (Android 7.0)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Artifact" >> $GITHUB_STEP_SUMMARY
+          echo "- **File:** PhimTV-Android-v${{ steps.version.outputs.version }}.apk" >> $GITHUB_STEP_SUMMARY
+          if [ -f "$SIGNED" ]; then
+            echo "- **Size:** $(ls -lh "$SIGNED" | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔐 Signing" >> $GITHUB_STEP_SUMMARY
+          echo "- **Keystore:** Restored from GitHub secret" >> $GITHUB_STEP_SUMMARY
+          echo "- **Signature verified:** ✅" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📋 Full APK Metadata" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          "$BUILD_TOOLS/aapt2" dump badging "$SIGNED" 2>/dev/null | grep -E "package:|application-label|sdkVersion|targetSdkVersion|uses-permission|launchable-activity|native-code" >> $GITHUB_STEP_SUMMARY || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
 
   build-windows:
     runs-on: windows-latest
