@@ -1,3 +1,4 @@
+
 name: Build Multi-Platform (APK & EXE)
 
 on:
@@ -108,9 +109,16 @@ jobs:
               --out "$SIGNED" \
               "$ALIGNED"
             echo "✅ Verifying signature..."
+            "$BUILD_TOOLS/apksigner" verify -v "$SIGNED" || true
+            echo ""
+            echo "📋 Certificate details:"
             "$BUILD_TOOLS/apksigner" verify --print-certs "$SIGNED"
+            echo ""
             echo "✅ Final signed APK: $SIGNED"
             ls -lh "$SIGNED"
+            echo ""
+            echo "📊 APK info:"
+            "$BUILD_TOOLS/aapt2" dump badging "$SIGNED" 2>/dev/null | grep -E "package:|application-label:|sdkVersion:|targetSdkVersion:" || true
           else
             echo "❌ Aligned APK not found at $ALIGNED"
             exit 1
