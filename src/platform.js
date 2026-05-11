@@ -89,3 +89,17 @@ function setupPlatformFeatures() {
         setupPlatformFeatures();
     }
 })();
+
+// Android-specific: hide exit button (back button handles it)
+document.addEventListener('DOMContentLoaded', () => {
+    const p = Platform.current;
+    if (p.isAndroid) {
+        const exitBtn = document.getElementById('btn-exit-main');
+        if (exitBtn) exitBtn.classList.add('android-hidden');
+        
+        // Also hide "Thoát" buttons in sub-page headers
+        document.querySelectorAll('.btn-exit-header').forEach(btn => {
+            btn.style.display = 'none';
+        });
+    }
+});

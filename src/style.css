@@ -1011,60 +1011,79 @@ body.entry-body.fade-out {
 
 /* ==================== RESPONSIVE: MOBILE ==================== */
 @media (max-width: 768px) {
+    body.entry-body {
+        justify-content: flex-start;
+        padding-top: env(safe-area-inset-top, 20px);
+        padding-bottom: env(safe-area-inset-bottom, 20px);
+    }
+
     .entry-container {
-        gap: 20px;
+        gap: 16px;
         flex-direction: column;
         align-items: center;
+        padding: 0 16px;
+        width: 100%;
     }
 
     .entry-header {
-        margin-bottom: 40px;
+        margin-bottom: 30px;
+        padding-top: 20px;
     }
 
     .entry-header h1 {
-        font-size: 28px;
+        font-size: 24px;
         letter-spacing: 1px;
     }
 
     .entry-header p {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .entry-box {
-        width: min(300px, 88vw);
-        aspect-ratio: 3/4;
-        border-radius: 20px;
+        width: 100%;
+        max-width: 340px;
+        aspect-ratio: 16/7;
+        border-radius: 18px;
+        flex-direction: row;
+        gap: 16px;
+        padding: 20px;
+        justify-content: flex-start;
     }
 
     .icon-wrapper {
-        width: 90px;
-        height: 90px;
-        margin-bottom: 25px;
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        margin-bottom: 0;
     }
 
     .entry-icon-v2 {
-        font-size: 42px;
+        font-size: 30px;
     }
 
     .entry-text {
-        font-size: 22px;
+        font-size: 18px;
+        margin-bottom: 4px;
+        text-align: left;
     }
 
     .entry-desc {
-        font-size: 13px;
-        padding: 0 20px;
+        font-size: 12px;
+        padding: 0;
+        text-align: left;
+        line-height: 1.4;
     }
 
     .btn-exit {
-        top: 15px;
-        right: 15px;
+        top: calc(env(safe-area-inset-top, 0px) + 12px);
+        right: 12px;
         padding: 8px 16px;
         font-size: 12px;
         gap: 6px;
     }
 
-    .btn-exit i {
-        font-size: 12px;
+    .btn-exit-icon {
+        font-size: 16px;
     }
 
     .modal-content {
@@ -1105,10 +1124,39 @@ body.entry-body.fade-out {
     }
 
     .ambient-glow {
-        width: 350px;
-        height: 350px;
-        filter: blur(60px);
-        opacity: 0.25;
+        width: 300px;
+        height: 300px;
+        filter: blur(50px);
+        opacity: 0.2;
+    }
+
+    /* Disable 3D transforms on touch devices */
+    .entry-box {
+        transform: none !important;
+        will-change: auto;
+    }
+
+    .entry-box:hover .entry-text,
+    .entry-box:hover .entry-desc,
+    .entry-box:hover .icon-wrapper {
+        transform: none;
+    }
+
+    .icon-glow { display: none; }
+
+    /* Touch-friendly active state */
+    .entry-box:active {
+        transform: scale(0.97) !important;
+        transition: transform 0.1s ease;
+    }
+
+    .entry-box:active::before {
+        border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Hide exit button on Android (back button handles it) */
+    .btn-exit.android-hidden {
+        display: none;
     }
 }
 
