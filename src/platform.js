@@ -41,6 +41,23 @@ const Platform = (() => {
     return { detect, get current() { return detect(); } };
 })();
 
+// Setup platform-aware features after DOM is ready
+function setupPlatformFeatures() {
+    const p = Platform.current;
+    
+    // Remove ALL data-tauri-drag-region attributes by default (safe for mobile/web)
+    document.querySelectorAll('[data-tauri-drag-region]').forEach(el => {
+        el.removeAttribute('data-tauri-drag-region');
+    });
+    
+    // Only enable drag-region on desktop Tauri
+    if (p.isDesktop) {
+        document.querySelectorAll('.entry-header, .entry-body, .tv-header, .tv-header-left').forEach(el => {
+            el.setAttribute('data-tauri-drag-region', '');
+        });
+    }
+}
+
 // Also try to get platform from Tauri backend for more accuracy
 (async () => {
     try {
@@ -58,4 +75,11 @@ const Platform = (() => {
             }
         }
     } catch (e) { }
+    
+    // Setup features once platform is known
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupPlatformFeatures);
+    } else {
+        setupPlatformFeatures();
+    }
 })();
