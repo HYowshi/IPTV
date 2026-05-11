@@ -178,3 +178,28 @@
     opacity: 0.6;
     cursor: wait;
 }
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-buttons .btn-play,
+    .hero-buttons .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hero-buttons .btn-random {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+    }
+}

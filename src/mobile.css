@@ -16,30 +16,27 @@
     object-fit: contain !important;
 }
 
-/* TV Player Landscape */
 #watch-view.landscape-mode .tv-osd {
-    padding: 15px 20px;
+    padding: 20px 30px;
     min-width: auto;
-    max-width: 60vw;
-    bottom: 80px;
-    border-left-width: 3px;
+    max-width: 70vw;
 }
 
 #watch-view.landscape-mode .tv-osd img {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 }
 
 #watch-view.landscape-mode .tv-osd-info h2 {
-    font-size: 18px;
-    margin-bottom: 4px;
+    font-size: 22px;
 }
 
 #watch-view.landscape-mode .tv-osd-info p {
-    font-size: 12px;
+    font-size: 14px;
 }
 
-#watch-view.landscape-mode #btn-back-tv {
+#watch-view.landscape-mode #btn-back-tv,
+#watch-view.landscape-mode #btn-back-watch {
     padding: 6px 12px;
     font-size: 12px;
 }
@@ -61,34 +58,8 @@
     padding: 6px 12px;
 }
 
-#watch-view.landscape-mode .top-controls {
-    padding: 8px;
-    gap: 8px;
-}
-
-#watch-view.landscape-mode #btn-back-tv {
-    padding: 6px 14px;
-    font-size: 13px;
-}
-
-#watch-view.landscape-mode .tv-loader-overlay .tv-spinner {
-    width: 40px;
-    height: 40px;
-    border-width: 3px;
-}
-
-/* TV Player: auto-hide controls faster on mobile */
-#watch-view.show-ui .tv-controls {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-#watch-view.show-ui .top-controls {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 /* ==================== PHIM PLAYER MOBILE FIXES ==================== */
+/* Show video controls on tap on mobile (not hover) */
 #custom-video-container.show-controls .custom-controls {
     opacity: 1 !important;
     pointer-events: auto !important;
@@ -134,13 +105,8 @@
     font-size: 12px;
 }
 
-/* ==================== MOBILE TOUCH IMPROVEMENTS ==================== */
+/* Mobile touch: tap to show/hide controls */
 @media (max-width: 768px) {
-    /* TV Player: touch to show/hide controls */
-    #watch-view {
-        cursor: pointer;
-    }
-
     /* Phim player: tap video to toggle controls */
     #custom-video-container {
         cursor: pointer;
@@ -152,48 +118,31 @@
     }
 
     /* Larger touch targets for controls */
-    .custom-controls .control-btn,
-    .tv-controls .control-btn {
-        padding: 10px;
-        min-width: 44px;
-        min-height: 44px;
+    .custom-controls .control-btn {
+        padding: 8px;
+        min-width: 40px;
+        min-height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    .top-controls button,
-    #btn-back-tv,
-    #tv-quality-selector {
-        min-height: 40px;
-    }
-
     /* Progress bar taller on mobile for easier scrubbing */
     .progress-container {
-        height: 10px !important;
+        height: 8px !important;
     }
 
     .progress-container:hover {
-        height: 12px !important;
+        height: 10px !important;
     }
 
-    /* TV controls bottom area taller for touch */
-    .tv-controls-main {
-        padding: 10px 20px 16px;
-    }
-
-    /* TV volume slider */
-    #volume-slider {
-        width: 80px;
-    }
-
-    /* Settings menu */
+    /* Settings menu full-width on mobile */
     .settings-menu {
         right: -50px !important;
         min-width: 180px !important;
     }
 
-    /* Watch sidebar */
+    /* Watch view: hide sidebar on phone portrait */
     .watch-sidebar {
         max-height: 200px;
     }
@@ -206,46 +155,66 @@
     #next-ep-name {
         font-size: 16px !important;
     }
+}
 
-    /* PiP button */
-    #btn-pip-tv {
-        min-width: 44px;
-        min-height: 44px;
+/* ==================== PHIM HERO MOBILE FIX ==================== */
+@media (max-width: 768px) {
+    .hero {
+        padding: 50px 15px 30px 15px;
+        min-height: auto;
+        height: auto;
     }
 
-    /* Fullscreen button on TV */
-    #btn-fullscreen-tv {
-        min-width: 44px;
-        min-height: 44px;
+    .hero-content {
+        margin-top: 0;
+        max-width: 100%;
     }
 
-    /* TV OSD on mobile portrait */
-    .tv-osd {
-        bottom: 80px;
-        padding: 15px 20px;
-        min-width: auto;
-        max-width: 85vw;
+    .hero h1 {
+        font-size: 22px;
+        letter-spacing: 0;
+        line-height: 1.2;
+        margin-bottom: 10px;
     }
 
-    .tv-osd img {
-        width: 50px;
-        height: 50px;
+    .hero-meta {
+        font-size: 11px;
+        gap: 6px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
     }
 
-    .tv-osd-info h2 {
-        font-size: 20px;
-    }
-
-    .tv-osd-info p {
+    .hero p {
         font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: 16px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
-    /* TV controls: hide volume slider on small screens */
-    .tv-controls #volume-slider {
-        display: none;
+    .hero-info {
+        font-size: 11px;
+        margin-bottom: 16px;
     }
 
-    .tv-controls #btn-mute {
-        display: flex;
+    /* Stack buttons vertically */
+    .hero .btn-play,
+    .hero .btn-primary {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 20px;
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+
+    .hero .btn-random {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 20px;
+        font-size: 12px;
+        margin-left: 0;
+        margin-top: 0;
     }
 }
