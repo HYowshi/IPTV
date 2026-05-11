@@ -9,3 +9,9 @@ src-tauri/target/
 # OS
 .DS_Store
 Thumbs.db
+
+# Android signing keystore (never commit!)
+*.jks
+*.keystore
+keystore_base64.txt
+phimtv-release.jks
