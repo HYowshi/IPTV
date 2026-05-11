@@ -18,7 +18,8 @@
         "center": true,
         "fullscreen": false,
         "resizable": true,
-        "visible": true
+        "visible": true,
+        "useHttpsScheme": false
       }
     ],
     "security": {
@@ -37,6 +38,11 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser"
+      }
+    }
   }
 }

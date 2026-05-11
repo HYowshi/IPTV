@@ -1,0 +1,410 @@
+/* ==================== CHANNELS CONTAINER ==================== */
+.tv-channels-container {
+    padding: 30px 30px 60px 30px; 
+    position: relative;
+    z-index: 10;
+    margin-top: -50px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.channel-row {
+    margin-bottom: 35px;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.row-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    padding: 0 20px; 
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: 0.5px;
+}
+.row-title::before {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 24px;
+    background: linear-gradient(180deg, #4facfe, #00f2fe);
+    border-radius: 3px;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
+}
+
+/* ==================== CHANNEL SCROLL ==================== */
+.channel-scroll-wrapper {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px; 
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.channel-scroll-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+.channel-scroll-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 6px;
+}
+.channel-scroll-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(0, 242, 254, 0.3);
+    border-radius: 6px;
+}
+.channel-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #00f2fe;
+    box-shadow: 0 0 10px #00f2fe;
+}
+
+/* ==================== CHANNEL CARD ==================== */
+@keyframes pulse-border {
+    0% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 242, 254, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0); }
+}
+
+.channel-card.playing {
+    border: 2px solid #00f2fe;
+    background: rgba(0, 242, 254, 0.12);
+    animation: pulse-border 2s infinite;
+}
+
+.channel-card.playing::after {
+    content: 'ĐANG XEM';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    color: #000;
+    font-size: 10px;
+    font-weight: 900;
+    text-align: center;
+    padding: 3px 0;
+    z-index: 10;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.channel-card {
+    min-width: 240px;
+    height: 140px;
+    background: linear-gradient(145deg, #1a1a1a 0%, #151515 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.06);
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+    flex-shrink: 0;
+}
+
+.channel-card .logo-container {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    z-index: 2;
+    transition: all 0.35s;
+}
+
+.channel-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at center, rgba(0, 242, 254, 0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.35s;
+}
+
+.channel-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    border-color: rgba(0, 242, 254, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 254, 0.1);
+    z-index: 5;
+    background: linear-gradient(145deg, #1e1e1e 0%, #181818 100%);
+}
+
+.channel-card:hover::before {
+    opacity: 1;
+}
+
+.channel-card:hover .logo-container {
+    background: rgba(0, 242, 254, 0.08);
+}
+
+.channel-logo {
+    font-size: 30px;
+    font-weight: 900;
+    color: #eee;
+    z-index: 2;
+    transition: all 0.35s;
+}
+
+.channel-card:hover .channel-logo {
+    transform: scale(1.1);
+    color: #00f2fe;
+}
+
+.channel-name {
+    font-size: 13px;
+    color: #999;
+    margin-top: 8px;
+    z-index: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+    text-align: center;
+    transition: color 0.3s;
+}
+
+.channel-card:hover .channel-name {
+    color: #ddd;
+}
+
+.channel-card:focus {
+    outline: none;
+    transform: translateY(-10px) scale(1.06);
+    border: 1.5px solid rgba(0, 242, 254, 0.6);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 242, 254, 0.2);
+    background: linear-gradient(145deg, #1e1e1e 0%, #181818 100%);
+    z-index: 10;
+}
+
+.channel-card:focus::before {
+    opacity: 1;
+}
+
+.channel-card:focus .channel-logo {
+    transform: scale(1.15);
+    color: #00f2fe;
+}
+
+.channel-card:focus .channel-name {
+    color: #eee;
+}
+
+.channel-card:active {
+    transform: scale(0.97) translateY(0) !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8) !important;
+    border-color: rgba(0, 242, 254, 0.4) !important;
+    transition: all 0.1s !important;
+}
+
+/* ==================== FILTER BAR ==================== */
+.tv-filter-bar {
+    display: flex;
+    gap: 10px;
+    padding: 12px 30px 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    position: relative;
+    z-index: 10;
+    flex-wrap: nowrap;
+}
+
+.tv-filter-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.tv-filter-tab {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 30px;
+    color: #888;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    flex-shrink: 0;
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tv-filter-tab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.05), rgba(79, 172, 254, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 30px;
+}
+
+.tv-filter-tab .material-symbols-rounded {
+    font-size: 18px;
+    transition: transform 0.3s;
+    position: relative;
+    z-index: 1;
+}
+
+.tv-filter-tab span:last-child {
+    position: relative;
+    z-index: 1;
+}
+
+.tv-filter-tab:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #ccc;
+    transform: translateY(-1px);
+}
+
+.tv-filter-tab:hover::before {
+    opacity: 1;
+}
+
+.tv-filter-tab:hover .material-symbols-rounded {
+    transform: scale(1.1);
+}
+
+.tv-filter-tab.active {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(79, 172, 254, 0.1));
+    border-color: rgba(0, 242, 254, 0.5);
+    color: #00f2fe;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.15), inset 0 0 20px rgba(0, 242, 254, 0.05);
+    font-weight: 800;
+    transform: translateY(-1px);
+}
+
+.tv-filter-tab.active .material-symbols-rounded {
+    filter: drop-shadow(0 0 4px rgba(0, 242, 254, 0.6));
+}
+
+/* ==================== LAST WATCHED BANNER ==================== */
+.tv-last-watched-banner {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 30px;
+    margin: 0 30px 15px;
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.08) 0%, rgba(79, 172, 254, 0.05) 100%);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10;
+}
+
+.tv-last-watched-banner:hover {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.15) 0%, rgba(79, 172, 254, 0.1) 100%);
+    border-color: rgba(0, 242, 254, 0.4);
+    box-shadow: 0 8px 30px rgba(0, 242, 254, 0.15);
+}
+
+.tv-last-watched-banner img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #fff;
+    padding: 3px;
+    flex-shrink: 0;
+}
+
+.banner-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.banner-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #00f2fe;
+    margin-bottom: 4px;
+}
+
+.banner-channel {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.banner-play {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    border: none;
+    border-radius: 20px;
+    color: #000;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.banner-play:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(0, 242, 254, 0.4);
+}
+
+.banner-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.banner-close:hover {
+    background: rgba(249, 25, 66, 0.2);
+    border-color: #f91942;
+    color: #f91942;
+}
+
+.banner-close .material-symbols-rounded {
+    font-size: 18px;
+}
+
+/* ==================== CHANNEL LETTER AVATAR ==================== */
+.channel-letter-avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(79, 172, 254, 0.2));
+    border: 2px solid rgba(0, 242, 254, 0.3);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 900;
+    color: #00f2fe;
+    z-index: 2;
+    letter-spacing: 1px;
+}

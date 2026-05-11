@@ -1,0 +1,824 @@
+/* ==================== RESPONSIVE: LARGE TABLET ==================== */
+@media (max-width: 1200px) {
+    .main-container {
+        padding: 0 30px 50px 30px;
+        gap: 30px;
+    }
+
+    header {
+        padding: 14px 30px;
+        gap: 12px;
+    }
+
+    .header-left {
+        gap: 18px;
+    }
+
+    nav>a,
+    nav .dropdown>a {
+        margin-right: 16px;
+    }
+
+    .movie-grid {
+        gap: 20px;
+    }
+
+    .search-box input {
+        width: 140px;
+    }
+
+    .search-box:focus-within input {
+        width: 180px;
+    }
+
+    .btn-exit-header {
+        padding: 7px 14px;
+        font-size: 12px;
+    }
+
+    .platform-switch {
+        padding: 3px;
+    }
+
+    .switch-item {
+        width: 120px;
+        font-size: 12px;
+    }
+}
+
+/* ==================== RESPONSIVE: SMALL TABLET ==================== */
+@media (max-width: 1100px) {
+    header {
+        padding: 12px 24px;
+        gap: 10px;
+    }
+
+    .header-left {
+        gap: 14px;
+    }
+
+    /* Hide nav links & dropdowns, show hamburger */
+    .header-left nav {
+        display: none;
+    }
+
+    .nav-separator {
+        display: none;
+    }
+
+    .unified-nav {
+        margin-left: 0;
+    }
+
+    /* Show hamburger on small tablet */
+    .hamburger-btn {
+        display: flex;
+    }
+
+    /* Show search toggle, hide inline search */
+    .search-toggle-btn {
+        display: flex;
+    }
+
+    .header-right .search-box {
+        display: none;
+    }
+
+    .header-right .search-box.expanded {
+        display: flex;
+    }
+
+    .search-box {
+        padding: 7px 14px;
+    }
+
+    .search-box input {
+        width: 120px;
+    }
+
+    .search-box:focus-within input {
+        width: 160px;
+    }
+
+    .switch-item {
+        width: 110px;
+        padding: 7px 0;
+    }
+}
+
+/* ==================== RESPONSIVE: TABLET ==================== */
+@media (max-width: 1024px) {
+    .main-container {
+        flex-direction: column;
+        padding: 0 20px 40px 20px;
+    }
+
+    .main-container.with-hero {
+        margin-top: -60px;
+    }
+
+    .right-column {
+        display: none;
+    }
+
+    .detail-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .detail-meta {
+        justify-content: center;
+    }
+
+    .detail-actions {
+        justify-content: center;
+    }
+
+    .detail-info-label {
+        width: 100px;
+    }
+
+    .detail-info-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .detail-info-label {
+        width: auto;
+    }
+
+    .lightbox-nav {
+        width: 40px;
+        height: 40px;
+    }
+
+    .lightbox-prev {
+        left: 10px;
+    }
+
+    .lightbox-next {
+        right: 10px;
+    }
+
+    /* Header rules: hamburger, search-toggle, nav hidden already set at 1100px */
+    header {
+        position: relative;
+        padding: 11px 18px;
+    }
+
+    header.compact {
+        padding: 8px 18px;
+    }
+
+    .watch-container {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .player-section,
+    .watch-sidebar {
+        flex: none;
+        width: 100%;
+        max-height: none;
+    }
+
+    .player-controls {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 14px 16px;
+    }
+
+    .player-controls > div {
+        justify-content: center;
+    }
+
+    .filter-bar-container {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px;
+        gap: 10px;
+    }
+
+    .hero {
+        padding: 0 20px;
+        height: auto;
+        min-height: 60vh;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero-meta {
+        justify-content: center;
+    }
+
+    .detail-info h1 {
+        font-size: 32px;
+    }
+
+    .detail-poster-wrapper img {
+        width: 220px;
+    }
+
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 15px;
+    }
+
+    .movie-grid.grid-horizontal {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    .episode-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 10px;
+    }
+
+    .btn-play,
+    .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .next-ep-overlay h3 {
+        font-size: 16px;
+    }
+
+    #next-ep-name {
+        font-size: 18px !important;
+    }
+
+    .countdown-circle {
+        width: 60px;
+        height: 60px;
+    }
+
+    #countdown-number {
+        font-size: 24px;
+    }
+}
+
+/* ==================== RESPONSIVE: MOBILE ==================== */
+@media (max-width: 768px) {
+
+    /* Header (nav, hamburger, search-toggle already hidden at 1100px) */
+    header {
+        padding: 10px 15px;
+        flex-wrap: wrap;
+    }
+
+    .header-left {
+        gap: 10px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .logo-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        border-radius: 8px;
+    }
+
+    .unified-nav .platform-switch {
+        display: none;
+    }
+
+    .header-right {
+        gap: 10px;
+    }
+
+    .btn-exit-header {
+        display: none;
+    }
+
+    .search-box {
+        padding: 6px 12px;
+        flex: 1;
+    }
+
+    .search-box input {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .search-box:focus-within input {
+        width: 100%;
+    }
+
+    /* Hero */
+    .hero {
+        padding: 60px 15px 30px 15px;
+        min-height: auto;
+        height: auto;
+    }
+
+    .hero-content {
+        margin-top: 0;
+        max-width: 100%;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+        letter-spacing: -0.5px;
+    }
+
+    .hero-meta {
+        font-size: 12px;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .hero p {
+        font-size: 14px;
+        line-height: 1.7;
+        display: -webkit-box;
+        line-clamp: 3;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .hero-info {
+        font-size: 12px;
+        margin-bottom: 24px;
+    }
+
+    /* Main Container */
+    .main-container {
+        padding: 0 12px 30px 12px;
+    }
+
+    .main-container.with-hero {
+        margin-top: -30px;
+    }
+
+    /* Movie Grid */
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 12px;
+    }
+
+    .movie-grid.grid-horizontal {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+
+    .movie-card h3 {
+        font-size: 12px;
+    }
+
+    .movie-card p {
+        font-size: 11px;
+    }
+
+    .movie-card .info {
+        padding: 10px 3px 3px 3px;
+    }
+
+    /* Section */
+    .section-title {
+        font-size: 16px;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+    }
+
+    .btn-more {
+        font-size: 10px;
+        padding: 4px 10px;
+    }
+
+    .movie-section {
+        margin-bottom: 50px;
+        content-visibility: auto;
+        contain-intrinsic-size: auto 400px;
+    }
+
+    /* Detail View */
+    .detail-header {
+        padding: 15px;
+        gap: 20px;
+    }
+
+    .detail-poster-wrapper img {
+        width: 180px;
+    }
+
+    .detail-info h1 {
+        font-size: 24px;
+    }
+
+    .detail-info h3 {
+        font-size: 15px;
+        margin-bottom: 15px;
+    }
+
+    .detail-info p {
+        font-size: 13px;
+    }
+
+    .detail-meta {
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .badge-outline {
+        font-size: 9px;
+        padding: 3px 8px;
+    }
+
+    .detail-extra {
+        gap: 6px;
+    }
+
+    .detail-info-row {
+        flex-direction: column;
+        gap: 2px;
+        padding: 6px 0;
+    }
+
+    .detail-info-label {
+        width: auto;
+        font-size: 11px;
+    }
+
+    .detail-info-value {
+        font-size: 12px;
+    }
+
+    .detail-actions {
+        gap: 10px;
+    }
+
+    .detail-actions .btn-play,
+    .detail-actions .btn-primary {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+
+    .btn-icon-action {
+        width: 38px;
+        height: 38px;
+    }
+
+    .detail-description p {
+        font-size: 13px;
+    }
+
+    .poster-rating {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    .poster-status-badge {
+        font-size: 9px;
+        padding: 4px 8px;
+    }
+
+    /* Gallery */
+    .gallery-img {
+        height: 100px;
+    }
+
+    /* Lightbox Mobile */
+    .lightbox-nav {
+        width: 36px;
+        height: 36px;
+    }
+
+    .lightbox-close {
+        top: 10px;
+        right: 15px;
+        font-size: 28px;
+    }
+
+    .lightbox-prev {
+        left: 5px;
+    }
+
+    .lightbox-next {
+        right: 5px;
+    }
+
+    .gallery-lightbox img {
+        max-width: 95vw;
+        max-height: 80vh;
+    }
+
+    /* Related Section Mobile */
+    #related-section .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 12px;
+    }
+
+    /* Toast Mobile */
+    .detail-toast {
+        bottom: 15px;
+        padding: 10px 18px;
+        font-size: 13px;
+        max-width: 90vw;
+    }
+
+    /* Episodes */
+    .episode-grid {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 8px;
+    }
+
+    .btn-episode {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .btn-server {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+
+    .server-list {
+        gap: 8px;
+    }
+
+    /* Watch View */
+    .watch-container {
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .player-controls {
+        padding: 12px 14px;
+        margin-top: 15px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .player-controls h2 {
+        font-size: 16px;
+        white-space: normal;
+        text-overflow: unset;
+    }
+
+    .player-controls > div {
+        justify-content: center;
+    }
+
+    .btn-secondary {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    /* Next Episode Overlay */
+    .next-ep-overlay h3 {
+        font-size: 14px;
+    }
+
+    #next-ep-name {
+        font-size: 16px !important;
+    }
+
+    .countdown-circle {
+        width: 50px;
+        height: 50px;
+    }
+
+    #countdown-number {
+        font-size: 20px;
+    }
+
+    .next-ep-actions {
+        gap: 10px;
+    }
+
+    .next-ep-actions .btn-primary,
+    .next-ep-actions .btn-secondary {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    /* Video Controls */
+    .controls-left,
+    .controls-right {
+        gap: 12px;
+    }
+
+    .control-btn {
+        font-size: 16px;
+    }
+
+    .time-display {
+        font-size: 11px;
+    }
+
+    .volume-container:hover .volume-track,
+    .volume-container.active .volume-track {
+        width: 70px;
+    }
+
+    #volume-slider {
+        width: 50px;
+    }
+
+    /* Pagination */
+    .pagination-controls {
+        padding: 8px 12px;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .btn-page {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+
+    .page-info {
+        font-size: 12px;
+    }
+
+    #input-page-jump {
+        width: 40px;
+    }
+
+    /* Filter */
+    .filter-bar-container {
+        padding: 12px;
+        gap: 10px;
+        margin-bottom: 25px;
+    }
+
+    .filter-bar-container select {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .filter-bar-container .btn-primary {
+        padding: 12px;
+    }
+
+    /* Loading */
+    .loading-container {
+        padding: 60px 0;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Random Movie Button */
+    .btn-random {
+        margin-left: 0;
+        margin-top: 12px;
+        width: 100%;
+        justify-content: center;
+        padding: 12px 20px;
+        font-size: 13px;
+    }
+
+    /* Trailer Preview - hidden on mobile */
+    .trailer-preview-overlay {
+        display: none !important;
+    }
+
+    /* Watch Party Modal */
+    .wp-modal-content {
+        padding: 25px;
+    }
+
+    .wp-modal-content h2 {
+        font-size: 18px;
+    }
+
+    .wp-room-code {
+        font-size: 22px;
+        letter-spacing: 3px;
+    }
+
+    .wp-join-row {
+        flex-direction: column;
+    }
+
+    .wp-join-row input {
+        width: 100%;
+    }
+
+    /* PiP Indicator */
+    .pip-indicator {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+}
+
+/* ==================== RESPONSIVE: SMALL MOBILE ==================== */
+@media (max-width: 380px) {
+    .hero h1 {
+        font-size: 22px;
+    }
+
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .movie-grid.grid-horizontal {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-poster-wrapper img {
+        width: 150px;
+    }
+
+    .detail-info h1 {
+        font-size: 20px;
+    }
+
+    .episode-grid {
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    }
+
+    .btn-episode {
+        font-size: 11px;
+        padding: 6px;
+    }
+
+    .hamburger-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .hamburger-line {
+        width: 18px;
+    }
+}
+
+/* ==================== RESPONSIVE: LANDSCAPE MOBILE ==================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: 50px 20px 20px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .hero-content {
+        margin-top: 0;
+    }
+
+    .main-container.with-hero {
+        margin-top: -20px;
+    }
+
+    .watch-container {
+        flex-direction: row;
+    }
+
+    .player-section {
+        flex: 7;
+    }
+
+    .watch-sidebar {
+        flex: 3;
+        max-height: 300px;
+    }
+}
+
+/* ==================== RESPONSIVE: WIDE DESKTOP ==================== */
+@media (min-width: 1600px) {
+    .main-container {
+        padding: 0 80px 80px 80px;
+    }
+
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 30px;
+    }
+
+    .movie-grid.grid-horizontal {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    }
+
+    .hero h1 {
+        font-size: 62px;
+    }
+
+    .hero-content {
+        max-width: 700px;
+    }
+
+    header {
+        padding: 20px 60px;
+    }
+}

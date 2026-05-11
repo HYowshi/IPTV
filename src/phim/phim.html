@@ -12,12 +12,20 @@
     <link rel="dns-prefetch" href="https://img.ophim.live">
     <link rel="dns-prefetch" href="https://phimimg.com">
     <title>Phim.tv - Giao diện Web</title>
-    <link rel="stylesheet" href="phim.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/detail.css">
+    <link rel="stylesheet" href="css/player.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap">
     <script src="../platform.js"></script>
     <script src="hls.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
 </head>
 
 <body>
@@ -87,10 +95,13 @@
             </nav>
         </div>
         <div class="header-right">
-            <div class="search-box">
+            <div class="search-box" id="searchBox">
                 <input type="text" placeholder="Tìm kiếm tác phẩm..." id="searchInput">
                 <button class="icon-btn" id="searchBtn"><span class="material-symbols-rounded" style="font-size:18px;">search</span></button>
             </div>
+            <button class="icon-btn search-toggle-btn" id="searchToggleBtn" aria-label="Tìm kiếm" style="display:none;">
+                <span class="material-symbols-rounded" style="font-size:20px;">search</span>
+            </button>
             <a href="../index.html" class="btn-exit-header transition-link"><span
                     class="material-symbols-rounded" style="font-size:18px;">logout</span> Thoát</a>
             <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
@@ -100,6 +111,34 @@
             </button>
         </div>
     </header>
+
+    <!-- Mobile Navigation Panel -->
+    <div id="mobileNavOverlay" class="mobile-nav-overlay"></div>
+    <div id="mobileNavPanel" class="mobile-nav-panel">
+        <div class="mobile-nav-title">Điều hướng</div>
+        <a href="#" onclick="navigateToHome(event)"><span class="material-symbols-rounded">movie</span> Phim Ảnh</a>
+        <a href="../truyenhinh/truyenhinh.html" class="transition-link"><span class="material-symbols-rounded">tv</span> Truyền hình</a>
+
+        <div class="mobile-nav-title">Danh sách</div>
+        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('new', '', 'Phim mới cập nhật', 1);"><span class="material-symbols-rounded">local_fire_department</span> Phim mới cập nhật</a>
+        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-bo', 'Phim bộ', 1);"><span class="material-symbols-rounded">view_list</span> Phim bộ</a>
+        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-le', 'Phim lẻ', 1);"><span class="material-symbols-rounded">movie</span> Phim lẻ</a>
+        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'hoat-hinh', 'Hoạt hình', 1);"><span class="material-symbols-rounded">animation</span> Hoạt hình</a>
+        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-vietsub', 'Phim Vietsub', 1);"><span class="material-symbols-rounded">subtitles</span> Phim Vietsub</a>
+        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-thuyet-minh', 'Phim Thuyết minh', 1);"><span class="material-symbols-rounded">record_voice_over</span> Phim Thuyết minh</a>
+        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-long-tieng', 'Phim Lồng tiếng', 1);"><span class="material-symbols-rounded">mic</span> Phim Lồng tiếng</a>
+        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-bo-dang-chieu', 'Phim bộ đang chiếu', 1);"><span class="material-symbols-rounded">play_circle</span> Phim bộ đang chiếu</a>
+        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-bo-hoan-tat', 'Phim bộ hoàn tất', 1);"><span class="material-symbols-rounded">check_circle</span> Phim bộ hoàn tất</a>
+        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-sap-chieu', 'Phim sắp chiếu', 1);"><span class="material-symbols-rounded">schedule</span> Phim sắp chiếu</a>
+
+        <div class="mobile-nav-title">Thể loại</div>
+        <div id="mobile-category-list" class="mobile-nav-links"></div>
+
+        <div class="mobile-nav-title">Quốc gia</div>
+        <div id="mobile-country-list" class="mobile-nav-links"></div>
+
+        <a href="../index.html" class="transition-link" style="margin-top:20px; color:#f91942;"><span class="material-symbols-rounded" style="color:#f91942;">logout</span> Thoát</a>
+    </div>
 
     <div id="loading-initial" class="loading-container">
         <div class="spinner"></div>
@@ -180,50 +219,117 @@
             <div id="detail-view" style="display: none;">
                 <button class="btn-back" onclick="navigateToHome(event)"><span class="material-symbols-rounded" style="font-size:18px;">arrow_back</span> Trở về
                     bộ sưu tập</button>
-                <div class="detail-header glass-panel">
+
+                <!-- Detail Loading Skeleton -->
+                <div id="detail-skeleton" class="detail-skeleton" style="display:none;">
+                    <div class="detail-header glass-panel">
+                        <div class="detail-poster-wrapper">
+                            <div class="skeleton skeleton-poster"></div>
+                        </div>
+                        <div class="detail-info">
+                            <div class="skeleton skeleton-title"></div>
+                            <div class="skeleton skeleton-subtitle"></div>
+                            <div class="skeleton-meta-row">
+                                <div class="skeleton skeleton-badge"></div>
+                                <div class="skeleton skeleton-badge"></div>
+                                <div class="skeleton skeleton-badge"></div>
+                            </div>
+                            <div class="skeleton skeleton-btn-row">
+                                <div class="skeleton skeleton-btn"></div>
+                                <div class="skeleton skeleton-btn"></div>
+                            </div>
+                            <div class="skeleton skeleton-text"></div>
+                            <div class="skeleton skeleton-text short"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-header glass-panel" id="detail-content-wrapper">
                     <div class="detail-poster-wrapper">
-                        <img id="detail-poster" src="" alt="Poster">
+                        <div class="poster-container">
+                            <img id="detail-poster" src="" alt="Poster">
+                            <div class="poster-rating" id="detail-rating" style="display:none;">
+                                <span class="material-symbols-rounded" style="font-size:14px;">star</span>
+                                <span id="detail-rating-value"></span>
+                            </div>
+                            <span class="poster-status-badge" id="detail-status-badge" style="display:none;"></span>
+                        </div>
                     </div>
                     <div class="detail-info">
                         <h1 id="detail-title"></h1>
                         <h3 id="detail-origin-name"></h3>
                         <div class="detail-meta">
-                            <span class="badge-outline" id="detail-quality"></span>
-                            <span class="badge-outline" id="detail-lang"></span>
-                            <span class="badge-outline" id="detail-year"></span>
+                            <span class="badge-outline badge-quality" id="detail-quality"></span>
+                            <span class="badge-outline badge-lang" id="detail-lang"></span>
+                            <span class="badge-outline badge-year" id="detail-year"></span>
+                            <span class="badge-outline badge-episodes" id="detail-ep-count" style="display:none;"></span>
                         </div>
 
-                        <div
-                            style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 25px; align-items: center;">
+                        <div class="detail-actions">
                             <button id="btn-watch-now" class="btn-play"
-                                style="display: none; padding: 10px 25px; font-size: 13px; border-radius: 30px;"><span
+                                style="display: none;"><span
                                     class="material-symbols-rounded" style="font-size:16px;">play_arrow</span> XEM NGAY</button>
                             <button id="btn-continue-watch" class="btn-primary"
-                                style="display: none; padding: 10px 25px; font-size: 13px; border-radius: 30px;"></button>
+                                style="display: none;"></button>
                             <a href="#" target="_blank" class="btn-secondary" id="detail-trailer"
-                                style="display: none; text-decoration: none;">XEM TRAILER</a>
+                                style="display: none; text-decoration: none;"><span class="material-symbols-rounded" style="font-size:16px;">movie</span> TRAILER</a>
+                            <button class="btn-icon-action" id="btn-favorite" title="Yêu thích">
+                                <span class="material-symbols-rounded" style="font-size:20px;">favorite</span>
+                            </button>
                         </div>
 
-                        <p id="detail-content"></p>
+                        <div class="detail-description" id="detail-description-wrapper">
+                            <p id="detail-content"></p>
+                            <button class="btn-expand-desc" id="btn-expand-desc" style="display:none;">
+                                <span class="material-symbols-rounded" style="font-size:16px;">expand_more</span> Xem thêm
+                            </button>
+                        </div>
                         <div class="detail-extra">
-                            <p><strong>Thể loại:</strong> <span id="detail-categories"></span></p>
-                            <p><strong>Quốc gia:</strong> <span id="detail-countries"></span></p>
-                            <p><strong>Đạo diễn:</strong> <span id="detail-directors"></span></p>
-                            <p><strong>Diễn viên:</strong> <span id="detail-actors"></span></p>
+                            <div class="detail-info-row">
+                                <span class="detail-info-label"><span class="material-symbols-rounded" style="font-size:16px;">category</span> Thể loại</span>
+                                <span class="detail-info-value" id="detail-categories"></span>
+                            </div>
+                            <div class="detail-info-row">
+                                <span class="detail-info-label"><span class="material-symbols-rounded" style="font-size:16px;">public</span> Quốc gia</span>
+                                <span class="detail-info-value" id="detail-countries"></span>
+                            </div>
+                            <div class="detail-info-row">
+                                <span class="detail-info-label"><span class="material-symbols-rounded" style="font-size:16px;">movie_creation</span> Đạo diễn</span>
+                                <span class="detail-info-value" id="detail-directors"></span>
+                            </div>
+                            <div class="detail-info-row">
+                                <span class="detail-info-label"><span class="material-symbols-rounded" style="font-size:16px;">groups</span> Diễn viên</span>
+                                <span class="detail-info-value" id="detail-actors"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="movie-section" style="margin-top: 40px; display: none;" id="gallery-section">
-                    <h2 class="section-title">Hình ảnh</h2>
+                    <h2 class="section-title"><span class="material-symbols-rounded" style="font-size:20px;">photo_library</span> Hình ảnh</h2>
                     <div class="gallery-scroll-wrapper" id="detail-gallery"></div>
                 </div>
 
                 <div class="movie-section" style="margin-top: 40px;">
                     <div id="server-list" class="server-list"></div>
-                    <h2 class="section-title">Chọn phân đoạn</h2>
+                    <h2 class="section-title"><span class="material-symbols-rounded" style="font-size:20px;">playlist_play</span> Chọn phân đoạn</h2>
                     <div class="episode-grid" id="episode-list"></div>
                 </div>
+
+                <!-- Related Movies Section -->
+                <div class="movie-section" id="related-section" style="margin-top: 40px; display: none;">
+                    <h2 class="section-title"><span class="material-symbols-rounded" style="font-size:20px;">recommend</span> Có thể bạn muốn xem</h2>
+                    <div class="movie-grid" id="related-grid"></div>
+                </div>
+            </div>
+
+            <!-- Gallery Lightbox -->
+            <div id="gallery-lightbox" class="gallery-lightbox" style="display:none;">
+                <button class="lightbox-close" id="lightbox-close">&times;</button>
+                <button class="lightbox-nav lightbox-prev" id="lightbox-prev"><span class="material-symbols-rounded" style="font-size:32px;">chevron_left</span></button>
+                <img id="lightbox-img" src="" alt="Gallery Image">
+                <button class="lightbox-nav lightbox-next" id="lightbox-next"><span class="material-symbols-rounded" style="font-size:32px;">chevron_right</span></button>
+                <div class="lightbox-counter" id="lightbox-counter"></div>
             </div>
 
             <div id="watch-view" style="display: none;">
@@ -361,7 +467,7 @@
         <div class="wp-modal-content glass-panel">
             <button class="wp-modal-close" id="btn-close-wp-modal">&times;</button>
             <h2><span class="material-symbols-rounded" style="color:#f91942;font-size:28px;">group</span> Chế độ xem nhóm</h2>
-            <p class="wp-subtitle">Đồng bộ phát lại giữa các tab trên cùng trình duyệt</p>
+            <p class="wp-subtitle">Đồng bộ phát lại giữa các tab trên cùng trình duyệt. Chia sẻ mã phòng để bạn bè tham gia!</p>
             
             <div id="wp-create-section" class="wp-section">
                 <button id="btn-create-room" class="btn-play" style="width:100%;justify-content:center;padding:12px 24px;font-size:13px;">
@@ -392,7 +498,21 @@
                     <span class="wp-status-dot"></span>
                     <span id="wp-status">Đang chờ đồng bộ...</span>
                 </div>
-                <button id="btn-leave-room" class="btn-secondary" style="width:100%;padding:10px;font-size:12px;margin-top:10px;">Rời phòng</button>
+                <div id="wp-member-count" class="wp-member-indicator" style="display:none;">
+                    <span class="material-symbols-rounded">people</span>
+                    <span id="wp-member-text">1 người xem</span>
+                </div>
+                <div class="wp-reactions" id="wp-reactions">
+                    <button class="wp-reaction-btn" data-emoji="👍">👍</button>
+                    <button class="wp-reaction-btn" data-emoji="❤️">❤️</button>
+                    <button class="wp-reaction-btn" data-emoji="😂">😂</button>
+                    <button class="wp-reaction-btn" data-emoji="😮">😮</button>
+                    <button class="wp-reaction-btn" data-emoji="😢">😢</button>
+                    <button class="wp-reaction-btn" data-emoji="🔥">🔥</button>
+                    <button class="wp-reaction-btn" data-emoji="👏">👏</button>
+                    <button class="wp-reaction-btn" data-emoji="🍿">🍿</button>
+                </div>
+                <button id="btn-leave-room" class="btn-secondary" style="width:100%;padding:10px;font-size:12px;margin-top:12px;">Rời phòng</button>
             </div>
         </div>
     </div>
@@ -404,7 +524,13 @@
         <button id="pip-return" class="pip-return-btn"><span class="material-symbols-rounded" style="font-size:16px;">open_in_full</span></button>
     </div>
 
-    <script src="phim.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/cards.js"></script>
+    <script src="js/detail.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/main.js" defer></script>
 </body>
 
 </html>

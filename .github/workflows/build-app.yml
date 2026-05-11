@@ -15,11 +15,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-linux-android, armv7-linux-androideabi, i686-linux-android, x86_64-linux-android
+
+      - name: Cache Rust build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -27,14 +33,20 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android NDK
+        run: sdkmanager "ndk;27.0.12077973"
+
       - name: Install Frontend Dependencies
         run: npm install
 
       - name: Init Tauri Android
         run: npm run tauri android init
 
-      - name: Build Tauri APK
-        run: npm run tauri android build
+      - name: Build Tauri APK (release)
+        run: npm run tauri android build -- --release
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
@@ -53,9 +65,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
 
       - name: Install Frontend Dependencies
         run: npm install

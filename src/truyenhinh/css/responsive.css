@@ -1,0 +1,384 @@
+/* ==================== RESPONSIVE: LARGE TABLET ==================== */
+@media (max-width: 1200px) {
+    .tv-header { padding: 20px 30px; }
+    .tv-header-left { gap: 25px; }
+    .tv-hero { padding: 40px 30px; }
+    .hero-content h1 { font-size: 50px; }
+    .tv-channels-container { padding: 20px; }
+    .channel-card { min-width: 200px; }
+}
+
+/* ==================== RESPONSIVE: TABLET ==================== */
+@media (max-width: 1024px) {
+    .tv-header { padding: 15px 20px; }
+    .tv-header-left { gap: 15px; }
+    .tv-logo { font-size: 20px; }
+    .hero-content h1 { font-size: 42px; }
+    .hero-content p { font-size: 14px; }
+    .tv-channels-container { padding: 15px; margin-top: -30px; }
+    .channel-card { min-width: 180px; height: 110px; }
+    .channel-card .logo-container { width: 60px; height: 60px; }
+    .channel-scroll-wrapper { gap: 15px; padding: 15px; }
+    .row-title { font-size: 18px; }
+    .tv-osd { min-width: 350px; padding: 20px 30px; }
+    .tv-osd img { width: 60px; height: 60px; }
+    .tv-osd-info h2 { font-size: 26px; }
+    .tv-osd-info p { font-size: 15px; }
+    .quick-sidebar { width: 300px; }
+}
+
+/* ==================== RESPONSIVE: MOBILE ==================== */
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+        height: auto;
+    }
+    .tv-app {
+        height: auto;
+    }
+    .tv-main {
+        overflow-y: auto;
+    }
+
+    /* Header */
+    .tv-header {
+        position: sticky;
+        padding: 10px 15px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .tv-header-left {
+        gap: 10px;
+    }
+    .tv-logo {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+    .unified-nav .platform-switch { display: none; }
+    
+    .tv-header-right {
+        gap: 8px;
+    }
+    .tv-clock { display: none; }
+    .btn-exit-header { display: none; }
+    .hamburger-btn-tv { display: flex; }
+    
+    .tv-search {
+        padding: 6px 12px;
+        flex: 1;
+    }
+    .tv-search:focus-within input, .tv-search input:not(:placeholder-shown) {
+        width: 100%;
+        padding-left: 8px;
+    }
+    .tv-search input {
+        font-size: 14px;
+    }
+
+    /* Hero */
+    .tv-hero {
+        height: auto;
+        min-height: 300px;
+        padding: 70px 15px 30px 15px;
+        align-items: flex-start;
+    }
+    .hero-content {
+        max-width: 100%;
+    }
+    .hero-content h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+    .hero-content p {
+        font-size: 13px;
+        margin-bottom: 20px;
+        display: -webkit-box;
+        line-clamp: 3;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .hero-actions {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    .btn-watch {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+    .hero-badge {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    /* Channels */
+    .tv-channels-container {
+        padding: 10px 10px 30px 10px;
+        margin-top: 0;
+    }
+    .channel-row {
+        margin-bottom: 15px;
+    }
+    .row-title {
+        font-size: 16px;
+        padding: 0 10px;
+        margin-bottom: 8px;
+    }
+    .row-title::before {
+        width: 3px;
+        height: 16px;
+    }
+    .channel-scroll-wrapper {
+        gap: 12px;
+        padding: 10px;
+    }
+    .channel-card {
+        min-width: 130px;
+        height: 90px;
+        border-radius: 12px;
+    }
+    .channel-card .logo-container {
+        width: 45px;
+        height: 45px;
+        margin-bottom: 5px;
+    }
+    .channel-card .logo-container img {
+        width: 35px !important;
+        height: 35px !important;
+    }
+    .channel-logo {
+        font-size: 22px;
+    }
+    .channel-name {
+        font-size: 11px;
+        margin-top: 5px;
+        max-width: 110px;
+    }
+    .channel-card:hover {
+        transform: translateY(-5px) scale(1.03);
+    }
+    .channel-card:focus {
+        transform: translateY(-8px) scale(1.05);
+    }
+
+    /* OSD */
+    .tv-osd {
+        top: 60px;
+        right: 10px;
+        left: 10px;
+        bottom: auto;
+        min-width: auto;
+        max-width: none;
+        transform: translateY(-30px);
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        padding: 15px;
+        border-left: none;
+        border-top: 4px solid #00f2fe;
+        border-radius: 12px;
+    }
+    .tv-osd.show {
+        transform: translateY(0);
+    }
+    .tv-osd img {
+        width: 50px;
+        height: 50px;
+    }
+    .tv-osd-info h2 {
+        font-size: 20px;
+    }
+    .tv-osd-info p {
+        font-size: 13px;
+        max-width: 100%;
+    }
+
+    /* Filter Bar */
+    .tv-filter-bar {
+        padding: 8px 10px 4px;
+        gap: 8px;
+    }
+    .tv-filter-tab {
+        padding: 8px 14px;
+        font-size: 12px;
+        gap: 5px;
+    }
+    .tv-filter-tab .material-symbols-rounded {
+        font-size: 16px;
+    }
+
+    /* Last Watched Banner */
+    .tv-last-watched-banner {
+        margin: 0 10px 10px;
+        padding: 12px 15px;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .tv-last-watched-banner img {
+        width: 40px;
+        height: 40px;
+    }
+    .banner-channel {
+        font-size: 14px;
+    }
+    .banner-play {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+    .banner-close {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* Toast */
+    #tv-toast-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+    .tv-toast {
+        min-width: auto;
+        max-width: none;
+        font-size: 13px;
+        padding: 12px 16px;
+    }
+
+    /* Player Controls */
+    .tv-controls-main {
+        padding: 6px 12px 10px;
+    }
+    .controls-left {
+        gap: 10px;
+    }
+    .controls-right {
+        gap: 8px;
+    }
+    .control-btn {
+        font-size: 20px;
+    }
+    #volume-slider {
+        width: 50px;
+    }
+    /* Quick Sidebar */
+    .quick-sidebar {
+        width: min(300px, 80vw);
+        padding: 20px 15px;
+    }
+    .quick-sidebar-title {
+        font-size: 18px;
+    }
+    .quick-channel-item {
+        padding: 8px 10px;
+        gap: 10px;
+    }
+    .quick-channel-item img {
+        width: 30px;
+        height: 30px;
+    }
+    .quick-channel-item .material-symbols-rounded {
+        font-size: 24px;
+    }
+    .quick-channel-item span {
+        font-size: 13px;
+    }
+
+    /* Top Controls */
+    #top-controls {
+        top: 10px !important;
+        left: 10px !important;
+        gap: 8px !important;
+    }
+    #btn-back-tv {
+        padding: 8px 14px !important;
+        font-size: 13px !important;
+    }
+    #tv-quality-selector {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* ==================== RESPONSIVE: SMALL MOBILE ==================== */
+@media (max-width: 380px) {
+    .tv-header {
+        padding: 8px 10px;
+    }
+    .tv-logo {
+        font-size: 14px;
+    }
+    .hero-content h1 {
+        font-size: 22px;
+    }
+    .channel-card {
+        min-width: 110px;
+        height: 80px;
+    }
+    .channel-card .logo-container {
+        width: 38px;
+        height: 38px;
+    }
+    .channel-name {
+        font-size: 10px;
+        max-width: 95px;
+    }
+    .btn-watch {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    .row-title {
+        font-size: 14px;
+    }
+}
+
+/* ==================== RESPONSIVE: LANDSCAPE MOBILE ==================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .tv-hero {
+        min-height: auto;
+        padding: 60px 20px 20px;
+    }
+    .hero-content h1 {
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+    .hero-content p {
+        display: none;
+    }
+    .hero-actions {
+        flex-direction: row !important;
+    }
+    .btn-watch {
+        width: auto;
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+    .tv-channels-container {
+        padding: 10px;
+    }
+    .channel-card {
+        min-width: 150px;
+        height: 80px;
+    }
+}
+
+/* ==================== RESPONSIVE: WIDE DESKTOP ==================== */
+@media (min-width: 1600px) {
+    .tv-header { padding: 35px 60px; }
+    .tv-hero { padding: 60px; }
+    .hero-content h1 { font-size: 72px; }
+    .hero-content p { font-size: 18px; }
+    .channel-card { min-width: 280px; height: 150px; }
+    .channel-card .logo-container { width: 90px; height: 90px; }
+    .channel-name { font-size: 15px; max-width: 220px; }
+    .tv-channels-container { padding: 30px 40px 60px; }
+}
+
+/* ==================== RESPONSIVE: ULTRA WIDE ==================== */
+@media (min-width: 2200px) {
+    .tv-app {
+        max-width: 2000px;
+        border-left: 1px solid rgba(255,255,255,0.05);
+        border-right: 1px solid rgba(255,255,255,0.05);
+    }
+}

@@ -1,0 +1,180 @@
+/* ==================== HERO SECTION ==================== */
+.hero {
+    height: 90vh;
+    min-height: 500px;
+    max-height: 800px;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    transition: background 1s ease;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to top, #050505 0%, rgba(5, 5, 5, 0.6) 40%, transparent 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    max-width: 620px;
+    z-index: 2;
+    margin-top: -60px;
+    animation: heroSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) translateX(0);
+    }
+}
+
+.hero h1 {
+    font-size: 54px;
+    margin-bottom: 18px;
+    line-height: 1.05;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.hero-meta {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: 1.5px;
+}
+
+.hero-meta .text-accent {
+    color: #f91942;
+    font-size: 14px;
+    text-shadow: 0 0 12px rgba(249, 25, 66, 0.3);
+}
+
+.hero p {
+    color: #bbb;
+    margin-bottom: 32px;
+    font-size: 15px;
+    line-height: 1.9;
+    max-width: 520px;
+}
+
+.hero-info {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 36px;
+    letter-spacing: 0.3px;
+}
+
+.hero-info strong {
+    color: #ddd;
+    font-weight: 700;
+}
+
+/* ==================== BUTTONS ==================== */
+.btn-play,
+.btn-primary {
+    background: linear-gradient(135deg, #f91942 0%, #ff004f 100%, #f91942);
+    background-size: 200% auto;
+    color: white;
+    border: none;
+    padding: 14px 35px;
+    font-size: 15px;
+    font-weight: 800;
+    border-radius: 30px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 20px rgba(249, 25, 66, 0.3);
+}
+
+.btn-play:hover,
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(249, 25, 66, 0.6);
+    background-position: right center;
+}
+
+.play-icon {
+    font-size: 12px;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: black;
+}
+
+.btn-random {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 14px 30px;
+    font-size: 14px;
+    font-weight: 800;
+    border-radius: 30px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    margin-left: 15px;
+}
+
+.btn-random:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.btn-random:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}

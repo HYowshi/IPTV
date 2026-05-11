@@ -1,0 +1,300 @@
+/* ==================== LOADER ==================== */
+.tv-loader-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: #000; display: none; justify-content: center; align-items: center; z-index: 999;
+}
+.tv-spinner {
+    width: 60px; height: 60px; border: 5px solid rgba(0, 242, 254, 0.2);
+    border-top-color: #00f2fe; border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#tv-player::-webkit-media-controls-timeline,
+#tv-player::-webkit-media-controls-current-time-display,
+#tv-player::-webkit-media-controls-time-remaining-display {
+    display: none !important;
+}
+
+/* ==================== OSD ==================== */
+.tv-osd {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    z-index: 10000;
+    background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-left: 5px solid #00f2fe;
+    padding: 30px 60px 30px 40px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    min-width: 500px;
+    max-width: 80vw;
+}
+.tv-osd.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+.tv-osd img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+.tv-osd-info h2 {
+    font-size: 34px;
+    color: #fff;
+    margin-bottom: 8px;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+.tv-osd-info p {
+    font-size: 18px;
+    color: #00f2fe;
+    max-width: 500px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+}
+
+/* ==================== PLAYER CONTROLS ==================== */
+.tv-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
+    z-index: 10001;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    flex-direction: column;
+}
+
+.tv-controls-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px 14px;
+}
+
+.top-controls {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#watch-view.show-ui .tv-controls,
+#watch-view.show-ui .top-controls {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#watch-view.hide-cursor {
+    cursor: none;
+}
+
+.controls-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.control-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.control-btn:hover,
+.control-btn:focus {
+    color: #00f2fe;
+    transform: scale(1.1);
+    outline: none;
+}
+
+.control-btn:focus {
+    background: rgba(0, 242, 254, 0.2);
+    border-radius: 50%;
+    box-shadow: 0 0 15px #00f2fe;
+}
+
+#btn-back-tv:focus,
+#tv-quality-selector:focus {
+    background: rgba(0, 242, 254, 0.2) !important;
+    border-color: #00f2fe !important;
+    color: #00f2fe !important;
+    outline: none;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+}
+
+#volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100px;
+    height: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+
+#volume-slider:focus {
+    outline: 2px solid #00f2fe;
+    outline-offset: 4px;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #00f2fe;
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+#volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+}
+
+/* ==================== PiP ACTIVE STATE ==================== */
+.control-btn.pip-active {
+    color: #00f2fe;
+    background: rgba(0, 242, 254, 0.2);
+    border-radius: 50%;
+}
+
+/* ==================== QUICK SIDEBAR ==================== */
+.quick-sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 350px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 80%, transparent 100%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 10002;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px 30px 30px;
+    border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.quick-sidebar.show {
+    transform: translateX(0);
+}
+
+.quick-sidebar-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #00f2fe;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.quick-list-content {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 10px;
+}
+
+.quick-list-content::-webkit-scrollbar {
+    display: none;
+}
+
+.quick-channel-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 15px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.quick-channel-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.quick-channel-item .material-symbols-rounded {
+    font-size: 30px;
+    color: #fff;
+}
+
+.quick-channel-item span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ccc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.quick-channel-item:focus,
+.quick-channel-item.active {
+    background: rgba(0, 242, 254, 0.2);
+    border-color: #00f2fe;
+    transform: scale(1.05) translateX(10px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.quick-channel-item:focus span,
+.quick-channel-item.active span {
+    color: #fff;
+}
+
+/* ==================== ERROR OVERLAY ==================== */
+#tv-error-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10003;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#tv-error-overlay .btn-watch {
+    padding: 12px 30px;
+    font-size: 15px;
+}

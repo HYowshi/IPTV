@@ -1,0 +1,125 @@
+/* ==================== TOAST NOTIFICATIONS ==================== */
+#tv-toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.tv-toast {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: auto;
+    min-width: 250px;
+    max-width: 400px;
+}
+
+.tv-toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.tv-toast .material-symbols-rounded {
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.tv-toast-info {
+    border-left: 4px solid #00f2fe;
+}
+.tv-toast-info .material-symbols-rounded { color: #00f2fe; }
+
+.tv-toast-success {
+    border-left: 4px solid #4caf50;
+}
+.tv-toast-success .material-symbols-rounded { color: #4caf50; }
+
+.tv-toast-error {
+    border-left: 4px solid #f91942;
+}
+.tv-toast-error .material-symbols-rounded { color: #f91942; }
+
+/* ==================== ENTRY BOXES (unused but kept) ==================== */
+.entry-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: radial-gradient(circle at center, #111 0%, #000 100%);
+}
+.entry-container {
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.entry-box {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 50px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    width: 300px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.entry-box:hover {
+    transform: translateY(-15px) scale(1.05);
+}
+.tv-accent:hover {
+    border-color: #00f2fe;
+    box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15);
+}
+.movie-accent:hover {
+    border-color: #f91942;
+    box-shadow: 0 20px 40px rgba(249, 25, 66, 0.15);
+}
+.icon-wrapper {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    font-size: 40px;
+    transition: transform 0.4s;
+}
+.tv-accent .icon-wrapper { color: #00f2fe; }
+.movie-accent .icon-wrapper { color: #f91942; }
+.entry-box:hover .icon-wrapper {
+    transform: scale(1.2);
+    background: rgba(255,255,255,0.1);
+}
+.entry-text {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+.entry-desc {
+    font-size: 14px;
+    color: #aaa;
+}
