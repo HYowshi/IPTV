@@ -382,34 +382,272 @@ const CacheSystem = (() => {
         idbClean(TTL.COLD);
     }
     
-    // ==================== INIT ====================
-    function init() {
+    // ==================== INIT STATE ====================
+    let _initialized = false;
+    let _destroyed = false;
+    let _cleanupTimer = null;
+    let _warmTimer = null;
+    let _listeners = new Map();
+    let _beforeUnloadHandler = null;
+    
+    // ==================== ENHANCED INIT ====================
+    function initialize(options = {}) {
+        if (_initialized) {
+            console.warn('[Cache] Already initialized');
+            return;
+        }
+        if (_destroyed) {
+            console.warn('[Cache] Cannot reinitialize after destroy. Create new instance.');
+            return;
+        }
+        
+        _initialized = true;
         initIDB();
         
-        // Clean stale cache on load
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => cleanup(), { timeout: 5000 });
-        } else {
-            setTimeout(cleanup, 2000);
-        }
+        // Configurable cleanup interval (default: 5 min)
+        const cleanupInterval = options.cleanupInterval || 5 * 60 * 1000;
+        _cleanupTimer = setInterval(() => {
+            if (!_destroyed) cleanup();
+        }, cleanupInterval);
         
         // Warm cache during idle
         if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => processWarmQueue(), { timeout: 10000 });
+            _warmTimer = requestIdleCallback(() => processWarmQueue(), { timeout: 10000 });
         } else {
-            setTimeout(processWarmQueue, 5000);
+            _warmTimer = setTimeout(processWarmQueue, 5000);
         }
+        
+        // Persist critical cache before page unload
+        _beforeUnloadHandler = () => {
+            if (!_destroyed) persistCriticalCache();
+        };
+        window.addEventListener('beforeunload', _beforeUnloadHandler);
+        
+        // Listen for visibility change to pause/resume
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Page hidden: persist important data
+                persistCriticalCache();
+            }
+        });
+        
+        _emit('init', { timestamp: Date.now() });
+        console.log(`[Cache] Initialized v${VERSION}`);
     }
     
-    // Auto-init
+    // ==================== DESTROY ====================
+    function destroy(options = {}) {
+        if (!_initialized || _destroyed) return;
+        _destroyed = true;
+        
+        // Clear timers
+        if (_cleanupTimer) { clearInterval(_cleanupTimer); _cleanupTimer = null; }
+        if (_warmTimer) {
+            if (typeof _warmTimer === 'number') clearTimeout(_warmTimer);
+            else if (typeof cancelIdleCallback === 'function') cancelIdleCallback(_warmTimer);
+            _warmTimer = null;
+        }
+        
+        // Remove event listeners
+        if (_beforeUnloadHandler) {
+            window.removeEventListener('beforeunload', _beforeUnloadHandler);
+            _beforeUnloadHandler = null;
+        }
+        
+        // Persist critical data before destroy
+        if (options.persist !== false) {
+            persistCriticalCache();
+        }
+        
+        // Optionally clear all caches
+        if (options.clearAll) {
+            clearAll();
+        } else if (options.clearMemory) {
+            memCache.clear();
+        }
+        
+        // Close IndexedDB
+        if (idb) {
+            try { idb.close(); } catch (e) {}
+            idb = null;
+            idbReady = false;
+        }
+        
+        // Clear listeners
+        _listeners.clear();
+        
+        // Reset stats
+        stats = { hits: 0, misses: 0, sets: 0, evictions: 0 };
+        
+        _emit('destroy', { timestamp: Date.now() });
+        console.log('[Cache] Destroyed');
+    }
+    
+    // ==================== PERSIST CRITICAL CACHE ====================
+    function persistCriticalCache() {
+        // Promote hot memory entries to IndexedDB before unload
+        if (!idbReady) return;
+        try {
+            const tx = idb.transaction(IDB_STORE, 'readwrite');
+            const store = tx.objectStore(IDB_STORE);
+            let count = 0;
+            for (const [key, entry] of memCache.cache) {
+                if (entry.hits > 2 || entry.critical) {
+                    store.put(entry, key);
+                    count++;
+                }
+            }
+            if (count > 0) console.log(`[Cache] Persisted ${count} hot entries to IDB`);
+        } catch (e) {}
+    }
+    
+    // ==================== INVALIDATE ====================
+    function invalidate(key) {
+        memCache.delete(key);
+        try { sessionStorage.removeItem(PREFIX + key); } catch (_) {}
+        idbDelete(key);
+        try { localStorage.removeItem(PREFIX + 'lt_' + key); } catch (_) {}
+        _emit('invalidate', { key });
+    }
+    
+    function invalidatePattern(pattern) {
+        const regex = typeof pattern === 'string' ? new RegExp(pattern.replace(/\*/g, '.*')) : pattern;
+        let count = 0;
+        
+        // Memory
+        for (const key of memCache.cache.keys()) {
+            if (regex.test(key)) { memCache.delete(key); count++; }
+        }
+        
+        // SessionStorage
+        try {
+            Object.keys(sessionStorage).filter(k => k.startsWith(PREFIX)).forEach(k => {
+                const realKey = k.slice(PREFIX.length);
+                if (regex.test(realKey)) { sessionStorage.removeItem(k); count++; }
+            });
+        } catch (_) {}
+        
+        // LocalStorage
+        try {
+            Object.keys(localStorage).filter(k => k.startsWith(PREFIX + 'lt_')).forEach(k => {
+                const realKey = k.slice((PREFIX + 'lt_').length);
+                if (regex.test(realKey)) { localStorage.removeItem(k); count++; }
+            });
+        } catch (_) {}
+        
+        _emit('invalidate-pattern', { pattern: pattern.toString(), count });
+        return count;
+    }
+    
+    // ==================== CLEAR ALL ====================
+    function clearAll() {
+        memCache.clear();
+        
+        try {
+            Object.keys(sessionStorage).filter(k => k.startsWith(PREFIX)).forEach(k => {
+                sessionStorage.removeItem(k);
+            });
+        } catch (_) {}
+        
+        try {
+            Object.keys(localStorage).filter(k => k.startsWith(PREFIX)).forEach(k => {
+                localStorage.removeItem(k);
+            });
+        } catch (_) {}
+        
+        // Clear IndexedDB
+        if (idbReady) {
+            try {
+                const tx = idb.transaction(IDB_STORE, 'readwrite');
+                tx.objectStore(IDB_STORE).clear();
+            } catch (e) {}
+        }
+        
+        stats = { hits: 0, misses: 0, sets: 0, evictions: 0 };
+        _emit('clear-all', { timestamp: Date.now() });
+    }
+    
+    // ==================== EVENT SYSTEM ====================
+    function on(event, callback) {
+        if (!_listeners.has(event)) _listeners.set(event, new Set());
+        _listeners.get(event).add(callback);
+        return () => _listeners.get(event)?.delete(callback);
+    }
+    
+    function off(event, callback) {
+        _listeners.get(event)?.delete(callback);
+    }
+    
+    function _emit(event, data) {
+        _listeners.get(event)?.forEach(fn => {
+            try { fn(data); } catch (e) {}
+        });
+    }
+    
+    // ==================== HEALTH CHECK ====================
+    function healthCheck() {
+        const storageUsage = getStorageUsage();
+        const s = getStats();
+        
+        return {
+            initialized: _initialized,
+            destroyed: _destroyed,
+            idbReady,
+            version: VERSION,
+            stats: s,
+            storage: storageUsage,
+            memoryPressure: memCache.size / MEM_MAX > 0.8 ? 'high' : 
+                           memCache.size / MEM_MAX > 0.5 ? 'medium' : 'low',
+            health: s.hitRate === 'N/A' ? 'cold' :
+                   parseFloat(s.hitRate) > 70 ? 'excellent' :
+                   parseFloat(s.hitRate) > 40 ? 'good' : 'poor'
+        };
+    }
+    
+    function getStorageUsage() {
+        let ssSize = 0, lsSize = 0;
+        try {
+            Object.keys(sessionStorage).filter(k => k.startsWith(PREFIX)).forEach(k => {
+                ssSize += (sessionStorage.getItem(k) || '').length * 2; // UTF-16
+            });
+        } catch (_) {}
+        try {
+            Object.keys(localStorage).filter(k => k.startsWith(PREFIX)).forEach(k => {
+                lsSize += (localStorage.getItem(k) || '').length * 2;
+            });
+        } catch (_) {}
+        return {
+            sessionKB: Math.round(ssSize / 1024),
+            localKB: Math.round(lsSize / 1024),
+            totalKB: Math.round((ssSize + lsSize) / 1024)
+        };
+    }
+    
+    // ==================== AUTO-INIT ====================
+    // Initialize on DOMContentLoaded
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', () => initialize());
     } else {
-        init();
+        initialize();
     }
     
     return {
-        get, set, cleanup, getStats, addToWarmQueue, processWarmQueue,
+        // Core
+        get, set, initialize, destroy,
+        // Invalidation
+        invalidate, invalidatePattern, clearAll,
+        // Maintenance
+        cleanup, persistCriticalCache,
+        // Monitoring
+        getStats, healthCheck, getStorageUsage,
+        // Cache warming
+        addToWarmQueue, processWarmQueue,
+        // Events
+        on, off,
+        // State
+        get initialized() { return _initialized; },
+        get destroyed() { return _destroyed; },
+        // Constants
         TTL, PREFIX, VERSION
     };
 })();
