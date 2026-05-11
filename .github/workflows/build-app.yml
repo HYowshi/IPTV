@@ -45,14 +45,45 @@ jobs:
       - name: Init Tauri Android
         run: npm run tauri android init
 
+      - name: Generate Signing Keystore
+        run: |
+          keytool -genkeypair -v \
+            -keystore phimtv-release.jks \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -alias phimtv \
+            -storepass phimtv2026 -keypass phimtv2026 \
+            -dname "CN=PhimTV, OU=App, O=PhimTV, L=HCM, ST=VN, C=VN"
+
       - name: Build Tauri APK (release)
         run: npm run tauri android build --release
+
+      - name: Sign APK
+        run: |
+          APK_DIR="src-tauri/gen/android/app/build/outputs/apk/universal/release"
+          UNSIGNED="$APK_DIR/app-universal-release-unsigned.apk"
+          ALIGNED="$APK_DIR/app-universal-release-aligned.apk"
+          SIGNED="$APK_DIR/PhimTV.apk"
+          if [ -f "$UNSIGNED" ]; then
+            BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/*/ | sort -V | tail -1)
+            echo "Using build-tools: $BUILD_TOOLS"
+            "$BUILD_TOOLS/zipalign" -v -p 4 "$UNSIGNED" "$ALIGNED"
+            "$BUILD_TOOLS/apksigner" sign \
+              --ks phimtv-release.jks \
+              --ks-pass pass:phimtv2026 \
+              --ks-key-alias phimtv \
+              --key-pass pass:phimtv2026 \
+              --out "$SIGNED" \
+              "$ALIGNED"
+            "$BUILD_TOOLS/apksigner" verify "$SIGNED"
+            echo "Signed APK: $SIGNED"
+            ls -la "$APK_DIR/"
+          fi
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: phimtvapp-android-apk
-          path: src-tauri/gen/android/app/build/outputs/apk/universal/release/*.apk
+          path: src-tauri/gen/android/app/build/outputs/apk/universal/release/PhimTV.apk
 
   build-windows:
     runs-on: windows-latest
