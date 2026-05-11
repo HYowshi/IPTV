@@ -74,18 +74,32 @@ jobs:
       - name: Build Tauri APK (release)
         run: npm run tauri android build --release
 
-      - name: Zipalign & Sign APK
+      - name: Zipalign APK
         run: |
           APK_DIR="src-tauri/gen/android/app/build/outputs/apk/universal/release"
           UNSIGNED="$APK_DIR/app-universal-release-unsigned.apk"
           ALIGNED="$APK_DIR/app-universal-release-aligned.apk"
-          SIGNED="$APK_DIR/PhimTV-v${{ steps.version.outputs.version }}.apk"
+          BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/*/ | sort -V | tail -1)
+          echo "Using build-tools: $BUILD_TOOLS"
           if [ -f "$UNSIGNED" ]; then
-            BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/*/ | sort -V | tail -1)
-            echo "Using build-tools: $BUILD_TOOLS"
-            echo "📦 Zipaligning APK..."
+            echo "📦 Step 1: Zipalign APK (must be done BEFORE signing)..."
             "$BUILD_TOOLS/zipalign" -v -p 4 "$UNSIGNED" "$ALIGNED"
-            echo "🔐 Signing APK..."
+            echo "✅ Zipaligned: $ALIGNED"
+            ls -lh "$ALIGNED"
+          else
+            echo "❌ Unsigned APK not found at $UNSIGNED"
+            ls -la "$APK_DIR/" || true
+            exit 1
+          fi
+
+      - name: Sign APK
+        run: |
+          APK_DIR="src-tauri/gen/android/app/build/outputs/apk/universal/release"
+          ALIGNED="$APK_DIR/app-universal-release-aligned.apk"
+          SIGNED="$APK_DIR/PhimTV-v${{ steps.version.outputs.version }}.apk"
+          BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/*/ | sort -V | tail -1)
+          if [ -f "$ALIGNED" ]; then
+            echo "🔐 Step 2: Signing aligned APK..."
             "$BUILD_TOOLS/apksigner" sign \
               --ks phimtv-release.jks \
               --ks-pass pass:phimtv2026 \
@@ -95,10 +109,10 @@ jobs:
               "$ALIGNED"
             echo "✅ Verifying signature..."
             "$BUILD_TOOLS/apksigner" verify --print-certs "$SIGNED"
-            echo "✅ Signed APK: $SIGNED"
+            echo "✅ Final signed APK: $SIGNED"
             ls -lh "$SIGNED"
           else
-            echo "❌ APK not found at $UNSIGNED"
+            echo "❌ Aligned APK not found at $ALIGNED"
             exit 1
           fi
 
