@@ -1,4 +1,6 @@
 /* ==================== MOBILE LANDSCAPE FULLSCREEN ==================== */
+
+/* landscape-mode: used by truyenhinh page */
 #watch-view.landscape-mode {
     position: fixed !important;
     top: 0 !important;
@@ -107,7 +109,6 @@
 
 /* Mobile touch: tap to show/hide controls */
 @media (max-width: 768px) {
-    /* Phim player: tap video to toggle controls */
     #custom-video-container {
         cursor: pointer;
     }
@@ -117,7 +118,6 @@
         pointer-events: auto;
     }
 
-    /* Larger touch targets for controls */
     .custom-controls .control-btn {
         padding: 8px;
         min-width: 40px;
@@ -127,7 +127,6 @@
         justify-content: center;
     }
 
-    /* Progress bar taller on mobile for easier scrubbing */
     .progress-container {
         height: 8px !important;
     }
@@ -136,18 +135,15 @@
         height: 10px !important;
     }
 
-    /* Settings menu full-width on mobile */
     .settings-menu {
         right: -50px !important;
         min-width: 180px !important;
     }
 
-    /* Watch view: hide sidebar on phone portrait */
     .watch-sidebar {
         max-height: 200px;
     }
 
-    /* Next episode overlay */
     .next-ep-overlay h3 {
         font-size: 14px;
     }
@@ -200,7 +196,6 @@
         margin-bottom: 16px;
     }
 
-    /* Stack buttons vertically */
     .hero .btn-play,
     .hero .btn-primary {
         width: 100%;
@@ -222,7 +217,6 @@
 
 /* ==================== TRUYENHINH MOBILE OPTIMIZATIONS ==================== */
 @media (max-width: 768px) {
-    /* Safe area insets */
     .tv-header {
         padding-top: max(10px, env(safe-area-inset-top));
     }
@@ -231,7 +225,6 @@
         padding-bottom: max(30px, env(safe-area-inset-bottom));
     }
 
-    /* Channel cards: better touch targets */
     .channel-card {
         min-width: 140px;
         height: 95px;
@@ -245,7 +238,6 @@
         border-color: rgba(0, 242, 254, 0.5);
     }
 
-    /* Channel scroll: snap scrolling for better UX */
     .channel-scroll-wrapper {
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
@@ -256,7 +248,6 @@
         scroll-snap-align: start;
     }
 
-    /* Hero: compact on mobile */
     .tv-hero {
         min-height: 250px;
         padding: 60px 15px 25px;
@@ -287,7 +278,6 @@
         font-size: 13px;
     }
 
-    /* Player: show controls on tap */
     #watch-view {
         -webkit-tap-highlight-color: transparent;
     }
@@ -298,7 +288,6 @@
         transform: translateY(0);
     }
 
-    /* OSD: smaller on mobile */
     .tv-osd {
         padding: 12px;
         gap: 8px;
@@ -320,7 +309,6 @@
         font-size: 12px;
     }
 
-    /* Player controls: larger touch targets */
     .tv-controls .control-btn {
         min-width: 44px;
         min-height: 44px;
@@ -329,7 +317,6 @@
         justify-content: center;
     }
 
-    /* Quick sidebar: full height on mobile */
     .quick-sidebar {
         width: min(280px, 85vw);
         padding: 20px 12px;
@@ -340,7 +327,6 @@
         margin-bottom: 15px;
     }
 
-    /* Filter tabs: horizontal scroll */
     .tv-filter-bar {
         overflow-x: auto;
         flex-wrap: nowrap;
@@ -354,27 +340,11 @@
     }
 }
 
-/* ==================== FULLSCREEN LANDSCAPE MODE ==================== */
+/* ==================== MOBILE FULLSCREEN (body.fullscreen-active) ==================== */
+/* JS moves #watch-view to body level, so parent styles don't interfere.
+   We only need to style watch-view and its children. */
 
-/* Hide header AND its space */
-body.fullscreen-active header,
-body.fullscreen-active .tv-header,
-body.fullscreen-active .btn-exit,
-body.fullscreen-active .btn-exit-header,
-body.fullscreen-active .hamburger-btn,
-body.fullscreen-active .hamburger-btn-tv,
-body.fullscreen-active .btn-back {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    min-height: 0 !important;
-    max-height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-}
-
-/* Lock body scroll in fullscreen */
+/* Lock body to prevent scroll behind fullscreen */
 body.fullscreen-active {
     overflow: hidden !important;
     position: fixed !important;
@@ -382,47 +352,12 @@ body.fullscreen-active {
     height: 100% !important;
 }
 
-/* Hide hero, sidebar, light overlay when fullscreen
-   NOTE: Do NOT hide .main-container or #main-content
-   because watch-view is a child of them! */
-body.fullscreen-active .hero,
-body.fullscreen-active #heroBanner,
-body.fullscreen-active .right-column,
-body.fullscreen-active #light-overlay,
-body.fullscreen-active .mobile-nav-overlay,
-body.fullscreen-active .mobile-nav-panel,
-body.fullscreen-active .mobile-nav-panel-tv {
+/* Hide everything except watch-view when fullscreen is active */
+body.fullscreen-active > *:not(#watch-view):not(.custom-controls):not(script):not(style) {
     display: none !important;
 }
 
-/* In fullscreen, reset main-container and left-column */
-body.fullscreen-active .main-container,
-body.fullscreen-active #main-content {
-    padding: 0 !important;
-    margin: 0 !important;
-    max-width: 100% !important;
-    overflow: visible !important;
-}
-
-/* In fullscreen, make left-column fill everything */
-body.fullscreen-active .left-column {
-    width: 100% !important;
-    max-width: 100% !important;
-    flex: 1 1 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-/* Hide filter bar, home-view, detail-view in fullscreen */
-body.fullscreen-active #home-view,
-body.fullscreen-active #filter-view,
-body.fullscreen-active #detail-view,
-body.fullscreen-active .filter-bar-container {
-    display: none !important;
-}
-
-/* True fullscreen for watch-view */
-#watch-view.landscape-mode,
+/* Watch-view fills entire screen (now at body level, no parent interference) */
 body.fullscreen-active #watch-view {
     position: fixed !important;
     top: 0 !important;
@@ -441,8 +376,7 @@ body.fullscreen-active #watch-view {
     overflow: hidden !important;
 }
 
-#watch-view.landscape-mode #tv-player,
-#watch-view.landscape-mode #video-player,
+/* Video fills entire screen */
 body.fullscreen-active #watch-view #tv-player,
 body.fullscreen-active #watch-view #video-player {
     width: 100% !important;
@@ -450,8 +384,7 @@ body.fullscreen-active #watch-view #video-player {
     object-fit: contain !important;
 }
 
-/* Reset watch-container to fill fullscreen */
-#watch-view.landscape-mode .watch-container,
+/* Watch-container fills watch-view */
 body.fullscreen-active #watch-view .watch-container {
     padding: 0 !important;
     gap: 0 !important;
@@ -468,36 +401,23 @@ body.fullscreen-active #watch-view .watch-container {
     -webkit-backdrop-filter: none !important;
 }
 
-/* Reset glass-panel in fullscreen */
-body.fullscreen-active .glass-panel,
-body.fullscreen-active .watch-container.glass-panel {
-    background: transparent !important;
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-}
-
-/* Player section fills entire container */
-#watch-view.landscape-mode .player-section,
+/* Player section fills container */
 body.fullscreen-active #watch-view .player-section {
     width: 100% !important;
     height: 100% !important;
     flex: 1 1 100% !important;
 }
 
-#watch-view.landscape-mode .watch-sidebar,
+/* Hide sidebar and player-controls bar */
 body.fullscreen-active #watch-view .watch-sidebar {
     display: none !important;
 }
 
-#watch-view.landscape-mode .player-controls,
 body.fullscreen-active #watch-view .player-controls {
     display: none !important;
 }
 
-#watch-view.landscape-mode .iframe-container,
+/* Iframe container fills player section */
 body.fullscreen-active #watch-view .iframe-container {
     border-radius: 0 !important;
     padding-bottom: 0 !important;
@@ -508,35 +428,35 @@ body.fullscreen-active #watch-view .iframe-container {
     box-shadow: none !important;
 }
 
-/* In fullscreen, always show controls on tap (not just hover) */
-body.fullscreen-active .custom-controls {
+/* Video controls: hidden by default, show on tap */
+body.fullscreen-active #watch-view .custom-controls {
     opacity: 0 !important;
     pointer-events: none !important;
 }
 
-body.fullscreen-active .iframe-container:hover .custom-controls,
-body.fullscreen-active #custom-video-container.show-controls .custom-controls,
-body.fullscreen-active .custom-controls:focus-within {
+body.fullscreen-active #watch-view .iframe-container:hover .custom-controls,
+body.fullscreen-active #watch-view #custom-video-container.show-controls .custom-controls,
+body.fullscreen-active #watch-view .custom-controls:focus-within {
     opacity: 1 !important;
     pointer-events: auto !important;
 }
 
-/* In fullscreen, show controls initially for a few seconds */
-body.fullscreen-active #watch-view.landscape-mode .custom-controls {
-    animation: showControlsTemporary 3s ease forwards;
+/* Show controls briefly on enter fullscreen */
+body.fullscreen-active #watch-view .custom-controls.fs-enter {
+    animation: fsShowControls 3s ease forwards;
 }
 
-@keyframes showControlsTemporary {
+@keyframes fsShowControls {
     0%, 70% { opacity: 1; pointer-events: auto; }
     100% { opacity: 0; pointer-events: none; }
 }
 
-/* Safe area insets for mobile devices with navbar/notch (non-fullscreen only) */
+/* Safe area insets (non-fullscreen only) */
 @media (max-width: 768px) {
     body:not(.fullscreen-active) .watch-container {
         padding-bottom: max(30px, env(safe-area-inset-bottom)) !important;
     }
-    
+
     body:not(.fullscreen-active) .player-controls {
         padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
     }

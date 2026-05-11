@@ -121,9 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Fix fullscreen for mobile: use CSS class + orientation lock instead of Fullscreen API
+    // Fix fullscreen for mobile: move watch-view to body level for true fullscreen
     if (p.isMobile) {
-        // Override fullscreen buttons to use CSS-based fullscreen (already 100vw x 100vh)
+        // Store original DOM position for watch-view restoration
+        let _fsOriginalParent = null;
+        let _fsOriginalNextSibling = null;
+
         document.addEventListener('click', (e) => {
             const fsBtn = e.target.closest('#btn-fullscreen-tv, #fullscreen-btn');
             if (!fsBtn) return;
@@ -134,44 +137,80 @@ document.addEventListener('DOMContentLoaded', () => {
             // Prevent the original handler from also firing
             e.stopImmediatePropagation();
 
-            const isLand = watchView.classList.contains('landscape-mode');
-            const header = document.querySelector('header');
-            if (!isLand) {
-                // Save scroll position and lock body
+            const isFs = watchView.classList.contains('landscape-mode');
+
+            if (!isFs) {
+                // === ENTER FULLSCREEN ===
+
+                // 1. Save original DOM position
+                _fsOriginalParent = watchView.parentNode;
+                _fsOriginalNextSibling = watchView.nextSibling;
+
+                // 2. Save scroll position
                 document.body.dataset.scrollY = window.scrollY;
-                // Apply CSS-based fullscreen + landscape
+
+                // 3. Move watch-view to body level (escape all parent containers)
+                document.body.appendChild(watchView);
+
+                // 4. Apply fullscreen classes
                 watchView.classList.add('landscape-mode');
                 document.body.classList.add('fullscreen-active');
-                if (header) header.style.display = 'none';
-                // Lock screen orientation to landscape
+
+                // 5. Lock screen orientation to landscape
                 try {
                     if (screen.orientation && screen.orientation.lock) {
                         screen.orientation.lock('landscape').catch(() => {});
                     }
                 } catch (e) {}
-                // Also try native fullscreen (triggers rotation on some Android WebViews)
+
+                // 6. Try native fullscreen for rotation on Android WebView
                 try {
                     if (watchView.requestFullscreen) watchView.requestFullscreen().catch(() => {});
                     else if (watchView.webkitRequestFullscreen) watchView.webkitRequestFullscreen();
                 } catch (e) {}
+
             } else {
-                // Exit fullscreen
+                // === EXIT FULLSCREEN ===
+
+                // 1. Remove fullscreen classes
                 watchView.classList.remove('landscape-mode');
                 document.body.classList.remove('fullscreen-active');
+
+                // 2. Reset body styles
                 document.body.style.position = '';
                 document.body.style.width = '';
                 document.body.style.height = '';
-                if (header) header.style.display = '';
-                // Restore scroll position
+                document.body.style.overflow = '';
+
+                // 3. Restore watch-view to original DOM position
+                if (_fsOriginalParent) {
+                    if (_fsOriginalNextSibling) {
+                        _fsOriginalParent.insertBefore(watchView, _fsOriginalNextSibling);
+                    } else {
+                        _fsOriginalParent.appendChild(watchView);
+                    }
+                    _fsOriginalParent = null;
+                    _fsOriginalNextSibling = null;
+                }
+
+                // 4. Show all hidden elements
+                document.querySelectorAll('header, .tv-header').forEach(h => h.style.display = '');
+
+                // 5. Restore scroll position
                 const scrollY = document.body.dataset.scrollY;
-                if (scrollY) window.scrollTo(0, parseInt(scrollY));
-                // Unlock orientation
+                if (scrollY) {
+                    window.scrollTo(0, parseInt(scrollY));
+                    delete document.body.dataset.scrollY;
+                }
+
+                // 6. Unlock orientation
                 try {
                     if (screen.orientation && screen.orientation.unlock) {
                         screen.orientation.unlock();
                     }
                 } catch (e) {}
-                // Exit native fullscreen
+
+                // 7. Exit native fullscreen
                 try {
                     if (document.fullscreenElement || document.webkitFullscreenElement) {
                         if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
@@ -180,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch (e) {}
             }
 
+            // Update icon
             const icon = fsBtn.querySelector('span');
             if (icon) icon.textContent = watchView.classList.contains('landscape-mode') ? 'fullscreen_exit' : 'fullscreen';
         }, true); // capture phase to intercept before original handler
