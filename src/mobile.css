@@ -16,27 +16,30 @@
     object-fit: contain !important;
 }
 
+/* TV Player Landscape */
 #watch-view.landscape-mode .tv-osd {
-    padding: 20px 30px;
+    padding: 15px 20px;
     min-width: auto;
-    max-width: 70vw;
+    max-width: 60vw;
+    bottom: 80px;
+    border-left-width: 3px;
 }
 
 #watch-view.landscape-mode .tv-osd img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
 }
 
 #watch-view.landscape-mode .tv-osd-info h2 {
-    font-size: 22px;
+    font-size: 18px;
+    margin-bottom: 4px;
 }
 
 #watch-view.landscape-mode .tv-osd-info p {
-    font-size: 14px;
+    font-size: 12px;
 }
 
-#watch-view.landscape-mode #btn-back-tv,
-#watch-view.landscape-mode #btn-back-watch {
+#watch-view.landscape-mode #btn-back-tv {
     padding: 6px 12px;
     font-size: 12px;
 }
@@ -58,8 +61,34 @@
     padding: 6px 12px;
 }
 
+#watch-view.landscape-mode .top-controls {
+    padding: 8px;
+    gap: 8px;
+}
+
+#watch-view.landscape-mode #btn-back-tv {
+    padding: 6px 14px;
+    font-size: 13px;
+}
+
+#watch-view.landscape-mode .tv-loader-overlay .tv-spinner {
+    width: 40px;
+    height: 40px;
+    border-width: 3px;
+}
+
+/* TV Player: auto-hide controls faster on mobile */
+#watch-view.show-ui .tv-controls {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#watch-view.show-ui .top-controls {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* ==================== PHIM PLAYER MOBILE FIXES ==================== */
-/* Show video controls on tap on mobile (not hover) */
 #custom-video-container.show-controls .custom-controls {
     opacity: 1 !important;
     pointer-events: auto !important;
@@ -105,8 +134,13 @@
     font-size: 12px;
 }
 
-/* Mobile touch: tap to show/hide controls */
+/* ==================== MOBILE TOUCH IMPROVEMENTS ==================== */
 @media (max-width: 768px) {
+    /* TV Player: touch to show/hide controls */
+    #watch-view {
+        cursor: pointer;
+    }
+
     /* Phim player: tap video to toggle controls */
     #custom-video-container {
         cursor: pointer;
@@ -118,31 +152,48 @@
     }
 
     /* Larger touch targets for controls */
-    .custom-controls .control-btn {
-        padding: 8px;
-        min-width: 40px;
-        min-height: 40px;
+    .custom-controls .control-btn,
+    .tv-controls .control-btn {
+        padding: 10px;
+        min-width: 44px;
+        min-height: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    /* Progress bar taller on mobile for easier scrubbing */
-    .progress-container {
-        height: 8px !important;
+    .top-controls button,
+    #btn-back-tv,
+    #tv-quality-selector {
+        min-height: 40px;
     }
 
-    .progress-container:hover {
+    /* Progress bar taller on mobile for easier scrubbing */
+    .progress-container {
         height: 10px !important;
     }
 
-    /* Settings menu full-width on mobile */
+    .progress-container:hover {
+        height: 12px !important;
+    }
+
+    /* TV controls bottom area taller for touch */
+    .tv-controls-main {
+        padding: 10px 20px 16px;
+    }
+
+    /* TV volume slider */
+    #volume-slider {
+        width: 80px;
+    }
+
+    /* Settings menu */
     .settings-menu {
         right: -50px !important;
         min-width: 180px !important;
     }
 
-    /* Watch view: hide sidebar on phone portrait */
+    /* Watch sidebar */
     .watch-sidebar {
         max-height: 200px;
     }
@@ -154,5 +205,47 @@
 
     #next-ep-name {
         font-size: 16px !important;
+    }
+
+    /* PiP button */
+    #btn-pip-tv {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    /* Fullscreen button on TV */
+    #btn-fullscreen-tv {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    /* TV OSD on mobile portrait */
+    .tv-osd {
+        bottom: 80px;
+        padding: 15px 20px;
+        min-width: auto;
+        max-width: 85vw;
+    }
+
+    .tv-osd img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .tv-osd-info h2 {
+        font-size: 20px;
+    }
+
+    .tv-osd-info p {
+        font-size: 13px;
+    }
+
+    /* TV controls: hide volume slider on small screens */
+    .tv-controls #volume-slider {
+        display: none;
+    }
+
+    .tv-controls #btn-mute {
+        display: flex;
     }
 }
