@@ -1040,38 +1040,30 @@ body.entry-body.fade-out {
     }
 
     .entry-box {
-        width: 100%;
-        max-width: 340px;
-        aspect-ratio: 16/7;
-        border-radius: 18px;
-        flex-direction: row;
-        gap: 16px;
-        padding: 20px;
-        justify-content: flex-start;
+        width: min(300px, 88vw);
+        aspect-ratio: 3/4;
+        border-radius: 20px;
     }
 
     .icon-wrapper {
-        width: 64px;
-        height: 64px;
-        min-width: 64px;
-        margin-bottom: 0;
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
     }
 
     .entry-icon-v2 {
-        font-size: 30px;
+        font-size: 38px;
     }
 
     .entry-text {
-        font-size: 18px;
-        margin-bottom: 4px;
-        text-align: left;
+        font-size: 20px;
+        margin-bottom: 6px;
     }
 
     .entry-desc {
         font-size: 12px;
-        padding: 0;
-        text-align: left;
-        line-height: 1.4;
+        padding: 0 20px;
+        line-height: 1.5;
     }
 
     .btn-exit {
