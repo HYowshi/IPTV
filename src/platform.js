@@ -52,7 +52,13 @@ function setupPlatformFeatures() {
     
     // Only enable drag-region on desktop Tauri
     if (p.isDesktop) {
-        document.querySelectorAll('.entry-header, .entry-body, .tv-header, .tv-header-left').forEach(el => {
+        // Restore drag-region on desktop: covers all header types across pages
+        const dragSelectors = [
+            '.entry-header', '.entry-body',     // index.html
+            '.tv-header', '.tv-header-left',     // truyenhinh.html
+            'header', '.header-left'             // phim.html
+        ].join(', ');
+        document.querySelectorAll(dragSelectors).forEach(el => {
             el.setAttribute('data-tauri-drag-region', '');
         });
     }
