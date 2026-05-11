@@ -14,7 +14,8 @@
         "width": 360,
         "height": 640,
         "fullscreen": true,
-        "resizable": true
+        "resizable": true,
+        "decorations": false
       }
     ],
     "security": {
