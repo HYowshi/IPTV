@@ -248,6 +248,16 @@ document.addEventListener('DOMContentLoaded', () => {
         Prefetcher.preconnect('https://image.tmdb.org');
     });
     
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then(function(reg) {
+            console.log('[SW] Registered:', reg.scope);
+        }).catch(function(err) {
+            console.log('[SW] Registration failed:', err);
+        });
+    }
+    
     // Show offline banner when connection lost
     ConnectionManager.onStatusChange((type) => {
         let banner = document.getElementById('connection-banner');
