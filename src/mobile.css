@@ -351,3 +351,59 @@
         flex-shrink: 0;
     }
 }
+
+/* ==================== FULLSCREEN LANDSCAPE MODE ==================== */
+body.fullscreen-active header,
+body.fullscreen-active .tv-header,
+body.fullscreen-active .btn-exit,
+body.fullscreen-active .btn-exit-header,
+body.fullscreen-active .hamburger-btn,
+body.fullscreen-active .hamburger-btn-tv {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+#watch-view.landscape-mode,
+body.fullscreen-active #watch-view {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 99999 !important;
+    background: #000 !important;
+}
+
+#watch-view.landscape-mode #tv-player,
+#watch-view.landscape-mode #video-player,
+body.fullscreen-active #watch-view #tv-player,
+body.fullscreen-active #watch-view #video-player {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+}
+
+#watch-view.landscape-mode .watch-container,
+body.fullscreen-active #watch-view .watch-container {
+    padding: 0 !important;
+    gap: 0 !important;
+    height: 100vh !important;
+}
+
+#watch-view.landscape-mode .watch-sidebar,
+body.fullscreen-active #watch-view .watch-sidebar {
+    display: none !important;
+}
+
+#watch-view.landscape-mode .player-controls,
+body.fullscreen-active #watch-view .player-controls {
+    display: none !important;
+}
+
+#watch-view.landscape-mode .iframe-container,
+body.fullscreen-active #watch-view .iframe-container {
+    border-radius: 0 !important;
+    padding-bottom: 0 !important;
+    height: 100vh !important;
+    width: 100% !important;
+}
