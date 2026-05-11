@@ -137,6 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const isLand = watchView.classList.contains('landscape-mode');
             const header = document.querySelector('header');
             if (!isLand) {
+                // Save scroll position and lock body
+                document.body.dataset.scrollY = window.scrollY;
                 // Apply CSS-based fullscreen + landscape
                 watchView.classList.add('landscape-mode');
                 document.body.classList.add('fullscreen-active');
@@ -156,7 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Exit fullscreen
                 watchView.classList.remove('landscape-mode');
                 document.body.classList.remove('fullscreen-active');
+                document.body.style.position = '';
+                document.body.style.width = '';
+                document.body.style.height = '';
                 if (header) header.style.display = '';
+                // Restore scroll position
+                const scrollY = document.body.dataset.scrollY;
+                if (scrollY) window.scrollTo(0, parseInt(scrollY));
                 // Unlock orientation
                 try {
                     if (screen.orientation && screen.orientation.unlock) {
