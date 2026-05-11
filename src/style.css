@@ -1018,52 +1018,56 @@ body.entry-body.fade-out {
     }
 
     .entry-container {
-        gap: 16px;
-        flex-direction: column;
-        align-items: center;
-        padding: 0 16px;
+        gap: 12px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0 12px;
         width: 100%;
     }
 
     .entry-header {
-        margin-bottom: 30px;
-        padding-top: 20px;
+        margin-bottom: 20px;
+        padding-top: 10px;
     }
 
     .entry-header h1 {
-        font-size: 24px;
+        font-size: 22px;
         letter-spacing: 1px;
     }
 
     .entry-header p {
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .entry-box {
-        width: min(300px, 88vw);
+        width: calc(50% - 12px);
+        max-width: 180px;
         aspect-ratio: 3/4;
-        border-radius: 20px;
+        border-radius: 16px;
     }
 
     .icon-wrapper {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 20px;
+        width: 56px;
+        height: 56px;
+        margin-bottom: 14px;
     }
 
     .entry-icon-v2 {
-        font-size: 38px;
+        font-size: 28px;
     }
 
     .entry-text {
-        font-size: 20px;
-        margin-bottom: 6px;
+        font-size: 15px;
+        margin-bottom: 4px;
+        letter-spacing: 0;
     }
 
     .entry-desc {
-        font-size: 12px;
-        padding: 0 20px;
-        line-height: 1.5;
+        font-size: 11px;
+        padding: 0 12px;
+        line-height: 1.4;
     }
 
     .btn-exit {
@@ -1155,26 +1159,31 @@ body.entry-body.fade-out {
 /* ==================== RESPONSIVE: SMALL MOBILE ==================== */
 @media (max-width: 380px) {
     .entry-header h1 {
-        font-size: 24px;
+        font-size: 19px;
     }
 
     .entry-box {
-        width: min(280px, 92vw);
-        aspect-ratio: 1/1;
+        width: calc(50% - 10px);
+        max-width: 160px;
     }
 
     .icon-wrapper {
-        width: 75px;
-        height: 75px;
-        margin-bottom: 20px;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 10px;
     }
 
     .entry-icon-v2 {
-        font-size: 36px;
+        font-size: 24px;
     }
 
     .entry-text {
-        font-size: 20px;
+        font-size: 13px;
+    }
+
+    .entry-desc {
+        font-size: 10px;
+        padding: 0 8px;
     }
 
     .btn-exit {
