@@ -57,3 +57,102 @@
     font-size: 12px;
     padding: 6px 12px;
 }
+
+/* ==================== PHIM PLAYER MOBILE FIXES ==================== */
+/* Show video controls on tap on mobile (not hover) */
+#custom-video-container.show-controls .custom-controls {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+/* Phim watch-view landscape mode */
+#watch-view.landscape-mode .watch-container {
+    padding: 0 !important;
+    gap: 0 !important;
+    flex-direction: row !important;
+    height: 100vh !important;
+}
+
+#watch-view.landscape-mode .player-section {
+    flex: 1 !important;
+    width: 100% !important;
+}
+
+#watch-view.landscape-mode .iframe-container {
+    border-radius: 0 !important;
+    padding-bottom: 0 !important;
+    height: 100vh !important;
+    width: 100% !important;
+}
+
+#watch-view.landscape-mode .watch-sidebar {
+    display: none !important;
+}
+
+#watch-view.landscape-mode .player-controls {
+    display: none !important;
+}
+
+#watch-view.landscape-mode .custom-controls {
+    padding: 10px 16px 6px;
+}
+
+#watch-view.landscape-mode .control-btn {
+    font-size: 22px;
+}
+
+#watch-view.landscape-mode .time-display {
+    font-size: 12px;
+}
+
+/* Mobile touch: tap to show/hide controls */
+@media (max-width: 768px) {
+    /* Phim player: tap video to toggle controls */
+    #custom-video-container {
+        cursor: pointer;
+    }
+
+    #custom-video-container.show-controls .custom-controls {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Larger touch targets for controls */
+    .custom-controls .control-btn {
+        padding: 8px;
+        min-width: 40px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Progress bar taller on mobile for easier scrubbing */
+    .progress-container {
+        height: 8px !important;
+    }
+
+    .progress-container:hover {
+        height: 10px !important;
+    }
+
+    /* Settings menu full-width on mobile */
+    .settings-menu {
+        right: -50px !important;
+        min-width: 180px !important;
+    }
+
+    /* Watch view: hide sidebar on phone portrait */
+    .watch-sidebar {
+        max-height: 200px;
+    }
+
+    /* Next episode overlay */
+    .next-ep-overlay h3 {
+        font-size: 14px;
+    }
+
+    #next-ep-name {
+        font-size: 16px !important;
+    }
+}

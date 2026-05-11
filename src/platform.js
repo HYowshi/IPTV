@@ -103,6 +103,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Phim player: tap video to show/hide controls on mobile
+    if (p.isMobile) {
+        const videoContainer = document.getElementById('custom-video-container');
+        if (videoContainer) {
+            let controlsTimer;
+            videoContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.custom-controls')) return;
+                videoContainer.classList.toggle('show-controls');
+                clearTimeout(controlsTimer);
+                if (videoContainer.classList.contains('show-controls')) {
+                    controlsTimer = setTimeout(() => {
+                        videoContainer.classList.remove('show-controls');
+                    }, 4000);
+                }
+            });
+        }
+    }
+
     // Fix fullscreen for mobile: use CSS class + orientation lock instead of Fullscreen API
     if (p.isMobile) {
         // Override fullscreen buttons to use CSS-based fullscreen (already 100vw x 100vh)
