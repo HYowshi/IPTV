@@ -144,7 +144,8 @@ async function showMovieDetails(slug) {
 
         // Watch buttons
         const btnWatchNow = document.getElementById('btn-watch-now');
-        if (eps && eps.length > 0 && eps[0].server_data && eps[0].server_data.length > 0) {
+        const isTrailerOnly = currentMovieData.status === 'trailer';
+        if (!isTrailerOnly && eps && eps.length > 0 && eps[0].server_data && eps[0].server_data.length > 0) {
             btnWatchNow.style.display = 'inline-flex';
             btnWatchNow.onclick = () => openWatchView(eps[0].server_data[0]);
         } else {
