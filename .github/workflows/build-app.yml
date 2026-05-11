@@ -6,10 +6,18 @@ on:
 jobs:
   build-android:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Extract version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Building version: $VERSION"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -62,7 +70,7 @@ jobs:
           APK_DIR="src-tauri/gen/android/app/build/outputs/apk/universal/release"
           UNSIGNED="$APK_DIR/app-universal-release-unsigned.apk"
           ALIGNED="$APK_DIR/app-universal-release-aligned.apk"
-          SIGNED="$APK_DIR/PhimTV.apk"
+          SIGNED="$APK_DIR/PhimTV-v${{ steps.version.outputs.version }}.apk"
           if [ -f "$UNSIGNED" ]; then
             BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/*/ | sort -V | tail -1)
             echo "Using build-tools: $BUILD_TOOLS"
@@ -75,22 +83,41 @@ jobs:
               --out "$SIGNED" \
               "$ALIGNED"
             "$BUILD_TOOLS/apksigner" verify "$SIGNED"
-            echo "Signed APK: $SIGNED"
-            ls -la "$APK_DIR/"
+            echo "✅ Signed APK: $SIGNED"
+            ls -lh "$SIGNED"
+          else
+            echo "❌ APK not found at $UNSIGNED"
+            exit 1
           fi
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: phimtvapp-android-apk
-          path: src-tauri/gen/android/app/build/outputs/apk/universal/release/PhimTV.apk
+          name: PhimTV-Android-v${{ steps.version.outputs.version }}
+          path: src-tauri/gen/android/app/build/outputs/apk/universal/release/PhimTV-v${{ steps.version.outputs.version }}.apk
+
+      - name: Build Summary
+        if: success()
+        run: |
+          echo "## ✅ Android Build Successful" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version:** ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Artifact:** PhimTV-Android-v${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
 
   build-windows:
     runs-on: windows-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Extract version
+        id: version
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          echo "version=$version" >> $env:GITHUB_OUTPUT
+          echo "📦 Building version: $version"
+        shell: pwsh
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -115,7 +142,15 @@ jobs:
       - name: Upload EXE Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: phimtvapp-windows-exe
+          name: PhimTV-Windows-v${{ steps.version.outputs.version }}
           path: |
             src-tauri/target/release/bundle/nsis/*.exe
             src-tauri/target/release/bundle/msi/*.msi
+
+      - name: Build Summary
+        if: success()
+        run: |
+          echo "## ✅ Windows Build Successful" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Version:** ${{ steps.version.outputs.version }}" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Artifact:** PhimTV-Windows-v${{ steps.version.outputs.version }}" >> $env:GITHUB_STEP_SUMMARY
+        shell: pwsh
