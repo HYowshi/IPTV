@@ -204,6 +204,18 @@ document.addEventListener("DOMContentLoaded", () => {
             try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) { }
         }
 
+        // Restore watch-view to original DOM position if it was moved for fullscreen
+        const watchViewEl = document.getElementById('watch-view');
+        const leftCol = document.querySelector('.left-column');
+        if (watchViewEl && leftCol && watchViewEl.parentNode === document.body) {
+            const detailView = document.getElementById('detail-view');
+            if (detailView && detailView.nextSibling) {
+                leftCol.insertBefore(watchViewEl, detailView.nextSibling);
+            } else if (leftCol) {
+                leftCol.appendChild(watchViewEl);
+            }
+        }
+
         document.getElementById('watch-view').style.display = 'none';
         document.getElementById('detail-view').style.display = 'block';
         window.scrollTo(0, 0);
@@ -437,10 +449,21 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
+        // Store original DOM position for watch-view restoration (desktop)
+        let _desktopFsOriginalParent = null;
+        let _desktopFsOriginalNextSibling = null;
+
         const toggleMobileFullscreen = async () => {
             const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
             if (!isFs) {
-                // Always apply simulated fullscreen on mobile to ensure header hides
+                // Move watch-view to body level so body.fullscreen-active CSS works correctly
+                const watchView = document.getElementById('watch-view');
+                if (watchView && watchView.parentNode !== document.body) {
+                    _desktopFsOriginalParent = watchView.parentNode;
+                    _desktopFsOriginalNextSibling = watchView.nextSibling;
+                    document.body.appendChild(watchView);
+                }
+
                 document.body.classList.add('fullscreen-active');
                 if (header) header.style.display = 'none';
                 fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen_exit</span>';
@@ -454,6 +477,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen</span>';
                 fullscreenBtn.classList.remove('fs-active');
                 try { await toggleFullscreen(customVideoContainer); } catch(e) {}
+
+                // Restore watch-view to original DOM position
+                const watchView = document.getElementById('watch-view');
+                if (watchView && _desktopFsOriginalParent) {
+                    if (_desktopFsOriginalNextSibling) {
+                        _desktopFsOriginalParent.insertBefore(watchView, _desktopFsOriginalNextSibling);
+                    } else {
+                        _desktopFsOriginalParent.appendChild(watchView);
+                    }
+                    _desktopFsOriginalParent = null;
+                    _desktopFsOriginalNextSibling = null;
+                }
             }
         };
 
@@ -464,6 +499,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (header) header.style.display = '';
                 fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen</span>';
                 fullscreenBtn.classList.remove('fs-active');
+
+                // Restore watch-view to original DOM position
+                const watchView = document.getElementById('watch-view');
+                if (watchView && _desktopFsOriginalParent) {
+                    if (_desktopFsOriginalNextSibling) {
+                        _desktopFsOriginalParent.insertBefore(watchView, _desktopFsOriginalNextSibling);
+                    } else {
+                        _desktopFsOriginalParent.appendChild(watchView);
+                    }
+                    _desktopFsOriginalParent = null;
+                    _desktopFsOriginalNextSibling = null;
+                }
             }
         };
 
