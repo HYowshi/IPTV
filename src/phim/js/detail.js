@@ -2,8 +2,18 @@
 let detailGalleryImages = [];
 let currentLightboxIndex = 0;
 let descriptionExpanded = false;
+let previousVisibleElements = []; // Khai báo bộ nhớ tạm
 
 async function showMovieDetails(slug) {
+    // 1. Lưu lại các khối đang hiển thị trước khi ẩn chúng đi
+    previousVisibleElements = [];
+    ['heroBanner', 'home-view', 'filter-view', 'advanced-filter-bar'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.style.display !== 'none') {
+            previousVisibleElements.push(id);
+        }
+    });
+
     const videoPlayer = document.getElementById('video-player');
     if (videoPlayer) {
         videoPlayer.pause();
@@ -486,4 +496,33 @@ function markEpisodeWatched(movieSlug, epKey) {
 
         localStorage.setItem('phimtv_watched_eps', JSON.stringify(watchedEps));
     } catch (e) { }
+}
+
+// ==================== GO BACK FUNCTION ====================
+function goBackFromDetail() {
+    // Ẩn trang chi tiết phim
+    document.getElementById('detail-view').style.display = 'none';
+    document.getElementById('watch-view').style.display = 'none';
+
+    // Phục hồi lại đúng các trang đã mở trước đó
+    if (previousVisibleElements && previousVisibleElements.length > 0) {
+        previousVisibleElements.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                // Phục hồi thuộc tính flex cho các thanh đặc thù, block cho các div thông thường
+                el.style.display = (id === 'heroBanner' || id === 'advanced-filter-bar') ? 'flex' : 'block';
+            }
+        });
+        
+        // Trả lại class hero nếu banner trang chủ được phục hồi
+        if (previousVisibleElements.includes('heroBanner')) {
+            document.querySelector('.main-container').classList.add('with-hero');
+        }
+    } else {
+        // Fallback: Nếu không có dữ liệu nhớ, ép về trang chủ
+        if (typeof navigateToHome === 'function') navigateToHome();
+    }
+
+    // Cuộn mượt mà lên đầu trang
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }

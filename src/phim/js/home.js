@@ -1,4 +1,3 @@
-// ==================== HOME & FILTER STATE ====================
 let currentFilterEndpoint = "";
 let currentFilterSlug = "";
 let currentFilterTitle = "";
@@ -7,15 +6,16 @@ let totalFilterPages = 1;
 let currentMovieData = null;
 let imageDomain = IMAGE_BASE_URL;
 let currentSearchId = 0;
-
 let categoriesMap = new Map();
 let countriesMap = new Map();
 let yearsSet = new Set();
 let watchHistoryCache = null;
 let hlsInstance = null;
 let nextEpTimer = null;
+let heroCarouselInterval = null;
+let currentHeroIndex = 0;
+let heroMovies = [];
 
-// ==================== HOME DATA ====================
 async function fetchHomeData() {
     document.getElementById('loading-initial').style.display = 'flex';
     document.getElementById('heroBanner').style.display = 'none';
@@ -41,26 +41,15 @@ async function fetchHomeData() {
 
         if (formatted[0].domain) imageDomain = formatted[0].domain + '/';
 
-        const heroMovie = formatted[0].items?.[0] || null;
-        if (heroMovie) {
-            const imgUrl = getImageUrl(imageDomain, heroMovie.thumb_url || heroMovie.poster_url);
-            const heroSection = document.getElementById('heroBanner');
-            heroSection.style.backgroundImage = `linear-gradient(to right, #050505 10%, rgba(5, 5, 5, 0.4) 60%), linear-gradient(to top, #050505 0%, transparent 30%), url('${imgUrl}')`;
-            document.getElementById('hero-title').innerText = heroMovie.name;
-            document.getElementById('hero-year').innerText = heroMovie.year || "2024";
-            document.getElementById('hero-desc').innerText = heroMovie.origin_name || "";
-            document.getElementById('hero-btn').onclick = () => showMovieDetails(heroMovie.slug);
-
-            fetchWithCache(`${API_BASE_URL}/v1/api/phim/${heroMovie.slug}/images`).then(tmdbJson => {
-                if (tmdbJson.success && tmdbJson.data && tmdbJson.data.images) {
-                    const tmdbBackdrops = tmdbJson.data.images.filter(img => img.type === "backdrop");
-                    if (tmdbBackdrops.length > 0 && tmdbBackdrops[0].file_path) {
-                        const bgUrl = TMDB_BACKDROP_BASE + tmdbBackdrops[0].file_path;
-                        heroSection.style.backgroundImage = `linear-gradient(to right, #050505 10%, rgba(5, 5, 5, 0.4) 60%), linear-gradient(to top, #050505 0%, transparent 30%), url('${bgUrl}')`;
-                    }
-                }
-            }).catch(() => { });
+        heroMovies = formatted[0].items.slice(0, 5);
+        if (heroMovies.length > 0) {
+            setupHeroControls();
+            buildHeroIndicators();
+            renderHero(0);
+            startHeroCarousel();
         }
+
+        renderFavorites();
 
         renderMoviesCards(formatted[0].items.slice(0, 12), 'grid-new-update', false);
         renderMoviesCards(formatted[1].items.slice(0, 3), 'grid-theaters', true);
@@ -72,7 +61,6 @@ async function fetchHomeData() {
         renderTopSeries(formatted[6].items.slice(0, 8), 'sidebar-top-series');
 
     } catch (e) {
-        console.error(e);
     } finally {
         document.getElementById('loading-initial').style.display = 'none';
         document.getElementById('heroBanner').style.display = 'flex';
@@ -81,7 +69,155 @@ async function fetchHomeData() {
     }
 }
 
-// ==================== FILTER SYSTEM ====================
+function buildHeroIndicators() {
+    const indicatorsContainer = document.getElementById('hero-indicators');
+    if (!indicatorsContainer) return;
+    indicatorsContainer.innerHTML = '';
+    heroMovies.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'hero-indicator-dot';
+        dot.onclick = () => {
+            currentHeroIndex = index;
+            renderHero(currentHeroIndex);
+            startHeroCarousel();
+        };
+        indicatorsContainer.appendChild(dot);
+    });
+}
+
+function setupHeroControls() {
+    const prevBtn = document.getElementById('hero-prev');
+    const nextBtn = document.getElementById('hero-next');
+    if (prevBtn) {
+        prevBtn.onclick = () => {
+            currentHeroIndex = (currentHeroIndex - 1 + heroMovies.length) % heroMovies.length;
+            renderHero(currentHeroIndex);
+            startHeroCarousel();
+        };
+    }
+    if (nextBtn) {
+        nextBtn.onclick = () => {
+            currentHeroIndex = (currentHeroIndex + 1) % heroMovies.length;
+            renderHero(currentHeroIndex);
+            startHeroCarousel();
+        };
+    }
+}
+
+function renderHero(index) {
+    if (heroMovies.length === 0) return;
+    const heroMovie = heroMovies[index];
+    const heroSection = document.getElementById('heroBanner');
+    if (!heroSection || heroSection.style.display === 'none') return;
+
+    const imgUrl = getImageUrl(imageDomain, heroMovie.thumb_url || heroMovie.poster_url);
+    heroSection.style.backgroundImage = `url('${imgUrl}')`;
+
+    const titleEl = document.getElementById('hero-title');
+    const yearEl = document.getElementById('hero-year');
+    const descEl = document.getElementById('hero-desc');
+    const qualityEl = document.getElementById('hero-quality');
+    const btnPlay = document.getElementById('hero-btn');
+    const btnRandom = document.getElementById('btn-random-movie');
+
+    const elementsToAnimate = [
+        titleEl,
+        document.querySelector('.hero-meta'),
+        descEl,
+        document.querySelector('.hero-info'),
+        btnPlay,
+        btnRandom
+    ];
+    elementsToAnimate.forEach(el => {
+        if (el) {
+            el.classList.remove('animate-fade-up');
+            void el.offsetWidth;
+            el.classList.add('animate-fade-up');
+        }
+    });
+    
+    titleEl.innerText = heroMovie.name;
+    yearEl.innerText = heroMovie.year || new Date().getFullYear().toString();
+    descEl.innerText = heroMovie.origin_name || "";
+    qualityEl.innerText = heroMovie.quality || "FHD";
+    
+    const ratingElement = document.getElementById('hero-rating');
+    if (ratingElement) {
+        const tmdbVote = heroMovie.tmdb?.vote_average || heroMovie.imdb?.vote_average || (Math.random() * (9.5 - 7.5) + 7.5).toFixed(1);
+        ratingElement.innerText = tmdbVote;
+    }
+
+    btnPlay.onclick = () => showMovieDetails(heroMovie.slug);
+
+    const indicators = document.querySelectorAll('.hero-indicator-dot');
+    indicators.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+
+    if (index === 0) {
+        document.title = heroMovie.name + " - Phim.tv | Xem Phim Chất Lượng Cao";
+        let ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.content = heroMovie.name + " - Phim Mới Cập Nhật";
+        let ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc) ogDesc.content = "Thưởng thức " + heroMovie.name + " (" + (heroMovie.year || "") + ") chất lượng HD. " + (heroMovie.origin_name || "");
+        let ogImg = document.querySelector('meta[property="og:image"]');
+        if (ogImg) ogImg.content = imgUrl;
+    }
+
+    fetchWithCache(`${API_BASE_URL}/v1/api/phim/${heroMovie.slug}/images`).then(tmdbJson => {
+        if (tmdbJson.success && tmdbJson.data && tmdbJson.data.images) {
+            const tmdbBackdrops = tmdbJson.data.images.filter(img => img.type === "backdrop");
+            if (tmdbBackdrops.length > 0 && tmdbBackdrops[0].file_path) {
+                const bgUrl = TMDB_BACKDROP_BASE + tmdbBackdrops[0].file_path;
+                heroSection.style.backgroundImage = `url('${bgUrl}')`;
+                if (index === 0) {
+                    let ogImg = document.querySelector('meta[property="og:image"]');
+                    if (ogImg) ogImg.content = bgUrl;
+                }
+            }
+        }
+    }).catch(() => { });
+}
+
+function startHeroCarousel() {
+    if (heroCarouselInterval) clearInterval(heroCarouselInterval);
+    heroCarouselInterval = setInterval(() => {
+        currentHeroIndex = (currentHeroIndex + 1) % heroMovies.length;
+        renderHero(currentHeroIndex);
+    }, 8000);
+}
+
+function renderFavorites() {
+    const section = document.getElementById('favorites-section');
+    const grid = document.getElementById('grid-favorites');
+    if (!section || !grid) return;
+
+    let favorites = JSON.parse(localStorage.getItem('phimtv_favorites')) || {};
+    const keys = Object.keys(favorites);
+    if (keys.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    grid.innerHTML = '';
+    
+    const sortedKeys = keys.sort((a, b) => favorites[b].time - favorites[a].time).slice(0, 6);
+    
+    const movies = sortedKeys.map(key => {
+        return {
+            slug: key,
+            name: favorites[key].name,
+            thumb_url: favorites[key].thumb_url,
+            poster_url: favorites[key].thumb_url,
+            year: 'Yêu thích',
+            quality: 'Đã lưu'
+        };
+    });
+
+    renderMoviesCardsAppend(movies, grid, false, '');
+}
+
 function extractFiltersFromMovies(movies) {
     if (!movies || !Array.isArray(movies)) return;
     let isUpdated = false;
@@ -145,7 +281,6 @@ function renderFilterUI() {
     renderMap(categoriesMap, catList, filterCat, 'the-loai', 'Thể loại');
     renderMap(countriesMap, countryList, filterCountry, 'quoc-gia', 'Quốc gia');
 
-    // Populate mobile nav panel category/country lists
     const mobileCatList = document.getElementById('mobile-category-list');
     const mobileCountryList = document.getElementById('mobile-country-list');
     if (mobileCatList) {
@@ -198,10 +333,9 @@ function renderFilterUI() {
     }
 }
 
-// ==================== NAVIGATION ====================
 function navigateToHome(e) {
     if (e) e.preventDefault();
-    document.title = "Phim.tv - Giao diện Web";
+    document.title = "Phim.tv - Xem Phim Trực Tuyến Chất Lượng Cao";
     document.getElementById('detail-view').style.display = 'none';
     document.getElementById('watch-view').style.display = 'none';
 
@@ -239,6 +373,12 @@ function navigateToHome(e) {
     document.getElementById('advanced-filter-bar').style.display = 'none';
     document.querySelector('.main-container').classList.add('with-hero');
 
+    if (heroMovies.length > 0) {
+        renderHero(0);
+        startHeroCarousel();
+    }
+    renderFavorites();
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -274,6 +414,7 @@ function buildFilterUrl(endpointType, slug, page) {
 }
 
 async function loadFilterData(endpointType, slug, titleText, page) {
+    if (heroCarouselInterval) clearInterval(heroCarouselInterval);
     document.getElementById('heroBanner').style.display = 'none';
     document.getElementById('home-view').style.display = 'none';
     document.getElementById('detail-view').style.display = 'none';
@@ -352,3 +493,38 @@ async function loadFilterData(endpointType, slug, titleText, page) {
         }
     }
 }
+
+function initVoiceSearch() {
+    const voiceBtn = document.getElementById('voiceSearchBtn');
+    const searchInput = document.getElementById('searchInput');
+    if (!voiceBtn || (!window.SpeechRecognition && !window.webkitSpeechRecognition)) {
+        if (voiceBtn) voiceBtn.style.display = 'none';
+        return;
+    }
+    
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'vi-VN';
+    recognition.interimResults = false;
+    
+    voiceBtn.addEventListener('click', () => {
+        voiceBtn.classList.add('recording');
+        recognition.start();
+    });
+    
+    recognition.onresult = (event) => {
+        const speechToText = event.results[0][0].transcript;
+        searchInput.value = speechToText;
+        if (typeof handleSearch === 'function') handleSearch();
+    };
+    
+    recognition.onspeechend = () => {
+        recognition.stop();
+    };
+    
+    recognition.onend = () => {
+        voiceBtn.classList.remove('recording');
+    };
+}
+
+document.addEventListener('DOMContentLoaded', initVoiceSearch);

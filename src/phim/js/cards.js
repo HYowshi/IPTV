@@ -9,7 +9,7 @@ function createMovieCard(movie, domain = imageDomain, isHorizontal = false) {
     card.innerHTML = `
         <span class="badge badge-red">${getMovieBadge(movie)}</span>
         <div class="image-container">
-            <img class="skeleton" data-src="${imgUrl}" alt="${movie.name}" decoding="async" fetchpriority="low" onload="this.classList.remove('skeleton')" onerror="handleImageError(this); this.classList.remove('skeleton');">
+            <img class="skeleton" data-src="${imgUrl}" alt="${movie.name}" decoding="async" onload="this.classList.remove('skeleton')" onerror="handleImageError(this); this.classList.remove('skeleton');">
             <div class="card-overlay"><span class="material-symbols-rounded" style="font-size:40px;">play_arrow</span></div>
         </div>
         <div class="info">

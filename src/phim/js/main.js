@@ -149,6 +149,26 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Thêm khối lệnh này để dừng video khi bấm menu/logo
+    document.querySelectorAll('header, #mobileNavPanel').forEach(container => {
+        container.addEventListener('click', (e) => {
+            // Kiểm tra nếu người dùng click vào thẻ <a> (link) hoặc logo
+            if (e.target.closest('a') || e.target.closest('.logo')) {
+                const videoPlayer = document.getElementById('video-player');
+                if (videoPlayer) {
+                    videoPlayer.pause(); // Dừng video
+                    videoPlayer.removeAttribute('src'); // Xóa nguồn
+                    videoPlayer.load(); // Tải lại thẻ trắng
+                }
+                // Nếu đang dùng HLS (m3u8), hủy tiến trình tải
+                if (typeof hlsInstance !== 'undefined' && hlsInstance) {
+                    try { hlsInstance.destroy(); } catch (err) {}
+                    hlsInstance = null;
+                }
+            }
+        });
+    });
+
     initSpatialNavigation();
 
     // ==================== AUTO-PLAY NEXT EPISODE ====================
@@ -494,23 +514,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Override the exit fullscreen to also clean up mobile fullscreen
         const exitMobileFullscreen = () => {
-            if (document.body.classList.contains('fullscreen-active')) {
-                document.body.classList.remove('fullscreen-active');
-                if (header) header.style.display = '';
-                fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen</span>';
-                fullscreenBtn.classList.remove('fs-active');
+            document.body.classList.remove('fullscreen-active');
+            if (header) header.style.display = '';
+            fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen</span>';
+            fullscreenBtn.classList.remove('fs-active');
 
-                // Restore watch-view to original DOM position
-                const watchView = document.getElementById('watch-view');
-                if (watchView && _desktopFsOriginalParent) {
-                    if (_desktopFsOriginalNextSibling) {
-                        _desktopFsOriginalParent.insertBefore(watchView, _desktopFsOriginalNextSibling);
-                    } else {
-                        _desktopFsOriginalParent.appendChild(watchView);
-                    }
-                    _desktopFsOriginalParent = null;
-                    _desktopFsOriginalNextSibling = null;
+            // Restore watch-view to original DOM position
+            const watchView = document.getElementById('watch-view');
+            if (watchView && _desktopFsOriginalParent) {
+                if (_desktopFsOriginalNextSibling) {
+                    _desktopFsOriginalParent.insertBefore(watchView, _desktopFsOriginalNextSibling);
+                } else {
+                    _desktopFsOriginalParent.appendChild(watchView);
                 }
+                _desktopFsOriginalParent = null;
+                _desktopFsOriginalNextSibling = null;
             }
         };
 
@@ -556,7 +574,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const isInput = activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select' || document.activeElement.isContentEditable;
         if (isInput) return;
 
-        if (e.code === 'Space') { e.preventDefault(); videoPlayer.paused ? videoPlayer.play().catch(() => { }) : videoPlayer.pause(); }
+        // Bắt sự kiện phím ESC tại đây
+        if (e.code === 'Escape') {
+            e.preventDefault();
+            const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+            if (isFs) {
+                try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch(err){}
+            } else if (document.body.classList.contains('fullscreen-active')) {
+                if (typeof exitMobileFullscreen !== 'undefined') exitMobileFullscreen();
+            }
+        }
+        else if (e.code === 'Space') { e.preventDefault(); videoPlayer.paused ? videoPlayer.play().catch(() => { }) : videoPlayer.pause(); }
         else if (e.code === 'ArrowRight') { e.preventDefault(); videoPlayer.currentTime += 10; }
         else if (e.code === 'ArrowLeft') { e.preventDefault(); videoPlayer.currentTime -= 10; }
         else if (e.code === 'KeyF') { e.preventDefault(); document.getElementById('fullscreen-btn')?.click(); }
