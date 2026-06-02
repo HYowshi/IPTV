@@ -15,3 +15,14 @@ Thumbs.db
 *.keystore
 keystore_base64.txt
 phimtv-release.jks
+
+# Build artifacts
+src-tauri/gen/
+src-tauri/.cargo/
+
+# Cache & temp
+*.zip
+phimtv-release.b64
+
+# VS Code local settings
+.vscode/
