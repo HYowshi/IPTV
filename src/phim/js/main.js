@@ -247,11 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const overlay = document.getElementById('next-ep-overlay');
             if (overlay) overlay.style.display = 'none';
         }
-        clearTimeout(searchDebounceTimer);
-        searchDebounceTimer = setTimeout(() => {
-            if (e.target.value.trim() !== "") handleSearch();
-            else navigateToHome(null);
-        }, 600);
     });
 
     safeAddListener('btn-prev-page', 'click', () => {
@@ -473,7 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let _desktopFsOriginalParent = null;
         let _desktopFsOriginalNextSibling = null;
 
-        const toggleMobileFullscreen = async () => {
+        window.toggleMobileFullscreen = async () => {
             const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
             if (!isFs) {
                 // Move watch-view to body level so body.fullscreen-active CSS works correctly
@@ -513,7 +508,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         // Override the exit fullscreen to also clean up mobile fullscreen
-        const exitMobileFullscreen = () => {
+        window.exitMobileFullscreen = () => {
             document.body.classList.remove('fullscreen-active');
             if (header) header.style.display = '';
             fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen</span>';

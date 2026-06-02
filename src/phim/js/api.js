@@ -156,8 +156,34 @@ function evictStorageEntries(storage, prefix, evictRatio) {
     } catch (_) {}
 })();
 
+// ==================== TAURI HTTP HELPER ====================
+async function tauriFetchJson(url, timeout = 8000) {
+    const tauriHttp = window.__TAURI__?.http;
+    if (!tauriHttp) return null;
+    const response = await tauriHttp.fetch(url, {
+        method: 'GET',
+        timeout: Math.floor(timeout / 1000),
+        responseType: 2, // JSON
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            'Accept': 'application/json',
+            'Referer': 'https://ophim1.com/'
+        }
+    });
+    if (response.ok) return response.data;
+    throw new Error(`HTTP ${response.status}`);
+}
+
 // ==================== FETCH UTILITIES ====================
 async function fetchRaw(url, timeout = 8000) {
+    // Try Tauri HTTP plugin first (bypasses CORS & sends proper headers)
+    try {
+        const tauriData = await tauriFetchJson(url, timeout);
+        if (tauriData) return tauriData;
+    } catch (e) {
+        // Fall through to regular fetch
+    }
+
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeout);
     try {

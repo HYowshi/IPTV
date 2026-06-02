@@ -583,8 +583,80 @@ nav .dropdown>a:hover::after {
     border-color: rgba(249, 25, 66, 0.5);
 }
 
-/* ==================== HEADER COMPACT (DISABLED) ==================== */
-/* Compact mode removed — header stays same size on scroll */
+/* ==================== CUSTOM WINDOW CONTROLS ==================== */
+.window-controls {
+    display: none;
+    align-items: center;
+    gap: 2px;
+    margin-left: auto;
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
+    flex-shrink: 0;
+}
+
+.window-controls.visible {
+    display: flex;
+}
+
+.window-control-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+    font-size: 18px;
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
+}
+
+.window-control-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.window-control-btn.close-btn:hover {
+    background: rgba(249, 25, 66, 0.8);
+    color: #fff;
+}
+
+.window-control-btn.close-btn:active {
+    background: rgba(249, 25, 66, 1);
+}
+
+.window-control-btn .material-symbols-rounded {
+    font-size: 18px;
+    pointer-events: none;
+}
+
+/* Title bar drag region */
+header[data-tauri-drag-region],
+.header-left[data-tauri-drag-region] {
+    -webkit-app-region: drag;
+    app-region: drag;
+}
+
+/* Make interactive elements no-drag */
+header a, header button, header input, header select,
+.unified-nav, .header-right, .search-box,
+.platform-switch, .dropdown, .hamburger-btn {
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
+}
+
+/* Window controls separator */
+.window-controls-separator {
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 4px;
+}
+
 
 /* ==================== EXPANDABLE SEARCH (TABLET) ==================== */
 .search-box.expanded {

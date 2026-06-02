@@ -111,7 +111,19 @@ function renderHero(index) {
     if (!heroSection || heroSection.style.display === 'none') return;
 
     const imgUrl = getImageUrl(imageDomain, heroMovie.thumb_url || heroMovie.poster_url);
-    heroSection.style.backgroundImage = `url('${imgUrl}')`;
+    // Preload image for faster display
+    const heroImg = new Image();
+    heroImg.onload = () => {
+        heroSection.style.backgroundImage = `url('${imgUrl}')`;
+    };
+    heroImg.onerror = () => {
+        heroSection.style.backgroundImage = `url('${imgUrl}')`; // Fallback show anyway
+    };
+    heroImg.src = imgUrl;
+    // If image already cached by browser, show immediately
+    if (heroImg.complete) {
+        heroSection.style.backgroundImage = `url('${imgUrl}')`;
+    }
 
     const titleEl = document.getElementById('hero-title');
     const yearEl = document.getElementById('hero-year');
@@ -136,18 +148,24 @@ function renderHero(index) {
         }
     });
     
-    titleEl.innerText = heroMovie.name;
-    yearEl.innerText = heroMovie.year || new Date().getFullYear().toString();
-    descEl.innerText = heroMovie.origin_name || "";
-    qualityEl.innerText = heroMovie.quality || "FHD";
+    if (titleEl) titleEl.innerText = heroMovie.name;
+    if (yearEl) yearEl.innerText = heroMovie.year || new Date().getFullYear().toString();
+    if (descEl) descEl.innerText = heroMovie.origin_name || "";
+    if (qualityEl) qualityEl.innerText = heroMovie.quality || "FHD";
     
     const ratingElement = document.getElementById('hero-rating');
-    if (ratingElement) {
-        const tmdbVote = heroMovie.tmdb?.vote_average || heroMovie.imdb?.vote_average || (Math.random() * (9.5 - 7.5) + 7.5).toFixed(1);
-        ratingElement.innerText = tmdbVote;
+    const ratingWrapper = document.getElementById('hero-rating-wrapper');
+    if (ratingElement && ratingWrapper) {
+        const tmdbVote = heroMovie.tmdb?.vote_average || heroMovie.imdb?.vote_average;
+        if (tmdbVote && tmdbVote > 0) {
+            ratingElement.innerText = parseFloat(tmdbVote).toFixed(1);
+            ratingWrapper.style.display = '';
+        } else {
+            ratingWrapper.style.display = 'none';
+        }
     }
 
-    btnPlay.onclick = () => showMovieDetails(heroMovie.slug);
+    if (btnPlay) btnPlay.onclick = () => showMovieDetails(heroMovie.slug);
 
     const indicators = document.querySelectorAll('.hero-indicator-dot');
     indicators.forEach((dot, i) => {

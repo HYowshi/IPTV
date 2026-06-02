@@ -13,7 +13,7 @@ body.entry-body {
     align-items: center;
     min-height: 100dvh;
     background: #050505;
-    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;

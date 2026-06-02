@@ -61,7 +61,90 @@ function setupPlatformFeatures() {
         document.querySelectorAll(dragSelectors).forEach(el => {
             el.setAttribute('data-tauri-drag-region', '');
         });
+
+        // Show custom window controls
+        document.querySelectorAll('#window-controls').forEach(el => {
+            el.classList.add('visible');
+        });
+
+        // Connect window control buttons to Tauri window API
+        setupWindowControls();
     }
+}
+
+// Setup window control buttons (minimize, maximize, close)
+function setupWindowControls() {
+    if (!window.__TAURI__) return;
+
+    const getCurrentWindow = async () => {
+        try {
+            const appWindow = window.__TAURI__.window;
+            if (appWindow) {
+                return appWindow.getCurrentWindow ? appWindow.getCurrentWindow() : appWindow;
+            }
+        } catch (e) { console.warn('[Window] Cannot get current window:', e); }
+        return null;
+    };
+
+    // Minimize
+    const btnMinimize = document.getElementById('btn-minimize');
+    if (btnMinimize) {
+        btnMinimize.addEventListener('click', async () => {
+            try {
+                const win = await getCurrentWindow();
+                if (win && win.minimize) await win.minimize();
+            } catch (e) { console.warn('[Window] Minimize error:', e); }
+        });
+    }
+
+    // Maximize / Restore
+    const btnMaximize = document.getElementById('btn-maximize');
+    if (btnMaximize) {
+        btnMaximize.addEventListener('click', async () => {
+            try {
+                const win = await getCurrentWindow();
+                if (!win) return;
+                if (win.isMaximized && await win.isMaximized()) {
+                    await win.unmaximize();
+                    const icon = btnMaximize.querySelector('.material-symbols-rounded');
+                    if (icon) icon.textContent = 'crop_square';
+                } else {
+                    await win.maximize();
+                    const icon = btnMaximize.querySelector('.material-symbols-rounded');
+                    if (icon) icon.textContent = 'filter_none';
+                }
+            } catch (e) { console.warn('[Window] Maximize error:', e); }
+        });
+    }
+
+    // Close
+    const btnClose = document.getElementById('btn-close');
+    if (btnClose) {
+        btnClose.addEventListener('click', async () => {
+            try {
+                const win = await getCurrentWindow();
+                if (win && win.close) await win.close();
+                else await window.__TAURI__.core.invoke('exit_app');
+            } catch (e) {
+                try { await window.__TAURI__.core.invoke('exit_app'); } catch (_) {}
+            }
+        });
+    }
+
+    // Listen for fullscreen changes to update maximize icon
+    document.addEventListener('fullscreenchange', async () => {
+        if (btnMaximize) {
+            const icon = btnMaximize.querySelector('.material-symbols-rounded');
+            if (icon) {
+                try {
+                    const win = await getCurrentWindow();
+                    if (win && win.isMaximized) {
+                        icon.textContent = await win.isMaximized() ? 'filter_none' : 'crop_square';
+                    }
+                } catch (e) {}
+            }
+        }
+    });
 }
 
 // Also try to get platform from Tauri backend for more accuracy
@@ -156,18 +239,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 watchView.classList.add('landscape-mode');
                 document.body.classList.add('fullscreen-active');
 
-                // 5. Lock screen orientation to landscape
-                try {
-                    if (screen.orientation && screen.orientation.lock) {
-                        screen.orientation.lock('landscape').catch(() => {});
-                    }
-                } catch (e) {}
+                    // 5. Lock screen orientation to landscape
+                    try {
+                        if (screen.orientation && screen.orientation.lock) {
+                            screen.orientation.lock('landscape-primary').catch(() => {
+                                // Fallback: try without 'primary' suffix
+                                screen.orientation.lock('landscape').catch(() => {});
+                            });
+                        }
+                    } catch (e) {}
 
-                // 6. Try native fullscreen for rotation on Android WebView
-                try {
-                    if (watchView.requestFullscreen) watchView.requestFullscreen().catch(() => {});
-                    else if (watchView.webkitRequestFullscreen) watchView.webkitRequestFullscreen();
-                } catch (e) {}
+                    // 6. Try native fullscreen for rotation on Android WebView
+                    try {
+                        if (watchView.requestFullscreen) watchView.requestFullscreen().catch(() => {});
+                        else if (watchView.webkitRequestFullscreen) watchView.webkitRequestFullscreen();
+                    } catch (e) {}
+
+                    // 7. Hide status bar on Android (if supported)
+                    try {
+                        if (window.Android && window.Android.hideStatusBar) {
+                            window.Android.hideStatusBar();
+                        }
+                    } catch (e) {}
 
             } else {
                 // === EXIT FULLSCREEN ===
