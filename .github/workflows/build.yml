@@ -134,7 +134,12 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Install Android NDK
-        run: sdkmanager "ndk;27.0.12077973"
+        run: |
+          sdkmanager --list | grep ndk
+          sdkmanager "ndk;28.0.13004108" || true
+          NDK_VERSION=$(ls $ANDROID_HOME/ndk/ | sort -V | tail -1)
+          echo "NDK_VERSION=$NDK_VERSION" >> $GITHUB_ENV
+          echo "Using NDK: $NDK_VERSION"
 
       - name: Install dependencies (Ubuntu)
         run: |
@@ -162,7 +167,7 @@ jobs:
       - name: Build Android APK
         run: npx tauri android build
         env:
-          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/27.0.12077973
+          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/${{ env.NDK_VERSION }}
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
