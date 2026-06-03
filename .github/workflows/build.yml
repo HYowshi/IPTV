@@ -136,8 +136,11 @@ jobs:
       - name: Install Android NDK
         run: |
           sdkmanager --install "ndk;26.1.10909125"
-          echo "NDK_VERSION=26.1.10909125" >> $GITHUB_ENV
-          echo "Using NDK: 26.1.10909125"
+          NDK_PATH="$ANDROID_HOME/ndk/26.1.10909125"
+          echo "NDK_HOME=$NDK_PATH" >> $GITHUB_ENV
+          echo "ANDROID_NDK_HOME=$NDK_PATH" >> $GITHUB_ENV
+          echo "CARGO_NDK_ANDROID_NDK_HOME=$NDK_PATH" >> $GITHUB_ENV
+          echo "Using NDK: $NDK_PATH"
 
       - name: Install dependencies (Ubuntu)
         run: |
@@ -165,7 +168,9 @@ jobs:
       - name: Build Android APK
         run: npx tauri android build
         env:
-          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/${{ env.NDK_VERSION }}
+          NDK_HOME: ${{ env.NDK_HOME }}
+          ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_HOME }}
+          CARGO_NDK_ANDROID_NDK_HOME: ${{ env.CARGO_NDK_ANDROID_NDK_HOME }}
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
