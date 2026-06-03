@@ -85,6 +85,22 @@ LOGO_GITHUB_REPOS = [
     "https://raw.githubusercontent.com/freetvm/tv-logos/master/vietnam/{channel}.png",
 ]
 
+# Alternative logo sources with keyword patterns
+LOGO_SEARCH_SOURCES = {
+    # Vietnamese channels - search patterns
+    "vtv": ["VTV", "vtvgo-assets"],
+    "htv": ["HTV", "HTVPlus"],
+    "thvl": ["THVL", "thvli"],
+    "sctv": ["SCTV", "sctv"],
+    "k+": ["Kplus", "K-PLUS"],
+    "on sports": ["ON_Sports", "ONSports"],
+    "on football": ["ON_Football"],
+    "vfc": ["VFC"],
+    "vtc": ["VTC"],
+    "qpvn": ["QPVN"],
+    "anninh": ["ANTV", "AnNinh"],
+}
+
 # ==================== UTILITY FUNCTIONS ====================
 
 def log(msg, level="info"):
