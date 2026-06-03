@@ -50,8 +50,7 @@
         "languages": ["Vietnamese", "English"],
         "startMenuSubfolder": "Phim.tv",
         "minimumWebview2Version": "110.0.1587.0"
-      },
-      "wix": null
+      }
     },
     "category": "Entertainment",
     "longDescription": "Phim.tv là ứng dụng giải trí đa phương tiện hỗ trợ xem phim trực tuyến và truyền hình IPTV với chất lượng cao, giao diện đẹp mắt và trải nghiệm mượt mà trên mọi thiết bị."

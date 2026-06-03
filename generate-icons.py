@@ -292,7 +292,11 @@ def main():
         except Exception as e:
             print(f"  Skipped uninstall-sidebar.bmp: {e}")
 
-    print(f"\n✅ All icons generated successfully in {ICONS_DIR}/")
+    import io, locale
+    if sys.stdout.encoding and sys.stdout.encoding.lower() != 'utf-8':
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+
+    print(f"\nAll icons generated successfully in {ICONS_DIR}/")
     total = len(os.listdir(ICONS_DIR))
     for d in ['android', 'ios']:
         dp = os.path.join(ICONS_DIR, d)
