@@ -30,7 +30,7 @@
   ; --- 2b. Registry cleanup ---
   DetailPrint "Dang xoa registry..."
   DeleteRegKey HKCU "Software\PhimTV Admin\Phim.tv"
-  DeleteRegKey HKCU "Software\Classes\com.phimtv.app"
+  DeleteRegKey HKCU "Software\Classes\com.phimtv.phimtvapp"
   DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Phim.tv"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Phim.tv"
   DeleteRegKey HKLM "Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Phim.tv"
