@@ -1,52 +1,60 @@
+#!/usr/bin/env python3
+"""
+M3U Playlist Processor v2.0
+Tải, phân loại, kiểm tra health, resolve playlist, tải EPG cho IPTV.
+
+Usage:
+    python M3U_list.py                    # Chạy với config mặc định
+    python M3U_list.py --no-health        # Tắt kiểm tra link sống
+    python M3U_list.py --no-epg           # Tắt tải EPG
+    python M3U_list.py --no-health --no-epg  # Chạy nhanh nhất
+    python M3U_list.py --help             # Xem hướng dẫn
+"""
+
 import requests
 import re
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import argparse
+import json
+import gzip
 import time
 import xml.etree.ElementTree as ET
 from urllib.parse import unquote, urljoin
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 
-# -------------------- CẤU HÌNH --------------------
-CHECK_HEALTH = True   # False: tắt kiểm tra link sống (chạy rất nhanh), True: bật kiểm tra (chậm hơn)
-ENABLE_EPG = True     # False: tắt tải EPG (tăng tốc), True: bật tải EPG (chậm hơn)
+# ==================== CONFIGURATION ====================
 SPECIAL_URL = "https://raw.githubusercontent.com/t23-02/bongda/refs/heads/main/bongda.m3u"
 
-# Danh sách kênh VTV (chuẩn)
 VTV_CHANNELS = [
     "VTV1", "VTV2", "VTV3", "VTV4", "VTV5", "VTV6", "VTV7", "VTV8", "VTV9",
     "VTV CẦN THƠ", "VTV5 TÂY NAM BỘ", "VTV5 TÂY NGUYÊN", "VIETNAM TODAY"
 ]
 
-# Danh sách kênh Giải Trí (chuẩn)
 ENTERTAINMENT_CHANNELS = [
     "AXN", "HBO", "HBO HITS", "HBO FAMILY", "HBO SIGNATURE", "CINEMAX",
-    "CINEMA WORLD", "DREAMWORKS", "BOX HITS", "WARNER TV", "FOX FAMILY MOVIES", 
+    "CINEMA WORLD", "DREAMWORKS", "BOX HITS", "WARNER TV", "FOX FAMILY MOVIES",
     "DISCOVERY CHANNEL", "DISCOVERY ASIA", "NATIONAL GEOGRAPHIC", "ANIMAL PLANET",
     "FASHION TV", "OUTDOOR CHANNEL"
 ]
 
-# Từ khóa nhận diện kênh Thể Thao
 SPORTS_INCLUDE_KEYWORDS = [
-    'thể thao', 'the thao', 'sport', 'bóng đá', 'bong da', 
+    'thể thao', 'the thao', 'sport', 'bóng đá', 'bong da',
     'k+', 'k+ sport', 'k+ cine', 'k+ life', 'k+ action',
     'on sports', 'on football', 'on sports news', 'on sports+',
-    'vtc3', 'htv thể thao', 'sctv thể thao', 'sctv15', 
+    'vtc3', 'htv thể thao', 'sctv thể thao', 'sctv15',
     'tv360', 'vtvcab', 'truc tiep', 'trực tiếp', 'vebo', 'xoilac'
 ]
 
-# Từ khóa loại trừ (không phải thể thao) - Đã được thu gọn, chỉ giữ các từ khóa đặc trưng
 SPORTS_EXCLUDE_KEYWORDS = [
-    'sky sports', 'espn', 'tnt', 'fox sports', 'bein sports', 
+    'sky sports', 'espn', 'tnt', 'fox sports', 'bein sports',
     'movistar', 'astro', 'dazn', 'peacock', 'viaplay', 'bt sport',
     'cricket', 'nhl', 'rugby', 'doku', 'livecam', 'quran', 'music'
 ]
 
-# DANH SÁCH TỪ KHÓA LOẠI TRỪ PHIM (bạn có thể tự thêm vào đây)
 MOVIE_EXCLUDE_KEYWORDS = [
-    'man [', 'man! (', 'woman [', 'wo man [',  # Các định dạng phim bạn cung cấp
-    # Thêm các từ khóa phim không mong muốn khác nếu cần
+    'man [', 'man! (', 'woman [', 'wo man [',
 ]
 
-# Map đổi tên kênh thể thao
 SPORTS_RENAME_MAP = {
     "Sky Sports Action UK NOW": "Sky Sports Action UK (NOW)",
     "Sky Sports F1 UK NOW": "Sky Sports F1 UK (NOW)",
@@ -68,7 +76,6 @@ SPORTS_RENAME_MAP = {
     "ช่อง": " ",
 }
 
-# Thứ tự ưu tiên trong từng group
 VTV_ORDER = {name: i for i, name in enumerate(VTV_CHANNELS)}
 ENT_ORDER = {name: i for i, name in enumerate(ENTERTAINMENT_CHANNELS)}
 
@@ -79,25 +86,30 @@ GROUP_ORDER = {
     "Trực tiếp": 4
 }
 
-# EPG SOURCES - chỉ giữ các nguồn ổn định, loại bỏ nguồn lỗi
 EPG_SOURCES = [
     "https://hnlive.dramahay.xyz/epg.xml",
     "https://raw.githubusercontent.com/mrprince/epg/refs/heads/main/epg.xml.gz",
 ]
 
-# Cache cho việc resolve playlist
 PLAYLIST_CACHE = {}
 
-# -------------------- HÀM TIỆN ÍCH --------------------
+# ==================== UTILITY FUNCTIONS ====================
+
+def log(msg, level="info"):
+    """Formatted logging with timestamp."""
+    icons = {"info": "ℹ️", "success": "✅", "warn": "⚠️", "error": "❌", "progress": "⏳"}
+    ts = time.strftime("%H:%M:%S")
+    print(f"[{ts}] {icons.get(level, '•')} {msg}")
+
 def clean_channel_name(name):
-    """Làm sạch tên kênh: loại bỏ group-title cũ, các ký tự đặc biệt"""
+    """Remove old group-title, special chars from channel name."""
     name = re.sub(r'group-title="[^"]*"', '', name)
     name = re.sub(r',+', ',', name)
     name = re.sub(r'\s+', ' ', name).strip()
     return name
 
 def normalize_channel_name(name):
-    """Chuẩn hóa tên kênh: loại bỏ nội dung trong ngoặc, ký tự đặc biệt, chỉ giữ chữ và số"""
+    """Normalize channel name for matching: remove brackets, diacritics, special chars."""
     name = re.sub(r'\[.*?\]', '', name)
     name = re.sub(r'\(.*?\)', '', name)
     name = re.sub(r'\b(hd|fhd|uhd|4k|sd|channel|tv|ch)\b', '', name, flags=re.IGNORECASE)
@@ -109,14 +121,53 @@ def build_normalized_set(channel_list):
     return {normalize_channel_name(name) for name in channel_list}
 
 def is_sports_channel(name_lower):
-    # Ưu tiên include hơn exclude để tránh loại nhầm
     has_include = any(inc in name_lower for inc in SPORTS_INCLUDE_KEYWORDS)
     has_exclude = any(ex in name_lower for ex in SPORTS_EXCLUDE_KEYWORDS)
     return has_include and not has_exclude
 
 def is_movie_excluded(name_lower):
-    """Kiểm tra tên kênh có chứa từ khóa phim cần loại trừ không"""
     return any(ex in name_lower for ex in MOVIE_EXCLUDE_KEYWORDS)
+
+def is_low_resolution(resolution):
+    if not resolution:
+        return False
+    resolution = resolution.lower()
+    if 'sd' in resolution:
+        return True
+    for pattern in [r'360p', r'480p', r'576p', r'360', r'480', r'576', r'low']:
+        if re.search(pattern, resolution):
+            return True
+    numbers = re.findall(r'\d+', resolution)
+    for num in numbers:
+        if int(num) < 720:
+            return True
+    return False
+
+def classify_channel(ch_name, ch_name_lower, normalized_name, vtv_set, ent_set):
+    if is_sports_channel(ch_name_lower):
+        return "Thể Thao"
+    elif normalized_name in vtv_set:
+        return "Kênh VTV"
+    elif normalized_name in ent_set:
+        return "Giải Trí"
+    return None
+
+def sort_key(ch, group):
+    name_norm = normalize_channel_name(ch['name'])
+    if group == "Kênh VTV":
+        for orig in VTV_CHANNELS:
+            if normalize_channel_name(orig) == name_norm:
+                return VTV_ORDER[orig]
+        return len(VTV_CHANNELS)
+    elif group == "Giải Trí":
+        for orig in ENTERTAINMENT_CHANNELS:
+            if normalize_channel_name(orig) == name_norm:
+                return ENT_ORDER[orig]
+        return len(ENTERTAINMENT_CHANNELS)
+    else:
+        return ch['name'].lower()
+
+# ==================== NETWORK FUNCTIONS ====================
 
 def resolve_m3u8_url(url, max_depth=2, session=None):
     if max_depth <= 0:
@@ -145,7 +196,7 @@ def resolve_m3u8_url(url, max_depth=2, session=None):
                 bw_match = re.search(r'BANDWIDTH=(\d+)', line)
                 bandwidth = int(bw_match.group(1)) if bw_match else 0
                 if i + 1 < len(lines):
-                    stream_url = lines[i+1].strip()
+                    stream_url = lines[i + 1].strip()
                     if stream_url and not stream_url.startswith('#'):
                         full_url = urljoin(url, stream_url)
                         if bandwidth > best_bandwidth:
@@ -155,29 +206,23 @@ def resolve_m3u8_url(url, max_depth=2, session=None):
             else:
                 i += 1
         if best_url:
-            resolved = resolve_m3u8_url(best_url, max_depth-1, session)
+            resolved = resolve_m3u8_url(best_url, max_depth - 1, session)
             PLAYLIST_CACHE[url] = resolved
             return resolved
         else:
             PLAYLIST_CACHE[url] = url
             return url
-    except Exception as e:
-        # Không in lỗi để tránh log nhiều
+    except Exception:
         return url
 
 def check_channel_health(url, timeout=3):
-    # Nếu CHECK_HEALTH = False thì luôn trả về True (bỏ qua kiểm tra)
-    if not CHECK_HEALTH:
-        return True
     if url.startswith('udp://'):
         return True
     try:
         headers = {'User-Agent': 'VLC/3.0.18 LibVLC/3.0.18'}
-        # Thử HEAD trước
         resp = requests.head(url, headers=headers, timeout=timeout, allow_redirects=True)
         if resp.status_code < 400:
             return True
-        # Nếu bị lỗi 403, 452, 456 hoặc HEAD không thành công, thử GET với range
         if resp.status_code in (403, 452, 456, 405, 400) or resp.status_code >= 500:
             headers_range = headers.copy()
             headers_range['Range'] = 'bytes=0-1'
@@ -185,51 +230,11 @@ def check_channel_health(url, timeout=3):
             if resp2.status_code in (206, 200):
                 return True
         return False
-    except:
+    except Exception:
         return False
 
-def is_low_resolution(resolution):
-    if not resolution:
-        return False
-    resolution = resolution.lower()
-    if 'sd' in resolution:
-        return True
-    low_patterns = [r'360p', r'480p', r'576p', r'360', r'480', r'576', r'low']
-    for pattern in low_patterns:
-        if re.search(pattern, resolution):
-            return True
-    numbers = re.findall(r'\d+', resolution)
-    for num in numbers:
-        if int(num) < 720:
-            return True
-    return False
+# ==================== M3U PARSING ====================
 
-def classify_channel(ch_name, ch_name_lower, normalized_name, vtv_set, ent_set):
-    # Ưu tiên thể thao trước vì danh sách include rộng
-    if is_sports_channel(ch_name_lower):
-        return "Thể Thao"
-    elif normalized_name in vtv_set:
-        return "Kênh VTV"
-    elif normalized_name in ent_set:
-        return "Giải Trí"
-    return None
-
-def sort_key(ch, group):
-    name_norm = normalize_channel_name(ch['name'])
-    if group == "Kênh VTV":
-        for orig in VTV_CHANNELS:
-            if normalize_channel_name(orig) == name_norm:
-                return VTV_ORDER[orig]
-        return len(VTV_CHANNELS)
-    elif group == "Giải Trí":
-        for orig in ENTERTAINMENT_CHANNELS:
-            if normalize_channel_name(orig) == name_norm:
-                return ENT_ORDER[orig]
-        return len(ENTERTAINMENT_CHANNELS)
-    else:
-        return ch['name'].lower()
-
-# -------------------- HÀM XỬ LÝ M3U --------------------
 def fetch_and_parse_m3u(url):
     try:
         if url.startswith('http://') or url.startswith('https://'):
@@ -240,7 +245,7 @@ def fetch_and_parse_m3u(url):
                 content = file.read()
         return parse_m3u(content)
     except Exception as e:
-        print(f"Lỗi khi xử lý {url}: {str(e)[:50]}")
+        log(f"Lỗi khi xử lý {url}: {str(e)[:50]}", "error")
         return []
 
 def parse_m3u(content):
@@ -283,66 +288,13 @@ def parse_m3u(content):
         channels.append(current_ch)
     return channels
 
-def process_channel(ch, vtv_set, ent_set, epg_mapping):
-    if 'name' not in ch:
-        return None
-    # Làm sạch tên kênh
-    ch['name'] = clean_channel_name(ch['name'])
-    ch_name = ch['name']
-    ch_name_lower = ch_name.lower()
-    
-    # Loại trừ phim không mong muốn
-    if is_movie_excluded(ch_name_lower):
-        return None
-    
-    res_match = re.search(r'(\d{3,4}[pP]|\d+K|HD|SD|FHD|UHD)', ch_name_lower)
-    resolution = res_match.group(0).upper() if res_match else ""
-    if is_low_resolution(resolution):
-        return None
-    
-    normalized_name = normalize_channel_name(ch_name)
-    group = classify_channel(ch_name, ch_name_lower, normalized_name, vtv_set, ent_set)
-    if not group:
-        return None
-    
-    ch['group'] = group
-    # Nếu EPG bị tắt, gán tvg-id rỗng để tránh lỗi
-    if ENABLE_EPG:
-        normalized_for_epg = re.sub(r'\W+', '', ch_name_lower)
-        ch['tvg-id'] = epg_mapping.get(normalized_for_epg, ch['params'].get('tvg-id', ''))
-    else:
-        ch['tvg-id'] = ''
-    ch['resolution'] = resolution
-    return ch
-
-def final_check_and_resolve(ch):
-    url = ch['url']
-    if url.startswith('udp://'):
-        return ch
-    # Chỉ resolve nếu là link github và có đuôi playlist
-    if 'github' in url.lower() and url.lower().endswith(('.m3u8', '.m3u')):
-        resolved = resolve_m3u8_url(url)
-        if resolved != url:
-            ch['url'] = resolved
-    # Nếu CHECK_HEALTH = False thì bỏ qua kiểm tra, coi như sống
-    if CHECK_HEALTH:
-        if check_channel_health(ch['url']):
-            return ch
-        else:
-            return None
-    else:
-        return ch
+# ==================== EPG ====================
 
 def get_epg_mapping(epg_url):
     mapping = {}
-    if not ENABLE_EPG:
-        return mapping
     try:
-        # Giảm timeout xuống 5s, không retry để nhanh
         response = requests.get(epg_url, timeout=5)
-        # Xử lý gzip nếu cần
         if epg_url.endswith('.gz'):
-            import gzip
             content = gzip.decompress(response.content)
             root = ET.fromstring(content)
         else:
@@ -356,10 +308,56 @@ def get_epg_mapping(epg_url):
                 if tvg_id and normalized:
                     mapping[normalized] = tvg_id
     except Exception as e:
-        # Chỉ in lỗi nếu là lỗi quan trọng
         if "not well-formed" not in str(e) and "syntax error" not in str(e):
-            print(f"Lỗi EPG {epg_url}: {str(e)[:50]}")
+            log(f"Lỗi EPG {epg_url}: {str(e)[:50]}", "warn")
     return mapping
+
+# ==================== CHANNEL PROCESSING ====================
+
+def process_channel(ch, vtv_set, ent_set, epg_mapping, enable_epg):
+    if 'name' not in ch:
+        return None
+    ch['name'] = clean_channel_name(ch['name'])
+    ch_name = ch['name']
+    ch_name_lower = ch_name.lower()
+
+    if is_movie_excluded(ch_name_lower):
+        return None
+
+    res_match = re.search(r'(\d{3,4}[pP]|\d+K|HD|SD|FHD|UHD)', ch_name_lower)
+    resolution = res_match.group(0).upper() if res_match else ""
+    if is_low_resolution(resolution):
+        return None
+
+    normalized_name = normalize_channel_name(ch_name)
+    group = classify_channel(ch_name, ch_name_lower, normalized_name, vtv_set, ent_set)
+    if not group:
+        return None
+
+    ch['group'] = group
+    if enable_epg:
+        normalized_for_epg = re.sub(r'\W+', '', ch_name_lower)
+        ch['tvg-id'] = epg_mapping.get(normalized_for_epg, ch['params'].get('tvg-id', ''))
+    else:
+        ch['tvg-id'] = ''
+    ch['resolution'] = resolution
+    return ch
+
+def final_check_and_resolve(ch, check_health):
+    url = ch['url']
+    if url.startswith('udp://'):
+        return ch
+    if 'github' in url.lower() and url.lower().endswith(('.m3u8', '.m3u')):
+        resolved = resolve_m3u8_url(url)
+        if resolved != url:
+            ch['url'] = resolved
+    if check_health:
+        if check_channel_health(ch['url']):
+            return ch
+        else:
+            return None
+    else:
+        return ch
 
 def get_m3u_links():
     with open('M3U_list.txt', 'r', encoding='utf-8', errors='ignore') as f:
@@ -369,27 +367,42 @@ def get_m3u_links():
         links.append("Sports_Playlist.m3u")
     return links
 
-# -------------------- MAIN --------------------
+# ==================== MAIN ====================
+
 def main():
+    parser = argparse.ArgumentParser(description='M3U Playlist Processor - Tải và phân loại kênh IPTV')
+    parser.add_argument('--no-health', action='store_true', help='Tắt kiểm tra link sống (chạy nhanh)')
+    parser.add_argument('--no-epg', action='store_true', help='Tắt tải EPG (chạy nhanh)')
+    parser.add_argument('--output', default='output.m3u', help='Tên file output (default: output.m3u)')
+    parser.add_argument('--workers', type=int, default=20, help='Số worker threads (default: 20)')
+    parser.add_argument('--health-timeout', type=int, default=3, help='Timeout kiểm tra health (giây, default: 3)')
+    args = parser.parse_args()
+
+    check_health = not args.no_health
+    enable_epg = not args.no_epg
+
     start_time = time.time()
-    print(f"CHẾ ĐỘ KIỂM TRA HEALTH: {'BẬT' if CHECK_HEALTH else 'TẮT (chạy nhanh)'}")
-    print(f"CHẾ ĐỘ EPG: {'BẬT' if ENABLE_EPG else 'TẮT (chạy nhanh)'}")
-    
+    log(f"Chế độ Health Check: {'BẬT' if check_health else 'TẮT'}", "info")
+    log(f"Chế độ EPG: {'BẬT' if enable_epg else 'TẮT'}", "info")
+
     vtv_set = build_normalized_set(VTV_CHANNELS)
     ent_set = build_normalized_set(ENTERTAINMENT_CHANNELS)
     m3u_links = get_m3u_links()
-    
-    # Tải EPG song song (chỉ khi bật)
+
+    # Tải EPG song song
     epg_mapping = {}
-    if ENABLE_EPG:
+    if enable_epg:
+        log("Đang tải EPG...", "progress")
         with ThreadPoolExecutor(max_workers=10) as executor:
             futures = [executor.submit(get_epg_mapping, url) for url in EPG_SOURCES]
             for future in as_completed(futures):
                 epg_mapping.update(future.result())
-    
+        log(f"Đã tải {len(epg_mapping)} mappings EPG", "success")
+
     all_channels = []
-    
+
     # Xử lý link đặc biệt (Trực tiếp)
+    log(f"Đang tải link đặc biệt: {SPECIAL_URL}", "progress")
     try:
         response = requests.get(SPECIAL_URL, timeout=10)
         channels = parse_m3u(response.text)
@@ -405,73 +418,77 @@ def main():
             if is_low_resolution(resolution):
                 continue
             ch['group'] = "Trực tiếp"
-            if ENABLE_EPG:
+            if enable_epg:
                 normalized_name = re.sub(r'\W+', '', ch_name_lower)
                 ch['tvg-id'] = epg_mapping.get(normalized_name, ch['params'].get('tvg-id', ''))
             else:
                 ch['tvg-id'] = ''
             ch['resolution'] = resolution
             all_channels.append(ch)
+        log(f"Đã tải {len(channels)} kênh trực tiếp", "success")
     except Exception as e:
-        print(f"Lỗi xử lý link đặc biệt: {e}")
-    
+        log(f"Lỗi xử lý link đặc biệt: {e}", "error")
+
     # Xử lý các link M3U còn lại song song
-    with ThreadPoolExecutor(max_workers=20) as executor:  # Tăng worker lên 20
+    log(f"Đang tải {len(m3u_links)} M3U playlists...", "progress")
+    with ThreadPoolExecutor(max_workers=args.workers) as executor:
         futures = [executor.submit(fetch_and_parse_m3u, url) for url in m3u_links if url != SPECIAL_URL]
         for future in as_completed(futures):
             all_channels.extend(future.result())
-    
-    # Lọc kênh theo tên và độ phân giải
+    log(f"Đã tải tổng cộng {len(all_channels)} kênh", "success")
+
+    # Lọc kênh
+    log("Đang lọc kênh theo tên và độ phân giải...", "progress")
     filtered_channels = []
     for ch in all_channels:
-        processed = process_channel(ch, vtv_set, ent_set, epg_mapping)
+        processed = process_channel(ch, vtv_set, ent_set, epg_mapping, enable_epg)
         if processed:
             filtered_channels.append(processed)
-    
+
     # Loại bỏ trùng URL
-    print("Đang loại bỏ kênh trùng lặp...")
+    log("Đang loại bỏ kênh trùng lặp...", "progress")
     unique_urls = set()
     unique_channels = []
     for ch in filtered_channels:
         if ch['url'] not in unique_urls:
             unique_urls.add(ch['url'])
             unique_channels.append(ch)
-    
+
     # Kiểm tra kênh sống và resolve playlist
-    print("Đang xử lý resolve playlist và kiểm tra kênh...")
+    log(f"Đang xử lý {len(unique_channels)} kênh...", "progress")
     valid_channels = []
-    # Tăng worker lên 100 để tăng tốc health check (nhưng nếu CHECK_HEALTH=False thì không gọi health)
     with ThreadPoolExecutor(max_workers=100) as executor:
-        future_to_ch = {executor.submit(final_check_and_resolve, ch): ch for ch in unique_channels}
+        future_to_ch = {executor.submit(final_check_and_resolve, ch, check_health): ch for ch in unique_channels}
         for future in as_completed(future_to_ch):
             result = future.result()
             if result:
                 valid_channels.append(result)
-    
-    # Đổi tên kênh thể thao theo map
+
+    # Đổi tên kênh thể thao
     for ch in valid_channels:
         if ch['group'] == "Thể Thao":
             old_name = ch['name'].strip()
             if old_name in SPORTS_RENAME_MAP:
                 ch['name'] = SPORTS_RENAME_MAP[old_name]
-    
-    # Nhóm và sắp xếp - chỉ giữ lại 4 group đã định
+
+    # Nhóm và sắp xếp
     grouped = {}
     for ch in valid_channels:
         if ch['group'] not in GROUP_ORDER:
             continue
         grouped.setdefault(ch['group'], []).append(ch)
-    
+
     for group in grouped:
         if group in ("Kênh VTV", "Giải Trí"):
             grouped[group].sort(key=lambda x: sort_key(x, group))
         else:
             grouped[group].sort(key=lambda x: x['name'].lower())
-    
+
     sorted_groups = sorted(grouped.items(), key=lambda x: GROUP_ORDER.get(x[0], 99))
-    
-    # Ghi file output.m3u
-    with open('output.m3u', 'w', encoding='utf-8') as f:
+
+    # Ghi file output
+    output_path = args.output
+    with open(output_path, 'w', encoding='utf-8') as f:
         f.write('#EXTM3U\n')
         for group_name, channels in sorted_groups:
             for ch in channels:
@@ -479,25 +496,28 @@ def main():
                 tvg_logo = ch['params'].get('tvg-logo', '')
                 resolution = ch.get('resolution', '')
                 name_display = f"{ch['name']} - {resolution}" if resolution else ch['name']
-                
+
                 extinf = f'#EXTINF:-1 tvg-id="{tvg_id}" group-title="{group_name}"'
                 if tvg_logo:
                     extinf += f' tvg-logo="{tvg_logo}"'
                 extinf += f',{name_display}'
                 f.write(extinf + '\n')
-                
+
                 if 'extra' in ch:
                     for extra_line in ch['extra']:
                         if not extra_line.startswith('#EXTINF'):
                             f.write(extra_line + '\n')
                 f.write(ch['url'] + '\n')
-    
+
+    # Thống kê
     total_time = time.time() - start_time
-    stats = "\n".join([f"{group}: {len(channels)} kênh" for group, channels in sorted_groups])
-    print(f"Hoàn thành! Thời gian: {total_time:.2f}s")
-    print(f"THỐNG KÊ:\n{stats}")
-    print(f"Tổng số kênh hợp lệ: {len(valid_channels)}")
-    print(f"Số kênh trùng đã loại: {len(filtered_channels) - len(unique_channels)}")
+    log("=" * 50, "info")
+    log(f"Hoàn thành trong {total_time:.1f}s", "success")
+    log(f"File output: {output_path}", "info")
+    stats = "\n".join([f"  {group}: {len(channels)} kênh" for group, channels in sorted_groups])
+    print(f"\n📊 THỐNG KÊ:\n{stats}")
+    print(f"\n📺 Tổng kênh hợp lệ: {len(valid_channels)}")
+    print(f"🔄 Kênh trùng đã loại: {len(filtered_channels) - len(unique_channels)}")
 
 if __name__ == "__main__":
     main()
