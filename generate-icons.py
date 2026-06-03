@@ -90,6 +90,11 @@ def main():
         img = img.crop((left, top, left + size, top + size))
         print(f"Cropped to square: {img.size}")
 
+    # Upscale to 1024x1024 for crisp icons on all platforms
+    if img.size[0] < 1024:
+        img = img.resize((1024, 1024), Image.Resampling.LANCZOS)
+        print(f"Upscaled to 1024x1024 for better quality")
+
     print(f"\n=== Generating icons from {SRC} ({img.size[0]}x{img.size[1]}) ===\n")
 
     # Desktop icons
