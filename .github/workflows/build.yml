@@ -17,13 +17,10 @@ jobs:
         include:
           - platform: windows-latest
             target: windows
-            ext: .exe
           - platform: ubuntu-22.04
             target: linux
-            ext: .AppImage
           - platform: macos-latest
             target: macos
-            ext: .dmg
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -32,7 +29,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+          cache: 'npm'
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
@@ -44,12 +42,15 @@ jobs:
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install frontend dependencies
-        working-directory: phimtvapp
         run: npm ci
 
       - name: Generate icons
-        working-directory: phimtvapp
-        run: python generate-icons.py || echo "Icons already exist, skipping..."
+        run: python generate-icons.py || pip install Pillow && python generate-icons.py || echo "Skip icon generation"
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
 
       - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
@@ -58,84 +59,86 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
-          projectPath: phimtvapp
           tagName: ${{ github.ref_name }}
           releaseName: 'Phim.tv ${{ github.ref_name }}'
-          releaseBody: 'Tải về phiên bản mới nhất của Phim.tv'
+          releaseBody: 'Tai ve phien ban moi nhat cua Phim.tv'
           releaseDraft: false
           prerelease: false
-          args: '--target ${{ matrix.target }}'
 
   build-android:
     runs-on: ubuntu-22.04
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+
+      - name: Extract version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+          cache: 'npm'
 
-      - name: Install Rust stable
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
 
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '17'
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
       - name: Install Android NDK
-        run: |
-          sdkmanager "ndk;27.0.12077973"
-          echo "NDK_HOME=$ANDROID_HOME/ndk/27.0.12077973" >> $GITHUB_ENV
+        run: sdkmanager "ndk;27.0.12077973"
 
-      - name: Install Android targets
-        run: |
-          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
-          rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
-
-      - name: Install dependencies
+      - name: Install dependencies (Ubuntu)
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: Install frontend dependencies
-        working-directory: phimtvapp
-        run: npm ci
-
-      - name: Install Tauri CLI
-        working-directory: phimtvapp
-        run: npm install @tauri-apps/cli
-
       - name: Generate icons
-        working-directory: phimtvapp
-        run: python generate-icons.py || echo "Icons already exist, skipping..."
+        run: python generate-icons.py || pip install Pillow && python generate-icons.py || echo "Skip icon generation"
+
+      - name: Init Tauri Android
+        run: npx tauri android init
+
+      - name: Restore Signing Keystore
+        run: |
+          if [ -n "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" ]; then
+            echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > src-tauri/gen/android/phimtv-release.jks
+          else
+            echo "ANDROID_KEYSTORE_BASE64 secret not found, generating debug keystore"
+            keytool -genkeypair -v -keystore src-tauri/gen/android/phimtv-release.jks \
+              -keyalg RSA -keysize 2048 -validity 10000 -alias phimtv \
+              -storepass phimtv2026 -keypass phimtv2026 \
+              -dname "CN=PhimTV, OU=App, O=PhimTV, L=HCM, ST=VN, C=VN"
+          fi
 
       - name: Build Android APK
-        working-directory: phimtvapp
-        run: npx tauri android init --ci && npx tauri android build --target aarch64 --split-per-abi
+        run: npx tauri android build --release
         env:
-          NDK_HOME: ${{ env.NDK_HOME }}
+          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/27.0.12077973
 
-      - name: Upload APK artifacts
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: android-apk
-          path: |
-            phimtvapp/src-tauri/gen/android/app/build/outputs/apk/**/*.apk
-            phimtvapp/src-tauri/gen/android/app/build/outputs/bundle/**/*.aab
+          name: PhimTV-Android-v${{ steps.version.outputs.version }}
+          path: src-tauri/gen/android/app/build/outputs/apk/**/*.apk
           retention-days: 30
-
-      - name: Upload APK to release
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: phimtvapp/src-tauri/gen/android/app/build/outputs/apk/**/*.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
