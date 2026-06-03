@@ -130,10 +130,10 @@ jobs:
 
       - name: Extract version
         id: version
+        shell: bash
         run: |
-          $version = (Get-Content package.json | ConvertFrom-Json).version
-          echo "version=$version" >> $env:GITHUB_OUTPUT
-        shell: pwsh
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
