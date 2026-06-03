@@ -120,6 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (window.innerWidth > 1024 && hamburgerBtn && hamburgerBtn.classList.contains('active')) closeMobileMenu();
     });
 
+    // ==================== SEARCH BUTTON ====================
+    const searchBtn = document.getElementById('searchBtn');
+    if (searchBtn) {
+        searchBtn.addEventListener('click', () => {
+            if (typeof handleSearch === 'function') handleSearch();
+        });
+    }
+
     // ==================== SEARCH TOGGLE (TABLET) ====================
     const searchBox = document.getElementById('searchBox');
     const searchToggleBtn = document.getElementById('searchToggleBtn');
