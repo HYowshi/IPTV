@@ -22,6 +22,11 @@ Unicode true
 !define MUI_INSTFILESPAGE_ABORTHEADER_MESSAGE "Cai dat bi huy"
 !define MUI_INSTFILESPAGE_ABORTHEADER_SUBTEXT "Quy trinh cai dat khong hoan tat."
 
+; --- Uninstaller images (show app logo during uninstall) ---
+!define MUI_UNHEADERIMAGE
+!define MUI_UNHEADERIMAGE_BITMAP "nsis\uninstall-header.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "nsis\uninstall-sidebar.bmp"
+
 ; --- Uninstaller strings ---
 !define MUI_UNCONFIRMPAGE_TEXT_TOP "Trinh go cai dat se go Phim.tv khoi may tinh cua ban."
 !define MUI_UNCONFIRMREGISTRY_TEXT "Xoa tat ca thiet lap va du lieu cua Phim.tv"
