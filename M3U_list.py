@@ -80,10 +80,15 @@ VTV_ORDER = {name: i for i, name in enumerate(VTV_CHANNELS)}
 ENT_ORDER = {name: i for i, name in enumerate(ENTERTAINMENT_CHANNELS)}
 
 GROUP_ORDER = {
-    "Kênh VTV": 1,
-    "Giải Trí": 2,
-    "Thể Thao": 3,
-    "Trực tiếp": 4
+    "Kenh dac biet": 0,
+    "Kenh VTV": 1,
+    "Kenh Giai Tri": 2,
+    "Kenh The Thao": 3,
+    "Truc tiep": 4,
+    "Hoat hinh": 5,
+    "THVL": 6,
+    "SCTV": 7,
+    "Kenh Quoc Te": 8
 }
 
 EPG_SOURCES = [
@@ -145,11 +150,11 @@ def is_low_resolution(resolution):
 
 def classify_channel(ch_name, ch_name_lower, normalized_name, vtv_set, ent_set):
     if is_sports_channel(ch_name_lower):
-        return "Thể Thao"
+        return "Kenh The Thao"
     elif normalized_name in vtv_set:
-        return "Kênh VTV"
+        return "Kenh VTV"
     elif normalized_name in ent_set:
-        return "Giải Trí"
+        return "Kenh Giai Tri"
     return None
 
 def sort_key(ch, group):
