@@ -135,11 +135,9 @@ jobs:
 
       - name: Install Android NDK
         run: |
-          sdkmanager --list | grep ndk
-          sdkmanager "ndk;28.0.13004108" || true
-          NDK_VERSION=$(ls $ANDROID_HOME/ndk/ | sort -V | tail -1)
-          echo "NDK_VERSION=$NDK_VERSION" >> $GITHUB_ENV
-          echo "Using NDK: $NDK_VERSION"
+          sdkmanager --install "ndk;26.1.10909125"
+          echo "NDK_VERSION=26.1.10909125" >> $GITHUB_ENV
+          echo "Using NDK: 26.1.10909125"
 
       - name: Install dependencies (Ubuntu)
         run: |
