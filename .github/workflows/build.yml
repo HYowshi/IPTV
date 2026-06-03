@@ -133,13 +133,16 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Android NDK
+      - name: Install Android NDK 26.1
         run: |
+          # Remove pre-installed NDKs that conflict
+          sudo rm -rf $ANDROID_HOME/ndk/2*.0.*
           sdkmanager --install "ndk;26.1.10909125"
           NDK_PATH="$ANDROID_HOME/ndk/26.1.10909125"
           echo "NDK_HOME=$NDK_PATH" >> $GITHUB_ENV
           echo "ANDROID_NDK_HOME=$NDK_PATH" >> $GITHUB_ENV
           echo "CARGO_NDK_ANDROID_NDK_HOME=$NDK_PATH" >> $GITHUB_ENV
+          ls -la $ANDROID_HOME/ndk/
           echo "Using NDK: $NDK_PATH"
 
       - name: Install dependencies (Ubuntu)
