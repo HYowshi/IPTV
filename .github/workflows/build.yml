@@ -17,14 +17,24 @@ jobs:
         include:
           - platform: windows-latest
             target: windows
+            artifact: PhimTV-Windows
           - platform: ubuntu-22.04
             target: linux
+            artifact: PhimTV-Linux
           - platform: macos-latest
             target: macos
+            artifact: PhimTV-macOS
 
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Extract version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Building version: $VERSION"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -59,9 +69,27 @@ jobs:
         with:
           tagName: ${{ github.ref_name }}
           releaseName: 'Phim.tv ${{ github.ref_name }}'
-          releaseBody: 'Tai ve phien ban moi nhat cua Phim.tv'
+          releaseBody: |
+            ## Phim.tv v${{ steps.version.outputs.version }}
+            
+            ### Tai ve phien ban moi nhat
+            - **Windows**: File `.exe` (NSIS installer)
+            - **Linux**: File `.AppImage` hoac `.deb`
+            - **macOS**: File `.dmg`
+            
+            ### Thong tin
+            - Trang chu: https://phimtv.app
+            - Bao loi: https://github.com/HYowshi/IPTV/issues
           releaseDraft: false
           prerelease: false
+
+      - name: Build Summary
+        if: success()
+        run: |
+          echo "## ${{ matrix.artifact }} Build Successful" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version:** ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Platform:** ${{ matrix.target }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Runner:** ${{ matrix.platform }}" >> $GITHUB_STEP_SUMMARY
 
   build-android:
     runs-on: ubuntu-22.04
@@ -74,6 +102,7 @@ jobs:
         run: |
           VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Building version: $VERSION"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -140,3 +169,12 @@ jobs:
           name: PhimTV-Android-v${{ steps.version.outputs.version }}
           path: src-tauri/gen/android/app/build/outputs/apk/**/*.apk
           retention-days: 30
+
+      - name: Build Summary
+        if: success()
+        run: |
+          echo "## PhimTV Android Build Successful" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version:** ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Package:** com.phimtv.phimtvapp" >> $GITHUB_STEP_SUMMARY
+          echo "- **Min SDK:** 24 (Android 7.0)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Architectures:** arm64, armv7, x86, x86_64" >> $GITHUB_STEP_SUMMARY
