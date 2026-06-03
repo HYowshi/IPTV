@@ -62,13 +62,6 @@ function setupPlatformFeatures() {
             el.setAttribute('data-tauri-drag-region', '');
         });
 
-        // Show custom window controls
-        document.querySelectorAll('#window-controls').forEach(el => {
-            el.classList.add('visible');
-        });
-
-        // Connect window control buttons to Tauri window API
-        setupWindowControls();
     }
 }
 

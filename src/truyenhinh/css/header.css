@@ -228,73 +228,14 @@
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* ==================== CUSTOM WINDOW CONTROLS ==================== */
-.window-controls {
-    display: none;
-    align-items: center;
-    gap: 2px;
-    margin-left: auto;
-    -webkit-app-region: no-drag;
-    app-region: no-drag;
-    flex-shrink: 0;
-}
-
-.window-controls.visible {
-    display: flex;
-}
-
-.window-control-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 28px;
-    background: transparent;
-    border: none;
-    color: #888;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border-radius: 6px;
-    font-size: 18px;
-    -webkit-app-region: no-drag;
-    app-region: no-drag;
-}
-
-.window-control-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-}
-
-.window-control-btn.close-btn:hover {
-    background: rgba(249, 25, 66, 0.8);
-    color: #fff;
-}
-
-.window-control-btn.close-btn:active {
-    background: rgba(249, 25, 66, 1);
-}
-
-.window-control-btn .material-symbols-rounded {
-    font-size: 18px;
-    pointer-events: none;
-}
-
+/* Title bar drag region (Tauri desktop only) */
 .tv-header[data-tauri-drag-region],
 .tv-header-left[data-tauri-drag-region] {
     -webkit-app-region: drag;
-    app-region: drag;
 }
 
 .tv-header a, .tv-header button, .tv-header input,
 .unified-nav, .tv-header-right, .tv-search,
 .platform-switch, .hamburger-btn-tv {
     -webkit-app-region: no-drag;
-    app-region: no-drag;
-}
-
-.window-controls-separator {
-    width: 1px;
-    height: 18px;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 0 4px;
 }
