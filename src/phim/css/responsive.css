@@ -723,12 +723,12 @@
 /* ==================== RESPONSIVE: SMALL MOBILE ==================== */
 @media (max-width: 380px) {
     .hero h1 {
-        font-size: 22px;
+        font-size: 20px;
     }
 
     .movie-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        gap: 8px;
     }
 
     .movie-grid.grid-horizontal {
@@ -736,20 +736,20 @@
     }
 
     .detail-poster-wrapper img {
-        width: 150px;
+        width: 140px;
     }
 
     .detail-info h1 {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .episode-grid {
-        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
     }
 
     .btn-episode {
         font-size: 11px;
-        padding: 6px;
+        padding: 5px;
     }
 
     .hamburger-btn {
@@ -760,21 +760,58 @@
     .hamburger-line {
         width: 18px;
     }
+
+    header {
+        padding: 10px 10px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .logo-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+    }
+
+    .main-container {
+        padding: 0 8px 20px 8px;
+    }
+
+    .section-title {
+        font-size: 14px;
+    }
+
+    .btn-more {
+        font-size: 9px;
+        padding: 3px 8px;
+    }
 }
 
 /* ==================== RESPONSIVE: LANDSCAPE MOBILE ==================== */
 @media (max-height: 500px) and (orientation: landscape) {
     .hero {
         min-height: auto;
-        padding: 50px 20px 20px;
+        padding: 40px 20px 15px;
     }
 
     .hero h1 {
-        font-size: 24px;
+        font-size: 22px;
     }
 
     .hero-content {
         margin-top: 0;
+    }
+
+    .hero-buttons {
+        flex-direction: row !important;
+    }
+
+    .hero-buttons .btn-play,
+    .hero-buttons .btn-primary {
+        width: auto;
+        flex: 1;
     }
 
     .main-container.with-hero {
@@ -811,7 +848,7 @@
     }
 
     .hero h1 {
-        font-size: 62px;
+        font-size: 54px;
     }
 
     .hero-content {
@@ -820,5 +857,53 @@
 
     header {
         padding: 20px 60px;
+    }
+}
+
+/* ==================== RESPONSIVE: ULTRA WIDE ==================== */
+@media (min-width: 2000px) {
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 35px;
+    }
+
+    .movie-grid.grid-horizontal {
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    }
+
+    .main-container {
+        max-width: 1800px;
+        margin: 0 auto;
+    }
+}
+
+/* ==================== RESPONSIVE: FOLD/SMALL TABLET ==================== */
+@media (min-width: 381px) and (max-width: 600px) {
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .movie-grid.grid-horizontal {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .detail-poster-wrapper img {
+        width: 160px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+}
+
+/* ==================== RESPONSIVE: DARK MODE SAFE AREA ==================== */
+@supports (padding: env(safe-area-inset-top)) {
+    header {
+        padding-top: max(16px, env(safe-area-inset-top));
+    }
+
+    .main-container {
+        padding-bottom: max(40px, env(safe-area-inset-bottom));
     }
 }

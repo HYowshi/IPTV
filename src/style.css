@@ -998,7 +998,7 @@ body.entry-body.fade-out {
     }
 
     .entry-header h1 {
-        font-size: 38px;
+        font-size: 36px;
     }
 
     .btn-exit {
@@ -1006,6 +1006,22 @@ body.entry-body.fade-out {
         right: 20px;
         padding: 10px 20px;
         font-size: 13px;
+    }
+}
+
+/* ==================== RESPONSIVE: FOLD/SMALL TABLET ==================== */
+@media (min-width: 381px) and (max-width: 600px) {
+    .entry-container {
+        gap: 15px;
+    }
+
+    .entry-header h1 {
+        font-size: 26px;
+    }
+
+    .entry-box {
+        width: calc(50% - 12px);
+        max-width: 200px;
     }
 }
 
