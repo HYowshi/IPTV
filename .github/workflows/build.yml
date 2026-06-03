@@ -63,6 +63,21 @@ jobs:
         with:
           workspaces: src-tauri -> target
 
+      - name: Generate changelog
+        id: changelog
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          if [ -n "$PREV_TAG" ]; then
+            CHANGES=$(git log ${PREV_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges | head -30)
+          else
+            CHANGES=$(git log --pretty=format:"- %s (%h)" --no-merges | head -30)
+          fi
+          # Save to file for multiline output
+          echo "$CHANGES" > /tmp/changelog.txt
+          echo "Generated changelog"
+
       - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
         env:
@@ -71,16 +86,49 @@ jobs:
           tagName: ${{ github.ref_name }}
           releaseName: 'Phim.tv ${{ github.ref_name }}'
           releaseBody: |
-            ## Phim.tv v${{ steps.version.outputs.version }}
+            <div align="center">
             
-            ### Tai ve phien ban moi nhat
-            - **Windows**: File `.exe` (NSIS installer)
-            - **Linux**: File `.AppImage` hoac `.deb`
-            - **macOS**: File `.dmg`
+            ## 🎬 Phim.tv ${{ github.ref_name }}
             
-            ### Thong tin
-            - Trang chu: https://phimtv.app
-            - Bao loi: https://github.com/HYowshi/IPTV/issues
+            **Giai Tri Da Phuong Tien — Xem Phim & Truyen Hinh HD**
+            
+            ---
+            
+            </div>
+
+            ### 📥 Tai ve
+
+            | Platform | File | Ghi chu |
+            |----------|------|---------|
+            | Windows | `.exe` (NSIS) | Windows 10+ |
+            | Linux | `.AppImage` / `.deb` | Ubuntu 22.04+ |
+            | macOS | `.dmg` | macOS 12+ |
+            | Android | `.apk` | Android 7.0+ (API 24) |
+
+            ### 🔄 Phien ban v${{ steps.version.outputs.version }}
+
+            - Xem phim truc tuyen tu ophim API
+            - 240+ kenh truyen hinh Viet Nam
+            - Watch Party (xem nhom qua PeerJS)
+            - Responsive: Desktop, Tablet, Mobile
+            - NSIS installer voi branding tuy chinh
+            - Auto-update IPTV playlists (daily)
+
+            ### 🛠️ Cai dat tu source
+            ```bash
+            git clone https://github.com/HYowshi/IPTV.git
+            cd IPTV
+            npm install
+            npm run tauri dev
+            ```
+
+            ### 🐛 Bao loi
+            [Mo issue tren GitHub](https://github.com/HYowshi/IPTV/issues)
+
+            ---
+            <div align="center">
+            <sub>Phim.tv © 2026 PhimTV Admin | Made with ❤️ in Vietnam</sub>
+            </div>
           releaseDraft: false
           prerelease: false
 
