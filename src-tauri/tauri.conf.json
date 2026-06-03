@@ -43,13 +43,8 @@
     "windows": {
       "nsis": {
         "installMode": "currentUser",
-        "installerIcon": "icons/icon.ico",
         "headerImage": "nsis/header.bmp",
-        "sidebarImage": "nsis/sidebar.bmp",
-        "displayLanguageSelector": false,
-        "languages": ["Vietnamese", "English"],
-        "startMenuSubfolder": "Phim.tv",
-        "minimumWebview2Version": "110.0.1587.0"
+        "sidebarImage": "nsis/sidebar.bmp"
       }
     },
     "category": "Entertainment",
