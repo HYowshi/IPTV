@@ -56,21 +56,12 @@ Unicode true
     MessageBox MB_YESNO|MB_ICONQUESTION "Phim.tv da duoc cai dat tai:$\n$R0$\n$\nBan co muon cai dat de (ghi de) khong?$\n$\n(Lua chin KHONG de huy)" IDYES upgrade_install IDNO cancel_install
     upgrade_install:
       DetailPrint "Dang cai dat de len phien ban cu..."
-      ; Close running instances before upgrade
       nsExec::ExecToLog 'taskkill /f /im "Phim.tv.exe" /t 2>nul'
       Sleep 500
       Goto check_webview
     cancel_install:
       DetailPrint "Nguoi dung huy cai dat."
       Abort
-  ${EndIf}
-
-  ; --- Smart Detect: Check other uninstall registry paths ---
-  ReadRegStr $R0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Phim.tv" "InstallLocation"
-  ${If} $R0 != ""
-    DetailPrint "Phat hien cai dat toan cuc tai: $R0"
-    nsExec::ExecToLog 'taskkill /f /im "Phim.tv.exe" /t 2>nul'
-    Sleep 500
   ${EndIf}
 
   check_webview:

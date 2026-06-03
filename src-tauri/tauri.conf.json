@@ -42,7 +42,7 @@
     ],
     "windows": {
       "nsis": {
-        "installMode": "both",
+        "installMode": "currentUser",
         "installerIcon": "icons/icon.ico",
         "headerImage": "nsis/header.bmp",
         "sidebarImage": "nsis/sidebar.bmp",
