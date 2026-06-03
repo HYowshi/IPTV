@@ -16,6 +16,11 @@ Thumbs.db
 keystore_base64.txt
 phimtv-release.jks
 
+# Windows code signing certificate (never commit!)
+*.pfx
+signing.pfx
+phimtv-signing.pfx
+
 # Build artifacts
 src-tauri/gen/
 src-tauri/.cargo/

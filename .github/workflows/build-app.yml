@@ -160,8 +160,32 @@ jobs:
       - name: Generate icons
         run: python generate-icons.py || pip install Pillow && python generate-icons.py || echo Skip
 
+      - name: Restore Signing Certificate
+        run: |
+          if ("${{ secrets.WINDOWS_CERT_BASE64 }}" -ne "") {
+            [System.Convert]::FromBase64String("${{ secrets.WINDOWS_CERT_BASE64 }}") | Set-Content -Path "signing.pfx" -Encoding Byte
+            echo "Certificate restored"
+          } else {
+            echo "WINDOWS_CERT_BASE64 secret not found, skipping signing"
+          }
+        shell: pwsh
+
       - name: Build Tauri Windows
         run: npx tauri build
+
+      - name: Sign Windows EXE
+        run: |
+          if (Test-Path "signing.pfx") {
+            $exe = Get-ChildItem -Path "src-tauri/target/release/bundle/nsis/*.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($exe) {
+              $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2("signing.pfx", "PhimTV2026Sign!")
+              Set-AuthenticodeSignature -FilePath $exe.FullName -Certificate $cert -HashAlgorithm SHA256 -TimestampServer "http://timestamp.digicert.com"
+              Write-Host "Signed: $($exe.Name)"
+            }
+          } else {
+            Write-Host "No certificate, skipping signing"
+          }
+        shell: pwsh
 
       - name: Upload EXE Artifact
         uses: actions/upload-artifact@v4
