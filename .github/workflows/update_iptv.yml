@@ -2,46 +2,74 @@ name: Auto Update IPTV
 
 on:
   schedule:
-    - cron: '0 17 * * *'
+    - cron: '0 17 * * *'  # Chạy hàng ngày lúc 17:00 UTC (00:00 GMT+7)
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  update-playlists:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-iptv-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-iptv-
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests aiohttp pytz tqdm
+          pip install requests aiohttp
 
       - name: Run Xtream Fetcher
-        run: python Xtreamlist2M3u.py
+        run: python Xtreamlist2M3u.py --all || echo "Xtream fetcher failed, continuing..."
+        continue-on-error: true
 
       - name: Run M3U Processor
-        run: python M3U_list.py
+        run: python M3U_list.py --no-health --workers 30
 
       - name: Run Sorter
-        run: python VTV_sort.py
+        run: python VTV_sort.py --workers 50
+
+      - name: Run Channel Logo Finder
+        run: python ChannelLogoFinder.py --dry-run || echo "Logo finder failed, continuing..."
+        continue-on-error: true
 
       - name: Cleanup Intermediate Files
         run: rm -f Sports_Playlist.m3u output.m3u
+
+      - name: Generate timestamp
+        id: timestamp
+        run: |
+          TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
 
       - name: Commit and Push
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add Vietnam_HBO_Final.m3u
-          git commit -m "Auto-update IPTV playlist" || exit 0
+          git add Vietnam_HBO_Final.m3u IPTV_Master.m3u
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "Auto-update IPTV playlists [${{ steps.timestamp.outputs.timestamp }}]"
           git push
+
+      - name: Build Summary
+        if: always()
+        run: |
+          echo "## IPTV Auto-Update" >> $GITHUB_STEP_SUMMARY
+          echo "- **Time:** ${{ steps.timestamp.outputs.timestamp }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
