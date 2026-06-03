@@ -120,6 +120,45 @@ document.addEventListener("DOMContentLoaded", () => {
         if (window.innerWidth > 1024 && hamburgerBtn && hamburgerBtn.classList.contains('active')) closeMobileMenu();
     });
 
+    // ==================== DROPDOWN CLICK TOGGLE ====================
+    document.querySelectorAll('.dropdown > a').forEach(dropdownTrigger => {
+        dropdownTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            const dropdown = dropdownTrigger.parentElement;
+            const content = dropdown.querySelector('.dropdown-content');
+            if (!content) return;
+
+            // Close all other dropdowns
+            document.querySelectorAll('.dropdown-content').forEach(dc => {
+                if (dc !== content) dc.style.display = '';
+            });
+
+            // Toggle this dropdown
+            content.style.display = content.style.display === 'block' ? '' : 'block';
+        });
+    });
+
+    // Make dropdown items clickable and close dropdown after click
+    document.querySelectorAll('.dropdown-content a').forEach(item => {
+        item.addEventListener('click', (e) => {
+            // Close the dropdown
+            const dropdown = item.closest('.dropdown');
+            if (dropdown) {
+                const content = dropdown.querySelector('.dropdown-content');
+                if (content) content.style.display = '';
+            }
+        });
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-content').forEach(dc => {
+                dc.style.display = '';
+            });
+        }
+    });
+
     // ==================== SEARCH BUTTON ====================
     const searchBtn = document.getElementById('searchBtn');
     if (searchBtn) {
