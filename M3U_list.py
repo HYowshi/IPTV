@@ -372,6 +372,19 @@ def get_m3u_links():
         links.append("Sports_Playlist.m3u")
     return links
 
+def load_existing_m3u_urls(file_path):
+    """Load URLs from existing M3U file to avoid duplicates."""
+    existing_urls = set()
+    try:
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith('http') or line.startswith('udp://'):
+                    existing_urls.add(line)
+    except FileNotFoundError:
+        pass
+    return existing_urls
+
 # ==================== MAIN ====================
 
 def main():
