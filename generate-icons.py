@@ -87,8 +87,16 @@ def main():
         print(f"Cropped to square: {img.size}")
 
     if img.size[0] < 1024:
-        img = img.resize((1024, 1024), Image.Resampling.LANCZOS)
-        print(f"Upscaled to 1024x1024")
+        from PIL import ImageEnhance
+        current = img
+        target = 1024
+        while current.size[0] < target:
+            step_size = min(current.size[0] * 2, target)
+            current = current.resize((step_size, step_size), Image.Resampling.LANCZOS)
+            enhancer = ImageEnhance.Sharpness(current)
+            current = enhancer.enhance(1.3)
+        img = current
+        print(f"Upscaled to 1024x1024 with sharpen")
 
     print(f"\n=== Generating icons from {SRC} ({img.size[0]}x{img.size[1]}) ===\n")
     count = 0
