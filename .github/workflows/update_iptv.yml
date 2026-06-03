@@ -46,7 +46,7 @@ jobs:
         run: python VTV_sort.py --workers 50
 
       - name: Run Channel Logo Finder
-        run: python ChannelLogoFinder.py --dry-run || echo "Logo finder failed, continuing..."
+        run: python ChannelLogoFinder.py --input Vietnam_HBO_Final.m3u || echo "Logo finder failed, continuing..."
         continue-on-error: true
 
       - name: Cleanup Intermediate Files

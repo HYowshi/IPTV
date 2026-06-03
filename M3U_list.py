@@ -407,6 +407,13 @@ def main():
     ent_set = build_normalized_set(ENTERTAINMENT_CHANNELS)
     m3u_links = get_m3u_links()
 
+    # Load existing M3U URLs to avoid duplicates
+    existing_urls = set()
+    for existing_file in ['IPTV_Master.m3u', 'Vietnam_HBO_Final.m3u']:
+        existing_urls.update(load_existing_m3u_urls(existing_file))
+    if existing_urls:
+        log(f"Đã tải {len(existing_urls)} URLs từ M3U hiện có để loại trùng", "info")
+
     # Tải EPG song song
     epg_mapping = {}
     if enable_epg:
