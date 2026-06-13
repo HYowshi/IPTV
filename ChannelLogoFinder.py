@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Channel Logo Finder v2.0
+Channel Logo Finder v2.1
 Tự động tìm, kiểm tra và cập nhật logo cho các kênh truyền hình trong file M3U.
 
 Kiểm tra logo:
@@ -19,14 +19,21 @@ Usage:
 
 import re
 import argparse
+import json
+import sys
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import threading
+import unicodedata
+from concurrent.futures import ThreadPoolExecutor
 
 try:
     import requests
 except ImportError:
-    print("Cần cài requests: pip install requests")
+    print("Missing dependency: install it with 'python -m pip install requests'")
     exit(1)
+
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 # ==================== LOGO DATABASE ====================
 # Logo chính xác cho từng kênh (verified URLs)
@@ -43,7 +50,7 @@ LOGO_DATABASE = {
     "vtv8": {"url": "https://upload.wikimedia.org/wikipedia/vi/thumb/9/93/VTV8_logo_2022.svg/200px-VTV8_logo_2022.svg.png", "verified": True},
     "vtv9": {"url": "https://upload.wikimedia.org/wikipedia/vi/thumb/b/b0/VTV9_logo_2022.svg/200px-VTV9_logo_2022.svg.png", "verified": True},
     "vtv can tho": {"url": "https://upload.wikimedia.org/wikipedia/vi/thumb/6/6c/VTV_Can_Tho_logo.svg/200px-VTV_Can_Tho_logo.svg.png", "verified": True},
-    "vietnam today": {"url": "https://upload.wikimedia.org/wikipedia/vi/thumb/9/9e/VTV1_2022.svg/200px-VTV1_2022.svg.png", "verified": True},
+    "vietnam today": {"url": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250905/2025090515/S1CWNGr2gI-VIETNAMTODAY-THUMBNAIL-KENHVTVgo-500x281.webp", "verified": True},
 
     # Kênh HTV
     "htv1": {"url": "https://upload.wikimedia.org/wikipedia/vi/thumb/a/a8/HTV_Logo.svg/200px-HTV_Logo.svg.png", "verified": True},
@@ -131,6 +138,9 @@ def log(msg, level="info"):
 
 def normalize_name(name):
     """Normalize channel name for matching."""
+    name = name.replace('Đ', 'D').replace('đ', 'd')
+    name = unicodedata.normalize('NFKD', name)
+    name = name.encode('ascii', 'ignore').decode()
     name = re.sub(r'\[.*?\]', '', name)
     name = re.sub(r'\(.*?\)', '', name)
     name = re.sub(r'\b(hd|fhd|uhd|4k|sd|channel|tv|ch)\b', '', name, flags=re.IGNORECASE)
@@ -138,22 +148,68 @@ def normalize_name(name):
     name = re.sub(r'\s+', ' ', name).strip().lower()
     return name
 
-def check_logo_accessible(url, timeout=5):
-    """Check if logo URL returns HTTP 200."""
-    try:
-        resp = requests.head(url, timeout=timeout, allow_redirects=True)
-        return resp.status_code == 200
-    except Exception:
-        return False
+_thread_local = threading.local()
 
-def check_logo_content_type(url, timeout=5):
-    """Check if URL returns an image content type."""
+
+def get_http_session():
+    """Return one reusable requests session per worker thread."""
+    if not hasattr(_thread_local, 'session'):
+        session = requests.Session()
+        session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (compatible; PhimTV-LogoFinder/2.1)',
+            'Accept': 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+        })
+        _thread_local.session = session
+    return _thread_local.session
+
+
+def check_logo(url, timeout=3):
+    """Validate a logo with one small GET request.
+
+    HEAD is not reliable for image CDNs: several valid hosts reject HEAD while
+    accepting GET. Reading only the first bytes also avoids downloading large
+    images during the scheduled workflow.
+    """
+    if not url:
+        return False, 'missing'
+
     try:
-        resp = requests.head(url, timeout=timeout, allow_redirects=True)
-        ct = resp.headers.get('Content-Type', '')
-        return 'image' in ct.lower()
-    except Exception:
-        return False
+        response = get_http_session().get(
+            url,
+            timeout=timeout,
+            allow_redirects=True,
+            stream=True,
+            headers={'Range': 'bytes=0-4095'},
+        )
+        if response.status_code not in (200, 206):
+            response.close()
+            return False, f'http_{response.status_code}'
+
+        content_type = response.headers.get('Content-Type', '').lower()
+        chunk = next(response.iter_content(4096), b'')
+        response.close()
+        signature = chunk[:16]
+        is_image = (
+            'image/' in content_type
+            or signature.startswith((b'\x89PNG', b'\xff\xd8\xff', b'GIF87a', b'GIF89a'))
+            or (signature.startswith(b'RIFF') and b'WEBP' in signature)
+            or b'<svg' in chunk[:1024].lower()
+        )
+        return (True, '') if chunk and is_image else (False, 'not_image')
+    except requests.RequestException as exc:
+        return False, type(exc).__name__
+
+
+def check_logo_urls(urls, workers=10, timeout=3):
+    """Check each unique URL once and return a URL -> result mapping."""
+    unique_urls = sorted({url for url in urls if url})
+    if not unique_urls:
+        return {}
+
+    log(f"Kiem tra {len(unique_urls)} URL logo voi {workers} workers...", "progress")
+    with ThreadPoolExecutor(max_workers=max(1, workers)) as executor:
+        results = executor.map(lambda url: check_logo(url, timeout), unique_urls)
+        return dict(zip(unique_urls, results))
 
 def verify_logo_matches_channel(logo_url, channel_name):
     """Verify logo URL actually matches the channel name."""
@@ -195,58 +251,83 @@ def verify_logo_matches_channel(logo_url, channel_name):
     # If we can't verify, assume OK (better to have some logo than none)
     return True
 
-def find_logo_for_channel(channel_name):
-    """Find verified logo URL for a channel."""
-    normalized = normalize_name(channel_name)
+def load_logo_overrides(file_path):
+    """Load curated logo mappings maintained with the playlists."""
+    if not file_path:
+        return {'by_name': {}, 'by_tvg_id': {}}
+    try:
+        with open(file_path, 'r', encoding='utf-8') as handle:
+            data = json.load(handle)
+    except FileNotFoundError:
+        log(f"Không tìm thấy file logo: {file_path}", "warn")
+        return {'by_name': {}, 'by_tvg_id': {}}
+    return {
+        'by_name': {
+            normalize_name(key): value
+            for key, value in data.get('by_name', {}).items()
+        },
+        'by_tvg_id': {
+            key.strip().lower().split('@', 1)[0]: value
+            for key, value in data.get('by_tvg_id', {}).items()
+        },
+    }
+
+
+def find_logo_for_channel(channel, overrides):
+    """Find a conservative logo candidate for a channel.
+
+    Automatic updates only use exact normalized database matches. Broad
+    partial matching can silently attach a generic or wrong channel logo.
+    """
+    normalized = normalize_name(channel['name'])
+    tvg_id = channel.get('tvg_id', '').strip().lower().split('@', 1)[0]
+
+    if normalized in overrides['by_name']:
+        return overrides['by_name'][normalized], 'override-name'
+    if tvg_id and tvg_id in overrides['by_tvg_id']:
+        return overrides['by_tvg_id'][tvg_id], 'override-tvg-id'
 
     # 1. Direct match in verified database
     if normalized in LOGO_DATABASE:
         entry = LOGO_DATABASE[normalized]
         return entry["url"], "database"
 
-    # 2. Partial match in database (verify it's the right channel)
-    for key, entry in LOGO_DATABASE.items():
-        if key in normalized or normalized in key:
-            if verify_logo_matches_channel(entry["url"], channel_name):
-                return entry["url"], "database-partial"
-
-    # 3. Try GitHub logo repos
-    clean_name = re.sub(r'\s+', '-', channel_name.strip().lower())
-    clean_name = re.sub(r'[^a-z0-9-]', '', clean_name)
-
-    for template in LOGO_GITHUB_REPOS:
-        url = template.format(channel=clean_name)
-        if check_logo_accessible(url):
-            return url, "github"
-
     return None, None
 
 # ==================== M3U PROCESSING ====================
 
-def parse_m3u_channels(file_path):
-    """Parse M3U file and extract channel info."""
+def read_m3u(file_path):
+    """Read an M3U while retaining encoding and newline style."""
+    raw = open(file_path, 'rb').read()
+    has_bom = raw.startswith(b'\xef\xbb\xbf')
+    newline = '\r\n' if b'\r\n' in raw else '\n'
+    text = raw.decode('utf-8-sig', errors='replace')
+    return text.splitlines(), has_bom, newline
+
+
+def parse_m3u_channels(lines):
+    """Parse M3U entries and retain the original EXTINF line index."""
     channels = []
-    with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
-        current = {}
-        for line in f:
-            line = line.strip()
-            if line.startswith('#EXTINF'):
-                name_match = re.search(r'#EXTINF[^,]*,(.*)', line)
-                logo_match = re.search(r'tvg-logo="([^"]*)"', line)
-                current = {
-                    'name': name_match.group(1).strip() if name_match else '',
-                    'logo': logo_match.group(1) if logo_match else '',
-                    'line': line,
-                    'needs_update': False,
-                    'reason': ''
-                }
-            elif line.startswith('http') or line.startswith('udp://'):
-                current['url'] = line
-                channels.append(current)
-                current = {}
+    current = None
+    for line_index, original_line in enumerate(lines):
+        line = original_line.strip()
+        if line.startswith('#EXTINF'):
+            name_match = re.search(r'#EXTINF[^,]*,(.*)', line)
+            logo_match = re.search(r'tvg-logo="([^"]*)"', line)
+            current = {
+                'name': name_match.group(1).strip() if name_match else '',
+                'logo': logo_match.group(1) if logo_match else '',
+                'tvg_id': dict(re.findall(r'([\w-]+)="([^"]*)"', line)).get('tvg-id', ''),
+                'line_index': line_index,
+                'url': '',
+            }
+        elif current and line and not line.startswith('#'):
+            current['url'] = line
+            channels.append(current)
+            current = None
     return channels
 
-def validate_channel_logo(channel):
+def validate_channel_logo(channel, logo_results):
     """Validate a channel's current logo."""
     name = channel['name']
     logo = channel['logo']
@@ -258,13 +339,9 @@ def validate_channel_logo(channel):
         issues.append('missing')
         return issues
 
-    # 2. Logo not accessible
-    if not check_logo_accessible(logo):
-        issues.append('inaccessible')
-
-    # 3. Logo not an image
-    if not check_logo_content_type(logo):
-        issues.append('not_image')
+    valid, reason = logo_results.get(logo, (False, 'not_checked'))
+    if not valid:
+        issues.append(reason)
 
     # 4. Logo doesn't match channel (basic check)
     if not verify_logo_matches_channel(logo, name):
@@ -272,70 +349,57 @@ def validate_channel_logo(channel):
 
     return issues
 
-def process_channel_logo(channel, dry_run=False):
-    """Process a single channel: validate and find replacement logo."""
-    name = channel['name']
-    if not name:
-        return channel, False, None, []
+def update_logo_attribute(line, logo_url):
+    """Update only tvg-logo and preserve every other EXTINF attribute."""
+    if re.search(r'tvg-logo="[^"]*"', line):
+        return re.sub(r'tvg-logo="[^"]*"', f'tvg-logo="{logo_url}"', line, count=1)
 
-    # Validate current logo
-    issues = validate_channel_logo(channel)
+    comma_index = line.rfind(',')
+    if comma_index == -1:
+        return line
+    return f'{line[:comma_index].rstrip()} tvg-logo="{logo_url}"{line[comma_index:]}'
 
-    if not issues:
-        return channel, False, None, []
 
-    # Find replacement
-    new_logo, source = find_logo_for_channel(name)
-
-    if not new_logo:
-        return channel, False, None, issues
-
-    # Verify new logo is accessible
-    if not check_logo_accessible(new_logo):
-        return channel, False, None, issues
-
-    if not dry_run:
-        channel['logo'] = new_logo
-        channel['needs_update'] = True
-        channel['update_source'] = source
-
-    return channel, True, new_logo, issues
-
-def rebuild_m3u_file(file_path, channels):
-    """Rebuild M3U file with updated logos."""
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write('#EXTM3U\n')
-        for ch in channels:
-            logo_attr = f' tvg-logo="{ch["logo"]}"' if ch.get('logo') else ''
-            f.write(f'{ch["line"]}\n')
-            if ch.get('url'):
-                f.write(f'{ch["url"]}\n')
+def write_m3u(file_path, lines, has_bom, newline):
+    encoding = 'utf-8-sig' if has_bom else 'utf-8'
+    with open(file_path, 'w', encoding=encoding, newline='') as file:
+        file.write(newline.join(lines) + newline)
 
 def main():
-    parser = argparse.ArgumentParser(description='Channel Logo Finder v2.0 - Tìm, kiểm tra và cập nhật logo kênh TV')
+    parser = argparse.ArgumentParser(description='Channel Logo Finder v2.1 - Tìm, kiểm tra và cập nhật logo kênh TV')
     parser.add_argument('--input', default='IPTV_Master.m3u', help='File M3U input')
     parser.add_argument('--output', default=None, help='File output (default: ghi đè input)')
     parser.add_argument('--dry-run', action='store_true', help='Chỉ hiển thị, không ghi file')
     parser.add_argument('--validate', action='store_true', help='Chỉ kiểm tra logo hiện tại')
     parser.add_argument('--workers', type=int, default=10, help='Số worker threads')
+    parser.add_argument('--timeout', type=float, default=3, help='Timeout mỗi URL logo, tính bằng giây')
+    parser.add_argument('--logo-file', default='channel_logos.json', help='File JSON logo chuẩn')
     args = parser.parse_args()
 
     output_path = args.output or args.input
     start_time = time.time()
 
-    log(f"Channel Logo Finder v2.0", "info")
+    log("Channel Logo Finder v2.1", "info")
     log(f"Input: {args.input}", "info")
     log(f"Output: {output_path}", "info")
+    overrides = load_logo_overrides(args.logo_file)
 
     # Parse M3U
     log("Đang đọc file M3U...", "progress")
     try:
-        channels = parse_m3u_channels(args.input)
+        lines, has_bom, newline = read_m3u(args.input)
+        channels = parse_m3u_channels(lines)
     except FileNotFoundError:
         log(f"Không tìm thấy file: {args.input}", "error")
         return
 
     log(f"Đã đọc {len(channels)} kênh", "success")
+
+    logo_results = check_logo_urls(
+        (channel['logo'] for channel in channels),
+        workers=args.workers,
+        timeout=args.timeout,
+    )
 
     if args.validate:
         # Validate-only mode
@@ -345,19 +409,16 @@ def main():
         missing = 0
 
         for ch in channels:
-            issues = validate_channel_logo(ch)
+            issues = validate_channel_logo(ch, logo_results)
             if not issues:
                 valid += 1
             else:
                 if 'missing' in issues:
                     missing += 1
                     log(f"  Thiếu logo: {ch['name']}", "warn")
-                elif 'inaccessible' in issues:
+                else:
                     invalid += 1
                     log(f"  Logo không truy cập: {ch['name']} → {ch['logo'][:60]}", "warn")
-                elif 'mismatch' in issues:
-                    invalid += 1
-                    log(f"  Logo không khớp: {ch['name']} → {ch['logo'][:60]}", "warn")
 
         print(f"\n📊 KẾT QUẢ KIỂM TRA:")
         print(f"  ✅ Logo hợp lệ: {valid}")
@@ -371,12 +432,32 @@ def main():
     not_found = 0
     updates = []
 
+    pending = []
     for ch in channels:
-        result, found, new_logo, issues = process_channel_logo(ch, args.dry_run)
-        if found:
+        issues = validate_channel_logo(ch, logo_results)
+        if not issues:
+            continue
+        new_logo, source = find_logo_for_channel(ch, overrides)
+        if new_logo:
+            pending.append((ch, new_logo, source, issues))
+        elif 'missing' in issues:
+            not_found += 1
+
+    replacement_results = check_logo_urls(
+        (new_logo for _, new_logo, _, _ in pending),
+        workers=args.workers,
+        timeout=args.timeout,
+    )
+
+    for ch, new_logo, source, issues in pending:
+        if replacement_results.get(new_logo, (False, ''))[0]:
             updated += 1
             updates.append((ch['name'], new_logo, issues))
-        elif issues and 'missing' in issues:
+            if not args.dry_run:
+                lines[ch['line_index']] = update_logo_attribute(
+                    lines[ch['line_index']], new_logo
+                )
+        elif 'missing' in issues:
             not_found += 1
 
     # Display results
@@ -392,7 +473,7 @@ def main():
     # Write output
     if not args.dry_run and updates:
         log(f"Đang ghi file: {output_path}", "progress")
-        rebuild_m3u_file(output_path, channels)
+        write_m3u(output_path, lines, has_bom, newline)
         log(f"Đã cập nhật {updated} logo", "success")
 
     # Stats

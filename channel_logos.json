@@ -1,0 +1,36 @@
+{
+  "by_name": {
+    "antv": "https://static.wikia.nocookie.net/logos/images/1/1a/ANTV_2023.png/revision/latest/scale-to-width-down/512?path-prefix=vi",
+    "al jazeera english": "https://dtil.tmsimg.com/assets/s159135_ld_h15_aa.png?lock=720x540",
+    "bbc world news": "https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/BBC-logo_2000_X_1125_Transparent.png",
+    "can tho tv1": "https://i.ibb.co/MDhNH26J/cantho1-2025.png",
+    "can tho tv2": "https://i.ibb.co/JjVvkMsf/cantho2-2025.png",
+    "dak lak tv": "https://i.imgur.com/gFfZvTW.png",
+    "dien bien tv": "https://i.imgur.com/u308o8q.png",
+    "dong thap tv1": "https://i.ibb.co/XFX7yw0/logo2-1.png",
+    "dong thap tv2": "https://i.ibb.co/XFX7yw0/logo2-1.png",
+    "ha tinh tv": "https://i.imgur.com/4yIgKKx.png",
+    "hanoitv1": "https://i.imgur.com/Je3K25E.png",
+    "hanoitv2": "https://i.imgur.com/szivqh2.png",
+    "lao cai tv": "https://i.imgur.com/TLvrDHa.png",
+    "lam dong tv": "https://i.imgur.com/lSMoGlv.png",
+    "sctv2": "https://i.imgur.com/8i5DXIg.png",
+    "thai nguyen tv": "https://thainguyentv.vn/modules/frontend/themes/ptthtn/images/logo.png",
+    "tay ninh tv": "https://static.wikia.nocookie.net/logos/images/3/3c/TTV11_2018.png/revision/latest?path-prefix=vi"
+  },
+  "by_tvg_id": {
+    "anninhtv.vn": "https://static.wikia.nocookie.net/logos/images/1/1a/ANTV_2023.png/revision/latest/scale-to-width-down/512?path-prefix=vi",
+    "canthotv.vn": "https://i.ibb.co/MDhNH26J/cantho1-2025.png",
+    "daklaktv.vn": "https://i.imgur.com/gFfZvTW.png",
+    "dienbientv.vn": "https://i.imgur.com/u308o8q.png",
+    "dongthaptv.vn": "https://i.ibb.co/XFX7yw0/logo2-1.png",
+    "hatinhtv.vn": "https://i.imgur.com/4yIgKKx.png",
+    "hanoitv1.vn": "https://i.imgur.com/Je3K25E.png",
+    "hanoitv2.vn": "https://i.imgur.com/szivqh2.png",
+    "laocaitv.vn": "https://i.imgur.com/TLvrDHa.png",
+    "lamdongtv.vn": "https://i.imgur.com/lSMoGlv.png",
+    "sctv2.vn": "https://i.imgur.com/8i5DXIg.png",
+    "thainguyentv.vn": "https://thainguyentv.vn/modules/frontend/themes/ptthtn/images/logo.png",
+    "tayninhtv.vn": "https://static.wikia.nocookie.net/logos/images/3/3c/TTV11_2018.png/revision/latest?path-prefix=vi"
+  }
+}

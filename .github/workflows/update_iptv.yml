@@ -11,7 +11,7 @@ permissions:
 jobs:
   update-playlists:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     steps:
       - name: Checkout code
@@ -45,12 +45,18 @@ jobs:
       - name: Run Sorter
         run: python VTV_sort.py --workers 50
 
+      - name: Replace Broken Master Streams
+        timeout-minutes: 5
+        run: python SyncMasterStreams.py --workers 32 --timeout 5
+
       - name: Run Channel Logo Finder (Vietnam HBO)
-        run: python ChannelLogoFinder.py --input Vietnam_HBO_Final.m3u || echo "Logo finder failed, continuing..."
+        timeout-minutes: 6
+        run: python ChannelLogoFinder.py --input Vietnam_HBO_Final.m3u --logo-file channel_logos.json --workers 32 --timeout 3
         continue-on-error: true
 
       - name: Run Channel Logo Finder (IPTV Master)
-        run: python ChannelLogoFinder.py --input IPTV_Master.m3u || echo "Logo finder failed, continuing..."
+        timeout-minutes: 3
+        run: python ChannelLogoFinder.py --input IPTV_Master.m3u --logo-file channel_logos.json --workers 24 --timeout 3
         continue-on-error: true
 
       - name: Cleanup Intermediate Files
@@ -66,7 +72,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add Vietnam_HBO_Final.m3u IPTV_Master.m3u
+          git add Vietnam_HBO_Final.m3u IPTV_Master.m3u channel_logos.json
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "Auto-update IPTV playlists [${{ steps.timestamp.outputs.timestamp }}]"
           git push
