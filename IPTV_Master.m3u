@@ -12,7 +12,7 @@ https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",VTV1 (1080p)
 https://live.fptplay53.net/live/media/vtv1/live247-hls-avc/index.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5ac4a9fb-6da7-4785-aab5-ae85e471d869.jpg?width=500" tvg-id="VTV2.vn@HD",VTV2 (1080p)
-https://live.fptplay53.net/fnxch2/vtv2hd_abr.smil/chunklist.m3u8
+https://live.fptplay53.net/live/media/vtv2/live247-hls-avc/index.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/292a3f4e-c6ee-4858-9c49-f61dde69a854.jpg?width=500" tvg-id="VTV3.vn@HD",VTV3 (1080p)
 http://42.1.99.192:8080/live/vtv3.flv
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/f161041d-3a3f-4c0a-88f2-ae97f8052ee7.jpg?width=500" tvg-id="VTV4.vn@HD",VTV4 (1080p)
@@ -30,7 +30,7 @@ https://live.fptplay53.net/live/media/vtv7/live247-hls-avc/index.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/447aba67-bee4-443a-ac5b-f6e457ff4abe.jpg?width=500" tvg-id="vtv8.vn@HD",VTV8 (1080p)
 https://live.fptplay53.net/live/media/vtv8/live-hls-avc/index.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/7f951ab0-a128-44a9-84cd-ba8faf108ad3.jpg?width=500" tvg-id="vtv9.vn@HD",VTV9 (1080p)
-http://42.1.99.192:8080/live/vtv9.flv
+https://live.fptplay53.net/live/media/vtv9/live247-hls-avc/index.m3u8
 
 # ================= Hoạt Hình =================
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/2391927.jpg" tvg-id="",Conan (1080p)
@@ -174,7 +174,7 @@ https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/kix/KenhCoBan.m3u8
 
 # ================= QUỐC TẾ =================
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/outdoor-hd/KenhCoBan.png" tvg-id="", Outdoor HD
-https://live.fptplay53.net/epzhd2/outdoorfhd_vhls.smil/chunklist.m3u8
+https://www.vavoo.to/play/173629287/index.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/channel-news-asia/KenhCoBan.png" tvg-id="", Channel News Asia
 https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/channel-news-asia/KenhCoBan.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/nhk/KenhCoBan.png" tvg-id="", NHK
