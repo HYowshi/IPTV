@@ -10,15 +10,15 @@ https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8
 
 # ================= VTV =================
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",VTV1 (1080p)
-https://live.fptplay53.net/live/media/vtv1/live247-hls-avc/index.m3u8
+https://vtvgolive-vtv.vtvdigital.vn/ReiWuUQlLW0fO8gXM_G2cQ/1770066008/vtvgo/vtv1-manifest.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5ac4a9fb-6da7-4785-aab5-ae85e471d869.jpg?width=500" tvg-id="VTV2.vn@HD",VTV2 (1080p)
-https://live.fptplay53.net/live/media/vtv2/live247-hls-avc/index.m3u8
+https://vtvgolive-vtv.vtvdigital.vn/ReiWuUQlLW0fO8gXM_G2cQ/1770066008/vtvgo/vtv2-manifest.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/292a3f4e-c6ee-4858-9c49-f61dde69a854.jpg?width=500" tvg-id="VTV3.vn@HD",VTV3 (1080p)
-https://live-a.fptplay53.net/live/media/vtv3/live247-hls-avc/vtv3-avc1_5600000=10000-mp4a_131600=20000.m3u8
+https://vtvgolive-vtv.vtvdigital.vn/2bQgqIyku36q6qencmv0Xw/1770066009/vtvgo/vtv3-manifest.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/f161041d-3a3f-4c0a-88f2-ae97f8052ee7.jpg?width=500" tvg-id="VTV4.vn@HD",VTV4 (1080p)
-https://live.fptplay53.net/live/media/vtv4/live247-hls-avc/index.m3u8
+https://vtvgolive-vtv.vtvdigital.vn/2bQgqIyku36q6qencmv0Xw/1770066009/vtvgo/vtv4-manifest.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/d84c3036-3cc4-4c45-911f-8d1c5025cd93.jpg?width=500" tvg-id="VTV5.vn@HD",VTV5 (1080p)
-https://live.fptplay53.net/live/media/vtv5/live247-hls-avc/index.m3u8
+https://vtvgolive-vtv.vtvdigital.vn/i_D88YdpVKGfG89UJGrPCg/1770066010/vtvgo/vtv5-manifest.m3u8
 #EXTINF:-1 tvg-id="vtv5hdtnb" group-title="Kenh VTV" tvg-logo="https://vnepg.site/logos/6.png",VTV5 TÂY NĂM BỘ
 https://vpsttt.vietanhtv.top/tv360/tv360.php?id=157
 #EXTINF:-1 tvg-id="vtv5hdtn" group-title="Kenh VTV" tvg-logo="https://vnepg.site/logos/7.png",VTV5 TÂY NGUYÊN
@@ -26,11 +26,11 @@ https://vpsttt.vietanhtv.top/tv360/tv360.php?id=207
 #EXTINF:-1 tvg-id="vtvcantho" group-title="Kenh VTV" tvg-logo="https://vnepg.site/logos/8.png",VTV_Can_Tho
 https://vtvgolive-vtv.vtvdigital.vn/pnKMPvAJcPqDolSUAi2jBQ/1770066013/vtvgo/vtv6-manifest.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/fe6f00dd-e418-44bf-9c0a-ae47cec1a67c.jpg?width=500" tvg-id="vtv7.vn@HD",VTV7 HD (1080p)
-https://live.fptplay53.net/live/media/vtv7/live247-hls-avc/index.m3u8
+https://vtvgolive-vtv.vtvdigital.vn/D9NIow-jXmAF-ah1J7HIXw/1770066012/vtvgo/vtv7-manifest.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/447aba67-bee4-443a-ac5b-f6e457ff4abe.jpg?width=500" tvg-id="vtv8.vn@HD",VTV8 (1080p)
-https://live.fptplay53.net/live/media/vtv8/live-hls-avc/index.m3u8
+https://vtvgolive-vtv.vtvdigital.vn/D9NIow-jXmAF-ah1J7HIXw/1770066012/vtvgo/vtv8-manifest.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/7f951ab0-a128-44a9-84cd-ba8faf108ad3.jpg?width=500" tvg-id="vtv9.vn@HD",VTV9 (1080p)
-https://live.fptplay53.net/live/media/vtv9/live247-hls-avc/index.m3u8
+http://42.1.99.192:8080/live/vtv9.flv
 
 # ================= Hoạt Hình =================
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/2391927.jpg" tvg-id="",Conan (1080p)
