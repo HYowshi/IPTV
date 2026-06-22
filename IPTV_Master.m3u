@@ -30,7 +30,7 @@ https://vtvgolive-vtv.vtvdigital.vn/D9NIow-jXmAF-ah1J7HIXw/1770066012/vtvgo/vtv7
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/447aba67-bee4-443a-ac5b-f6e457ff4abe.jpg?width=500" tvg-id="vtv8.vn@HD",VTV8 (1080p)
 https://vtvgolive-vtv.vtvdigital.vn/D9NIow-jXmAF-ah1J7HIXw/1770066012/vtvgo/vtv8-manifest.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/7f951ab0-a128-44a9-84cd-ba8faf108ad3.jpg?width=500" tvg-id="vtv9.vn@HD",VTV9 (1080p)
-http://42.1.99.192:8080/live/vtv9.flv
+https://vtvgolive-vtv.vtvdigital.vn/D9NIow-jXmAF-ah1J7HIXw/1770066012/vtvgo/vtv9-manifest.m3u8
 
 # ================= Hoạt Hình =================
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/2391927.jpg" tvg-id="",Conan (1080p)
