@@ -29,7 +29,7 @@ const M3U_FILES = [
 const TV_CACHE_PREFIX = 'tv_cache_';
 const TV_CACHE_TTL = 10 * 60 * 1000;          // 10 phút fresh
 const TV_STALE_TTL = 60 * 60 * 1000;           // 60 phút stale window
-const TV_LONG_TERM_TTL = 12 * 60 * 60 * 1000;  // 12 hours in LocalStorage
+const TV_LONG_TERM_TTL = 30 * 60 * 1000;  // 30 minutes in LocalStorage
 const TV_MEMORY_MAX = 20;                       // LRU max entries in memory
 const inFlightTvRequests = new Map();
 
