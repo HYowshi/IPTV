@@ -56,43 +56,43 @@ https://live.thvli.vn/thvl2/playlist.m3u8
 
 # ================= SCTV =================
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv1.png" tvg-id="SCTV1.vn@SD",SCTV1 (720p)
-https://toiyeuvietnam.dpdns.org/OnliveTV/sctv1hd/Free.m3u8
+https://hoiquan.dpdns.org/VTVGo/?sctv1
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://i.imgur.com/8i5DXIg.png" tvg-id="SCTV2.vn@SD",SCTV2 (720p)
-http://dead.link
+https://tpninosaga.duckdns.org/source/tv360.m3u8?id=201&token=NinoExility
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv3.png" tvg-id="sctv3hd",SCTV3
-http://dead.link
+https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv3-hd-cf3adaca
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv4.png" tvg-id="sctv4hd",SCTV4
-http://dead.link
+https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv4-ae779f7e
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv4.png" tvg-id="sctv6hd",SCTV6
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/sctv6/KenhCoBan.m3u8
+https://live.fptplay53.net/epzhd2/film360_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv7.webp" tvg-id="sctv7hd",SCTV7
-https://toiyeuvietnam.dpdns.org/OnliveTV/sctv7hd/Free.m3u8
+https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv7-ef7e259a
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv8.png" tvg-id="sctv8hd",SCTV8
-https://toiyeuvietnam.dpdns.org/OnliveTV/sctv8hd/Free.m3u8
+https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv8-c12d138b
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV10.jpg" tvg-id="sctv10hd",SCTV10
-https://toiyeuvietnam.dpdns.org/OnliveTV/sctv10hd/Free.m3u8
+https://hoiquan.dpdns.org/VTVGo/?sctv10
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv11.png" tvg-id="sctv11hd",SCTV11
-http://dead.link
+https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv11-1d565c47
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv12.png" tvg-id="sctv12hd",SCTV12
-http://dead.link
+https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv12-b0d6c023
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv13.png" tvg-id="sctv13hd",SCTV13
-https://toiyeuvietnam.dpdns.org/OnliveTV/sctv13hd/Free.m3u8
+https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv13-67f88fcb
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv14.png" tvg-id="sctv14hd",SCTV14
-https://toiyeuvietnam.dpdns.org/OnliveTV/sctv14hd/Free.m3u8
+https://hoiquan.dpdns.org/VTVGo/?sctv14
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv14.png" tvg-id="SCTV16.vn@SD",SCTV16 (720p)
-https://toiyeuvietnam.dpdns.org/OnliveTV/sctv16hd/Free.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV16/04.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv18.png" tvg-id="sctv18hd",SCTV18
-https://toiyeuvietnam.dpdns.org/OnliveTV/sctv18hd/Free.m3u8
+https://liveh34.seenow.vn/hls/SCTV18/03.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv19.png" tvg-id="sctv19hd",SCTV19
-https://toiyeuvietnam.dpdns.org/OnliveTV/sctv19hd/Free.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV19/03.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV20.png" tvg-id="sctv20hd",SCTV20
-https://toiyeuvietnam.dpdns.org/OnliveTV/sctv20hd/Free.m3u8
+https://liveh34.vtvprime.vn/hls/SCTV20/03.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV21.png" tvg-id="sctv21hd",SCTV21 - Việt Nam Ký Ức
-http://dead.link
+https://liveh34.vtvprime.vn/hls/SCTV21/03.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV22.png" tvg-id="sctv22hd",:SCTV22
-http://dead.link
+https://liveh34.vtvprime.vn/hls/SCTV22/04.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctvpth.png" tvg-id="sctvhdpth",SCTV Phim Tổng Hợp
-https://toiyeuvietnam.dpdns.org/OnliveTV/sctvhdpth/Free.m3u8
+https://liveh12.vtvprime.vn/hls/SCTVPHIM/03.m3u8
 
 # ================= HTV =================
 #EXTINF:-1 group-title="HTV" tvg-logo="https://img-zlr1.tv360.vn/image1/2023/04/03/16/1680514594557/ab2557f0b015_640_360.png" tvg-id="HTVTheThao.vn@HD",HTV Thể Thao

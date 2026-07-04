@@ -383,7 +383,19 @@ function playChannel(channel) {
         
         tvMpegtsPlayer.on(mpegts.Events.ERROR, (type, detail, info) => {
             console.error('[TV mpegts] Error:', type, detail, info);
+            if (tvLoader) tvLoader.style.display = 'none';
             showToast('Lỗi tải luồng MPEG-TS', 3000, 'error');
+            showErrorWithRetry('Lỗi tải luồng MPEG-TS. Không thể kết nối hoặc luồng phát không được hỗ trợ.', () => {
+                playChannel(channel);
+            });
+            try {
+                if (tvMpegtsPlayer) {
+                    tvMpegtsPlayer.unload();
+                    tvMpegtsPlayer.detachMediaElement();
+                    tvMpegtsPlayer.destroy();
+                    tvMpegtsPlayer = null;
+                }
+            } catch (e) { }
         });
     } else if (streamUrl.includes('.mpd')) {
         if (typeof dashjs !== 'undefined') {
