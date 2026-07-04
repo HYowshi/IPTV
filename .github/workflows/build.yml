@@ -225,11 +225,41 @@ jobs:
           ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_HOME }}
           CARGO_NDK_ANDROID_NDK_HOME: ${{ env.CARGO_NDK_ANDROID_NDK_HOME }}
 
+      - name: Zipalign and Sign APK
+        run: |
+          APK_DIR="src-tauri/gen/android/app/build/outputs/apk/universal/release"
+          UNSIGNED="$APK_DIR/app-universal-release-unsigned.apk"
+          ALIGNED="$APK_DIR/app-universal-release-aligned.apk"
+          SIGNED="$APK_DIR/PhimTV-v${{ steps.version.outputs.version }}.apk"
+          BUILD_TOOLS=$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -1)
+
+          if [ ! -f "$UNSIGNED" ]; then
+            echo "Unsigned APK not found at $UNSIGNED"
+            find src-tauri/gen/android/app/build/outputs/apk -type f -name "*.apk" -print || true
+            exit 1
+          fi
+
+          echo "Zipalign APK..."
+          "$BUILD_TOOLS/zipalign" -v -p 4 "$UNSIGNED" "$ALIGNED"
+
+          echo "Sign APK..."
+          "$BUILD_TOOLS/apksigner" sign \
+            --ks src-tauri/gen/android/phimtv-release.jks \
+            --ks-pass pass:phimtv2026 \
+            --ks-key-alias phimtv \
+            --key-pass pass:phimtv2026 \
+            --out "$SIGNED" \
+            "$ALIGNED"
+
+          echo "Verify APK signature..."
+          "$BUILD_TOOLS/apksigner" verify -v "$SIGNED"
+          ls -lh "$SIGNED"
+
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: PhimTV-Android-v${{ steps.version.outputs.version }}
-          path: src-tauri/gen/android/app/build/outputs/apk/**/*.apk
+          path: src-tauri/gen/android/app/build/outputs/apk/universal/release/PhimTV-v${{ steps.version.outputs.version }}.apk
           retention-days: 30
 
       - name: Build Summary
