@@ -12,7 +12,7 @@ function initSpatialNavigation() {
         if (isInput) return;
 
         const focusables = Array.from(document.querySelectorAll(
-            '.movie-card, .btn-play, .btn-primary, .btn-secondary, .btn-more, .btn-server, .btn-episode, .btn-back, .btn-icon-action, .btn-expand-desc, .switch-item, .dropdown > a, .btn-exit-header, .sidebar-list li, #searchInput, .btn-page'
+            '.movie-card, .btn-play, .btn-primary, .btn-secondary, .btn-more, .btn-server, .btn-episode, .btn-back, .btn-icon-action, .btn-expand-desc, .switch-item, .dropdown > a, .dropdown-content a, .btn-exit-header, .sidebar-list li, #searchInput, .btn-page'
         )).filter(el => {
             const rect = el.getBoundingClientRect();
             const style = window.getComputedStyle(el);
@@ -643,6 +643,35 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.code === 'ArrowUp') { e.preventDefault(); videoPlayer.volume = Math.min(1, videoPlayer.volume + 0.1); }
         else if (e.code === 'ArrowDown') { e.preventDefault(); videoPlayer.volume = Math.max(0, videoPlayer.volume - 0.1); }
         else if (e.code === 'KeyM') { e.preventDefault(); videoPlayer.muted = !videoPlayer.muted; }
+    });
+
+    // Global TV Remote Back Button Handler (Escape / Backspace)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' || e.key === 'Backspace') {
+            const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+            if (activeTag === 'input' || activeTag === 'textarea') return; // Don't block typable Backspace
+
+            const watchView = document.getElementById('watch-view');
+            const detailView = document.getElementById('detail-view');
+            const filterView = document.getElementById('filter-view');
+
+            // If player is open, let the player keydown listener handle it
+            if (watchView && watchView.style.display === 'block') {
+                return;
+            }
+
+            // Otherwise, handle step-by-step back navigation
+            e.preventDefault();
+            if (detailView && detailView.style.display === 'block') {
+                goBackFromDetail();
+            } else if (filterView && filterView.style.display === 'block') {
+                if (typeof navigateToHome === 'function') navigateToHome();
+            } else {
+                // If on Home Screen, go back to Service Selection Screen (index.html)
+                document.body.classList.add('fade-out');
+                setTimeout(() => { window.location.href = '../index.html'; }, 300);
+            }
+        }
     });
 
     // ==================== FETCH HOME DATA ====================

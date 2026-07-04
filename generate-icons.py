@@ -259,17 +259,18 @@ def main():
         import shutil
         android_src_dir = os.path.join(ICONS_DIR, "android")
         if os.path.exists(android_src_dir):
-            for item in os.listdir(android_src_dir):
-                s = os.path.join(android_src_dir, item)
-                d = os.path.join(android_res_dir, item)
-                if os.path.isdir(s):
-                    if os.path.exists(d):
-                        shutil.rmtree(d)
-                    shutil.copytree(s, d)
-                    print(f"  [copy] {item} -> res/")
-                else:
-                    shutil.copy2(s, d)
-                    print(f"  [copy] {item} -> res/")
+            def merge_copy(src, dst):
+                os.makedirs(dst, exist_ok=True)
+                for item in os.listdir(src):
+                    s = os.path.join(src, item)
+                    d = os.path.join(dst, item)
+                    if os.path.isdir(s):
+                        merge_copy(s, d)
+                    else:
+                        shutil.copy2(s, d)
+            
+            merge_copy(android_src_dir, android_res_dir)
+            print("  [copy] Android icons merged to res/ directory successfully.")
 
     # Summary
     total = 0

@@ -569,9 +569,14 @@ body.entry-body.fade-out {
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.disclaimer-checkbox:hover {
+.disclaimer-checkbox:hover,
+.disclaimer-checkbox:focus,
+.disclaimer-checkbox:focus-visible {
     color: #fff;
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: #f91942;
+    box-shadow: 0 0 15px rgba(249, 25, 66, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+    outline: none;
 }
 
 .disclaimer-checkbox input[type="checkbox"] {
@@ -641,56 +646,68 @@ body.entry-body.fade-out {
 }
 
 /* ==================== FOCUS STATES ==================== */
-.tv-accent:focus-visible {
+.tv-accent:focus-visible,
+.tv-accent:focus {
     outline: 2px solid rgba(0, 242, 254, 0.8);
     outline-offset: 4px;
     transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.05, 1.05, 1.05);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 242, 254, 0.3);
 }
 
-.tv-accent:focus-visible::before {
+.tv-accent:focus-visible::before,
+.tv-accent:focus::before {
     border-color: rgba(0, 242, 254, 0.5);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(0, 242, 254, 0.2);
 }
 
-.tv-accent:focus-visible .entry-icon-v2 {
+.tv-accent:focus-visible .entry-icon-v2,
+.tv-accent:focus .entry-icon-v2 {
     color: #00f2fe;
     filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.5));
 }
 
-.tv-accent:focus-visible .icon-wrapper {
+.tv-accent:focus-visible .icon-wrapper,
+.tv-accent:focus .icon-wrapper {
     border-color: rgba(0, 242, 254, 0.3);
     box-shadow: 0 0 25px rgba(0, 242, 254, 0.15);
 }
 
-.movie-accent:focus-visible {
+.movie-accent:focus-visible,
+.movie-accent:focus {
     outline: 2px solid rgba(249, 25, 66, 0.8);
     outline-offset: 4px;
     transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.05, 1.05, 1.05);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 25px rgba(249, 25, 66, 0.3);
 }
 
-.movie-accent:focus-visible::before {
+.movie-accent:focus-visible::before,
+.movie-accent:focus::before {
     border-color: rgba(249, 25, 66, 0.5);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(249, 25, 66, 0.2);
 }
 
-.movie-accent:focus-visible .entry-icon-v2 {
+.movie-accent:focus-visible .entry-icon-v2,
+.movie-accent:focus .entry-icon-v2 {
     color: #f91942;
     filter: drop-shadow(0 0 20px rgba(249, 25, 66, 0.5));
 }
 
-.movie-accent:focus-visible .icon-wrapper {
+.movie-accent:focus-visible .icon-wrapper,
+.movie-accent:focus .icon-wrapper {
     border-color: rgba(249, 25, 66, 0.3);
     box-shadow: 0 0 25px rgba(249, 25, 66, 0.15);
 }
 
-.btn-exit:focus-visible {
+.btn-exit:focus-visible,
+.btn-exit:focus {
     outline: 2px solid #f91942;
     outline-offset: 4px;
+    background: rgba(249, 25, 66, 0.15);
+    border-color: rgba(249, 25, 66, 0.6);
 }
 
-.modal-btn:focus-visible {
+.modal-btn:focus-visible,
+.modal-btn:focus {
     outline: 2px solid #fff;
     outline-offset: 4px;
     transform: scale(1.05);

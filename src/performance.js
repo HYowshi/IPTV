@@ -6,6 +6,35 @@
  * - Debounce/throttle utilities
  */
 
+// ==================== SCROLL POLYFILL FOR OLDER WEBVIEWS ====================
+(function() {
+    const originalScrollTo = window.scrollTo;
+    window.scrollTo = function(x, y) {
+        if (typeof x === 'object') {
+            try {
+                originalScrollTo.call(window, x);
+            } catch (e) {
+                const top = x.top || 0;
+                const left = x.left || 0;
+                originalScrollTo.call(window, left, top);
+            }
+        } else {
+            originalScrollTo.call(window, x, y);
+        }
+    };
+
+    const originalScrollIntoView = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = function(alignWithTop) {
+        try {
+            originalScrollIntoView.call(this, alignWithTop);
+        } catch (e) {
+            try {
+                originalScrollIntoView.call(this, true);
+            } catch (err) {}
+        }
+    };
+})();
+
 // ==================== PASSIVE EVENT LISTENERS ====================
 // Override addEventListener to default touch/wheel events to passive
 (function() {

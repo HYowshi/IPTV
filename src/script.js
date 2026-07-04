@@ -46,6 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setInterval(() => {
         if (isNavigating) return;
+        
+        // Skip background particles on TV Boxes (Android) to optimize RAM & CPU
+        const isLowMem = typeof Platform !== 'undefined' && (Platform.current.isLowMemory || Platform.current.isAndroid);
+        if (isLowMem) return;
+        
         idleTime++;
 
         let targetSeasonLevel = -1;
@@ -152,6 +157,26 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.key === 'Escape') {
                 e.preventDefault();
                 exitTauriApp();
+                return;
+            }
+            
+            const modalFocusables = [
+                document.getElementById('disclaimer-checkbox-label'),
+                document.getElementById('btn-decline-disclaimer'),
+                document.getElementById('btn-accept-disclaimer')
+            ].filter(Boolean);
+            
+            const activeEl = document.activeElement;
+            const index = modalFocusables.indexOf(activeEl);
+            
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                const nextIdx = index >= 0 ? (index + 1) % modalFocusables.length : 0;
+                modalFocusables[nextIdx].focus();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                const prevIdx = index >= 0 ? (index - 1 + modalFocusables.length) % modalFocusables.length : modalFocusables.length - 1;
+                modalFocusables[prevIdx].focus();
             }
             return; 
         }
@@ -335,9 +360,10 @@ document.addEventListener("DOMContentLoaded", () => {
             disclaimerCheckbox.addEventListener('change', updateAcceptButton);
         }
 
-        // Focus the checkbox first (user needs to read and check)
-        if (disclaimerCheckbox) {
-            disclaimerCheckbox.focus();
+        // Focus the checkbox label first (user needs to read and check)
+        const disclaimerLabel = document.getElementById('disclaimer-checkbox-label');
+        if (disclaimerLabel) {
+            disclaimerLabel.focus();
         }
 
         if (btnDecline) {
@@ -366,11 +392,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 500);
         });
 
-        // Enter key on checkbox to accept when ready
-        if (disclaimerCheckbox) {
-            disclaimerCheckbox.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && !btnAccept.disabled) {
-                    btnAccept.click();
+        // Enter key on label toggles the checkbox
+        if (disclaimerLabel && disclaimerCheckbox) {
+            disclaimerLabel.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    disclaimerCheckbox.checked = !disclaimerCheckbox.checked;
+                    disclaimerCheckbox.dispatchEvent(new Event('change'));
                 }
             });
         }

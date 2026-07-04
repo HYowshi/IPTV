@@ -550,6 +550,16 @@ function initUIEvents() {
                     handleActivity();
                 }
             }
+        } else {
+            // Trình phát không mở. Nếu nhấn Escape hoặc Backspace, quay lại trang chọn dịch vụ (index.html)
+            if (e.key === 'Escape' || e.key === 'Backspace') {
+                const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+                if (activeTag === 'input') return;
+                
+                e.preventDefault();
+                document.body.classList.add('fade-out');
+                setTimeout(() => { window.location.href = '../index.html'; }, 300);
+            }
         }
     });
 
