@@ -17,26 +17,42 @@ function detectYouTubeUrl(url) {
     return null;
 }
 
-// YouTube IFrame API Loader
 function loadYouTubeIFrameAPI() {
     return new Promise((resolve) => {
+        const timeoutId = setTimeout(() => {
+            console.warn('[YT] Load IFrame API timeout, using fallback');
+            resolve(null);
+        }, 5000);
+
         if (window.YT && window.YT.Player) {
+            clearTimeout(timeoutId);
             resolve(window.YT);
             return;
         }
         // Check if script already loading
         if (document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
-            window.onYouTubeIframeAPIReady = () => resolve(window.YT);
+            const originalReady = window.onYouTubeIframeAPIReady;
+            window.onYouTubeIframeAPIReady = () => {
+                clearTimeout(timeoutId);
+                if (typeof originalReady === 'function') originalReady();
+                resolve(window.YT);
+            };
             return;
         }
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
         tag.onerror = () => {
+            clearTimeout(timeoutId);
             console.error('[YT] Failed to load IFrame API');
             resolve(null);
         };
         document.head.appendChild(tag);
-        window.onYouTubeIframeAPIReady = () => resolve(window.YT);
+        const originalReady = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = () => {
+            clearTimeout(timeoutId);
+            if (typeof originalReady === 'function') originalReady();
+            resolve(window.YT);
+        };
     });
 }
 

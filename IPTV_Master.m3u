@@ -10,9 +10,9 @@ https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8
 
 # ================= VTV =================
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",VTV1 (1080p)
-https://HaNoiIPTV.short.gy/HaNoiIPTV-VTV1_HD
+https://live.fptplay53.net/live/media/vtv1/live247-hls-avc/vtv1-avc1_5600000=10000-mp4a_131600=20000.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5ac4a9fb-6da7-4785-aab5-ae85e471d869.jpg?width=500" tvg-id="VTV2.vn@HD",VTV2 (1080p)
-https://HaNoiIPTV.short.gy/HaNoiIPTV-VTV2_HD
+https://live.fptplay53.net/live/media/v2abr/live247-hls-avc/v2abr-avc1_5600000=10000-mp4a_131600=20000.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/292a3f4e-c6ee-4858-9c49-f61dde69a854.jpg?width=500" tvg-id="VTV3.vn@HD",VTV3 (1080p)
 https://HaNoiIPTV.short.gy/HaNoiIPTV-VTV3_HD
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/f161041d-3a3f-4c0a-88f2-ae97f8052ee7.jpg?width=500" tvg-id="VTV4.vn@HD",VTV4 (1080p)
@@ -34,19 +34,19 @@ https://HaNoiIPTV.short.gy/HaNoiIPTV-VTV9_HD
 
 # ================= Hoạt Hình =================
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/2391927.jpg" tvg-id="",Conan (1080p)
-https://www.youtube.com/watch?v=DPRZWLasTkE
+https://www.youtube.com/watch?v=h3CBgUl4tcI
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/889165.jpg" tvg-id="",Doremon (1080p)
-https://www.youtube.com/watch?v=nY2upofLh5o
+https://www.youtube.com/watch?v=geIOmH9erLc
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/1198080.jpg" tvg-id="",Tom and Jerry (1080p)
-https://www.youtube.com/live/400k2SKoeh4?si=iiEXqrHW_DaHnWJU
+https://www.youtube.com/watch?v=rEKifG2XUZg
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/2076353.jpg" tvg-id="",Mr.Bean (1080p)
-https://www.youtube.com/watch?v=lCp-9YihW-c
+https://www.youtube.com/watch?v=XQLEvieRMj4
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/1675031.jpg" tvg-id="",OGGY (1080p)
 https://www.youtube.com/watch?v=n4lcJjsMEb0
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/188527.jpg" tvg-id="",MINIONS (1080p)
-https://www.youtube.com/watch?v=btP-bWKDVik
+https://www.youtube.com/watch?v=LDsO1WJVQqM
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/155078.jpg" tvg-id="",Adventure Time (1080p)
-https://www.youtube.com/watch?v=1oDs_W730cw
+https://www.youtube.com/watch?v=uZkaJ3e9nfY
 
 # ================= THVL =================
 #EXTINF:-1 group-title="THVL" tvg-logo="http://static3.thvli.vn/assets/thumbnail/2025/09/12/pbe9c6gh_button_thvl1.png" tvg-id="THVL1.vn@HD",THVL 1 (1080p)
