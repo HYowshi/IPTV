@@ -38,7 +38,7 @@
                         class="material-symbols-rounded" style="font-size:20px;">play_arrow</span></span> Phim<span class="text-accent">.tv</span></div>
             <nav class="unified-nav">
                 <div class="platform-switch">
-                    <a href="#" class="switch-item active" onclick="navigateToHome(event)"><span
+                    <a href="javascript:void(0)" class="switch-item active" onclick="navigateToHome(event)"><span
                             class="material-symbols-rounded">movie</span> Phim Ảnh</a>
                     <a href="../truyenhinh/truyenhinh.html" class="switch-item transition-link"><span
                             class="material-symbols-rounded">tv</span> Truyền hình</a>
@@ -47,44 +47,44 @@
                 <div class="nav-separator"></div>
 
                 <div class="dropdown">
-                    <a href="#">Danh sách <span class="dropdown-icon"><span
+                    <a href="javascript:void(0)">Danh sách <span class="dropdown-icon"><span
                                 class="material-symbols-rounded" style="font-size:14px;">expand_more</span></span></a>
                     <div class="dropdown-content">
-                        <a href="#"
+                        <a href="javascript:void(0)"
                             onclick="loadFilterData('new', '', 'Phim mới cập nhật', 1); return false;">Phim
                             mới cập nhật</a>
-                        <a href="#"
+                        <a href="javascript:void(0)"
                             onclick="loadFilterData('danh-sach', 'phim-bo', 'Phim bộ', 1); return false;">Phim
                             bộ</a>
-                        <a href="#"
+                        <a href="javascript:void(0)"
                             onclick="loadFilterData('danh-sach', 'phim-le', 'Phim lẻ', 1); return false;">Phim
                             lẻ</a>
-                        <a href="#"
+                        <a href="javascript:void(0)"
                             onclick="loadFilterData('danh-sach', 'hoat-hinh', 'Hoạt hình', 1); return false;">Hoạt
                             hình</a>
-                        <a href="#"
+                        <a href="javascript:void(0)"
                             onclick="loadFilterData('danh-sach', 'phim-vietsub', 'Phim Vietsub', 1); return false;">Phim
                             Vietsub</a>
-                        <a href="#"
+                        <a href="javascript:void(0)"
                             onclick="loadFilterData('danh-sach', 'phim-thuyet-minh', 'Phim Thuyết minh', 1); return false;">Phim
                             Thuyết minh</a>
-                        <a href="#"
+                        <a href="javascript:void(0)"
                             onclick="loadFilterData('danh-sach', 'phim-long-tieng', 'Phim Lồng tiếng', 1); return false;">Phim
                             Lồng tiếng</a>
-                        <a href="#"
+                        <a href="javascript:void(0)"
                             onclick="loadFilterData('danh-sach', 'tv-shows', 'TV Shows', 1); return false;">TV Shows</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="#">Thể loại <span class="dropdown-icon"><span class="material-symbols-rounded" style="font-size:14px;">expand_more</span></span></a>
+                    <a href="javascript:void(0)">Thể loại <span class="dropdown-icon"><span class="material-symbols-rounded" style="font-size:14px;">expand_more</span></span></a>
                     <div class="dropdown-content" id="category-list"></div>
                 </div>
                 <div class="dropdown">
-                    <a href="#">Quốc gia <span class="dropdown-icon"><span class="material-symbols-rounded" style="font-size:14px;">expand_more</span></span></a>
+                    <a href="javascript:void(0)">Quốc gia <span class="dropdown-icon"><span class="material-symbols-rounded" style="font-size:14px;">expand_more</span></span></a>
                     <div class="dropdown-content" id="country-list"></div>
                 </div>
                 <div class="dropdown">
-                    <a href="#">Năm <span class="dropdown-icon"><span class="material-symbols-rounded" style="font-size:14px;">expand_more</span></span></a>
+                    <a href="javascript:void(0)">Năm <span class="dropdown-icon"><span class="material-symbols-rounded" style="font-size:14px;">expand_more</span></span></a>
                     <div class="dropdown-content" id="year-list"></div>
                 </div>
             </nav>
@@ -111,18 +111,18 @@
     <div id="mobileNavOverlay" class="mobile-nav-overlay"></div>
     <div id="mobileNavPanel" class="mobile-nav-panel">
         <div class="mobile-nav-title">Điều hướng</div>
-        <a href="#" onclick="navigateToHome(event)"><span class="material-symbols-rounded">movie</span> Phim Ảnh</a>
+        <a href="javascript:void(0)" onclick="navigateToHome(event)"><span class="material-symbols-rounded">movie</span> Phim Ảnh</a>
         <a href="../truyenhinh/truyenhinh.html" class="transition-link"><span class="material-symbols-rounded">tv</span> Truyền hình</a>
 
         <div class="mobile-nav-title">Danh sách</div>
-        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('new', '', 'Phim mới cập nhật', 1);"><span class="material-symbols-rounded">local_fire_department</span> Phim mới cập nhật</a>
-        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-bo', 'Phim bộ', 1);"><span class="material-symbols-rounded">view_list</span> Phim bộ</a>
-        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-le', 'Phim lẻ', 1);"><span class="material-symbols-rounded">movie</span> Phim lẻ</a>
-        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'hoat-hinh', 'Hoạt hình', 1);"><span class="material-symbols-rounded">animation</span> Hoạt hình</a>
-        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-vietsub', 'Phim Vietsub', 1);"><span class="material-symbols-rounded">subtitles</span> Phim Vietsub</a>
-        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-thuyet-minh', 'Phim Thuyết minh', 1);"><span class="material-symbols-rounded">record_voice_over</span> Phim Thuyết minh</a>
-        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-long-tieng', 'Phim Lồng tiếng', 1);"><span class="material-symbols-rounded">mic</span> Phim Lồng tiếng</a>
-        <a href="#" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'tv-shows', 'TV Shows', 1);"><span class="material-symbols-rounded">live_tv</span> TV Shows</a>
+        <a href="javascript:void(0)" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('new', '', 'Phim mới cập nhật', 1);"><span class="material-symbols-rounded">local_fire_department</span> Phim mới cập nhật</a>
+        <a href="javascript:void(0)" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-bo', 'Phim bộ', 1);"><span class="material-symbols-rounded">view_list</span> Phim bộ</a>
+        <a href="javascript:void(0)" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-le', 'Phim lẻ', 1);"><span class="material-symbols-rounded">movie</span> Phim lẻ</a>
+        <a href="javascript:void(0)" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'hoat-hinh', 'Hoạt hình', 1);"><span class="material-symbols-rounded">animation</span> Hoạt hình</a>
+        <a href="javascript:void(0)" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-vietsub', 'Phim Vietsub', 1);"><span class="material-symbols-rounded">subtitles</span> Phim Vietsub</a>
+        <a href="javascript:void(0)" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-thuyet-minh', 'Phim Thuyết minh', 1);"><span class="material-symbols-rounded">record_voice_over</span> Phim Thuyết minh</a>
+        <a href="javascript:void(0)" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'phim-long-tieng', 'Phim Lồng tiếng', 1);"><span class="material-symbols-rounded">mic</span> Phim Lồng tiếng</a>
+        <a href="javascript:void(0)" onclick="event.preventDefault(); closeMobileMenu(); loadFilterData('danh-sach', 'tv-shows', 'TV Shows', 1);"><span class="material-symbols-rounded">live_tv</span> TV Shows</a>
 
         <div class="mobile-nav-title">Thể loại</div>
         <div id="mobile-category-list" class="mobile-nav-links"></div>
@@ -266,7 +266,7 @@
                                     class="material-symbols-rounded" style="font-size:16px;">play_arrow</span> XEM NGAY</button>
                             <button id="btn-continue-watch" class="btn-primary"
                                 style="display: none;"></button>
-                            <a href="#" target="_blank" class="btn-secondary" id="detail-trailer"
+                            <a href="javascript:void(0)" target="_blank" class="btn-secondary" id="detail-trailer"
                                 style="display: none; text-decoration: none;"><span class="material-symbols-rounded" style="font-size:16px;">movie</span> TRAILER</a>
                             <button class="btn-icon-action" id="btn-favorite" title="Yêu thích">
                                 <span class="material-symbols-rounded" style="font-size:20px;">favorite</span>

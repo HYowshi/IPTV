@@ -11,7 +11,9 @@ Usage:
     python M3U_list.py --help             # Xem hướng dẫn
 """
 
-import requests
+import urllib.request
+import urllib.error
+import ssl
 import re
 import argparse
 import json
@@ -174,7 +176,7 @@ def sort_key(ch, group):
 
 # ==================== NETWORK FUNCTIONS ====================
 
-def resolve_m3u8_url(url, max_depth=2, session=None):
+def resolve_m3u8_url(url, max_depth=2):
     if max_depth <= 0:
         return url
     if url in PLAYLIST_CACHE:
@@ -182,41 +184,41 @@ def resolve_m3u8_url(url, max_depth=2, session=None):
     if not url.lower().endswith(('.m3u8', '.m3u')):
         return url
     try:
-        if session is None:
-            session = requests.Session()
         headers = {'User-Agent': 'VLC/3.0.18 LibVLC/3.0.18'}
-        resp = session.get(url, headers=headers, timeout=8)
-        if resp.status_code != 200:
-            return url
-        content = resp.text
-        if '#EXTM3U' not in content:
-            return url
-        lines = content.splitlines()
-        best_url = None
-        best_bandwidth = -1
-        i = 0
-        while i < len(lines):
-            line = lines[i].strip()
-            if line.startswith('#EXT-X-STREAM-INF'):
-                bw_match = re.search(r'BANDWIDTH=(\d+)', line)
-                bandwidth = int(bw_match.group(1)) if bw_match else 0
-                if i + 1 < len(lines):
-                    stream_url = lines[i + 1].strip()
-                    if stream_url and not stream_url.startswith('#'):
-                        full_url = urljoin(url, stream_url)
-                        if bandwidth > best_bandwidth:
-                            best_bandwidth = bandwidth
-                            best_url = full_url
-                i += 2
+        req = urllib.request.Request(url, headers=headers)
+        context = ssl._create_unverified_context()
+        with urllib.request.urlopen(req, timeout=8, context=context) as resp:
+            if resp.status != 200:
+                return url
+            content = resp.read().decode('utf-8', errors='ignore')
+            if '#EXTM3U' not in content:
+                return url
+            lines = content.splitlines()
+            best_url = None
+            best_bandwidth = -1
+            i = 0
+            while i < len(lines):
+                line = lines[i].strip()
+                if line.startswith('#EXT-X-STREAM-INF'):
+                    bw_match = re.search(r'BANDWIDTH=(\d+)', line)
+                    bandwidth = int(bw_match.group(1)) if bw_match else 0
+                    if i + 1 < len(lines):
+                        stream_url = lines[i + 1].strip()
+                        if stream_url and not stream_url.startswith('#'):
+                            full_url = urljoin(url, stream_url)
+                            if bandwidth > best_bandwidth:
+                                best_bandwidth = bandwidth
+                                best_url = full_url
+                    i += 2
+                else:
+                    i += 1
+            if best_url:
+                resolved = resolve_m3u8_url(best_url, max_depth - 1)
+                PLAYLIST_CACHE[url] = resolved
+                return resolved
             else:
-                i += 1
-        if best_url:
-            resolved = resolve_m3u8_url(best_url, max_depth - 1, session)
-            PLAYLIST_CACHE[url] = resolved
-            return resolved
-        else:
-            PLAYLIST_CACHE[url] = url
-            return url
+                PLAYLIST_CACHE[url] = url
+                return url
     except Exception:
         return url
 
@@ -225,15 +227,24 @@ def check_channel_health(url, timeout=3):
         return True
     try:
         headers = {'User-Agent': 'VLC/3.0.18 LibVLC/3.0.18'}
-        resp = requests.head(url, headers=headers, timeout=timeout, allow_redirects=True)
-        if resp.status_code < 400:
-            return True
-        if resp.status_code in (403, 452, 456, 405, 400) or resp.status_code >= 500:
-            headers_range = headers.copy()
-            headers_range['Range'] = 'bytes=0-1'
-            resp2 = requests.get(url, headers=headers_range, timeout=timeout, allow_redirects=True)
-            if resp2.status_code in (206, 200):
-                return True
+        req = urllib.request.Request(url, headers=headers, method='HEAD')
+        context = ssl._create_unverified_context()
+        try:
+            with urllib.request.urlopen(req, timeout=timeout, context=context) as resp:
+                if resp.status < 400:
+                    return True
+        except urllib.error.HTTPError as e:
+            status = e.code
+            if status in (403, 452, 456, 405, 400) or status >= 500:
+                headers_range = headers.copy()
+                headers_range['Range'] = 'bytes=0-1'
+                req2 = urllib.request.Request(url, headers=headers_range)
+                try:
+                    with urllib.request.urlopen(req2, timeout=timeout, context=context) as resp2:
+                        if resp2.status in (200, 206):
+                            return True
+                except Exception:
+                    pass
         return False
     except Exception:
         return False
@@ -243,8 +254,10 @@ def check_channel_health(url, timeout=3):
 def fetch_and_parse_m3u(url):
     try:
         if url.startswith('http://') or url.startswith('https://'):
-            response = requests.get(url, timeout=10)
-            content = response.text
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            context = ssl._create_unverified_context()
+            with urllib.request.urlopen(req, timeout=10, context=context) as response:
+                content = response.read().decode('utf-8', errors='ignore')
         else:
             with open(url, 'r', encoding='utf-8', errors='ignore') as file:
                 content = file.read()
@@ -298,12 +311,15 @@ def parse_m3u(content):
 def get_epg_mapping(epg_url):
     mapping = {}
     try:
-        response = requests.get(epg_url, timeout=5)
-        if epg_url.endswith('.gz'):
-            content = gzip.decompress(response.content)
+        req = urllib.request.Request(epg_url, headers={'User-Agent': 'Mozilla/5.0'})
+        context = ssl._create_unverified_context()
+        with urllib.request.urlopen(req, timeout=5, context=context) as response:
+            res_content = response.read()
+            if epg_url.endswith('.gz'):
+                content = gzip.decompress(res_content)
+            else:
+                content = res_content
             root = ET.fromstring(content)
-        else:
-            root = ET.fromstring(response.content)
         for channel in root.findall('.//channel'):
             tvg_id = channel.get('id')
             display_name = channel.find('display-name')
@@ -429,8 +445,10 @@ def main():
     # Xử lý link đặc biệt (Trực tiếp)
     log(f"Đang tải link đặc biệt: {SPECIAL_URL}", "progress")
     try:
-        response = requests.get(SPECIAL_URL, timeout=10)
-        channels = parse_m3u(response.text)
+        req = urllib.request.Request(SPECIAL_URL, headers={'User-Agent': 'Mozilla/5.0'})
+        context = ssl._create_unverified_context()
+        with urllib.request.urlopen(req, timeout=10, context=context) as response:
+            channels = parse_m3u(response.read().decode('utf-8', errors='ignore'))
         for ch in channels:
             if 'name' not in ch:
                 continue

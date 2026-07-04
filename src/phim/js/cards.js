@@ -111,7 +111,7 @@ function renderUpcoming(movies, containerId) {
     });
 }
 
-function renderTopMovies(movies, containerId) {
+function renderTopMovies(movies, containerId, domain = imageDomain) {
     const container = document.getElementById(containerId);
     if (!container) return;
     container.innerHTML = "";
@@ -119,7 +119,7 @@ function renderTopMovies(movies, containerId) {
         const li = document.createElement("li");
         li.tabIndex = 0;
         const imagePath = movie.poster_url || movie.thumb_url;
-        const imgUrl = getImageUrl(imageDomain, imagePath);
+        const imgUrl = getImageUrl(domain, imagePath);
         const episodeCurrent = movie.episode_current || "HD";
 
         li.innerHTML = `
@@ -138,7 +138,7 @@ function renderTopMovies(movies, containerId) {
     });
 }
 
-function renderTopSeries(movies, containerId) {
+function renderTopSeries(movies, containerId, domain = imageDomain) {
     const container = document.getElementById(containerId);
     if (!container) return;
     container.innerHTML = "";
@@ -148,7 +148,7 @@ function renderTopSeries(movies, containerId) {
         card.tabIndex = 0;
 
         const imagePath = movie.poster_url || movie.thumb_url;
-        const imgUrl = getImageUrl(imageDomain, imagePath);
+        const imgUrl = getImageUrl(domain, imagePath);
 
         card.innerHTML = `
             <span class="badge badge-red">${getMovieBadge(movie)}</span>

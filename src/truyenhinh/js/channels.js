@@ -16,7 +16,7 @@ async function fetchAllM3UFiles(urls) {
     const container = document.getElementById('channels-container');
     container.innerHTML = "<div style='color: white; text-align: center; padding: 20px;'>Đang tải tổng hợp danh sách kênh...</div>";
 
-    const cacheKey = 'm3u_combined';
+    const cacheKey = 'm3u_combined_v3';
     const cached = tvGetCached(cacheKey);
 
     let combinedRawData = "";

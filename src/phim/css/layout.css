@@ -300,6 +300,8 @@
 
 .rank-thumb {
     width: 50px;
+    min-width: 50px;
+    flex-shrink: 0;
     height: 75px;
     border-radius: 6px;
     object-fit: cover;

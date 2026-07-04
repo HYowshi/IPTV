@@ -655,8 +655,21 @@ document.addEventListener("DOMContentLoaded", () => {
             const detailView = document.getElementById('detail-view');
             const filterView = document.getElementById('filter-view');
 
-            // If player is open, let the player keydown listener handle it
+            // If player is open, check if it's fullscreen. If not, go back to detail view
             if (watchView && watchView.style.display === 'block') {
+                const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || document.body.classList.contains('fullscreen-active');
+                if (isFs) {
+                    return; // Let the player keydown listener handle exiting fullscreen
+                }
+                e.preventDefault();
+                const backBtn = document.getElementById('btn-back-watch');
+                if (backBtn) {
+                    backBtn.click();
+                } else {
+                    document.getElementById('watch-view').style.display = 'none';
+                    document.getElementById('detail-view').style.display = 'block';
+                    window.scrollTo(0, 0);
+                }
                 return;
             }
 

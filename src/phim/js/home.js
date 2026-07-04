@@ -21,27 +21,24 @@ async function fetchHomeData() {
     document.getElementById('heroBanner').style.display = 'none';
     document.getElementById('main-content').style.display = 'none';
 
+    const endpoints = [
+        `${API_BASE_URL}/danh-sach/phim-moi-cap-nhat?page=1`,
+        `${API_BASE_URL}/danh-sach/phim-moi-cap-nhat?page=2`,
+        `${API_BASE_URL}/v1/api/danh-sach/phim-bo`,
+        `${API_BASE_URL}/v1/api/danh-sach/phim-le`,
+        `${API_BASE_URL}/v1/api/danh-sach/hoat-hinh`,
+        `${API_BASE_URL}/v1/api/danh-sach/phim-le?page=2`,
+        `${API_BASE_URL}/v1/api/danh-sach/phim-bo?page=2`
+    ];
+
     try {
-        const endpoints = [
-            `${API_BASE_URL}/v1/api/danh-sach/phim-moi-cap-nhat?page=1`,
-            `${API_BASE_URL}/v1/api/danh-sach/phim-moi-cap-nhat?page=2`,
-            `${API_BASE_URL}/v1/api/danh-sach/phim-bo`,
-            `${API_BASE_URL}/v1/api/danh-sach/phim-le`,
-            `${API_BASE_URL}/v1/api/danh-sach/hoat-hinh`,
-            `${API_BASE_URL}/v1/api/danh-sach/phim-le?page=2`,
-            `${API_BASE_URL}/v1/api/danh-sach/phim-bo?page=2`
-        ];
+        // Priority 1: Load the first endpoint (Hero & New updates) immediately
+        const p1Res = await fetchWithCache(endpoints[0]).catch(() => null);
+        const p1Formatted = formatResponse(p1Res);
 
-        const responses = await Promise.all(endpoints.map(url => fetchWithCache(url).catch(() => null)));
-        const formatted = responses.map(formatResponse);
+        if (p1Formatted.domain) imageDomain = p1Formatted.domain + '/';
 
-        let allMovies = [];
-        formatted.forEach(f => allMovies = allMovies.concat(f.items || []));
-        extractFiltersFromMovies(allMovies);
-
-        if (formatted[0].domain) imageDomain = formatted[0].domain + '/';
-
-        heroMovies = formatted[0].items.slice(0, 5);
+        heroMovies = p1Formatted.items.slice(0, 5);
         if (heroMovies.length > 0) {
             setupHeroControls();
             buildHeroIndicators();
@@ -50,18 +47,58 @@ async function fetchHomeData() {
         }
 
         renderFavorites();
+        renderMoviesCards(p1Formatted.items.slice(0, 12), 'grid-new-update', false);
 
-        renderMoviesCards(formatted[0].items.slice(0, 12), 'grid-new-update', false);
-        renderMoviesCards(formatted[1].items.slice(0, 3), 'grid-theaters', true);
-        renderMoviesCards(formatted[2].items.slice(0, 6), 'grid-series', false);
-        renderMoviesCards(formatted[3].items.slice(0, 6), 'grid-movies', false);
+        // Instantly display the main page structure and hero section
+        document.getElementById('loading-initial').style.display = 'none';
+        document.getElementById('heroBanner').style.display = 'flex';
+        document.getElementById('main-content').style.display = 'flex';
+        document.getElementById('home-view').style.display = 'block';
 
-        renderUpcoming(formatted[4].items.slice(0, 5), 'sidebar-upcoming');
-        renderTopMovies(formatted[5].items.slice(0, 5), 'sidebar-top-movies');
-        renderTopSeries(formatted[6].items.slice(0, 8), 'sidebar-top-series');
+        // Priority 2: Fetch and render other sections in the background
+        const otherEndpoints = endpoints.slice(1);
+        Promise.all(otherEndpoints.map(url => fetchWithCache(url).catch(() => null)))
+            .then(responses => {
+                const formatted = responses.map(formatResponse);
+                
+                // Construct filter map
+                let allMovies = p1Formatted.items.slice();
+                formatted.forEach(f => {
+                    if (f && f.items) {
+                        allMovies = allMovies.concat(f.items);
+                    }
+                });
+                extractFiltersFromMovies(allMovies);
+
+                // Render remaining grids
+                if (formatted[0] && formatted[0].items) {
+                    renderMoviesCards(formatted[0].items.slice(0, 3), 'grid-theaters', true);
+                }
+                if (formatted[1] && formatted[1].items) {
+                    renderMoviesCards(formatted[1].items.slice(0, 6), 'grid-series', false);
+                }
+                if (formatted[2] && formatted[2].items) {
+                    renderMoviesCards(formatted[2].items.slice(0, 6), 'grid-movies', false);
+                }
+
+                // Render sidebars with specific domains passed to fix the images
+                if (formatted[3] && formatted[3].items) {
+                    renderUpcoming(formatted[3].items.slice(0, 5), 'sidebar-upcoming');
+                }
+                if (formatted[4] && formatted[4].items) {
+                    renderTopMovies(formatted[4].items.slice(0, 5), 'sidebar-top-movies', formatted[4].domain);
+                }
+                if (formatted[5] && formatted[5].items) {
+                    renderTopSeries(formatted[5].items.slice(0, 8), 'sidebar-top-series', formatted[5].domain);
+                }
+            })
+            .catch(err => {
+                console.error("Error loading background home data:", err);
+            });
 
     } catch (e) {
-    } finally {
+        console.error("Error in fetchHomeData initial load:", e);
+        // Fallback display in case even the first endpoint fails
         document.getElementById('loading-initial').style.display = 'none';
         document.getElementById('heroBanner').style.display = 'flex';
         document.getElementById('main-content').style.display = 'flex';

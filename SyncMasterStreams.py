@@ -9,8 +9,9 @@ import time
 import unicodedata
 from concurrent.futures import ThreadPoolExecutor
 from difflib import SequenceMatcher
-
-import requests
+import urllib.request
+import urllib.error
+import ssl
 
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
@@ -20,7 +21,6 @@ QUALITY_RE = re.compile(
     r'\b(?:4k|uhd|fhd|hd|sd|\d{3,4}[pi]|\d+mbps|geo.?blocked|drm|live)\b',
     re.IGNORECASE,
 )
-_thread_local = threading.local()
 
 
 def log(message):
@@ -51,13 +51,20 @@ def read_playlist(path):
 
 
 def read_playlist_url(url):
-    response = requests.get(url, timeout=10)
-    response.raise_for_status()
-    raw = response.content
-    has_bom = raw.startswith(b'\xef\xbb\xbf')
-    newline = '\r\n' if b'\r\n' in raw else '\n'
-    lines = raw.decode('utf-8-sig', errors='replace').splitlines()
-    return lines, has_bom, newline
+    req = urllib.request.Request(
+        url,
+        headers={
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
+    )
+    context = ssl._create_unverified_context()
+    with urllib.request.urlopen(req, timeout=10, context=context) as response:
+        raw = response.read()
+        has_bom = raw.startswith(b'\xef\xbb\xbf')
+        newline = '\r\n' if b'\r\n' in raw else '\n'
+        lines = raw.decode('utf-8-sig', errors='replace').splitlines()
+        return lines, has_bom, newline
+
 
 def parse_playlist(lines):
     channels = []
@@ -88,17 +95,6 @@ def parse_playlist(lines):
     return channels
 
 
-def get_session():
-    if not hasattr(_thread_local, 'session'):
-        session = requests.Session()
-        session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': '*/*',
-        })
-        _thread_local.session = session
-    return _thread_local.session
-
-
 def check_stream(url, timeout):
     if not url.lower().startswith(('http://', 'https://')):
         return False, 'unsupported'
@@ -106,30 +102,34 @@ def check_stream(url, timeout):
         return True, 'youtube'
 
     try:
-        response = get_session().get(
+        req = urllib.request.Request(
             url,
-            timeout=timeout,
-            allow_redirects=True,
-            stream=True,
-            headers={'Range': 'bytes=0-4095'},
+            headers={
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Range': 'bytes=0-4095',
+                'Accept': '*/*'
+            }
         )
-        status = response.status_code
-        content_type = response.headers.get('Content-Type', '').lower()
-        chunk = next(response.iter_content(4096), b'')
-        response.close()
-        lower = chunk[:1024].lower()
-        if status not in (200, 206):
-            return False, f'http_{status}'
-        if not chunk:
-            return False, 'empty'
-        if content_type.startswith('image/'):
-            return False, 'image'
-        if b'<html' in lower and b'mpegurl' not in content_type.encode():
-            return False, 'html'
-        if b'signal_low' in lower:
-            return False, 'signal_low'
-        return True, f'http_{status}'
-    except requests.RequestException as exc:
+        context = ssl._create_unverified_context()
+        with urllib.request.urlopen(req, timeout=timeout, context=context) as response:
+            status = response.status
+            content_type = response.headers.get('Content-Type', '').lower()
+            chunk = response.read(4096)
+            lower = chunk[:1024].lower()
+            if status not in (200, 206):
+                return False, f'http_{status}'
+            if not chunk:
+                return False, 'empty'
+            if content_type.startswith('image/'):
+                return False, 'image'
+            if b'<html' in lower and b'mpegurl' not in content_type.encode():
+                return False, 'html'
+            if b'signal_low' in lower:
+                return False, 'signal_low'
+            return True, f'http_{status}'
+    except urllib.error.HTTPError as exc:
+        return False, f'http_{exc.code}'
+    except Exception as exc:
         return False, type(exc).__name__
 
 
