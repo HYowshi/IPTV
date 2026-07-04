@@ -4,11 +4,13 @@ function createMovieCard(movie, domain = imageDomain, isHorizontal = false) {
     card.className = `movie-card ${isHorizontal ? 'horizontal' : ''}`;
     card.tabIndex = 0;
 
-    const imagePath = isHorizontal ? (movie.thumb_url || movie.poster_url) : (movie.poster_url || movie.thumb_url);
+    const imagePath = isHorizontal ? (movie.poster_url || movie.thumb_url) : (movie.thumb_url || movie.poster_url);
     const imgUrl = getImageUrl(domain, imagePath);
+    const badgeText = getMovieBadge(movie);
+    const badgeHTML = badgeText ? `<span class="badge badge-red">${badgeText}</span>` : '';
     card.innerHTML = `
-        <span class="badge badge-red">${getMovieBadge(movie)}</span>
         <div class="image-container">
+            ${badgeHTML}
             <img class="skeleton" data-src="${imgUrl}" alt="${movie.name}" decoding="async" onload="this.classList.remove('skeleton')" onerror="handleImageError(this); this.classList.remove('skeleton');">
             <div class="card-overlay"><span class="material-symbols-rounded" style="font-size:40px;">play_arrow</span></div>
         </div>
@@ -52,11 +54,13 @@ function renderMoviesCardsAppend(movies, container, isHorizontal = false, domain
         card.className = `movie-card ${isHorizontal ? 'horizontal' : ''}`;
         card.tabIndex = 0;
 
-        const imagePath = isHorizontal ? (movie.thumb_url || movie.poster_url) : (movie.poster_url || movie.thumb_url);
+        const imagePath = isHorizontal ? (movie.poster_url || movie.thumb_url) : (movie.thumb_url || movie.poster_url);
         const imgUrl = getImageUrl(domain, imagePath);
+        const badgeText = getMovieBadge(movie);
+        const badgeHTML = badgeText ? `<span class="badge badge-red">${badgeText}</span>` : '';
         card.innerHTML = `
-            <span class="badge badge-red">${getMovieBadge(movie)}</span>
             <div class="image-container">
+                ${badgeHTML}
                 <img class="skeleton" data-src="${imgUrl}" alt="${movie.name}" decoding="async" fetchpriority="low" onload="this.classList.remove('skeleton')" onerror="handleImageError(this); this.classList.remove('skeleton');">
                 <div class="card-overlay"><span class="material-symbols-rounded" style="font-size:40px;">play_arrow</span></div>
             </div>
@@ -118,7 +122,7 @@ function renderTopMovies(movies, containerId, domain = imageDomain) {
     movies.forEach((movie, index) => {
         const li = document.createElement("li");
         li.tabIndex = 0;
-        const imagePath = movie.poster_url || movie.thumb_url;
+        const imagePath = movie.thumb_url || movie.poster_url;
         const imgUrl = getImageUrl(domain, imagePath);
         const episodeCurrent = movie.episode_current || "HD";
 
@@ -147,12 +151,14 @@ function renderTopSeries(movies, containerId, domain = imageDomain) {
         card.className = "movie-card small";
         card.tabIndex = 0;
 
-        const imagePath = movie.poster_url || movie.thumb_url;
+        const imagePath = movie.thumb_url || movie.poster_url;
         const imgUrl = getImageUrl(domain, imagePath);
+        const badgeText = getMovieBadge(movie);
+        const badgeHTML = badgeText ? `<span class="badge badge-red">${badgeText}</span>` : '';
 
         card.innerHTML = `
-            <span class="badge badge-red">${getMovieBadge(movie)}</span>
             <div class="image-container">
+               ${badgeHTML}
                <img class="skeleton" src="${imgUrl}" alt="${movie.name}" loading="lazy" decoding="async" onload="this.classList.remove('skeleton')" onerror="handleImageError(this); this.classList.remove('skeleton');">
                <div class="card-overlay"><span class="material-symbols-rounded" style="font-size:40px;">play_arrow</span></div>
             </div>

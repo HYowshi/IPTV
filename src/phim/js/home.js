@@ -11,7 +11,6 @@ let countriesMap = new Map();
 let yearsSet = new Set();
 let watchHistoryCache = null;
 let hlsInstance = null;
-let nextEpTimer = null;
 let heroCarouselInterval = null;
 let currentHeroIndex = 0;
 let heroMovies = [];

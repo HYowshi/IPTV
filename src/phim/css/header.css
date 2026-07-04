@@ -277,7 +277,8 @@ nav .dropdown>a:hover::after {
     transition: transform 0.3s;
 }
 
-.dropdown:hover .dropdown-icon {
+.dropdown:hover .dropdown-icon,
+.dropdown:focus-within .dropdown-icon {
     transform: rotate(180deg);
 }
 
@@ -341,15 +342,19 @@ nav .dropdown>a:hover::after {
     font-weight: 500;
 }
 
-.dropdown-content a:hover {
+.dropdown-content a:hover,
+.dropdown-content a:focus,
+.dropdown-content a:focus-visible {
     background-color: rgba(249, 25, 66, 0.06);
     color: #ffffff;
     padding-left: 26px;
     border-left: 3px solid #f91942;
     letter-spacing: 0.2px;
+    outline: none;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
     display: block;
     animation: fadeUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

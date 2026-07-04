@@ -1,6 +1,7 @@
 // ==================== CONSTANTS ====================
 const ERROR_IMAGE = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22450%22 viewBox=%220 0 300 450%22%3E%3Crect width=%22300%22 height=%22450%22 fill=%22%231a1a1a%22/%3E%3Crect width=%22300%22 height=%22450%22 fill=%22none%22 stroke=%22%23333%22 stroke-width=%224%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23666%22 font-family=%22sans-serif%22 font-size=%2220%22 font-weight=%22bold%22 text-anchor=%22middle%22 dy=%22.3em%22%3ELỗi Ảnh%3C/text%3E%3C/svg%3E";
 const MAX_HISTORY_ENTRIES = 150;
+var nextEpTimer = null;
 
 // Intersection Observer for lazy loading
 let imageObserver = null;
