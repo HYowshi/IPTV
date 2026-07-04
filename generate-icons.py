@@ -159,8 +159,7 @@ def main():
     ico_sizes = [16, 32, 48, 64, 128, 256]
     ico_path = os.path.join(ICONS_DIR, "icon.ico")
     if force or not os.path.exists(ico_path):
-        ico_imgs = [img.resize((s, s), Image.Resampling.LANCZOS) for s in ico_sizes]
-        ico_imgs[0].save(ico_path, format="ICO", sizes=[(s,s) for s in ico_sizes], append_images=ico_imgs[1:])
+        img.save(ico_path, format="ICO", sizes=[(s,s) for s in ico_sizes])
         log(f"  [gen]  icon.ico (multi-size)")
         count += 1
 
@@ -252,6 +251,25 @@ def main():
         s.save(usp, 'BMP')
         log("  [gen]  uninstall-sidebar.bmp")
         count += 1
+
+    # Copy to generated Android project if it exists
+    android_res_dir = "src-tauri/gen/android/app/src/main/res"
+    if os.path.exists(android_res_dir):
+        print(f"\n[Android Project Detected] Copying icons to {android_res_dir}...")
+        import shutil
+        android_src_dir = os.path.join(ICONS_DIR, "android")
+        if os.path.exists(android_src_dir):
+            for item in os.listdir(android_src_dir):
+                s = os.path.join(android_src_dir, item)
+                d = os.path.join(android_res_dir, item)
+                if os.path.isdir(s):
+                    if os.path.exists(d):
+                        shutil.rmtree(d)
+                    shutil.copytree(s, d)
+                    print(f"  [copy] {item} -> res/")
+                else:
+                    shutil.copy2(s, d)
+                    print(f"  [copy] {item} -> res/")
 
     # Summary
     total = 0

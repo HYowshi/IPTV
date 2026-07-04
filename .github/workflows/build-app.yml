@@ -59,7 +59,9 @@ jobs:
         run: python generate-icons.py || pip install Pillow && python generate-icons.py || echo "Skip icon generation"
 
       - name: Init Tauri Android
-        run: npx tauri android init
+        run: |
+          npx tauri android init
+          python generate-icons.py --force
 
       - name: Restore Signing Keystore
         run: |
