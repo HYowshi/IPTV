@@ -106,7 +106,6 @@ mod local_proxy {
                 .pool_max_idle_per_host(8)
                 .tcp_keepalive(std::time::Duration::from_secs(30))
                 .user_agent(USER_AGENTS[0])
-                .gzip(true)
                 .build() {
                     Ok(c) => c,
                     Err(e) => {
