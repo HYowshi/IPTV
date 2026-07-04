@@ -50,6 +50,15 @@ def read_playlist(path):
     return lines, has_bom, newline
 
 
+def read_playlist_url(url):
+    response = requests.get(url, timeout=10)
+    response.raise_for_status()
+    raw = response.content
+    has_bom = raw.startswith(b'\xef\xbb\xbf')
+    newline = '\r\n' if b'\r\n' in raw else '\n'
+    lines = raw.decode('utf-8-sig', errors='replace').splitlines()
+    return lines, has_bom, newline
+
 def parse_playlist(lines):
     channels = []
     current = None
@@ -63,7 +72,12 @@ def parse_playlist(lines):
                 'tvg_id': attributes.get('tvg-id', ''),
                 'url': '',
                 'url_index': None,
+                'kodi_props': [],
+                'prop_indices': []
             }
+        elif current and line.startswith('#KODIPROP:'):
+            current['kodi_props'].append(original)
+            current['prop_indices'].append(index)
         elif current and line and not line.startswith('#'):
             current['url'] = line
             current['url_index'] = index
@@ -78,7 +92,7 @@ def get_session():
     if not hasattr(_thread_local, 'session'):
         session = requests.Session()
         session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (compatible; PhimTV-StreamSync/1.0)',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'Accept': '*/*',
         })
         _thread_local.session = session
@@ -110,8 +124,10 @@ def check_stream(url, timeout):
             return False, 'empty'
         if content_type.startswith('image/'):
             return False, 'image'
-        if b'<html' in lower and 'mpegurl' not in content_type:
+        if b'<html' in lower and b'mpegurl' not in content_type.encode():
             return False, 'html'
+        if b'signal_low' in lower:
+            return False, 'signal_low'
         return True, f'http_{status}'
     except requests.RequestException as exc:
         return False, type(exc).__name__
@@ -160,6 +176,7 @@ def main():
     parser = argparse.ArgumentParser(description='Sync broken IPTV_Master streams')
     parser.add_argument('--master', default='IPTV_Master.m3u')
     parser.add_argument('--source', default='Vietnam_HBO_Final.m3u')
+    parser.add_argument('--vip-source', default='https://raw.githubusercontent.com/hoiquanclick/hoiquan/main/vip.m3u')
     parser.add_argument('--workers', type=int, default=32)
     parser.add_argument('--timeout', type=float, default=5)
     parser.add_argument('--dry-run', action='store_true')
@@ -169,6 +186,16 @@ def main():
     source_lines, _, _ = read_playlist(args.source)
     masters = parse_playlist(master_lines)
     sources = parse_playlist(source_lines)
+    
+    if args.vip_source:
+        try:
+            vip_lines, _, _ = read_playlist_url(args.vip_source)
+            vip_sources = parse_playlist(vip_lines)
+            sources.extend(vip_sources)
+            log(f'Loaded {len(vip_sources)} channels from VIP source')
+        except Exception as e:
+            log(f'Failed to load VIP source: {e}')
+
     candidates = build_candidates(masters, sources)
     log(f'Found duplicate candidates for {len(candidates)}/{len(masters)} master channels')
 
@@ -189,16 +216,25 @@ def main():
             continue
         for candidate in candidates.get(master['line_index'], []):
             candidate_ok, _ = health.get(candidate['url'], (False, 'not_checked'))
-            if candidate_ok:
+            # Trust candidates with DRM/KODIPROP since simple GET fails on them (e.g. 403 Forbidden)
+            if candidate_ok or bool(candidate['kodi_props']):
                 replacements.append((master, candidate, master_reason))
                 break
 
     for master, candidate, reason in replacements:
         log(f'Replace {master["name"]} ({reason}) -> {candidate["name"]}')
         if not args.dry_run:
-            master_lines[master['url_index']] = candidate['url']
+            # Mark old KODIPROP lines for deletion safely
+            for idx in master['prop_indices']:
+                master_lines[idx] = None
+            
+            # Form the new block with candidate's KODIPROP and URL
+            new_block = candidate['kodi_props'] + [candidate['url']]
+            master_lines[master['url_index']] = newline.join(new_block)
 
     if replacements and not args.dry_run:
+        # Filter out marked None lines
+        master_lines = [line for line in master_lines if line is not None]
         write_playlist(args.master, master_lines, has_bom, newline)
 
     log(f'Updated {len(replacements)} stream(s)')

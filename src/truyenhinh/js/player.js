@@ -40,6 +40,44 @@ function loadYouTubeIFrameAPI() {
     });
 }
 
+// Auto find new live stream if current one is dead
+async function autoFindNewYoutubeLive(channel) {
+    showToast(`Đang tự động tìm luồng phát mới cho ${channel.name}...`, 4000, 'info');
+    const tvLoader = document.getElementById('tv-loader');
+    if (tvLoader) tvLoader.style.display = 'flex';
+    
+    try {
+        const query = encodeURIComponent(channel.name + ' trực tiếp');
+        const searchUrl = `https://www.youtube.com/results?search_query=${query}&sp=EgJAAQ%253D%253D`;
+        
+        let response;
+        if (window.__TAURI__ && window.__TAURI__.http) {
+            response = await window.__TAURI__.http.fetch(searchUrl, { method: 'GET' });
+        } else {
+            response = await fetch(searchUrl, { method: 'GET' });
+        }
+        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const html = await response.text();
+        
+        // Find the first video ID from the search results
+        const match = html.match(/"videoId":"([a-zA-Z0-9_-]{11})"/);
+        if (match && match[1]) {
+            const newVideoId = match[1];
+            console.log(`[YouTube] Found new live stream for ${channel.name}: ${newVideoId}`);
+            // Update channel URL in memory so it doesn't auto-fetch again if replayed
+            channel.url = `https://www.youtube.com/watch?v=${newVideoId}`;
+            playYouTubeChannel(channel, newVideoId);
+        } else {
+            throw new Error('No live video found in search results');
+        }
+    } catch (err) {
+        console.error('[YouTube] Auto-find live failed:', err);
+        if (tvLoader) tvLoader.style.display = 'none';
+        showErrorWithRetry(`Không tìm thấy luồng phát mới cho ${channel.name}.`, () => playChannel(channel));
+    }
+}
+
 // Create or update YouTube player using YT API
 async function playYouTubeChannel(channel, videoId) {
     const videoPlayer = document.getElementById('tv-player');
@@ -60,20 +98,27 @@ async function playYouTubeChannel(channel, videoId) {
         return;
     }
 
-    let container = document.getElementById('yt-player-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'yt-player-container';
-        container.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;';
-        videoPlayer.parentNode.insertBefore(container, videoPlayer.nextSibling);
+    let wrapper = document.getElementById('yt-wrapper');
+    if (!wrapper) {
+        wrapper = document.createElement('div');
+        wrapper.id = 'yt-wrapper';
+        wrapper.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;';
+        videoPlayer.parentNode.insertBefore(wrapper, videoPlayer.nextSibling);
     }
-    container.style.display = 'block';
+    wrapper.style.display = 'block';
 
     if (ytPlayerInstance && typeof ytPlayerInstance.destroy === 'function') {
         clearTimeout(ytLoadTimeout);
         try { ytPlayerInstance.destroy(); } catch (e) { }
         ytPlayerInstance = null;
         ytPlayerReady = false;
+    }
+
+    let container = document.getElementById('yt-player-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'yt-player-container';
+        wrapper.appendChild(container);
     }
 
     clearTimeout(ytLoadTimeout);
@@ -84,6 +129,7 @@ async function playYouTubeChannel(channel, videoId) {
             autoplay: 1, controls: 0, disablekb: 1, fs: 0,
             modestbranding: 1, rel: 0, iv_load_policy: 3,
             playsinline: 1, enablejsapi: 1, cc_load_policy: 0, hl: 'vi',
+            origin: window.location.origin
         },
         events: {
             onReady: (event) => {
@@ -106,6 +152,9 @@ async function playYouTubeChannel(channel, videoId) {
                     if (btnPlayPause) { const icon = btnPlayPause.querySelector('span'); if (icon) icon.innerText = 'play_arrow'; }
                 } else if (event.data === YTState.BUFFERING) {
                     if (tvLoader) tvLoader.style.display = 'flex';
+                } else if (event.data === YTState.ENDED) {
+                    // Try to auto-find new live stream if it ended
+                    autoFindNewYoutubeLive(channel);
                 }
             },
             onError: (event) => {
@@ -117,7 +166,11 @@ async function playYouTubeChannel(channel, videoId) {
                     showToast(`Đang thử lại... (${ytRetryCount}/${YT_MAX_RETRIES})`, 2000, 'info');
                     setTimeout(() => { if (ytPlayerInstance?.loadVideoById) ytPlayerInstance.loadVideoById(videoId); }, 1500 * ytRetryCount);
                 } else {
-                    showErrorWithRetry(msg, () => playChannel(channel));
+                    if (event.data === 100 || event.data === 101 || event.data === 150 || event.data === 2) {
+                        autoFindNewYoutubeLive(channel);
+                    } else {
+                        showErrorWithRetry(msg, () => playChannel(channel));
+                    }
                 }
             }
         }
@@ -135,8 +188,8 @@ async function playYouTubeChannel(channel, videoId) {
 function playYouTubeFallback(channel, videoId) {
     const videoPlayer = document.getElementById('tv-player');
     const tvLoader = document.getElementById('tv-loader');
-    const container = document.getElementById('yt-player-container');
-    if (container) container.style.display = 'none';
+    const wrapper = document.getElementById('yt-wrapper');
+    if (wrapper) wrapper.style.display = 'none';
 
     let ytIframe = document.getElementById('yt-iframe-player');
     if (!ytIframe) {
@@ -244,8 +297,8 @@ function playChannel(channel) {
         ytPlayerInstance = null;
         ytPlayerReady = false;
     }
-    const ytContainer = document.getElementById('yt-player-container');
-    if (ytContainer) ytContainer.style.display = 'none';
+    const ytWrapper = document.getElementById('yt-wrapper');
+    if (ytWrapper) ytWrapper.style.display = 'none';
 
     // Cleanup YouTube fallback iframe
     const ytIframe = document.getElementById('yt-iframe-player');
