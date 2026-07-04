@@ -208,13 +208,8 @@ function renderChannels(channels) {
         groups[groupName].push(channel);
     });
 
-    // Build DOM
-    const fragment = document.createDocumentFragment();
-
-    for (const groupName in groups) {
-        const groupChannels = groups[groupName];
-        if (groupChannels.length === 0) continue;
-
+    const groupEntries = Object.entries(groups).filter(([, groupChannels]) => groupChannels.length > 0);
+    const buildGroupRow = (groupName, groupChannels) => {
         const rowDiv = document.createElement('div');
         rowDiv.className = 'channel-row';
 
@@ -265,11 +260,57 @@ function renderChannels(channels) {
         }
 
         rowDiv.appendChild(scrollWrapper);
-        fragment.appendChild(rowDiv);
-    }
+        return rowDiv;
+    };
 
     container.innerHTML = '';
-    container.appendChild(fragment);
+
+    if (TV_LOW_MEMORY_MODE) {
+        let index = 0;
+        const renderNextBatch = () => {
+            const fragment = document.createDocumentFragment();
+            const end = Math.min(index + 2, groupEntries.length);
+            for (; index < end; index++) {
+                const [groupName, groupChannels] = groupEntries[index];
+                fragment.appendChild(buildGroupRow(groupName, groupChannels));
+            }
+            container.appendChild(fragment);
+            observeLowMemoryLogos(container);
+            if (index < groupEntries.length) setTimeout(renderNextBatch, 80);
+        };
+        renderNextBatch();
+    } else {
+        const fragment = document.createDocumentFragment();
+        groupEntries.forEach(([groupName, groupChannels]) => {
+            fragment.appendChild(buildGroupRow(groupName, groupChannels));
+        });
+        container.appendChild(fragment);
+    }
+}
+
+function observeLowMemoryLogos(container) {
+    if (!TV_LOW_MEMORY_MODE) return;
+    const images = container.querySelectorAll('img[data-src]');
+    if (!images.length) return;
+    if (!('IntersectionObserver' in window)) {
+        images.forEach(img => {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+        });
+        return;
+    }
+    if (!window.tvLogoObserver) {
+        window.tvLogoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                window.tvLogoObserver.unobserve(img);
+            });
+        }, { rootMargin: '180px 320px' });
+    }
+    images.forEach(img => window.tvLogoObserver.observe(img));
 }
 
 // ==================== HERO BANNER ====================
@@ -283,13 +324,16 @@ function updateHeroBanner(channel, category) {
     if (heroTitle) heroTitle.innerText = channel.name;
     if (heroCategory) heroCategory.innerText = category.toUpperCase();
 
-    if (heroBackdrop) {
+    if (heroBackdrop && !TV_LOW_MEMORY_MODE) {
         if (channel.logo && channel.logo.trim() !== "") {
             heroBackdrop.style.backgroundImage = `url('${channel.logo}')`;
             heroBackdrop.style.opacity = '0.3';
         } else {
             heroBackdrop.style.backgroundImage = 'none';
         }
+    } else if (heroBackdrop) {
+        heroBackdrop.style.backgroundImage = 'none';
+        heroBackdrop.style.opacity = '0';
     }
 
     let currentProgram = "Đang cập nhật lịch phát sóng...";
@@ -362,7 +406,7 @@ function populateQuickList() {
             item.setAttribute('data-url', channel.url);
 
             let logoHTML = '';
-            if (channel.logo && channel.logo.trim() !== "") {
+            if (!TV_LOW_MEMORY_MODE && channel.logo && channel.logo.trim() !== "") {
                 logoHTML = `<img src="${channel.logo}" alt="${channel.name}" onerror="this.style.display='none'">`;
             } else {
                 logoHTML = `<span class="material-symbols-rounded">tv</span>`;

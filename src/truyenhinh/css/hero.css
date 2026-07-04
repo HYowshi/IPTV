@@ -33,6 +33,21 @@
     animation: fadeIn 0.8s ease;
 }
 
+.low-memory-mode .tv-hero {
+    height: auto;
+    min-height: 210px;
+    padding: 30px 24px 54px;
+}
+
+.low-memory-mode .hero-backdrop,
+.low-memory-mode .hero-overlay {
+    display: none !important;
+}
+
+.low-memory-mode .hero-content {
+    animation: none !important;
+}
+
 .hero-badge {
     display: inline-block;
     background: rgba(255, 255, 255, 0.1);

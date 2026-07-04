@@ -184,6 +184,21 @@
 }
 .btn-exit-header .material-symbols-rounded { font-size: 18px; }
 
+.low-memory-mode * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    text-shadow: none !important;
+}
+
+.low-memory-mode .tv-header,
+.low-memory-mode .platform-switch,
+.low-memory-mode .switch-slider,
+.low-memory-mode .btn-exit-header {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+}
+
 /* ==================== HAMBURGER BUTTON ==================== */
 .hamburger-btn-tv {
     display: none;

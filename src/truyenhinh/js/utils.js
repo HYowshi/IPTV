@@ -120,7 +120,9 @@ function escapeHtml(str) {
 
 function buildLogoHTML(channel) {
     if (isValidLogoUrl(channel.logo)) {
-        return `<img src="${channel.logo}" alt="${channel.name}" loading="lazy" decoding="async" style="width:60px;height:60px;object-fit:contain;z-index:2;" onerror="this.onerror=null;this.src='${LOGO_FALLBACK}'">`;
+        const lowMemory = typeof TV_LOW_MEMORY_MODE !== 'undefined' && TV_LOW_MEMORY_MODE;
+        const srcAttr = lowMemory ? `data-src="${channel.logo}"` : `src="${channel.logo}"`;
+        return `<img ${srcAttr} alt="${channel.name}" loading="lazy" decoding="async" class="channel-logo-img" onerror="this.onerror=null;this.src='${LOGO_FALLBACK}'">`;
     }
     // Generate letter avatar from channel name
     const initials = channel.name.split(/\s+/).map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase();

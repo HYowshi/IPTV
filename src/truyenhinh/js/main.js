@@ -86,11 +86,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==================== INIT ====================
     initUIEvents();
     initSpatialNavigation();
-    // Fetch EPG and M3U in parallel — they're independent
-    Promise.all([
-        fetchAndParseEPG(`${REMOTE_DATA_SERVER}/epg.xml`),
-        fetchAllM3UFiles(M3U_FILES)
-    ]).then(() => {
+    const startupLoads = [fetchAllM3UFiles(M3U_FILES)];
+
+    if (typeof TV_LOW_MEMORY_MODE !== 'undefined' && TV_LOW_MEMORY_MODE) {
+        console.log('[TV] Low-memory mode: skipping startup EPG load');
+    } else {
+        // Fetch EPG and M3U in parallel on devices with enough memory.
+        startupLoads.push(fetchAndParseEPG(`${REMOTE_DATA_SERVER}/epg.xml`));
+    }
+
+    Promise.all(startupLoads).then(() => {
         if (allChannels.length > 0) {
             const firstCard = document.querySelector('.channel-card');
             if (firstCard) firstCard.focus();

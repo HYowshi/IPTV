@@ -204,6 +204,60 @@
     transition: all 0.1s !important;
 }
 
+.channel-logo-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    z-index: 2;
+}
+
+.low-memory-mode .channel-row {
+    animation: none !important;
+    margin-bottom: 22px;
+}
+
+.low-memory-mode .channel-scroll-wrapper {
+    gap: 12px;
+    padding: 12px;
+    scroll-behavior: auto;
+}
+
+.low-memory-mode .channel-card {
+    min-width: 180px;
+    height: 112px;
+    border-radius: 12px;
+    transition: none !important;
+    box-shadow: none !important;
+    background: #151515;
+}
+
+.low-memory-mode .channel-card,
+.low-memory-mode .channel-card:hover,
+.low-memory-mode .channel-card:focus,
+.low-memory-mode .channel-card:active {
+    transform: none !important;
+}
+
+.low-memory-mode .channel-card::before {
+    display: none;
+}
+
+.low-memory-mode .channel-card.playing {
+    animation: none !important;
+}
+
+.low-memory-mode .channel-card .logo-container {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 6px;
+    transition: none !important;
+}
+
+.low-memory-mode .channel-logo-img {
+    width: 46px;
+    height: 46px;
+}
+
 /* ==================== FILTER BAR ==================== */
 .tv-filter-bar {
     display: flex;

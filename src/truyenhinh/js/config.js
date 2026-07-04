@@ -13,6 +13,10 @@ let ytPlayerInstance = null;
 let ytLoadTimeout = null;
 let ytRetryCount = 0;
 const YT_MAX_RETRIES = 3;
+const TV_LOW_MEMORY_MODE = (() => {
+    const platform = typeof Platform !== 'undefined' ? Platform.current : null;
+    return !!(platform?.isLowMemory || platform?.isAndroid || (navigator.deviceMemory && navigator.deviceMemory <= 2));
+})();
 
 // ==================== CONSTANTS ====================
 const REMOTE_DATA_SERVER = 'https://raw.githubusercontent.com/HYowshi/IPTV/main';
@@ -69,20 +73,20 @@ const MAX_RECENT_CHANNELS = 20;
 // ==================== HLS CONFIGURATION ====================
 const TV_HLS_CONFIG = {
     xhrSetup: function (xhr) { xhr.withCredentials = false; },
-    liveSyncDurationCount: 3,
-    liveMaxLatencyDurationCount: 10,
+    liveSyncDurationCount: TV_LOW_MEMORY_MODE ? 2 : 3,
+    liveMaxLatencyDurationCount: TV_LOW_MEMORY_MODE ? 5 : 10,
     enableWorker: true,
     lowLatencyMode: false,
-    maxBufferLength: 30,
-    maxMaxBufferLength: 60,
-    maxBufferSize: 30 * 1024 * 1024,
+    maxBufferLength: TV_LOW_MEMORY_MODE ? 8 : 30,
+    maxMaxBufferLength: TV_LOW_MEMORY_MODE ? 16 : 60,
+    maxBufferSize: (TV_LOW_MEMORY_MODE ? 8 : 30) * 1024 * 1024,
     maxBufferHole: 0.1,
-    backBufferLength: 10,
-    fragLoadingMaxRetry: 6,
+    backBufferLength: TV_LOW_MEMORY_MODE ? 0 : 10,
+    fragLoadingMaxRetry: TV_LOW_MEMORY_MODE ? 3 : 6,
     fragLoadingRetryDelay: 1000,
-    manifestLoadingMaxRetry: 4,
+    manifestLoadingMaxRetry: TV_LOW_MEMORY_MODE ? 2 : 4,
     manifestLoadingRetryDelay: 1000,
-    levelLoadingMaxRetry: 4,
+    levelLoadingMaxRetry: TV_LOW_MEMORY_MODE ? 2 : 4,
     levelLoadingRetryDelay: 1000,
     nudgeOffset: 0.5,
     nudgeMaxRetry: 10,
@@ -91,7 +95,7 @@ const TV_HLS_CONFIG = {
     abrBandWidthFactor: 0.95,
     abrBandWidthUpFactor: 0.7,
     abrEwmaDefaultEstimate: 2000000,
-    appendErrorMaxRetry: 5
+    appendErrorMaxRetry: TV_LOW_MEMORY_MODE ? 2 : 5
 };
 
 // ==================== LOGO & UI CONSTANTS ====================

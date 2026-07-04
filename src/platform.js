@@ -27,6 +27,7 @@ const Platform = (() => {
             isAndroid: platform === 'android',
             isIOS: platform === 'ios',
             isMobile: platform === 'android' || platform === 'ios',
+            isLowMemory: isAndroid || (navigator.deviceMemory && navigator.deviceMemory <= 2),
             isWeb: platform === 'web',
             isTauri: isTauri,
             platform: platform,
@@ -152,6 +153,7 @@ function setupWindowControls() {
                 p.isAndroid = backendPlatform === 'android';
                 p.isIOS = backendPlatform === 'ios';
                 p.isMobile = backendPlatform === 'android' || backendPlatform === 'ios';
+                p.isLowMemory = p.isAndroid || (navigator.deviceMemory && navigator.deviceMemory <= 2);
                 p.needsProxy = p.isDesktop;
                 console.log(`[Platform] Backend confirmed: ${backendPlatform}`);
             }
@@ -177,6 +179,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.btn-exit-header').forEach(btn => {
             btn.style.display = 'none';
         });
+    }
+
+    if (p.isLowMemory) {
+        document.documentElement.classList.add('low-memory-mode');
+        document.body.classList.add('low-memory-mode');
     }
 
     // Phim player: tap video to show/hide controls on mobile
