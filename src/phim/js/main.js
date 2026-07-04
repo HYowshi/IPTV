@@ -674,6 +674,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // ==================== TV BOX HARDWARE BACK FIX ====================
+    window.history.pushState({ page: 'phim' }, "", "");
+    window.addEventListener('popstate', (e) => {
+        window.history.pushState({ page: 'phim' }, "", "");
+        const evt = new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', bubbles: true });
+        document.dispatchEvent(evt);
+    });
+
     // ==================== FETCH HOME DATA ====================
     fetchHomeData();
 

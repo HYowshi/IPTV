@@ -423,7 +423,7 @@ function buildFilterUrl(endpointType, slug, page) {
     } else if (endpointType === 'nam') {
         return `${API_BASE_URL}/v1/api/nam-phat-hanh/${slug}?limit=24&page=${page}`;
     } else if (endpointType === 'new') {
-        return `${API_BASE_URL}/v1/api/danh-sach/phim-moi-cap-nhat?limit=24&page=${page}`;
+        return `${API_BASE_URL}/danh-sach/phim-moi-cap-nhat?page=${page}`;
     } else if (endpointType === 'danh-sach') {
         return `${API_BASE_URL}/v1/api/danh-sach/${slug}?limit=24&page=${page}`;
     } else {

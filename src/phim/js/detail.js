@@ -514,6 +514,23 @@ function markEpisodeWatched(movieSlug, epKey) {
 
 // ==================== GO BACK FUNCTION ====================
 function goBackFromDetail() {
+    // Stop video/HLS if playing
+    const moviePlayer = document.getElementById('movie-player');
+    if (typeof hlsInstance !== 'undefined' && hlsInstance) {
+        try { hlsInstance.destroy(); hlsInstance = null; } catch (e) {}
+    }
+    if (moviePlayer) {
+        moviePlayer.pause();
+        moviePlayer.removeAttribute('src');
+        moviePlayer.load();
+    }
+    const trailerPlayer = document.getElementById('video-player');
+    if (trailerPlayer) {
+        trailerPlayer.pause();
+        trailerPlayer.removeAttribute('src');
+        trailerPlayer.load();
+    }
+
     // Ẩn trang chi tiết phim
     document.getElementById('detail-view').style.display = 'none';
     document.getElementById('watch-view').style.display = 'none';

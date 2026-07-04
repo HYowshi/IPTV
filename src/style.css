@@ -1284,3 +1284,52 @@ body.entry-body.fade-out {
         font-size: 30px;
     }
 }
+
+/* ==================== TV BOX OPTIMIZATIONS ==================== */
+*:focus {
+    outline: none !important;
+}
+
+/* TV Box Select Screen */
+.entry-box:focus {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.4);
+    border: 3px solid #fff;
+    z-index: 10;
+}
+
+.entry-box:focus .icon-glow {
+    opacity: 1;
+    transform: scale(1.5);
+}
+
+/* TV Box Disclaimer Screen */
+.disclaimer-checkbox:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.modal-btn:focus {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    border: 2px solid #fff;
+}
+
+.btn-exit:focus {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+    border: 2px solid #ef4444;
+}
+
+/* Modal Content TV Box scaling for 2GB RAM / 1080p */
+@media (min-width: 1024px) {
+    .modal-content {
+        max-width: 800px;
+        padding: 40px;
+    }
+    .modal-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+}
