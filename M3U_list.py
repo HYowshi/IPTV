@@ -23,6 +23,12 @@ import xml.etree.ElementTree as ET
 from urllib.parse import unquote, urljoin
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+import sys
+import io
+
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
 
 # ==================== CONFIGURATION ====================
 SPECIAL_URL = "https://raw.githubusercontent.com/t23-02/bongda/refs/heads/main/bongda.m3u"
@@ -152,7 +158,7 @@ def is_low_resolution(resolution):
 
 def classify_channel(ch_name, ch_name_lower, normalized_name, vtv_set, ent_set):
     if is_sports_channel(ch_name_lower):
-        return "Kenh The Thao"
+        return None
     elif normalized_name in vtv_set:
         return "Kenh VTV"
     elif normalized_name in ent_set:

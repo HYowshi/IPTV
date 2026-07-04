@@ -98,6 +98,8 @@ def parse_playlist(lines):
 def check_stream(url, timeout):
     if not url.lower().startswith(('http://', 'https://')):
         return False, 'unsupported'
+    if 'toiyeuvietnam.dpdns.org/onlivetv/' in url.lower():
+        return False, 'blacklisted_onlivetv'
     if 'youtube.com/' in url or 'youtu.be/' in url:
         return True, 'youtube'
 
@@ -187,14 +189,21 @@ def main():
     masters = parse_playlist(master_lines)
     sources = parse_playlist(source_lines)
     
-    if args.vip_source:
+    # Load multiple remote VIP sources for better candidates (e.g. working SCTV streams)
+    vip_urls = [
+        args.vip_source,
+        'https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/vmttv'
+    ]
+    for url in vip_urls:
+        if not url:
+            continue
         try:
-            vip_lines, _, _ = read_playlist_url(args.vip_source)
+            vip_lines, _, _ = read_playlist_url(url)
             vip_sources = parse_playlist(vip_lines)
             sources.extend(vip_sources)
-            log(f'Loaded {len(vip_sources)} channels from VIP source')
+            log(f'Loaded {len(vip_sources)} channels from VIP source: {url}')
         except Exception as e:
-            log(f'Failed to load VIP source: {e}')
+            log(f'Failed to load VIP source {url}: {e}')
 
     candidates = build_candidates(masters, sources)
     log(f'Found duplicate candidates for {len(candidates)}/{len(masters)} master channels')

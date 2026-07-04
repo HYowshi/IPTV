@@ -261,6 +261,15 @@ def main():
         if os.path.exists(android_src_dir):
             def merge_copy(src, dst):
                 os.makedirs(dst, exist_ok=True)
+                # Clean up any default tauri launcher icons (especially default .webp files) in destination
+                for item in os.listdir(dst):
+                    if item.startswith("ic_launcher"):
+                        try:
+                            item_path = os.path.join(dst, item)
+                            if os.path.isfile(item_path):
+                                os.remove(item_path)
+                        except Exception:
+                            pass
                 for item in os.listdir(src):
                     s = os.path.join(src, item)
                     d = os.path.join(dst, item)
