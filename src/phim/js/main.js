@@ -11,12 +11,22 @@ function initSpatialNavigation() {
         const isInput = activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select' || document.activeElement.isContentEditable;
         if (isInput) return;
 
-        const focusables = Array.from(document.querySelectorAll('.movie-card, .btn-play, .btn-primary, .btn-more, .btn-server, .btn-episode, .switch-item, .dropdown > a, .btn-exit-header, .sidebar-list li, #searchInput, .btn-page'));
+        const focusables = Array.from(document.querySelectorAll(
+            '.movie-card, .btn-play, .btn-primary, .btn-secondary, .btn-more, .btn-server, .btn-episode, .btn-back, .btn-icon-action, .btn-expand-desc, .switch-item, .dropdown > a, .btn-exit-header, .sidebar-list li, #searchInput, .btn-page'
+        )).filter(el => {
+            const rect = el.getBoundingClientRect();
+            const style = window.getComputedStyle(el);
+            return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none';
+        });
         const currentFocus = document.activeElement;
 
         if (!currentFocus || !focusables.includes(currentFocus)) {
             e.preventDefault();
-            const startElement = document.querySelector('.movie-card') || focusables[0];
+            const detailView = document.getElementById('detail-view');
+            const detailVisible = detailView && detailView.style.display === 'block';
+            const startElement = detailVisible
+                ? (focusables.find(el => el.id === 'btn-watch-now') || focusables.find(el => el.matches('#detail-view .btn-episode')) || focusables[0])
+                : (focusables.find(el => el.classList.contains('movie-card')) || focusables[0]);
             if (startElement) startElement.focus();
             return;
         }

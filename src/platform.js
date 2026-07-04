@@ -31,8 +31,9 @@ const Platform = (() => {
             isWeb: platform === 'web',
             isTauri: isTauri,
             platform: platform,
-            // Whether proxy is needed (only on desktop where CORS applies)
-            needsProxy: isTauri && !isAndroid && !isIOS,
+            // Whether proxy is needed. Tauri desktop and Android both hit
+            // CORS/hotlink restrictions when HLS.js loads IPTV streams directly.
+            needsProxy: isTauri && !isIOS,
         };
 
         console.log(`[Platform] Detected: ${_cached.platform}, needsProxy: ${_cached.needsProxy}`);
@@ -154,7 +155,7 @@ function setupWindowControls() {
                 p.isIOS = backendPlatform === 'ios';
                 p.isMobile = backendPlatform === 'android' || backendPlatform === 'ios';
                 p.isLowMemory = p.isAndroid || (navigator.deviceMemory && navigator.deviceMemory <= 2);
-                p.needsProxy = p.isDesktop;
+                p.needsProxy = p.isDesktop || p.isAndroid;
                 console.log(`[Platform] Backend confirmed: ${backendPlatform}`);
             }
         }

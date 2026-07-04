@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/materialsymbolsrounded/v338/syl0-zNym6YjUruM-QrEh7-nyTnjDwKNJ_190FjpZIvDmUSVOK7BDJ_vb9vUSzq3wzLK-P0J-V_Zs-QtQth3-jOcbTCVpeRL2w5rwZu2rIelXxI.ttf) format('truetype');
+  src: url('./material-symbols-rounded.ttf') format('truetype');
 }
 
 .material-symbols-rounded {
@@ -18,4 +18,15 @@
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
+}
+
+.icon-inline {
+  font-family: 'Segoe UI Symbol', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+  font-size: 1.1em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.15em;
+  margin-right: 0.2em;
 }

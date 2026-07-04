@@ -696,3 +696,136 @@
     -webkit-appearance: none;
     margin: 0;
 }
+
+/* ==================== TV BOX / LOW MEMORY DETAIL VIEW ==================== */
+.low-memory-mode #detail-view .detail-header,
+.low-memory-mode #detail-view .movie-section {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.low-memory-mode #detail-view .glass-panel {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    background: rgba(15, 15, 15, 0.92);
+}
+
+.low-memory-mode #detail-view .detail-header {
+    gap: 28px;
+    padding: 28px;
+    align-items: flex-start;
+}
+
+.low-memory-mode #detail-view .detail-poster-wrapper img {
+    width: 200px;
+    box-shadow: none;
+    transition: none;
+}
+
+.low-memory-mode #detail-view .detail-poster-wrapper img:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.low-memory-mode #detail-view .detail-info {
+    justify-content: flex-start;
+}
+
+.low-memory-mode #detail-view .detail-info h1 {
+    font-size: 34px;
+    line-height: 1.18;
+}
+
+.low-memory-mode #detail-view .detail-description.collapsed p {
+    max-height: 84px;
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+.low-memory-mode #detail-view .detail-actions .btn-play,
+.low-memory-mode #detail-view .detail-actions .btn-primary,
+.low-memory-mode #detail-view .detail-actions .btn-secondary,
+.low-memory-mode #detail-view .btn-server,
+.low-memory-mode #detail-view .btn-episode,
+.low-memory-mode #detail-view .btn-back,
+.low-memory-mode #detail-view .btn-expand-desc,
+.low-memory-mode #detail-view .btn-icon-action {
+    min-height: 48px;
+    transition: none;
+}
+
+.low-memory-mode #detail-view .btn-server,
+.low-memory-mode #detail-view .btn-episode {
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+.low-memory-mode #detail-view .episode-grid {
+    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+    gap: 14px;
+}
+
+.low-memory-mode #detail-view .btn-episode:hover,
+.low-memory-mode #detail-view .btn-episode:focus-visible,
+.low-memory-mode #detail-view .btn-server:hover,
+.low-memory-mode #detail-view .btn-server:focus-visible,
+.low-memory-mode #detail-view .btn-watch-now:focus-visible,
+.low-memory-mode #detail-view .btn-play:focus-visible,
+.low-memory-mode #detail-view .btn-primary:focus-visible,
+.low-memory-mode #detail-view .btn-secondary:focus-visible,
+.low-memory-mode #detail-view .btn-icon-action:focus-visible,
+.low-memory-mode #detail-view .btn-back:focus-visible,
+.low-memory-mode #detail-view .btn-expand-desc:focus-visible {
+    outline: 3px solid #f91942;
+    outline-offset: 3px;
+    transform: none;
+    box-shadow: 0 0 0 5px rgba(249, 25, 66, 0.25);
+}
+
+.low-memory-mode #detail-view #gallery-section,
+.low-memory-mode #detail-view #related-section {
+    display: none !important;
+}
+
+@media (min-width: 700px) and (max-width: 1280px) {
+    .low-memory-mode #detail-view .detail-header {
+        flex-direction: row;
+        text-align: left;
+    }
+
+    .low-memory-mode #detail-view .detail-meta,
+    .low-memory-mode #detail-view .detail-actions {
+        justify-content: flex-start;
+    }
+
+    .low-memory-mode #detail-view .detail-info-row {
+        flex-direction: row;
+        gap: 12px;
+    }
+
+    .low-memory-mode #detail-view .detail-info-label {
+        width: 120px;
+    }
+}
+
+@media (max-width: 699px) {
+    .low-memory-mode #detail-view .detail-header {
+        padding: 18px;
+        gap: 18px;
+    }
+
+    .low-memory-mode #detail-view .detail-info h1 {
+        font-size: 24px;
+    }
+
+    .low-memory-mode #detail-view .detail-poster-wrapper img {
+        width: 150px;
+    }
+
+    .low-memory-mode #detail-view .episode-grid {
+        grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+        gap: 10px;
+    }
+}

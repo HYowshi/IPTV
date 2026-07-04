@@ -211,11 +211,19 @@ async function showMovieDetails(slug) {
             document.getElementById('episode-list').innerHTML = "<p style='color: white;'>Phim đang được cập nhật tập mới.</p>";
         }
 
-        // Load TMDB images
-        loadTMDBImagesForDetail(slug);
+        const lowMemory = typeof Platform !== 'undefined' && Platform.current?.isLowMemory;
+        if (!lowMemory) {
+            // Load TMDB images and related movies only on devices with enough headroom.
+            loadTMDBImagesForDetail(slug);
+            loadRelatedMovies(slug, currentMovieData);
+        }
 
-        // Load related movies
-        loadRelatedMovies(slug, currentMovieData);
+        requestAnimationFrame(() => {
+            const firstAction = document.getElementById('btn-watch-now')?.style.display !== 'none'
+                ? document.getElementById('btn-watch-now')
+                : document.querySelector('#detail-view .btn-episode, #detail-view .btn-back');
+            if (firstAction && typeof firstAction.focus === 'function') firstAction.focus();
+        });
 
     } catch (error) {
         if (skeleton) skeleton.style.display = 'none';

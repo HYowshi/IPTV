@@ -257,7 +257,7 @@ function playChannel(channel) {
     videoPlayer.style.display = 'block';
 
     const plat = typeof Platform !== 'undefined' ? Platform.current : { needsProxy: true };
-    if (streamUrl.startsWith("http://") && (!plat.needsProxy || !Hls.isSupported())) {
+    if (streamUrl.startsWith("http://") && !plat.needsProxy) {
         streamUrl = streamUrl.replace("http://", "https://");
     }
 
@@ -463,7 +463,10 @@ function playChannel(channel) {
             });
 
         } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
-            videoPlayer.src = streamUrl;
+            const nativeUrl = plat.needsProxy
+                ? `http://127.0.0.1:1420/proxy?url=${encodeURIComponent(streamUrl)}`
+                : streamUrl;
+            videoPlayer.src = nativeUrl;
             videoPlayer.onloadedmetadata = () => {
                 if (tvLoader) tvLoader.style.display = 'none';
                 videoPlayer.play().catch(() => { });

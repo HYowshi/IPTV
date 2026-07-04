@@ -85,35 +85,43 @@ function updateWatchViewPlayer(ep, btnElement) {
     videoPlayer.load();
 
     let streamUrl = ep.link_m3u8;
-    if (streamUrl.startsWith("http://")) {
+    const platform = typeof Platform !== 'undefined' ? Platform.current : { needsProxy: false, isLowMemory: false };
+    const useProxy = !!platform.needsProxy;
+    const lowMemory = !!platform.isLowMemory;
+
+    if (streamUrl.startsWith("http://") && !useProxy) {
         streamUrl = streamUrl.replace(/^http:/, "https:");
     }
 
+    const finalStreamUrl = useProxy
+        ? `http://127.0.0.1:1420/proxy?url=${encodeURIComponent(streamUrl)}`
+        : streamUrl;
+
     if (window.Hls && Hls.isSupported()) {
         let hlsConfig = {
-            fragLoadingMaxRetry: 8,
+            fragLoadingMaxRetry: lowMemory ? 3 : 8,
             fragLoadingRetryDelay: 500,
-            manifestLoadingMaxRetry: 5,
+            manifestLoadingMaxRetry: lowMemory ? 2 : 5,
             manifestLoadingRetryDelay: 500,
-            levelLoadingMaxRetry: 5,
+            levelLoadingMaxRetry: lowMemory ? 2 : 5,
             levelLoadingRetryDelay: 500,
             startLevel: -1,
             abrEwmaDefaultEstimate: 2000000,
             abrBandWidthFactor: 0.95,
             abrBandWidthUpFactor: 0.7,
-            maxBufferLength: 60,
-            maxMaxBufferLength: 120,
-            maxBufferSize: 60 * 1024 * 1024,
+            maxBufferLength: lowMemory ? 12 : 60,
+            maxMaxBufferLength: lowMemory ? 24 : 120,
+            maxBufferSize: (lowMemory ? 12 : 60) * 1024 * 1024,
             maxBufferHole: 0.5,
             enableWorker: true,
             lowLatencyMode: false,
-            backBufferLength: 30,
+            backBufferLength: lowMemory ? 0 : 30,
             nudgeOffset: 0.2,
             nudgeMaxRetry: 5,
             maxFragLookUpTolerance: 0.25
         };
         hlsInstance = new Hls(hlsConfig);
-        hlsInstance.loadSource(streamUrl);
+        hlsInstance.loadSource(finalStreamUrl);
         hlsInstance.attachMedia(videoPlayer);
         hlsInstance.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
             videoLoader.style.display = 'none';
@@ -188,7 +196,7 @@ function updateWatchViewPlayer(ep, btnElement) {
                             const wasPaused = videoPlayer.paused;
                             try { hlsInstance.destroy(); } catch (e) { }
                             hlsInstance = new Hls(hlsConfig);
-                            hlsInstance.loadSource(streamUrl);
+                            hlsInstance.loadSource(finalStreamUrl);
                             hlsInstance.attachMedia(videoPlayer);
                             hlsInstance.once(Hls.Events.MANIFEST_PARSED, () => {
                                 videoPlayer.currentTime = currentTime;
@@ -214,7 +222,7 @@ function updateWatchViewPlayer(ep, btnElement) {
             }
         });
     } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
-        videoPlayer.src = streamUrl;
+        videoPlayer.src = finalStreamUrl;
 
         videoPlayer.addEventListener('loadedmetadata', function () {
             videoPlayer.currentTime = savedTime;

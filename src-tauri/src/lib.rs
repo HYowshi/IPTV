@@ -37,8 +37,9 @@ fn get_app_version() -> String {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    // Start proxy server on desktop
-    #[cfg(desktop)]
+    // Start proxy server on desktop/mobile. Android WebView hits the same
+    // CORS/hotlink walls as desktop when HLS.js loads IPTV streams directly.
+    #[cfg(any(desktop, mobile))]
     start_proxy();
 
     tauri::Builder::default()
@@ -54,12 +55,12 @@ pub fn run() {
         .expect("error while running tauri application");
 }
 
-// ==================== DESKTOP: CORS Proxy Server ====================
+// ==================== LOCAL: CORS Proxy Server ====================
 // This proxy server bypasses CORS restrictions for HLS/DASH streams
 // Running on 127.0.0.1:1420, it rewrites M3U8 URLs to use the proxy
 
-#[cfg(desktop)]
-mod desktop_proxy {
+#[cfg(any(desktop, mobile))]
+mod local_proxy {
     use url::Url;
     use std::io::Read;
     use std::sync::atomic::{AtomicU64, Ordering};
@@ -300,7 +301,7 @@ mod desktop_proxy {
     }
 }
 
-#[cfg(desktop)]
+#[cfg(any(desktop, mobile))]
 fn start_proxy() {
-    desktop_proxy::start();
+    local_proxy::start();
 }
