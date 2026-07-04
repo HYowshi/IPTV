@@ -227,6 +227,16 @@ function playChannel(channel) {
         tvDashInstance = null;
     }
 
+    // Cleanup mpegts
+    if (tvMpegtsPlayer) {
+        try {
+            tvMpegtsPlayer.unload();
+            tvMpegtsPlayer.detachMediaElement();
+            tvMpegtsPlayer.destroy();
+        } catch (e) { console.warn('[TV mpegts] Cleanup error:', e); }
+        tvMpegtsPlayer = null;
+    }
+
     // Cleanup YouTube API player
     if (ytPlayerInstance && typeof ytPlayerInstance.destroy === 'function') {
         clearTimeout(ytLoadTimeout);
@@ -256,9 +266,14 @@ function playChannel(channel) {
     // ==================== NON-YOUTUBE PLAYBACK ====================
     videoPlayer.style.display = 'block';
 
-    const plat = typeof Platform !== 'undefined' ? Platform.current : { needsProxy: true };
-    if (streamUrl.startsWith("http://") && !plat.needsProxy) {
-        streamUrl = streamUrl.replace("http://", "https://");
+    const plat = typeof Platform !== 'undefined' ? Platform.current : { needsProxy: false };
+    const useProxyTv = !!plat.needsProxy;
+    const originalStreamUrl = streamUrl;
+
+    // Desktop: convert http → https rồi load trực tiếp (không proxy)
+    // Android: giữ http:// để proxy fetch, chỉ proxy khi cần
+    if (streamUrl.startsWith('http://') && !useProxyTv) {
+        streamUrl = streamUrl.replace('http://', 'https://');
     }
 
     qualitySelector.style.display = 'none';
@@ -271,7 +286,37 @@ function playChannel(channel) {
     videoPlayer.setAttribute('x5-video-player-fullscreen', 'false');
     videoPlayer.preload = 'auto';
 
-    if (streamUrl.includes('.mpd')) {
+    // Kiểm tra định dạng luồng phát
+    const isTsStream = streamUrl.toLowerCase().includes('.ts') || 
+                       streamUrl.toLowerCase().includes('mpegts') || 
+                       streamUrl.toLowerCase().includes('/ts') || 
+                       (!streamUrl.includes('.m3u8') && !streamUrl.includes('.mpd') && !streamUrl.includes('.mp4') && !streamUrl.includes('youtube.com') && !streamUrl.includes('youtu.be'));
+
+    if (isTsStream && typeof mpegts !== 'undefined' && mpegts.isSupported()) {
+        const finalUrl = (useProxyTv && originalStreamUrl.startsWith('http://'))
+            ? `http://127.0.0.1:1420/proxy?url=${encodeURIComponent(streamUrl)}`
+            : streamUrl;
+        
+        tvMpegtsPlayer = mpegts.createPlayer({
+            type: 'mpegts',
+            url: finalUrl,
+            isLive: true
+        }, {
+            enableStashBuffer: false,
+            liveBufferLatencyChasing: true
+        });
+        
+        tvMpegtsPlayer.attachMediaElement(videoPlayer);
+        tvMpegtsPlayer.load();
+        tvMpegtsPlayer.play().catch(() => {});
+        
+        if (tvLoader) tvLoader.style.display = 'none';
+        
+        tvMpegtsPlayer.on(mpegts.Events.ERROR, (type, detail, info) => {
+            console.error('[TV mpegts] Error:', type, detail, info);
+            showToast('Lỗi tải luồng MPEG-TS', 3000, 'error');
+        });
+    } else if (streamUrl.includes('.mpd')) {
         if (typeof dashjs !== 'undefined') {
             tvDashInstance = dashjs.MediaPlayer().create();
 
@@ -355,8 +400,8 @@ function playChannel(channel) {
                 }
             };
             tvHlsInstance = new Hls(hlsConfig);
-            const p = typeof Platform !== 'undefined' ? Platform.current : { needsProxy: true };
-            const finalUrl = p.needsProxy
+            // Chỉ Android + http:// stream mới dùng proxy
+            const finalUrl = (useProxyTv && originalStreamUrl.startsWith('http://'))
                 ? `http://127.0.0.1:1420/proxy?url=${encodeURIComponent(streamUrl)}`
                 : streamUrl;
             tvHlsInstance.loadSource(finalUrl);
@@ -463,7 +508,7 @@ function playChannel(channel) {
             });
 
         } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
-            const nativeUrl = plat.needsProxy
+            const nativeUrl = (useProxyTv && originalStreamUrl.startsWith('http://'))
                 ? `http://127.0.0.1:1420/proxy?url=${encodeURIComponent(streamUrl)}`
                 : streamUrl;
             videoPlayer.src = nativeUrl;

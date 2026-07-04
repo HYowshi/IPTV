@@ -103,8 +103,10 @@ function renderUpcoming(movies, containerId) {
     container.innerHTML = "";
     movies.forEach(movie => {
         const li = document.createElement("li");
+        li.tabIndex = 0;
         li.innerHTML = `<span class="bullet"><span class="material-symbols-rounded" style="font-size:12px;">fiber_manual_record</span></span> <span style="flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${movie.name}</span> <span class="year">${movie.year || ""}</span>`;
         li.onclick = () => showMovieDetails(movie.slug);
+        li.onkeydown = (e) => { if (e.key === 'Enter') showMovieDetails(movie.slug); };
         container.appendChild(li);
     });
 }
@@ -115,6 +117,7 @@ function renderTopMovies(movies, containerId) {
     container.innerHTML = "";
     movies.forEach((movie, index) => {
         const li = document.createElement("li");
+        li.tabIndex = 0;
         const imagePath = movie.poster_url || movie.thumb_url;
         const imgUrl = getImageUrl(imageDomain, imagePath);
         const episodeCurrent = movie.episode_current || "HD";
@@ -130,6 +133,7 @@ function renderTopMovies(movies, containerId) {
             </div>
         `;
         li.onclick = () => showMovieDetails(movie.slug);
+        li.onkeydown = (e) => { if (e.key === 'Enter') showMovieDetails(movie.slug); };
         container.appendChild(li);
     });
 }
@@ -141,6 +145,7 @@ function renderTopSeries(movies, containerId) {
     movies.forEach(movie => {
         const card = document.createElement("div");
         card.className = "movie-card small";
+        card.tabIndex = 0;
 
         const imagePath = movie.poster_url || movie.thumb_url;
         const imgUrl = getImageUrl(imageDomain, imagePath);
@@ -154,6 +159,7 @@ function renderTopSeries(movies, containerId) {
             <div class="info"><h4>${movie.name}</h4></div>
         `;
         card.onclick = () => showMovieDetails(movie.slug);
+        card.onkeydown = (e) => { if (e.key === 'Enter') showMovieDetails(movie.slug); };
         container.appendChild(card);
     });
 }

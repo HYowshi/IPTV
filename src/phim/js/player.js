@@ -89,11 +89,19 @@ function updateWatchViewPlayer(ep, btnElement) {
     const useProxy = !!platform.needsProxy;
     const lowMemory = !!platform.isLowMemory;
 
-    if (streamUrl.startsWith("http://") && !useProxy) {
-        streamUrl = streamUrl.replace(/^http:/, "https:");
+    // Desktop: luôn convert http → https, load trực tiếp (không dùng proxy)
+    // Android: dùng proxy chỉ khi stream là http:// (server IPTV block https upgrade)
+    if (useProxy && streamUrl.startsWith('http://')) {
+        // Android + stream HTTP → đi qua proxy để bypass CORS
+        // Giữ nguyên http:// (proxy sẽ fetch trực tiếp)
+    } else {
+        // Desktop hoặc stream HTTPS → convert http → https, load trực tiếp
+        if (streamUrl.startsWith('http://')) {
+            streamUrl = streamUrl.replace(/^http:/, 'https:');
+        }
     }
 
-    const finalStreamUrl = useProxy
+    const finalStreamUrl = (useProxy && ep.link_m3u8.startsWith('http://'))
         ? `http://127.0.0.1:1420/proxy?url=${encodeURIComponent(streamUrl)}`
         : streamUrl;
 

@@ -5,14 +5,20 @@ let descriptionExpanded = false;
 let previousVisibleElements = []; // Khai báo bộ nhớ tạm
 
 async function showMovieDetails(slug) {
-    // 1. Lưu lại các khối đang hiển thị trước khi ẩn chúng đi
-    previousVisibleElements = [];
-    ['heroBanner', 'home-view', 'filter-view', 'advanced-filter-bar'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el && el.style.display !== 'none') {
-            previousVisibleElements.push(id);
-        }
-    });
+    // 1. Luu lai cac khoi dang hien thi truoc khi an chung di
+    // Chi cap nhat neu detail-view chua mo (tranh mat state khi user click phim khac tu detail)
+    const _detailEl = document.getElementById('detail-view');
+    if (!(_detailEl && _detailEl.style.display === 'block')) {
+        previousVisibleElements = [];
+        ['heroBanner', 'home-view', 'filter-view', 'advanced-filter-bar'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                const d = el.style.display || window.getComputedStyle(el).display;
+                if (d !== 'none') previousVisibleElements.push(id);
+            }
+        });
+        try { sessionStorage.setItem('phimtv_prev_view', JSON.stringify(previousVisibleElements)); } catch(e) {}
+    }
 
     const videoPlayer = document.getElementById('video-player');
     if (videoPlayer) {
@@ -512,6 +518,14 @@ function goBackFromDetail() {
     document.getElementById('detail-view').style.display = 'none';
     document.getElementById('watch-view').style.display = 'none';
 
+    // Thử lấy state từ sessionStorage nếu biến in-memory rỗng
+    if (!previousVisibleElements || previousVisibleElements.length === 0) {
+        try {
+            const saved = sessionStorage.getItem('phimtv_prev_view');
+            if (saved) previousVisibleElements = JSON.parse(saved);
+        } catch (e) { }
+    }
+
     // Phục hồi lại đúng các trang đã mở trước đó
     if (previousVisibleElements && previousVisibleElements.length > 0) {
         previousVisibleElements.forEach(id => {
@@ -527,8 +541,25 @@ function goBackFromDetail() {
             document.querySelector('.main-container').classList.add('with-hero');
         }
     } else {
-        // Fallback: Nếu không có dữ liệu nhớ, ép về trang chủ
-        if (typeof navigateToHome === 'function') navigateToHome();
+        // Fallback thông minh:
+        // Nếu filter-view có dữ liệu (currentFilterEndpoint đã được set) → về collection
+        // Nếu không có → về home
+        const filterView = document.getElementById('filter-view');
+        const hasFilterData = typeof currentFilterEndpoint !== 'undefined' && currentFilterEndpoint !== '';
+        if (filterView && hasFilterData) {
+            filterView.style.display = 'block';
+            const advFilter = document.getElementById('advanced-filter-bar');
+            if (advFilter) advFilter.style.display = 'flex';
+        } else if (typeof navigateToHome === 'function') {
+            navigateToHome();
+        } else {
+            // Last resort: hiển home-view
+            const homeView = document.getElementById('home-view');
+            const heroBanner = document.getElementById('heroBanner');
+            if (homeView) homeView.style.display = 'block';
+            if (heroBanner) heroBanner.style.display = 'flex';
+            document.querySelector('.main-container')?.classList.add('with-hero');
+        }
     }
 
     // Cuộn mượt mà lên đầu trang

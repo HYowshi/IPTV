@@ -37,9 +37,9 @@ fn get_app_version() -> String {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    // Start proxy server on desktop/mobile. Android WebView hits the same
-    // CORS/hotlink walls as desktop when HLS.js loads IPTV streams directly.
-    #[cfg(any(desktop, mobile))]
+    // Proxy chỉ khởi động trên Android (mobile).
+    // Desktop (Windows/EdgeWebView2) load HTTPS stream trực tiếp được — không cần proxy.
+    #[cfg(mobile)]
     start_proxy();
 
     tauri::Builder::default()
@@ -56,10 +56,11 @@ pub fn run() {
 }
 
 // ==================== LOCAL: CORS Proxy Server ====================
-// This proxy server bypasses CORS restrictions for HLS/DASH streams
-// Running on 127.0.0.1:1420, it rewrites M3U8 URLs to use the proxy
+// Proxy này dùng để bypass CORS cho HLS/DASH streams trên Android WebView.
+// Chạy trên 127.0.0.1:1420, rewrite M3U8 URLs để đi qua proxy.
+// KHÔNG dùng cho Desktop — EdgeWebView2 load HTTPS trực tiếp được.
 
-#[cfg(any(desktop, mobile))]
+#[cfg(mobile)]
 mod local_proxy {
     use url::Url;
     use std::io::Read;
@@ -68,9 +69,9 @@ mod local_proxy {
     use urlencoding::decode;
 
     const USER_AGENTS: &[&str] = &[
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15",
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.200 Mobile Safari/537.36",
+        "Mozilla/5.0 (Linux; Android 13; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.200 Mobile Safari/537.36",
+        "Mozilla/5.0 (Linux; Android 12; Redmi Note 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.200 Mobile Safari/537.36",
     ];
 
     // Global request counter for round-robin User-Agent rotation
@@ -96,7 +97,7 @@ mod local_proxy {
                 }
             };
 
-            println!("[Proxy] CORS Proxy started on 127.0.0.1:1420");
+            println!("[Proxy] CORS Proxy started on 127.0.0.1:1420 (Android only)");
 
             // Build HTTP client with connection pooling
             let client = match reqwest::blocking::Client::builder()
@@ -105,6 +106,7 @@ mod local_proxy {
                 .pool_max_idle_per_host(8)
                 .tcp_keepalive(std::time::Duration::from_secs(30))
                 .user_agent(USER_AGENTS[0])
+                .gzip(true)
                 .build() {
                     Ok(c) => c,
                     Err(e) => {
@@ -177,14 +179,17 @@ mod local_proxy {
                     println!("[Proxy] #{} {}", count, display_url);
                 }
 
-                // Forward request
+                // Forward request với headers giống browser Android thật
+                // Không gửi Origin (có thể gây hotlink block), không dùng identity encoding
                 let origin = decoded.split('/').take(3).collect::<Vec<_>>().join("/");
                 let resp = client.get(&decoded)
                     .header("User-Agent", ua)
                     .header("Referer", &origin)
-                    .header("Origin", &origin)
                     .header("Accept", "*/*")
-                    .header("Accept-Encoding", "identity")
+                    .header("Accept-Language", "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7")
+                    .header("Accept-Encoding", "gzip, deflate, br")
+                    .header("Connection", "keep-alive")
+                    .header("Cache-Control", "no-cache")
                     .send();
 
                 match resp {
@@ -196,8 +201,9 @@ mod local_proxy {
                             .unwrap_or("application/octet-stream")
                             .to_string();
 
-                        let is_m3u8 = decoded.contains(".m3u8") 
-                            || content_type.contains("mpegurl") 
+                        let is_m3u8 = decoded.contains(".m3u8")
+                            || decoded.contains(".m3u")
+                            || content_type.contains("mpegurl")
                             || content_type.contains("m3u");
 
                         if !is_m3u8 {
@@ -301,7 +307,7 @@ mod local_proxy {
     }
 }
 
-#[cfg(any(desktop, mobile))]
+#[cfg(mobile)]
 fn start_proxy() {
     local_proxy::start();
 }

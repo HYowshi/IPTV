@@ -169,3 +169,59 @@ img.skeleton {
 .rank-thumb {
     transition: opacity 0.5s ease-in-out, transform 0.4s ease;
 }
+
+/* ==================== TV BOX SPATIAL NAVIGATION FOCUS STYLES ==================== */
+/* Make focused elements stand out clearly on TV Screens with D-pad navigation */
+.movie-card:focus-visible,
+.movie-card:focus,
+.btn-play:focus-visible,
+.btn-play:focus,
+.btn-primary:focus-visible,
+.btn-primary:focus,
+.btn-secondary:focus-visible,
+.btn-secondary:focus,
+.btn-more:focus-visible,
+.btn-more:focus,
+.btn-server:focus-visible,
+.btn-server:focus,
+.btn-episode:focus-visible,
+.btn-episode:focus,
+.btn-back:focus-visible,
+.btn-back:focus,
+.btn-icon-action:focus-visible,
+.btn-icon-action:focus,
+.btn-expand-desc:focus-visible,
+.btn-expand-desc:focus,
+.switch-item:focus-visible,
+.switch-item:focus,
+.dropdown > a:focus-visible,
+.dropdown > a:focus,
+.btn-exit-header:focus-visible,
+.btn-exit-header:focus,
+.sidebar-list li:focus-visible,
+.sidebar-list li:focus,
+#searchInput:focus-visible,
+#searchInput:focus,
+.btn-page:focus-visible,
+.btn-page:focus {
+    outline: none !important;
+    border-color: #f91942 !important;
+    box-shadow: 0 0 15px rgba(249, 25, 66, 0.8) !important;
+    transform: scale(1.05);
+    z-index: 10;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Specific Focus Styles for Movie Card overlay and icons */
+.movie-card:focus .card-overlay,
+.movie-card:focus-visible .card-overlay {
+    opacity: 1 !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+
+.movie-card:focus .card-overlay .material-symbols-rounded,
+.movie-card:focus-visible .card-overlay .material-symbols-rounded {
+    transform: scale(1) !important;
+    color: #f91942 !important;
+}

@@ -5,6 +5,7 @@
 
 const Platform = (() => {
     let _cached = null;
+    let _proxyReady = false;
 
     function detect() {
         if (_cached) return _cached;
@@ -31,27 +32,55 @@ const Platform = (() => {
             isWeb: platform === 'web',
             isTauri: isTauri,
             platform: platform,
-            // Whether proxy is needed. Tauri desktop and Android both hit
-            // CORS/hotlink restrictions when HLS.js loads IPTV streams directly.
-            needsProxy: isTauri && !isIOS,
+            // Proxy CHỈ cần thiết cho Android (bypass CORS trên Android WebView).
+            // Desktop (Windows/EdgeWebView2) load HTTPS stream trực tiếp — KHÔNG cần proxy.
+            // Đây là nguyên nhân chính tại sao stream bị chặn sau khi thêm proxy cho desktop.
+            // iOS: sandbox không cho bind local port → không dùng proxy.
+            needsProxy: isAndroid,
         };
 
         console.log(`[Platform] Detected: ${_cached.platform}, needsProxy: ${_cached.needsProxy}`);
         return _cached;
     }
 
-    return { detect, get current() { return detect(); } };
+    /**
+     * Chờ proxy sẵn sàng (chỉ dành cho Android).
+     * Trả về true nếu proxy sẵn sàng, false nếu timeout sau 3s.
+     */
+    async function waitForProxy() {
+        const p = detect();
+        if (!p.needsProxy) return true; // Desktop/web không cần proxy → luôn ready
+        if (_proxyReady) return true;
+
+        return new Promise(resolve => {
+            const started = Date.now();
+            const check = setInterval(() => {
+                if (_proxyReady || Date.now() - started > 3000) {
+                    clearInterval(check);
+                    resolve(_proxyReady);
+                }
+            }, 100);
+        });
+    }
+
+    return {
+        detect,
+        get current() { return detect(); },
+        get proxyReady() { return _proxyReady; },
+        set proxyReady(v) { _proxyReady = !!v; },
+        waitForProxy
+    };
 })();
 
 // Setup platform-aware features after DOM is ready
 function setupPlatformFeatures() {
     const p = Platform.current;
-    
+
     // Remove ALL data-tauri-drag-region attributes by default (safe for mobile/web)
     document.querySelectorAll('[data-tauri-drag-region]').forEach(el => {
         el.removeAttribute('data-tauri-drag-region');
     });
-    
+
     // Only enable drag-region on desktop Tauri
     if (p.isDesktop) {
         // Restore drag-region on desktop: covers all header types across pages
@@ -63,7 +92,6 @@ function setupPlatformFeatures() {
         document.querySelectorAll(dragSelectors).forEach(el => {
             el.setAttribute('data-tauri-drag-region', '');
         });
-
     }
 }
 
@@ -155,12 +183,13 @@ function setupWindowControls() {
                 p.isIOS = backendPlatform === 'ios';
                 p.isMobile = backendPlatform === 'android' || backendPlatform === 'ios';
                 p.isLowMemory = p.isAndroid || (navigator.deviceMemory && navigator.deviceMemory <= 2);
-                p.needsProxy = p.isDesktop || p.isAndroid;
-                console.log(`[Platform] Backend confirmed: ${backendPlatform}`);
+                // Chỉ Android cần proxy — Desktop tự load HTTPS được
+                p.needsProxy = p.isAndroid;
+                console.log(`[Platform] Backend confirmed: ${backendPlatform}, needsProxy: ${p.needsProxy}`);
             }
         }
     } catch (e) { }
-    
+
     // Setup features once platform is known
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', setupPlatformFeatures);
@@ -175,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (p.isAndroid) {
         const exitBtn = document.getElementById('btn-exit-main');
         if (exitBtn) exitBtn.classList.add('android-hidden');
-        
+
         // Also hide "Thoát" buttons in sub-page headers
         document.querySelectorAll('.btn-exit-header').forEach(btn => {
             btn.style.display = 'none';
@@ -240,28 +269,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 watchView.classList.add('landscape-mode');
                 document.body.classList.add('fullscreen-active');
 
-                    // 5. Lock screen orientation to landscape
-                    try {
-                        if (screen.orientation && screen.orientation.lock) {
-                            screen.orientation.lock('landscape-primary').catch(() => {
-                                // Fallback: try without 'primary' suffix
-                                screen.orientation.lock('landscape').catch(() => {});
-                            });
-                        }
-                    } catch (e) {}
+                // 5. Lock screen orientation to landscape
+                try {
+                    if (screen.orientation && screen.orientation.lock) {
+                        screen.orientation.lock('landscape-primary').catch(() => {
+                            // Fallback: try without 'primary' suffix
+                            screen.orientation.lock('landscape').catch(() => {});
+                        });
+                    }
+                } catch (e) {}
 
-                    // 6. Try native fullscreen for rotation on Android WebView
-                    try {
-                        if (watchView.requestFullscreen) watchView.requestFullscreen().catch(() => {});
-                        else if (watchView.webkitRequestFullscreen) watchView.webkitRequestFullscreen();
-                    } catch (e) {}
+                // 6. Try native fullscreen for rotation on Android WebView
+                try {
+                    if (watchView.requestFullscreen) watchView.requestFullscreen().catch(() => {});
+                    else if (watchView.webkitRequestFullscreen) watchView.webkitRequestFullscreen();
+                } catch (e) {}
 
-                    // 7. Hide status bar on Android (if supported)
-                    try {
-                        if (window.Android && window.Android.hideStatusBar) {
-                            window.Android.hideStatusBar();
-                        }
-                    } catch (e) {}
+                // 7. Hide status bar on Android (if supported)
+                try {
+                    if (window.Android && window.Android.hideStatusBar) {
+                        window.Android.hideStatusBar();
+                    }
+                } catch (e) {}
 
             } else {
                 // === EXIT FULLSCREEN ===

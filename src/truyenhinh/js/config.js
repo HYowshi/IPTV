@@ -5,6 +5,7 @@ let currentChannelList = [];
 let tvHlsInstance = null;
 let currentPlayingChannel = null;
 let tvDashInstance = null;
+let tvMpegtsPlayer = null;
 let osdTimer = null;
 let quickListDirty = true;
 let currentStreamUrl = null;
