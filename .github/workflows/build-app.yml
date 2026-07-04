@@ -49,11 +49,9 @@ jobs:
 
       - name: Install Android NDK
         run: |
-          sdkmanager --list | grep ndk
-          sdkmanager "ndk;28.0.13004108" || true
-          NDK_VERSION=$(ls $ANDROID_HOME/ndk/ | sort -V | tail -1)
-          echo "NDK_VERSION=$NDK_VERSION" >> $GITHUB_ENV
-          echo "Using NDK: $NDK_VERSION"
+          sdkmanager "ndk;26.3.11579264"
+          echo "NDK_VERSION=26.3.11579264" >> $GITHUB_ENV
+          echo "Using NDK: 26.3.11579264"
 
       - name: Generate icons
         run: python generate-icons.py || pip install Pillow && python generate-icons.py || echo "Skip icon generation"
