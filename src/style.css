@@ -1345,13 +1345,12 @@ body.low-memory-mode .ambient-glow {
     display: none !important;
 }
 
-/* Tắt shimmer + titleGlow animation trên title — tiết kiệm CPU liên tục */
+/* Tắt shimmer + titleGlow animation trên title — thiết lập chữ màu trắng trơn */
 body.low-memory-mode .entry-header h1 {
     animation: none !important;
-    background: #ffffff !important;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background: none !important;
+    -webkit-text-fill-color: #ffffff !important;
+    color: #ffffff !important;
     filter: none !important;
 }
 
@@ -1397,11 +1396,9 @@ body.low-memory-mode .entry-box:nth-child(2) {
     opacity: 1 !important;
 }
 
-/* Tắt hover effects nặng */
-body.low-memory-mode .entry-box:hover::before,
-body.low-memory-mode .entry-box:hover::after {
-    opacity: 0 !important;
-    transition: none !important;
+/* Tắt hiệu ứng ánh sáng (glow) nền trên card */
+body.low-memory-mode .entry-box::after {
+    display: none !important;
 }
 
 body.low-memory-mode .icon-glow {
