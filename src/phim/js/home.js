@@ -74,15 +74,15 @@ async function fetchHomeData() {
             });
             extractFiltersFromMovies(allMovies);
 
-            // Render remaining grids
+            // Render remaining grids (tăng số lượng hiển thị vì đã chuyển sang hàng ngang cuộn)
             if (formatted[0] && formatted[0].items) {
-                renderMoviesCards(formatted[0].items.slice(0, 3), 'grid-theaters', true);
+                renderMoviesCards(formatted[0].items.slice(0, 10), 'grid-theaters', true);
             }
             if (formatted[1] && formatted[1].items) {
-                renderMoviesCards(formatted[1].items.slice(0, 6), 'grid-series', false);
+                renderMoviesCards(formatted[1].items.slice(0, 12), 'grid-series', false);
             }
             if (formatted[2] && formatted[2].items) {
-                renderMoviesCards(formatted[2].items.slice(0, 6), 'grid-movies', false);
+                renderMoviesCards(formatted[2].items.slice(0, 12), 'grid-movies', false);
             }
 
             // Render sidebars with specific domains passed to fix the images

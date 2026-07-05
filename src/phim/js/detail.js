@@ -161,9 +161,21 @@ async function showMovieDetails(slug) {
         // Watch buttons
         const btnWatchNow = document.getElementById('btn-watch-now');
         const isTrailerOnly = currentMovieData.status === 'trailer';
-        if (!isTrailerOnly && eps && eps.length > 0 && eps[0].server_data && eps[0].server_data.length > 0) {
+        
+        let preferredServerIndex = 0;
+        if (eps && eps.length > 0) {
+            const foundIndex = eps.findIndex(server => {
+                const name = (server.server_name || '').toLowerCase();
+                return name.includes('thuyết minh') || name.includes('thuyet minh') || name.includes('lồng tiếng') || name.includes('long tieng');
+            });
+            if (foundIndex !== -1) {
+                preferredServerIndex = foundIndex;
+            }
+        }
+
+        if (!isTrailerOnly && eps && eps.length > 0 && eps[preferredServerIndex].server_data && eps[preferredServerIndex].server_data.length > 0) {
             btnWatchNow.style.display = 'inline-flex';
-            btnWatchNow.onclick = () => openWatchView(eps[0].server_data[0]);
+            btnWatchNow.onclick = () => openWatchView(eps[preferredServerIndex].server_data[0]);
         } else {
             btnWatchNow.style.display = 'none';
         }
@@ -203,7 +215,7 @@ async function showMovieDetails(slug) {
         if (eps && eps.length > 0) {
             eps.forEach((server, index) => {
                 const sBtn = document.createElement("button");
-                sBtn.className = "btn-server" + (index === 0 ? " active" : "");
+                sBtn.className = "btn-server" + (index === preferredServerIndex ? " active" : "");
                 sBtn.innerText = "Server " + server.server_name;
                 sBtn.onclick = (e) => {
                     document.querySelectorAll('.btn-server').forEach(b => b.classList.remove('active'));
@@ -212,7 +224,7 @@ async function showMovieDetails(slug) {
                 };
                 serverContainer.appendChild(sBtn);
             });
-            renderEpisodesByServer(eps[0].server_data, 'episode-list', false, slug);
+            renderEpisodesByServer(eps[preferredServerIndex].server_data, 'episode-list', false, slug);
         } else {
             document.getElementById('episode-list').innerHTML = "<p style='color: white;'>Phim đang được cập nhật tập mới.</p>";
         }

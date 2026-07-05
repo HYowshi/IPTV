@@ -102,6 +102,30 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
+/* TV Box optimized horizontal row */
+.movie-row-horizontal {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 20px;
+    padding: 10px 5px 25px 5px;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+}
+
+.movie-row-horizontal::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+.movie-row-horizontal .movie-card {
+    flex: 0 0 160px; /* Chiều rộng cố định cho thẻ dọc */
+}
+
+.movie-row-horizontal .movie-card.horizontal {
+    flex: 0 0 280px; /* Chiều rộng cố định cho thẻ ngang */
+}
+
 .movie-card {
     background-color: transparent;
     border-radius: 12px;

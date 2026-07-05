@@ -79,7 +79,7 @@ function initSpatialNavigation() {
 
         if (bestMatch) {
             bestMatch.focus();
-            bestMatch.scrollIntoView({ behavior: scrollBehavior, block: 'center' });
+            bestMatch.scrollIntoView({ behavior: scrollBehavior, block: 'center', inline: 'center' });
         }
     });
 }
