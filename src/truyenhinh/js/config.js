@@ -75,10 +75,10 @@ const MAX_RECENT_CHANNELS = 20;
 const TV_HLS_CONFIG = {
     xhrSetup: function (xhr) { xhr.withCredentials = false; },
 
-    // Live sync: 2 segments behind live edge — đủ để không rebuffer liên tục
-    liveSyncDurationCount: 2,
+    // Live sync: 3 segments behind live edge (tăng từ 2 để tránh cận live edge quá gây lag)
+    liveSyncDurationCount: 3,
     // Latency tối đa trước khi HLS.js tự catch-up (tính bằng số segment)
-    liveMaxLatencyDurationCount: TV_LOW_MEMORY_MODE ? 4 : 6,
+    liveMaxLatencyDurationCount: TV_LOW_MEMORY_MODE ? 6 : 8,
     // Tốc độ catch-up khi bị lag (1.25x thay vì rebuffer) — đủ để bắt kịp mà không giật
     maxLiveSyncPlaybackRate: 1.25,
 
@@ -86,9 +86,9 @@ const TV_HLS_CONFIG = {
     lowLatencyMode: false,
 
     // Buffer: tăng lên cho TV Box để ít phải fetch lại fragment
-    maxBufferLength: TV_LOW_MEMORY_MODE ? 12 : 40,
-    maxMaxBufferLength: TV_LOW_MEMORY_MODE ? 20 : 80,
-    maxBufferSize: (TV_LOW_MEMORY_MODE ? 12 : 40) * 1024 * 1024,
+    maxBufferLength: TV_LOW_MEMORY_MODE ? 20 : 40,
+    maxMaxBufferLength: TV_LOW_MEMORY_MODE ? 30 : 80,
+    maxBufferSize: (TV_LOW_MEMORY_MODE ? 20 : 40) * 1024 * 1024,
 
     // Cho phép nhảy qua lỗ hổng buffer nhỏ thay vì dừng hẳn
     maxBufferHole: 0.5,

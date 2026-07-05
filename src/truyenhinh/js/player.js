@@ -371,14 +371,14 @@ function playChannel(channel) {
             url: finalUrl,
             isLive: true
         }, {
-            // Tắt stash buffer để giảm RAM usage và latency trên TV Box
-            enableStashBuffer: false,
-            stashInitialSize: 128 * 1024,
+            // Bật stash buffer để lọc bỏ hiện tượng chập chờn đường truyền mạng
+            enableStashBuffer: true,
+            stashInitialSize: 384 * 1024,
             // Không chase latency aggressively — tránh seek liên tục gây chập chừng
             liveBufferLatencyChasing: false,
-            // Giữ buffer nhỏ để latency thấp nhưng đủ để không rebuffer
-            liveBufferLatencyMaxLatency: 2.0,
-            liveBufferLatencyMinRemain: 0.5,
+            // Giữ buffer rộng rãi hơn một chút để không bị gián đoạn phát sóng
+            liveBufferLatencyMaxLatency: 5.0,
+            liveBufferLatencyMinRemain: 1.0,
             // Cho phép worker thread nếu có thể
             enableWorker: true
         });
