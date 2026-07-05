@@ -195,6 +195,15 @@ function initUIEvents() {
             tvDashInstance = null;
         }
 
+        if (tvMpegtsPlayer) {
+            try {
+                tvMpegtsPlayer.unload();
+                tvMpegtsPlayer.detachMediaElement();
+                tvMpegtsPlayer.destroy();
+            } catch (e) { console.warn('[TV mpegts] Cleanup error on close:', e); }
+            tvMpegtsPlayer = null;
+        }
+
         document.getElementById('tv-quality-selector').style.display = 'none';
 
         // Reset quick sidebar
