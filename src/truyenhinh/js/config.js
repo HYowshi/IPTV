@@ -80,7 +80,7 @@ const TV_HLS_CONFIG = {
     // Latency tối đa trước khi HLS.js tự catch-up (tính bằng số segment)
     liveMaxLatencyDurationCount: TV_LOW_MEMORY_MODE ? 6 : 8,
     // Tốc độ catch-up khi bị lag (1.25x thay vì rebuffer) — đủ để bắt kịp mà không giật
-    maxLiveSyncPlaybackRate: 1.25,
+    maxLiveSyncPlaybackRate: 1.1,
 
     enableWorker: true,
     lowLatencyMode: false,
@@ -116,7 +116,10 @@ const TV_HLS_CONFIG = {
     abrBandWidthUpFactor: 0.6,
     abrEwmaDefaultEstimate: TV_LOW_MEMORY_MODE ? 1000000 : 2000000,
 
-    appendErrorMaxRetry: TV_LOW_MEMORY_MODE ? 3 : 6
+    appendErrorMaxRetry: TV_LOW_MEMORY_MODE ? 3 : 6,
+
+    forceKeyFrameOnDiscontinuity: true,
+    maxAudioFramesDrift: 1
 };
 
 // ==================== LOGO & UI CONSTANTS ====================

@@ -356,10 +356,10 @@ function playChannel(channel) {
     videoPlayer.preload = 'auto';
 
     // Kiểm tra định dạng luồng phát
-    const isTsStream = streamUrl.toLowerCase().includes('.ts') || 
-                       streamUrl.toLowerCase().includes('mpegts') || 
-                       streamUrl.toLowerCase().includes('/ts') || 
-                       (!streamUrl.includes('.m3u8') && !streamUrl.includes('.mpd') && !streamUrl.includes('.mp4') && !streamUrl.includes('youtube.com') && !streamUrl.includes('youtu.be'));
+    const lowerUrl = streamUrl.toLowerCase();
+    const isTsStream = /\.ts(\?|$)/.test(lowerUrl) || 
+                       lowerUrl.includes('mpegts') || 
+                       lowerUrl.includes('/ts');
 
     if (isTsStream && typeof mpegts !== 'undefined' && mpegts.isSupported()) {
         const finalUrl = (useProxyTv && originalStreamUrl.startsWith('http://'))
@@ -380,14 +380,16 @@ function playChannel(channel) {
             liveBufferLatencyMaxLatency: 5.0,
             liveBufferLatencyMinRemain: 1.0,
             // Cho phép worker thread nếu có thể
-            enableWorker: true
+            enableWorker: true,
+            // Tự động dọn dẹp source buffer cũ để tránh tràn bộ nhớ
+            autoCleanupSourceBuffer: true,
+            autoCleanupMaxBackwardDuration: 60,
+            autoCleanupMinBackwardDuration: 30
         });
         
         tvMpegtsPlayer.attachMediaElement(videoPlayer);
         tvMpegtsPlayer.load();
         tvMpegtsPlayer.play().catch(() => {});
-        
-        if (tvLoader) tvLoader.style.display = 'none';
         
         tvMpegtsPlayer.on(mpegts.Events.ERROR, (type, detail, info) => {
             console.error('[TV mpegts] Error:', type, detail, info);
@@ -540,7 +542,7 @@ function playChannel(channel) {
                 videoPlayer.play().catch(() => { });
             });
 
-            tvHlsInstance.on(Hls.Events.ERROR, function (event, data) {
+            function handleHlsError(event, data) {
                 if (data.fatal) {
                     switch (data.type) {
                         case Hls.ErrorTypes.NETWORK_ERROR:
@@ -554,6 +556,7 @@ function playChannel(channel) {
                                 try {
                                     if (data.details === 'bufferAppendError' || data.details === 'bufferFullError') {
                                         tvHlsInstance.recoverMediaError();
+                                        return;
                                     }
                                     tvHlsInstance.recoverMediaError();
                                 } catch (e) {
@@ -566,6 +569,7 @@ function playChannel(channel) {
                                     tvHlsInstance = new Hls({ ...TV_HLS_CONFIG });
                                     tvHlsInstance.loadSource(finalUrl);
                                     tvHlsInstance.attachMedia(videoPlayer);
+                                    tvHlsInstance.on(Hls.Events.ERROR, handleHlsError);
                                     tvHlsInstance.once(Hls.Events.MANIFEST_PARSED, () => {
                                         videoPlayer.currentTime = currentTime;
                                         if (!wasPaused) videoPlayer.play().catch(() => { });
@@ -607,7 +611,8 @@ function playChannel(channel) {
                         }
                     }
                 }
-            });
+            }
+            tvHlsInstance.on(Hls.Events.ERROR, handleHlsError);
 
         } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
             const nativeUrl = (useProxyTv && originalStreamUrl.startsWith('http://'))

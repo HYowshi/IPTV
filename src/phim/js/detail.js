@@ -218,7 +218,7 @@ async function showMovieDetails(slug) {
                 sBtn.className = "btn-server" + (index === preferredServerIndex ? " active" : "");
                 sBtn.innerText = "Server " + server.server_name;
                 sBtn.onclick = (e) => {
-                    document.querySelectorAll('.btn-server').forEach(b => b.classList.remove('active'));
+                    serverContainer.querySelectorAll('.btn-server').forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
                     renderEpisodesByServer(server.server_data, 'episode-list', false, slug);
                 };

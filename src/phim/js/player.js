@@ -187,9 +187,13 @@ function updateWatchViewPlayer(ep, btnElement) {
             lowLatencyMode: false,
             backBufferLength: lowMemory ? 0 : 30,
             nudgeOffset: 0.2,
-            nudgeMaxRetry: 5,
-            maxFragLookUpTolerance: 0.25
+            nudgeMaxRetry: 10,
+            maxFragLookUpTolerance: 0.25,
+            progressive: true,
+            forceKeyFrameOnDiscontinuity: true,
+            maxAudioFramesDrift: 1
         };
+        let _networkRetryCount = 0;
         hlsInstance = new Hls(hlsConfig);
         hlsInstance.loadSource(finalStreamUrl);
         hlsInstance.attachMedia(videoPlayer);
@@ -247,8 +251,16 @@ function updateWatchViewPlayer(ep, btnElement) {
             if (data.fatal) {
                 switch (data.type) {
                     case Hls.ErrorTypes.NETWORK_ERROR:
-                        console.warn("Lỗi mạng, đang thử tải lại...");
-                        setTimeout(() => hlsInstance.startLoad(), 1000);
+                        _networkRetryCount++;
+                        if (_networkRetryCount <= 5) {
+                            console.warn(`Lỗi mạng (#${_networkRetryCount}/5), đang thử tải lại...`);
+                            setTimeout(() => hlsInstance.startLoad(), 1000 * _networkRetryCount);
+                        } else {
+                            console.error("Đã thử kết nối lại 5 lần, dừng tải.");
+                            _networkRetryCount = 0;
+                            try { hlsInstance.destroy(); } catch (e) { }
+                            hlsInstance = null;
+                        }
                         break;
                     case Hls.ErrorTypes.MEDIA_ERROR:
                         mediaErrorRetries++;
@@ -259,6 +271,7 @@ function updateWatchViewPlayer(ep, btnElement) {
                                     const sb = videoPlayer.buffered;
                                     if (sb.length > 0) {
                                         hlsInstance.recoverMediaError();
+                                        break;
                                     }
                                 } catch (e) { }
                             }
@@ -320,13 +333,29 @@ function updateWatchViewPlayer(ep, btnElement) {
                         }).catch(() => {});
                     });
             }
-        });
+        }, { once: true });
     }
 
+    // Throttle lưu lịch sử: mỗi 10 giây thay vì 4 lần/giây → giảm ~97% I/O
+    let _lastHistorySave = 0;
     videoPlayer.ontimeupdate = () => {
+        const now = Date.now();
+        if (now - _lastHistorySave < 10000) return;
+        _lastHistorySave = now;
         if (!watchHistoryCache) {
             watchHistoryCache = JSON.parse(localStorage.getItem('phimtv_history')) || {};
         }
+        const cached = watchHistoryCache[currentMovieData.slug];
+        if (cached && (cached.name === ep.name || cached.epName === ep.name)) {
+            cached.currentTime = videoPlayer.currentTime;
+            cached.updatedAt = now;
+            localStorage.setItem('phimtv_history', JSON.stringify(watchHistoryCache));
+        }
+    };
+
+    // Lưu ngay lập tức khi pause hoặc đóng trang
+    const _saveHistoryNow = () => {
+        if (!watchHistoryCache) return;
         const cached = watchHistoryCache[currentMovieData.slug];
         if (cached && (cached.name === ep.name || cached.epName === ep.name)) {
             cached.currentTime = videoPlayer.currentTime;
@@ -334,6 +363,47 @@ function updateWatchViewPlayer(ep, btnElement) {
             localStorage.setItem('phimtv_history', JSON.stringify(watchHistoryCache));
         }
     };
+    videoPlayer.addEventListener('pause', _saveHistoryNow, { once: false });
+    window.addEventListener('beforeunload', _saveHistoryNow);
+
+    // Audio desync detection: kiểm tra mỗi 3 giây, tự sửa nếu drift > 2s
+    if (window._desyncCheckTimer) clearInterval(window._desyncCheckTimer);
+    window._desyncCheckTimer = setInterval(() => {
+        if (videoPlayer.paused || videoPlayer.ended || !videoPlayer.buffered.length) return;
+        const buffEnd = videoPlayer.buffered.end(videoPlayer.buffered.length - 1);
+        const drift = buffEnd - videoPlayer.currentTime;
+        if (drift > 2 && drift < 30) {
+            console.warn(`[Audio Sync] Drift ${drift.toFixed(1)}s detected, correcting...`);
+            videoPlayer.currentTime = buffEnd - 1;
+        }
+    }, 3000);
+
+    // Volume fade mượt mà khi buffer stall (tránh giật âm thanh)
+    let _preMuteVolume = null;
+    videoPlayer.addEventListener('waiting', () => {
+        if (_preMuteVolume === null && !videoPlayer.paused) {
+            _preMuteVolume = videoPlayer.volume;
+            videoPlayer.volume = Math.max(0, videoPlayer.volume * 0.3);
+        }
+    });
+    videoPlayer.addEventListener('playing', () => {
+        if (_preMuteVolume !== null) {
+            const targetVol = _preMuteVolume;
+            _preMuteVolume = null;
+            let curVol = videoPlayer.volume;
+            const fadeStep = (targetVol - curVol) / 10;
+            let fadeCount = 0;
+            const fadeInterval = setInterval(() => {
+                fadeCount++;
+                curVol += fadeStep;
+                videoPlayer.volume = Math.min(1, Math.max(0, curVol));
+                if (fadeCount >= 10) {
+                    clearInterval(fadeInterval);
+                    videoPlayer.volume = targetVol;
+                }
+            }, 30);
+        }
+    });
 
     document.getElementById('watch-view').scrollIntoView({ behavior: 'smooth', block: 'start' });
 

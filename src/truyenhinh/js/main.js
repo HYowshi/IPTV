@@ -186,7 +186,8 @@ function initUIEvents() {
         hideErrorOverlay();
 
         if (tvHlsInstance) {
-            tvHlsInstance.destroy();
+            try { tvHlsInstance.stopLoad(); } catch (e) { }
+            try { tvHlsInstance.destroy(); } catch (e) { }
             tvHlsInstance = null;
         }
 

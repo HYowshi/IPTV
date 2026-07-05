@@ -121,9 +121,10 @@ function formatResponse(res) {
 function trimWatchHistory(history) {
     const keys = Object.keys(history);
     if (keys.length > MAX_HISTORY_ENTRIES) {
-        const excess = keys.length - MAX_HISTORY_ENTRIES;
+        const sorted = keys.sort((a, b) => (history[a].updatedAt || 0) - (history[b].updatedAt || 0));
+        const excess = sorted.length - MAX_HISTORY_ENTRIES;
         for (let i = 0; i < excess; i++) {
-            delete history[keys[i]];
+            delete history[sorted[i]];
         }
     }
     return history;

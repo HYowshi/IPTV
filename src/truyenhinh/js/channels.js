@@ -473,6 +473,7 @@ async function fetchAndParseEPG(url) {
     try {
         const text = await tvFetchWithCache('epg_raw', url, 2, 30000);
 
+        EPG_BLOCK_REGEX.lastIndex = 0;
         let match;
         while ((match = EPG_BLOCK_REGEX.exec(text)) !== null) {
             const channelId = match[1];
