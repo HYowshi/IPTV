@@ -1,20 +1,41 @@
-// ==================== WATCH VIEW PLAYER ====================
 function openWatchView(episodeData) {
     document.getElementById('detail-view').style.display = 'none';
     document.getElementById('watch-view').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Auto fullscreen cho Android TV Box khi bấm xem phim
+    // Tự động kích hoạt chế độ Fullscreen ngay lập tức trong sự kiện click của user để tránh bị chặn
     const _platform = typeof Platform !== 'undefined' ? Platform.current : null;
     if (_platform && _platform.isAndroid) {
-        window._pendingAutoFullscreen = true;
+        const fsBtn = document.getElementById('fullscreen-btn');
+        const watchView = document.getElementById('watch-view');
+        if (fsBtn && watchView && !watchView.classList.contains('landscape-mode')) {
+            try {
+                fsBtn.click();
+            } catch (e) {
+                console.warn('[Player] Immediate fullscreen failed, fallback to pending');
+                window._pendingAutoFullscreen = true;
+            }
+        } else {
+            window._pendingAutoFullscreen = true;
+        }
+    }
+
+    // Tìm xem tập phim được chọn thuộc Server nào
+    let activeServerIndex = 0;
+    if (currentMovieData && currentMovieData.episodes) {
+        currentMovieData.episodes.forEach((server, index) => {
+            const hasEp = server.server_data.some(ep => ep.link_m3u8 === episodeData.link_m3u8 || (ep.name === episodeData.name && ep.slug === episodeData.slug));
+            if (hasEp) {
+                activeServerIndex = index;
+            }
+        });
     }
 
     const watchServerContainer = document.getElementById('watch-server-list');
     watchServerContainer.innerHTML = "";
     currentMovieData.episodes.forEach((server, index) => {
         const sBtn = document.createElement("button");
-        sBtn.className = "btn-server" + (index === 0 ? " active" : "");
+        sBtn.className = "btn-server" + (index === activeServerIndex ? " active" : "");
         sBtn.innerText = "Server " + server.server_name;
         sBtn.onclick = (e) => {
             document.getElementById('watch-server-list').querySelectorAll('.btn-server').forEach(b => b.classList.remove('active'));
@@ -23,12 +44,21 @@ function openWatchView(episodeData) {
         };
         watchServerContainer.appendChild(sBtn);
     });
-    renderEpisodesByServer(currentMovieData.episodes[0].server_data, 'watch-episode-list', true, currentMovieData.slug);
+
+    renderEpisodesByServer(currentMovieData.episodes[activeServerIndex].server_data, 'watch-episode-list', true, currentMovieData.slug);
 
     setTimeout(() => {
-        const firstEpBtn = document.getElementById('watch-episode-list').querySelector('.btn-episode');
-        if (firstEpBtn) {
-            updateWatchViewPlayer(episodeData, firstEpBtn);
+        const watchEpisodeList = document.getElementById('watch-episode-list');
+        const epBtns = Array.from(watchEpisodeList.querySelectorAll('.btn-episode'));
+        const targetBtn = epBtns.find(btn => btn.innerText === episodeData.name);
+        
+        if (targetBtn) {
+            updateWatchViewPlayer(episodeData, targetBtn);
+        } else {
+            const firstEpBtn = watchEpisodeList.querySelector('.btn-episode');
+            if (firstEpBtn) {
+                updateWatchViewPlayer(episodeData, firstEpBtn);
+            }
         }
     }, 100);
 }
@@ -73,12 +103,20 @@ function updateWatchViewPlayer(ep, btnElement) {
     }
 
     let savedTime = 0;
-    if (watchHistoryCache[currentMovieData.slug] && watchHistoryCache[currentMovieData.slug].name === ep.name && watchHistoryCache[currentMovieData.slug].currentTime) {
-        savedTime = watchHistoryCache[currentMovieData.slug].currentTime;
+    const existingCache = watchHistoryCache[currentMovieData.slug];
+    if (existingCache && (existingCache.name === ep.name || existingCache.epName === ep.name) && existingCache.currentTime) {
+        savedTime = existingCache.currentTime;
     }
 
-    watchHistoryCache[currentMovieData.slug] = ep;
-    watchHistoryCache[currentMovieData.slug].currentTime = savedTime;
+    watchHistoryCache[currentMovieData.slug] = {
+        ...ep,
+        movieName: currentMovieData.name,
+        moviePoster: currentMovieData.thumb_url || currentMovieData.poster_url,
+        movieSlug: currentMovieData.slug,
+        epName: ep.name,
+        currentTime: savedTime,
+        updatedAt: Date.now()
+    };
     trimWatchHistory(watchHistoryCache);
     localStorage.setItem('phimtv_history', JSON.stringify(watchHistoryCache));
 
@@ -289,8 +327,10 @@ function updateWatchViewPlayer(ep, btnElement) {
         if (!watchHistoryCache) {
             watchHistoryCache = JSON.parse(localStorage.getItem('phimtv_history')) || {};
         }
-        if (watchHistoryCache[currentMovieData.slug] && watchHistoryCache[currentMovieData.slug].name === ep.name) {
-            watchHistoryCache[currentMovieData.slug].currentTime = videoPlayer.currentTime;
+        const cached = watchHistoryCache[currentMovieData.slug];
+        if (cached && (cached.name === ep.name || cached.epName === ep.name)) {
+            cached.currentTime = videoPlayer.currentTime;
+            cached.updatedAt = Date.now();
             localStorage.setItem('phimtv_history', JSON.stringify(watchHistoryCache));
         }
     };

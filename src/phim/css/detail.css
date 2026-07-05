@@ -829,3 +829,19 @@
         gap: 10px;
     }
 }
+
+/* Custom Scrollbar for Episode List in Detail View */
+#episode-list::-webkit-scrollbar {
+    width: 6px;
+}
+#episode-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 3px;
+}
+#episode-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+#episode-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(249, 25, 66, 0.5);
+}

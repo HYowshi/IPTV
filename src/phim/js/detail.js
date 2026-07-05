@@ -579,6 +579,11 @@ function goBackFromDetail() {
         }
     }
 
+    // Cập nhật lại danh sách lịch sử khi quay về màn hình chính
+    if (typeof renderWatchHistory === 'function') {
+        renderWatchHistory();
+    }
+
     // Cuộn mượt mà lên đầu trang
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }

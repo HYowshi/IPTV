@@ -45,6 +45,7 @@ async function fetchHomeData() {
             startHeroCarousel();
         }
 
+        renderWatchHistory();
         renderFavorites();
         renderMoviesCards(p1Formatted.items.slice(0, 12), 'grid-new-update', false);
 
@@ -258,6 +259,65 @@ function startHeroCarousel() {
         currentHeroIndex = (currentHeroIndex + 1) % heroMovies.length;
         renderHero(currentHeroIndex);
     }, 8000);
+}
+
+function renderWatchHistory() {
+    const historySection = document.getElementById('section-history');
+    const historyGrid = document.getElementById('grid-history');
+    if (!historySection || !historyGrid) return;
+
+    const historyCache = JSON.parse(localStorage.getItem('phimtv_history')) || {};
+    const historyItems = Object.values(historyCache)
+        .filter(item => item && item.movieSlug && item.movieName)
+        .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+
+    if (historyItems.length === 0) {
+        historySection.style.display = 'none';
+        return;
+    }
+
+    historySection.style.display = 'block';
+    historyGrid.innerHTML = "";
+
+    const fragment = document.createDocumentFragment();
+    const observer = getImageObserver();
+
+    historyItems.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "movie-card horizontal";
+        card.tabIndex = 0;
+
+        const imgUrl = item.moviePoster ? (item.moviePoster.startsWith('http') ? item.moviePoster : imageDomain + item.moviePoster) : '../truyenhinh/img/logo_fallback.svg';
+
+        card.innerHTML = `
+            <div class="image-container">
+                <span class="badge badge-red">Tập ${item.epName || item.name || ''}</span>
+                <img class="skeleton" data-src="${imgUrl}" alt="${item.movieName}" decoding="async" fetchpriority="low" onload="this.classList.remove('skeleton')" onerror="handleImageError(this); this.classList.remove('skeleton');">
+                <div class="card-overlay"><span class="material-symbols-rounded" style="font-size:40px;">play_arrow</span></div>
+            </div>
+            <div class="info">
+                <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;">${item.movieName}</h3>
+                <p style="color: #00b8d4; font-weight: 600;">Xem tiếp Tập ${item.epName || item.name || ''}</p>
+            </div>
+        `;
+
+        card.onclick = () => showMovieDetails(item.movieSlug);
+        card.onkeydown = (e) => { if (e.key === 'Enter') showMovieDetails(item.movieSlug); };
+        fragment.appendChild(card);
+    });
+
+    historyGrid.appendChild(fragment);
+
+    if (observer) {
+        historyGrid.querySelectorAll('img[data-src]').forEach(img => {
+            observer.observe(img);
+        });
+    } else {
+        historyGrid.querySelectorAll('img[data-src]').forEach(img => {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+        });
+    }
 }
 
 function renderFavorites() {
