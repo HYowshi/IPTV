@@ -38,7 +38,7 @@ const NOISE_REGEX = /\b(hd|fhd|uhd|4k|sd|1080p|720p|1080i|50fps|60fps|hevc|h264|
 const DIACRITICS_REGEX = /[\u0300-\u036f]/g;
 const BRACKET_REGEX = /\[.*?\]|\(.*?\)/g;
 const NON_ALPHANUM_REGEX = /[^a-z0-9]/g;
-const ESCAPE_HTML_MAP = { '&': '&', '<': '<', '>': '>', '"': '"', "'": '&#039;' };
+const ESCAPE_HTML_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
 const ESCAPE_HTML_REGEX = /[&<>"']/g;
 const normalizeCache = new Map();
 
@@ -74,29 +74,49 @@ const MAX_RECENT_CHANNELS = 20;
 // ==================== HLS CONFIGURATION ====================
 const TV_HLS_CONFIG = {
     xhrSetup: function (xhr) { xhr.withCredentials = false; },
-    liveSyncDurationCount: TV_LOW_MEMORY_MODE ? 2 : 3,
-    liveMaxLatencyDurationCount: TV_LOW_MEMORY_MODE ? 5 : 10,
+
+    // Live sync: 2 segments behind live edge — đủ để không rebuffer liên tục
+    liveSyncDurationCount: 2,
+    // Latency tối đa trước khi HLS.js tự catch-up (tính bằng số segment)
+    liveMaxLatencyDurationCount: TV_LOW_MEMORY_MODE ? 4 : 6,
+    // Tốc độ catch-up khi bị lag (1.25x thay vì rebuffer) — đủ để bắt kịp mà không giật
+    maxLiveSyncPlaybackRate: 1.25,
+
     enableWorker: true,
     lowLatencyMode: false,
-    maxBufferLength: TV_LOW_MEMORY_MODE ? 8 : 30,
-    maxMaxBufferLength: TV_LOW_MEMORY_MODE ? 16 : 60,
-    maxBufferSize: (TV_LOW_MEMORY_MODE ? 8 : 30) * 1024 * 1024,
-    maxBufferHole: 0.1,
-    backBufferLength: TV_LOW_MEMORY_MODE ? 0 : 10,
-    fragLoadingMaxRetry: TV_LOW_MEMORY_MODE ? 3 : 6,
-    fragLoadingRetryDelay: 1000,
-    manifestLoadingMaxRetry: TV_LOW_MEMORY_MODE ? 2 : 4,
-    manifestLoadingRetryDelay: 1000,
-    levelLoadingMaxRetry: TV_LOW_MEMORY_MODE ? 2 : 4,
-    levelLoadingRetryDelay: 1000,
-    nudgeOffset: 0.5,
-    nudgeMaxRetry: 10,
-    maxFragLookUpTolerance: 0.25,
-    startLevel: -1,
-    abrBandWidthFactor: 0.95,
-    abrBandWidthUpFactor: 0.7,
-    abrEwmaDefaultEstimate: 2000000,
-    appendErrorMaxRetry: TV_LOW_MEMORY_MODE ? 2 : 5
+
+    // Buffer: tăng lên cho TV Box để ít phải fetch lại fragment
+    maxBufferLength: TV_LOW_MEMORY_MODE ? 12 : 40,
+    maxMaxBufferLength: TV_LOW_MEMORY_MODE ? 20 : 80,
+    maxBufferSize: (TV_LOW_MEMORY_MODE ? 12 : 40) * 1024 * 1024,
+
+    // Cho phép nhảy qua lỗ hổng buffer nhỏ thay vì dừng hẳn
+    maxBufferHole: 0.5,
+
+    // Back buffer: giữ ít để tiết kiệm RAM trên TV Box
+    backBufferLength: TV_LOW_MEMORY_MODE ? 0 : 5,
+
+    // Retry fragments nhiều hơn — tín hiệu TV hay bị gián đoạn ngắn
+    fragLoadingMaxRetry: TV_LOW_MEMORY_MODE ? 4 : 8,
+    fragLoadingRetryDelay: 500,
+    fragLoadingMaxRetryTimeout: 4000,
+    manifestLoadingMaxRetry: TV_LOW_MEMORY_MODE ? 3 : 5,
+    manifestLoadingRetryDelay: 500,
+    levelLoadingMaxRetry: TV_LOW_MEMORY_MODE ? 3 : 5,
+    levelLoadingRetryDelay: 500,
+
+    // Nudge: kéo playhead qua điểm stuck nhanh hơn
+    nudgeOffset: 0.3,
+    nudgeMaxRetry: 15,
+    maxFragLookUpTolerance: 0.3,
+
+    // ABR: bắt đầu ở quality thấp → nâng dần, tránh chọn ngay quality cao rồi bị lag
+    startLevel: TV_LOW_MEMORY_MODE ? 0 : -1,
+    abrBandWidthFactor: 0.85,
+    abrBandWidthUpFactor: 0.6,
+    abrEwmaDefaultEstimate: TV_LOW_MEMORY_MODE ? 1000000 : 2000000,
+
+    appendErrorMaxRetry: TV_LOW_MEMORY_MODE ? 3 : 6
 };
 
 // ==================== LOGO & UI CONSTANTS ====================

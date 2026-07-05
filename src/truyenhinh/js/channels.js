@@ -173,6 +173,11 @@ function parseDashLicenseKeys(licenseType, licenseKey) {
     };
 }
 
+// Throttled updateHeroBanner to optimize key navigation updates on TV Box
+const updateHeroBannerThrottled = (typeof throttle !== 'undefined') 
+    ? throttle((...args) => updateHeroBanner(...args), 100) 
+    : (...args) => updateHeroBanner(...args);
+
 // ==================== CHANNEL RENDERING ====================
 function renderChannels(channels) {
     currentChannelList = channels;
@@ -246,8 +251,8 @@ function renderChannels(channels) {
 
             const ch = channel;
             const gn = groupName;
-            card.addEventListener('mouseenter', () => updateHeroBanner(ch, gn));
-            card.addEventListener('focus', () => updateHeroBanner(ch, gn));
+            card.addEventListener('mouseenter', () => updateHeroBannerThrottled(ch, gn));
+            card.addEventListener('focus', () => updateHeroBannerThrottled(ch, gn));
             card.addEventListener('click', () => playChannel(ch));
             card.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -308,7 +313,7 @@ function observeLowMemoryLogos(container) {
                 img.removeAttribute('data-src');
                 window.tvLogoObserver.unobserve(img);
             });
-        }, { rootMargin: '180px 320px' });
+        }, { rootMargin: '80px 100px' });
     }
     images.forEach(img => window.tvLogoObserver.observe(img));
 }

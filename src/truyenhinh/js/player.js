@@ -371,8 +371,16 @@ function playChannel(channel) {
             url: finalUrl,
             isLive: true
         }, {
+            // Tắt stash buffer để giảm RAM usage và latency trên TV Box
             enableStashBuffer: false,
-            liveBufferLatencyChasing: true
+            stashInitialSize: 128 * 1024,
+            // Không chase latency aggressively — tránh seek liên tục gây chập chừng
+            liveBufferLatencyChasing: false,
+            // Giữ buffer nhỏ để latency thấp nhưng đủ để không rebuffer
+            liveBufferLatencyMaxLatency: 2.0,
+            liveBufferLatencyMinRemain: 0.5,
+            // Cho phép worker thread nếu có thể
+            enableWorker: true
         });
         
         tvMpegtsPlayer.attachMediaElement(videoPlayer);
@@ -398,7 +406,7 @@ function playChannel(channel) {
             } catch (e) { }
         });
     } else if (streamUrl.includes('.mpd')) {
-        if (typeof dashjs !== 'undefined') {
+        const initDashMediaPlayer = () => {
             tvDashInstance = dashjs.MediaPlayer().create();
 
             // Apply DRM protection data from M3U #KODIPROP (clearkey, widevine, playready)
@@ -463,9 +471,22 @@ function playChannel(channel) {
                     tvDashInstance = null;
                 }
             });
+        };
+
+        if (typeof dashjs === 'undefined') {
+            const script = document.createElement('script');
+            script.src = '../phim/dash.all.min.js';
+            script.onload = () => {
+                console.log('[TV Player] dashjs dynamically loaded');
+                initDashMediaPlayer();
+            };
+            script.onerror = () => {
+                showToast('Lỗi tải module phát DASH', 3000, 'error');
+                if (tvLoader) tvLoader.style.display = 'none';
+            };
+            document.head.appendChild(script);
         } else {
-            showToast('Trình duyệt không hỗ trợ phát định dạng DASH', 3000, 'error');
-            if (tvLoader) tvLoader.style.display = 'none';
+            initDashMediaPlayer();
         }
     } else {
         if (Hls.isSupported()) {

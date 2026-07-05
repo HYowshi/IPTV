@@ -35,17 +35,32 @@
 
 .low-memory-mode .tv-hero {
     height: auto;
-    min-height: 210px;
-    padding: 30px 24px 54px;
+    min-height: 170px;
+    padding: 24px 20px 44px;
 }
 
 .low-memory-mode .hero-backdrop,
 .low-memory-mode .hero-overlay {
     display: none !important;
+    content-visibility: hidden;
 }
 
 .low-memory-mode .hero-content {
     animation: none !important;
+}
+
+.low-memory-mode .hero-badge {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.low-memory-mode .btn-watch {
+    box-shadow: none !important;
+    transition: none !important;
+}
+
+.low-memory-mode .btn-watch::after {
+    display: none !important;
 }
 
 .hero-badge {

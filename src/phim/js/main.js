@@ -1,11 +1,25 @@
 // ==================== SPATIAL NAVIGATION ====================
 function initSpatialNavigation() {
+    const MOVIE_LOW_MEMORY_MODE = (() => {
+        const platform = typeof Platform !== 'undefined' ? Platform.current : null;
+        return !!(platform?.isLowMemory || platform?.isAndroid || (navigator.deviceMemory && navigator.deviceMemory <= 2));
+    })();
+    const scrollBehavior = MOVIE_LOW_MEMORY_MODE ? 'auto' : 'smooth';
+
     document.addEventListener('keydown', (e) => {
         const watchView = document.getElementById('watch-view');
         if (watchView && watchView.style.display === 'block') return;
 
+        let key = e.key;
+        if (!key || key === 'Unidentified') {
+            if (e.keyCode === 38) key = 'ArrowUp';
+            else if (e.keyCode === 40) key = 'ArrowDown';
+            else if (e.keyCode === 37) key = 'ArrowLeft';
+            else if (e.keyCode === 39) key = 'ArrowRight';
+        }
+
         const arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-        if (!arrowKeys.includes(e.key)) return;
+        if (!arrowKeys.includes(key)) return;
 
         const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
         const isInput = activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select' || document.activeElement.isContentEditable;
@@ -47,13 +61,13 @@ function initSpatialNavigation() {
             const dx = (rect.left + rect.width / 2) - (currentRect.left + currentRect.width / 2);
             const dy = (rect.top + rect.height / 2) - (currentRect.top + currentRect.height / 2);
 
-            if (e.key === 'ArrowRight' && rect.left >= currentRect.right - 20) {
+            if (key === 'ArrowRight' && rect.left >= currentRect.right - 20) {
                 isMatch = true; distance = Math.abs(dx) + Math.abs(dy) * 3;
-            } else if (e.key === 'ArrowLeft' && rect.right <= currentRect.left + 20) {
+            } else if (key === 'ArrowLeft' && rect.right <= currentRect.left + 20) {
                 isMatch = true; distance = Math.abs(dx) + Math.abs(dy) * 3;
-            } else if (e.key === 'ArrowDown' && rect.top >= currentRect.bottom - 20) {
+            } else if (key === 'ArrowDown' && rect.top >= currentRect.bottom - 20) {
                 isMatch = true; distance = Math.abs(dy) + Math.abs(dx) * 3;
-            } else if (e.key === 'ArrowUp' && rect.bottom <= currentRect.top + 20) {
+            } else if (key === 'ArrowUp' && rect.bottom <= currentRect.top + 20) {
                 isMatch = true; distance = Math.abs(dy) + Math.abs(dx) * 3;
             }
 
@@ -65,7 +79,7 @@ function initSpatialNavigation() {
 
         if (bestMatch) {
             bestMatch.focus();
-            bestMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            bestMatch.scrollIntoView({ behavior: scrollBehavior, block: 'center' });
         }
     });
 }
@@ -643,6 +657,42 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.code === 'ArrowUp') { e.preventDefault(); videoPlayer.volume = Math.min(1, videoPlayer.volume + 0.1); }
         else if (e.code === 'ArrowDown') { e.preventDefault(); videoPlayer.volume = Math.max(0, videoPlayer.volume - 0.1); }
         else if (e.code === 'KeyM') { e.preventDefault(); videoPlayer.muted = !videoPlayer.muted; }
+    });
+
+    // ==================== REMOTE VOLUME KEYS (Android TV Box) ====================
+    // Android TV remote gửi hardware volume keys — cần sync với video player
+    document.addEventListener('keydown', (e) => {
+        const videoPlayer = document.getElementById('video-player');
+        if (!videoPlayer) return;
+
+        let handled = false;
+        if (e.key === 'AudioVolumeUp' || e.keyCode === 175) {
+            e.preventDefault();
+            videoPlayer.muted = false;
+            videoPlayer.volume = Math.min(1, parseFloat((videoPlayer.volume + 0.1).toFixed(2)));
+            handled = true;
+        } else if (e.key === 'AudioVolumeDown' || e.keyCode === 174) {
+            e.preventDefault();
+            videoPlayer.volume = Math.max(0, parseFloat((videoPlayer.volume - 0.1).toFixed(2)));
+            handled = true;
+        } else if (e.key === 'AudioVolumeMute' || e.keyCode === 173) {
+            e.preventDefault();
+            videoPlayer.muted = !videoPlayer.muted;
+            // Nếu unmute mà volume = 0, set về 0.5
+            if (!videoPlayer.muted && videoPlayer.volume === 0) videoPlayer.volume = 0.5;
+            handled = true;
+        }
+
+        if (handled) {
+            // Cập nhật UI volume slider nếu có
+            const volSlider = document.getElementById('volume-slider');
+            if (volSlider) {
+                const vol = videoPlayer.muted ? 0 : videoPlayer.volume;
+                volSlider.value = vol;
+                const pct = Math.round(vol * 100);
+                volSlider.style.background = `linear-gradient(to right, #f91942 0%, #ff4070 ${pct}%, rgba(255,255,255,0.2) ${pct}%)`;
+            }
+        }
     });
 
     // Global TV Remote Back Button Handler (Escape / Backspace)

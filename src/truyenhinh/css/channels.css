@@ -11,6 +11,9 @@
 .channel-row {
     margin-bottom: 35px;
     animation: fadeIn 0.5s ease forwards;
+    content-visibility: auto;
+    contain-intrinsic-size: 0 220px;
+    contain: layout style;
 }
 
 .row-title {
@@ -43,6 +46,7 @@
     padding: 20px; 
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    contain: layout style;
 }
 
 .channel-scroll-wrapper::-webkit-scrollbar {
@@ -90,7 +94,7 @@
 }
 
 .channel-card {
-    min-width: 240px;
+    min-width: 200px;
     height: 140px;
     background: linear-gradient(145deg, #1a1a1a 0%, #151515 100%);
     border: 1.5px solid rgba(255, 255, 255, 0.06);
@@ -100,11 +104,12 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.03);
     flex-shrink: 0;
+    contain: layout style paint;
 }
 
 .channel-card .logo-container {
@@ -175,13 +180,16 @@
     color: #ddd;
 }
 
+/* ==================== TV BOX FOCUS (Android Remote) ==================== */
+/* Focus indicator rõ ràng cho TV remote navigation */
 .channel-card:focus {
-    outline: none;
-    transform: translateY(-10px) scale(1.06);
-    border: 1.5px solid rgba(0, 242, 254, 0.6);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 242, 254, 0.2);
-    background: linear-gradient(145deg, #1e1e1e 0%, #181818 100%);
-    z-index: 10;
+    outline: 3px solid #00f2fe !important;
+    outline-offset: 3px;
+    transform: scale(1.08) !important;
+    border-color: rgba(0, 242, 254, 0.8) !important;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.4) !important;
+    background: linear-gradient(145deg, #1e1e1e 0%, #181818 100%) !important;
+    z-index: 20 !important;
 }
 
 .channel-card:focus::before {
@@ -211,6 +219,8 @@
     z-index: 2;
 }
 
+/* ==================== LOW-MEMORY MODE ==================== */
+/* Tắt toàn bộ animation và effect nặng khi thiếu RAM */
 .low-memory-mode .channel-row {
     animation: none !important;
     margin-bottom: 22px;
@@ -223,8 +233,8 @@
 }
 
 .low-memory-mode .channel-card {
-    min-width: 180px;
-    height: 112px;
+    min-width: 170px;
+    height: 110px;
     border-radius: 12px;
     transition: none !important;
     box-shadow: none !important;
@@ -233,7 +243,6 @@
 
 .low-memory-mode .channel-card,
 .low-memory-mode .channel-card:hover,
-.low-memory-mode .channel-card:focus,
 .low-memory-mode .channel-card:active {
     transform: none !important;
 }
@@ -247,15 +256,30 @@
 }
 
 .low-memory-mode .channel-card .logo-container {
-    width: 52px;
-    height: 52px;
+    width: 50px;
+    height: 50px;
     margin-bottom: 6px;
     transition: none !important;
 }
 
 .low-memory-mode .channel-logo-img {
-    width: 46px;
-    height: 46px;
+    width: 44px;
+    height: 44px;
+}
+
+/* Focus rõ hơn cho low-memory: không dùng transform tốn GPU */
+.low-memory-mode .channel-card:focus {
+    outline: 4px solid #00f2fe !important;
+    outline-offset: 2px;
+    transform: none !important;
+    box-shadow: 0 0 0 4px rgba(0, 242, 254, 0.5) !important;
+    background: rgba(0, 242, 254, 0.1) !important;
+    border-color: #00f2fe !important;
+}
+
+.low-memory-mode .channel-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 /* ==================== FILTER BAR ==================== */

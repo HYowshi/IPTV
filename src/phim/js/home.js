@@ -54,46 +54,65 @@ async function fetchHomeData() {
         document.getElementById('main-content').style.display = 'flex';
         document.getElementById('home-view').style.display = 'block';
 
-        // Priority 2: Fetch and render other sections in the background
+        // Priority 2: Fetch and render other sections (sequential in low memory to prevent lags)
+        const MOVIE_LOW_MEMORY_MODE = (() => {
+            const platform = typeof Platform !== 'undefined' ? Platform.current : null;
+            return !!(platform?.isLowMemory || platform?.isAndroid || (navigator.deviceMemory && navigator.deviceMemory <= 2));
+        })();
+
         const otherEndpoints = endpoints.slice(1);
-        Promise.all(otherEndpoints.map(url => fetchWithCache(url).catch(() => null)))
-            .then(responses => {
-                const formatted = responses.map(formatResponse);
-                
-                // Construct filter map
-                let allMovies = p1Formatted.items.slice();
-                formatted.forEach(f => {
-                    if (f && f.items) {
-                        allMovies = allMovies.concat(f.items);
-                    }
-                });
-                extractFiltersFromMovies(allMovies);
-
-                // Render remaining grids
-                if (formatted[0] && formatted[0].items) {
-                    renderMoviesCards(formatted[0].items.slice(0, 3), 'grid-theaters', true);
+        const processHomeResponses = (responses) => {
+            const formatted = responses.map(formatResponse);
+            
+            // Construct filter map
+            let allMovies = p1Formatted.items.slice();
+            formatted.forEach(f => {
+                if (f && f.items) {
+                    allMovies = allMovies.concat(f.items);
                 }
-                if (formatted[1] && formatted[1].items) {
-                    renderMoviesCards(formatted[1].items.slice(0, 6), 'grid-series', false);
-                }
-                if (formatted[2] && formatted[2].items) {
-                    renderMoviesCards(formatted[2].items.slice(0, 6), 'grid-movies', false);
-                }
-
-                // Render sidebars with specific domains passed to fix the images
-                if (formatted[3] && formatted[3].items) {
-                    renderUpcoming(formatted[3].items.slice(0, 5), 'sidebar-upcoming');
-                }
-                if (formatted[4] && formatted[4].items) {
-                    renderTopMovies(formatted[4].items.slice(0, 5), 'sidebar-top-movies', formatted[4].domain);
-                }
-                if (formatted[5] && formatted[5].items) {
-                    renderTopSeries(formatted[5].items.slice(0, 8), 'sidebar-top-series', formatted[5].domain);
-                }
-            })
-            .catch(err => {
-                console.error("Error loading background home data:", err);
             });
+            extractFiltersFromMovies(allMovies);
+
+            // Render remaining grids
+            if (formatted[0] && formatted[0].items) {
+                renderMoviesCards(formatted[0].items.slice(0, 3), 'grid-theaters', true);
+            }
+            if (formatted[1] && formatted[1].items) {
+                renderMoviesCards(formatted[1].items.slice(0, 6), 'grid-series', false);
+            }
+            if (formatted[2] && formatted[2].items) {
+                renderMoviesCards(formatted[2].items.slice(0, 6), 'grid-movies', false);
+            }
+
+            // Render sidebars with specific domains passed to fix the images
+            if (formatted[3] && formatted[3].items) {
+                renderUpcoming(formatted[3].items.slice(0, 5), 'sidebar-upcoming');
+            }
+            if (formatted[4] && formatted[4].items) {
+                renderTopMovies(formatted[4].items.slice(0, 5), 'sidebar-top-movies', formatted[4].domain);
+            }
+            if (formatted[5] && formatted[5].items) {
+                renderTopSeries(formatted[5].items.slice(0, 8), 'sidebar-top-series', formatted[5].domain);
+            }
+        };
+
+        if (MOVIE_LOW_MEMORY_MODE) {
+            (async () => {
+                const responses = [];
+                for (let i = 0; i < otherEndpoints.length; i++) {
+                    await new Promise(resolve => setTimeout(resolve, 150));
+                    const res = await fetchWithCache(otherEndpoints[i]).catch(() => null);
+                    responses.push(res);
+                }
+                processHomeResponses(responses);
+            })().catch(err => console.error("Error in sequential load:", err));
+        } else {
+            Promise.all(otherEndpoints.map(url => fetchWithCache(url).catch(() => null)))
+                .then(processHomeResponses)
+                .catch(err => {
+                    console.error("Error loading background home data:", err);
+                });
+        }
 
     } catch (e) {
         console.error("Error in fetchHomeData initial load:", e);

@@ -1,5 +1,28 @@
+// ==================== LOW-MEMORY MODE DETECTION ====================
+;(function() {
+    try {
+        const platform = typeof Platform !== 'undefined' ? Platform.current : null;
+        const isLowMem = platform
+            ? (platform.isLowMemory || platform.isAndroid)
+            : (navigator.deviceMemory && navigator.deviceMemory <= 2);
+        if (isLowMem) {
+            document.documentElement.classList.add('low-memory-mode');
+            document.body.classList.add('low-memory-mode');
+        }
+    } catch(e) {}
+})();
+
 // ==================== INIT ====================
 document.addEventListener("DOMContentLoaded", () => {
+    // Áp dụng lại sau DOMContentLoaded
+    try {
+        const platform = typeof Platform !== 'undefined' ? Platform.current : null;
+        const isLowMem = platform
+            ? (platform.isLowMemory || platform.isAndroid)
+            : (navigator.deviceMemory && navigator.deviceMemory <= 2);
+        if (isLowMem) document.body.classList.add('low-memory-mode');
+    } catch(e) {}
+
     // ==================== HAMBURGER MENU ====================
     const hamburgerBtn = document.getElementById('hamburgerBtnTv');
     let mobileNavOverlay = null;
@@ -443,6 +466,29 @@ function initUIEvents() {
         });
     }
 
+    // ==================== NUMERIC CHANNEL SWITCHER (TV Box Remote) ====================
+    let numSwitchTimeout = null;
+    let numSwitchBuffer = '';
+
+    function showNumSwitchOverlay(number) {
+        let overlay = document.getElementById('tv-num-switch-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'tv-num-switch-overlay';
+            overlay.style.cssText = 'position:fixed;top:40px;right:40px;background:rgba(5,5,5,0.85);color:#00f2fe;border:2px solid #00f2fe;padding:15px 25px;border-radius:12px;font-size:28px;font-weight:900;z-index:99999;box-shadow:0 0 20px rgba(0,242,254,0.3);letter-spacing:1px;font-family:system-ui,sans-serif;pointer-events:none;transition:opacity 0.2s;opacity:0;';
+            document.body.appendChild(overlay);
+        }
+        overlay.style.opacity = '1';
+        overlay.innerHTML = `<span style="color:#fff;font-size:16px;display:block;margin-bottom:4px;font-weight:normal;opacity:0.8;">CHUYỂN KÊNH</span>${number}`;
+    }
+
+    function hideNumSwitchOverlay() {
+        const overlay = document.getElementById('tv-num-switch-overlay');
+        if (overlay) {
+            overlay.style.opacity = '0';
+        }
+    }
+
     // ==================== KEYBOARD CONTROLS ====================
     document.addEventListener('keydown', (e) => {
         if (watchView.style.display === 'block') {
@@ -452,6 +498,27 @@ function initUIEvents() {
 
             const quickSidebar = document.getElementById('quick-channel-sidebar');
             const isQuickListOpen = quickSidebar && quickSidebar.classList.contains('show');
+
+            // 1. Phím số (0-9) để chuyển kênh trực tiếp kiểu Tivi truyền thống
+            if (e.key >= '0' && e.key <= '9') {
+                e.preventDefault();
+                numSwitchBuffer += e.key;
+                showNumSwitchOverlay(numSwitchBuffer);
+                
+                clearTimeout(numSwitchTimeout);
+                numSwitchTimeout = setTimeout(() => {
+                    const channelIdx = parseInt(numSwitchBuffer, 10) - 1;
+                    numSwitchBuffer = '';
+                    hideNumSwitchOverlay();
+                    
+                    if (channelIdx >= 0 && channelIdx < currentChannelList.length) {
+                        playChannel(currentChannelList[channelIdx]);
+                    } else {
+                        showToast('Không tìm thấy số kênh này', 2000, 'warning');
+                    }
+                }, 1200);
+                return;
+            }
 
             if (e.key === 'Escape' || e.key === 'Backspace') {
                 e.preventDefault();
@@ -464,29 +531,39 @@ function initUIEvents() {
                 return;
             }
 
+            // Định nghĩa các phím điều hướng Remote TV (có fallback keyCode)
+            const isUp = e.key === 'ArrowUp' || e.keyCode === 38;
+            const isDown = e.key === 'ArrowDown' || e.keyCode === 40;
+            const isLeft = e.key === 'ArrowLeft' || e.keyCode === 37;
+            const isRight = e.key === 'ArrowRight' || e.keyCode === 39;
+            
+            // Phím CH+ / CH- trên Remote TV Box chuyên dụng
+            const isChannelNext = e.key === 'ChannelUp' || e.keyCode === 166 || e.key === 'PageUp' || e.keyCode === 33;
+            const isChannelPrev = e.key === 'ChannelDown' || e.keyCode === 167 || e.key === 'PageDown' || e.keyCode === 34;
+
             if (isQuickListOpen) {
                 const items = Array.from(document.querySelectorAll('.quick-channel-item'));
                 let currentIndex = items.indexOf(document.activeElement);
 
-                if (e.code === 'ArrowDown') {
+                if (isDown) {
                     e.preventDefault();
                     let nextIndex = currentIndex + 1 >= items.length ? 0 : currentIndex + 1;
                     items[nextIndex].focus();
                     clearTimeout(window.quickPlayTimer);
                     window.quickPlayTimer = setTimeout(() => items[nextIndex].click(), 500);
-                } else if (e.code === 'ArrowUp') {
+                } else if (isUp) {
                     e.preventDefault();
                     let nextIndex = currentIndex - 1 < 0 ? items.length - 1 : currentIndex - 1;
                     items[nextIndex].focus();
                     clearTimeout(window.quickPlayTimer);
                     window.quickPlayTimer = setTimeout(() => items[nextIndex].click(), 500);
-                } else if (e.code === 'ArrowRight') {
+                } else if (isRight) {
                     e.preventDefault();
                     quickSidebar.classList.remove('show');
                     videoPlayer.focus();
                 }
             } else {
-                if (e.code === 'ArrowDown') {
+                if (isDown || isChannelNext) {
                     e.preventDefault();
                     if (currentPlayingChannel && currentChannelList.length > 0) {
                         let currentIndex = currentChannelList.findIndex(c => c.url === currentPlayingChannel.url);
@@ -495,7 +572,7 @@ function initUIEvents() {
                             playChannel(currentChannelList[nextIndex]);
                         }
                     }
-                } else if (e.code === 'ArrowUp') {
+                } else if (isUp || isChannelPrev) {
                     e.preventDefault();
                     if (currentPlayingChannel && currentChannelList.length > 0) {
                         let currentIndex = currentChannelList.findIndex(c => c.url === currentPlayingChannel.url);
@@ -504,7 +581,7 @@ function initUIEvents() {
                             playChannel(currentChannelList[nextIndex]);
                         }
                     }
-                } else if (e.code === 'ArrowLeft') {
+                } else if (isLeft) {
                     e.preventDefault();
                     if (quickSidebar) {
                         populateQuickList();
@@ -522,33 +599,34 @@ function initUIEvents() {
                             }
                         }, 100);
                     }
-                } else if (e.code === 'Space' || e.key === 'Enter') {
+                } else if (e.key === ' ' || e.key === 'Enter' || e.keyCode === 13 || e.keyCode === 23) {
                     e.preventDefault();
                     if (videoPlayer.paused) videoPlayer.play().catch(() => { });
                     else videoPlayer.pause();
                 }
-                // ==================== VOLUME SHORTCUTS ====================
-                else if (e.key === '+' || e.key === '=') {
-                    e.preventDefault();
-                    const newVol = Math.min(1, parseFloat((videoPlayer.volume + 0.1).toFixed(2)));
-                    videoPlayer.volume = newVol;
-                    if (volumeSlider) {
-                        volumeSlider.value = newVol;
-                        volumeSlider.style.background = `linear-gradient(to right, #00f2fe ${newVol * 100}%, rgba(255,255,255,0.3) ${newVol * 100}%)`;
-                    }
-                    updateVolumeUI(newVol);
-                    handleActivity();
-                } else if (e.key === '-') {
-                    e.preventDefault();
-                    const newVol = Math.max(0, parseFloat((videoPlayer.volume - 0.1).toFixed(2)));
-                    videoPlayer.volume = newVol;
-                    if (volumeSlider) {
-                        volumeSlider.value = newVol;
-                        volumeSlider.style.background = `linear-gradient(to right, #00f2fe ${newVol * 100}%, rgba(255,255,255,0.3) ${newVol * 100}%)`;
-                    }
-                    updateVolumeUI(newVol);
-                    handleActivity();
+            }
+            
+            // ==================== VOLUME SHORTCUTS ====================
+            if (e.key === '+' || e.key === '=') {
+                e.preventDefault();
+                const newVol = Math.min(1, parseFloat((videoPlayer.volume + 0.1).toFixed(2)));
+                videoPlayer.volume = newVol;
+                if (volumeSlider) {
+                    volumeSlider.value = newVol;
+                    volumeSlider.style.background = `linear-gradient(to right, #00f2fe ${newVol * 100}%, rgba(255,255,255,0.3) ${newVol * 100}%)`;
                 }
+                updateVolumeUI(newVol);
+                handleActivity();
+            } else if (e.key === '-') {
+                e.preventDefault();
+                const newVol = Math.max(0, parseFloat((videoPlayer.volume - 0.1).toFixed(2)));
+                videoPlayer.volume = newVol;
+                if (volumeSlider) {
+                    volumeSlider.value = newVol;
+                    volumeSlider.style.background = `linear-gradient(to right, #00f2fe ${newVol * 100}%, rgba(255,255,255,0.3) ${newVol * 100}%)`;
+                }
+                updateVolumeUI(newVol);
+                handleActivity();
             }
         } else {
             // Trình phát không mở. Nếu nhấn Escape hoặc Backspace, quay lại trang chọn dịch vụ (index.html)
@@ -561,6 +639,55 @@ function initUIEvents() {
                 setTimeout(() => { window.location.href = '../index.html'; }, 300);
             }
         }
+    });
+
+    // ==================== REMOTE VOLUME KEYS (Android TV Box) ====================
+    // Hardware volume keys từ remote Android TV — áp dụng cho cả TV player
+    document.addEventListener('keydown', (e) => {
+        let handled = false;
+        if (e.key === 'AudioVolumeUp' || e.keyCode === 175) {
+            e.preventDefault();
+            videoPlayer.muted = false;
+            const newVol = Math.min(1, parseFloat((videoPlayer.volume + 0.1).toFixed(2)));
+            videoPlayer.volume = newVol;
+            syncYtVolume(newVol);
+            if (volumeSlider) {
+                volumeSlider.value = newVol;
+                volumeSlider.style.background = `linear-gradient(to right, #00f2fe ${newVol * 100}%, rgba(255,255,255,0.3) ${newVol * 100}%)`;
+            }
+            updateVolumeUI(newVol);
+            handled = true;
+        } else if (e.key === 'AudioVolumeDown' || e.keyCode === 174) {
+            e.preventDefault();
+            const newVol = Math.max(0, parseFloat((videoPlayer.volume - 0.1).toFixed(2)));
+            videoPlayer.volume = newVol;
+            syncYtVolume(newVol);
+            if (volumeSlider) {
+                volumeSlider.value = newVol;
+                volumeSlider.style.background = `linear-gradient(to right, #00f2fe ${newVol * 100}%, rgba(255,255,255,0.3) ${newVol * 100}%)`;
+            }
+            updateVolumeUI(newVol);
+            handled = true;
+        } else if (e.key === 'AudioVolumeMute' || e.keyCode === 173) {
+            e.preventDefault();
+            if (videoPlayer.volume > 0) {
+                videoPlayer.setAttribute('data-last-vol', videoPlayer.volume);
+                videoPlayer.volume = 0;
+                if (volumeSlider) volumeSlider.value = 0;
+                syncYtVolume(0);
+            } else {
+                const lastVol = parseFloat(videoPlayer.getAttribute('data-last-vol') || '0.8');
+                videoPlayer.volume = lastVol;
+                if (volumeSlider) volumeSlider.value = lastVol;
+                syncYtVolume(lastVol);
+            }
+            if (volumeSlider) {
+                volumeSlider.style.background = `linear-gradient(to right, #00f2fe ${volumeSlider.value * 100}%, rgba(255,255,255,0.3) ${volumeSlider.value * 100}%)`;
+            }
+            updateVolumeUI(videoPlayer.volume);
+            handled = true;
+        }
+        if (handled) handleActivity();
     });
 
     startClock();

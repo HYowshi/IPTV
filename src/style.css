@@ -23,6 +23,10 @@ body.entry-body {
     opacity: 1;
 }
 
+body.entry-body.low-memory-mode {
+    font-family: Roboto, 'Segoe UI', Arial, sans-serif !important;
+}
+
 body.entry-body.fade-out {
     opacity: 0;
 }
@@ -1332,4 +1336,110 @@ body.entry-body.fade-out {
         font-size: 1.1rem;
         line-height: 1.8;
     }
+}
+
+/* ==================== LOW-MEMORY MODE (Android TV Box 1GB RAM) ==================== */
+/* Applied via body.low-memory-mode class from platform.js detection */
+
+body.low-memory-mode .ambient-glow {
+    display: none !important;
+}
+
+/* Tắt shimmer + titleGlow animation trên title — tiết kiệm CPU liên tục */
+body.low-memory-mode .entry-header h1 {
+    animation: none !important;
+    background: #ffffff !important;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: none !important;
+}
+
+body.low-memory-mode .entry-header p {
+    animation: none !important;
+    opacity: 1 !important;
+}
+
+body.low-memory-mode .entry-header {
+    animation: none !important;
+    opacity: 1 !important;
+}
+
+/* Tắt backdrop-filter blur nặng */
+body.low-memory-mode .entry-box::before {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(20, 20, 20, 0.92) !important;
+    transition: none !important;
+}
+
+body.low-memory-mode .modal-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+body.low-memory-mode .modal-content {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Tắt preserve-3d và will-change nặng */
+body.low-memory-mode .entry-box {
+    transform-style: flat !important;
+    will-change: auto !important;
+    animation: none !important;
+    opacity: 1 !important;
+}
+
+body.low-memory-mode .entry-box:nth-child(1),
+body.low-memory-mode .entry-box:nth-child(2) {
+    animation: none !important;
+    opacity: 1 !important;
+}
+
+/* Tắt hover effects nặng */
+body.low-memory-mode .entry-box:hover::before,
+body.low-memory-mode .entry-box:hover::after {
+    opacity: 0 !important;
+    transition: none !important;
+}
+
+body.low-memory-mode .icon-glow {
+    display: none !important;
+}
+
+body.low-memory-mode .btn-exit {
+    animation: none !important;
+    opacity: 1 !important;
+}
+
+/* Tắt hover 3D transforms */
+body.low-memory-mode .entry-box:hover .entry-text,
+body.low-memory-mode .entry-box:hover .entry-desc,
+body.low-memory-mode .entry-box:hover .icon-wrapper {
+    transform: none !important;
+}
+
+body.low-memory-mode .entry-box:hover {
+    transform: scale(1.02) !important;
+    transition: transform 0.15s ease !important;
+}
+
+/* Tối ưu TV focus indicator rõ hơn cho low-memory mode */
+body.low-memory-mode .entry-box:focus {
+    transform: scale(1.05) !important;
+    outline: 4px solid #00f2fe !important;
+    outline-offset: 6px !important;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.5) !important;
+    transition: none !important;
+}
+
+body.low-memory-mode .movie-accent:focus {
+    outline-color: #f91942 !important;
+    box-shadow: 0 0 20px rgba(249, 25, 66, 0.5) !important;
+}
+
+/* Ripple effect tắt */
+body.low-memory-mode .entry-box .ripple-effect {
+    display: none !important;
 }

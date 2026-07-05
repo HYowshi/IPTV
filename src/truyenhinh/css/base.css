@@ -15,6 +15,10 @@ body {
     align-items: center;
 }
 
+body.low-memory-mode {
+    font-family: Roboto, 'Segoe UI', Arial, sans-serif !important;
+}
+
 body.fade-out {
     opacity: 0;
 }

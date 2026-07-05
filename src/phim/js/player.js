@@ -4,6 +4,12 @@ function openWatchView(episodeData) {
     document.getElementById('watch-view').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
+    // Auto fullscreen cho Android TV Box khi bấm xem phim
+    const _platform = typeof Platform !== 'undefined' ? Platform.current : null;
+    if (_platform && _platform.isAndroid) {
+        window._pendingAutoFullscreen = true;
+    }
+
     const watchServerContainer = document.getElementById('watch-server-list');
     watchServerContainer.innerHTML = "";
     currentMovieData.episodes.forEach((server, index) => {
@@ -105,6 +111,24 @@ function updateWatchViewPlayer(ep, btnElement) {
         ? `http://127.0.0.1:1420/proxy?url=${encodeURIComponent(streamUrl)}`
         : streamUrl;
 
+    // Helper: trigger fullscreen sau khi video bắt đầu play (chỉ Android)
+    const triggerAutoFullscreen = () => {
+        if (window._pendingAutoFullscreen) {
+            window._pendingAutoFullscreen = false;
+            setTimeout(() => {
+                const fsBtn = document.getElementById('fullscreen-btn');
+                if (fsBtn) fsBtn.click();
+            }, 500);
+        }
+    };
+
+    // Helper: tự unmute sau 1 giây (khi bị autoplay policy từ chối)
+    const autoUnmuteAfter1s = () => {
+        setTimeout(() => {
+            videoPlayer.muted = false;
+        }, 1000);
+    };
+
     if (window.Hls && Hls.isSupported()) {
         let hlsConfig = {
             fragLoadingMaxRetry: lowMemory ? 3 : 8,
@@ -164,14 +188,18 @@ function updateWatchViewPlayer(ep, btnElement) {
                     .then(() => {
                         videoLoader.style.display = 'none';
                         videoPlayer.style.opacity = '1';
+                        triggerAutoFullscreen();
                     })
                     .catch(() => {
+                        // Autoplay bị từ chối bởi browser policy
+                        // Mute tạm thời để play được, sau đó tự unmute khi user tương tác
                         videoPlayer.muted = true;
-
                         videoPlayer.play().then(() => {
                             videoLoader.style.display = 'none';
                             videoPlayer.style.opacity = '1';
-                        });
+                            autoUnmuteAfter1s();
+                            triggerAutoFullscreen();
+                        }).catch(() => {});
                     });
             }
         });
@@ -234,24 +262,24 @@ function updateWatchViewPlayer(ep, btnElement) {
 
         videoPlayer.addEventListener('loadedmetadata', function () {
             videoPlayer.currentTime = savedTime;
-
             videoPlayer.muted = false;
 
             const playPromise = videoPlayer.play();
-
             if (playPromise !== undefined) {
                 playPromise
                     .then(() => {
                         videoLoader.style.display = 'none';
                         videoPlayer.style.opacity = '1';
+                        triggerAutoFullscreen();
                     })
                     .catch(() => {
                         videoPlayer.muted = true;
-
                         videoPlayer.play().then(() => {
                             videoLoader.style.display = 'none';
                             videoPlayer.style.opacity = '1';
-                        });
+                            autoUnmuteAfter1s();
+                            triggerAutoFullscreen();
+                        }).catch(() => {});
                     });
             }
         });

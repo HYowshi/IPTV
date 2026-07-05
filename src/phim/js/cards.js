@@ -119,6 +119,8 @@ function renderTopMovies(movies, containerId, domain = imageDomain) {
     const container = document.getElementById(containerId);
     if (!container) return;
     container.innerHTML = "";
+    const observer = getImageObserver();
+
     movies.forEach((movie, index) => {
         const li = document.createElement("li");
         li.tabIndex = 0;
@@ -128,7 +130,7 @@ function renderTopMovies(movies, containerId, domain = imageDomain) {
 
         li.innerHTML = `
             <div class="rank-number">${index + 1}</div>
-            <img src="${imgUrl}" class="rank-thumb skeleton" alt="${movie.name}" loading="lazy" decoding="async" onload="this.classList.remove('skeleton')" onerror="handleImageError(this); this.classList.remove('skeleton');">
+            <img data-src="${imgUrl}" class="rank-thumb skeleton" alt="${movie.name}" loading="lazy" decoding="async" onload="this.classList.remove('skeleton')" onerror="handleImageError(this); this.classList.remove('skeleton');">
             <div class="rank-info">
                 <h4>${movie.name}</h4>
                 <div class="rank-meta">
@@ -140,12 +142,25 @@ function renderTopMovies(movies, containerId, domain = imageDomain) {
         li.onkeydown = (e) => { if (e.key === 'Enter') showMovieDetails(movie.slug); };
         container.appendChild(li);
     });
+
+    if (observer) {
+        container.querySelectorAll('img[data-src]').forEach(img => {
+            observer.observe(img);
+        });
+    } else {
+        container.querySelectorAll('img[data-src]').forEach(img => {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+        });
+    }
 }
 
 function renderTopSeries(movies, containerId, domain = imageDomain) {
     const container = document.getElementById(containerId);
     if (!container) return;
     container.innerHTML = "";
+    const observer = getImageObserver();
+
     movies.forEach(movie => {
         const card = document.createElement("div");
         card.className = "movie-card small";
@@ -159,7 +174,7 @@ function renderTopSeries(movies, containerId, domain = imageDomain) {
         card.innerHTML = `
             <div class="image-container">
                ${badgeHTML}
-               <img class="skeleton" src="${imgUrl}" alt="${movie.name}" loading="lazy" decoding="async" onload="this.classList.remove('skeleton')" onerror="handleImageError(this); this.classList.remove('skeleton');">
+               <img class="skeleton" data-src="${imgUrl}" alt="${movie.name}" loading="lazy" decoding="async" onload="this.classList.remove('skeleton')" onerror="handleImageError(this); this.classList.remove('skeleton');">
                <div class="card-overlay"><span class="material-symbols-rounded" style="font-size:40px;">play_arrow</span></div>
             </div>
             <div class="info"><h4>${movie.name}</h4></div>
@@ -168,4 +183,15 @@ function renderTopSeries(movies, containerId, domain = imageDomain) {
         card.onkeydown = (e) => { if (e.key === 'Enter') showMovieDetails(movie.slug); };
         container.appendChild(card);
     });
+
+    if (observer) {
+        container.querySelectorAll('img[data-src]').forEach(img => {
+            observer.observe(img);
+        });
+    } else {
+        container.querySelectorAll('img[data-src]').forEach(img => {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+        });
+    }
 }

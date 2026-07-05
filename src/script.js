@@ -1,4 +1,30 @@
+// ==================== LOW-MEMORY MODE DETECTION (chạy trước DOMContentLoaded) ====================
+// Detect Android/low-memory từ Platform sớm nhất có thể để CSS áp dụng ngay
+;(function applyLowMemoryMode() {
+    try {
+        const platform = typeof Platform !== 'undefined' ? Platform.current : null;
+        const isLowMem = platform
+            ? (platform.isLowMemory || platform.isAndroid)
+            : (navigator.deviceMemory && navigator.deviceMemory <= 2);
+        if (isLowMem) {
+            document.documentElement.classList.add('low-memory-mode');
+            document.body.classList.add('low-memory-mode');
+        }
+    } catch (e) {}
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
+    // Áp dụng lại sau DOMContentLoaded để chắc chắn body đã load
+    try {
+        const platform = typeof Platform !== 'undefined' ? Platform.current : null;
+        const isLowMem = platform
+            ? (platform.isLowMemory || platform.isAndroid)
+            : (navigator.deviceMemory && navigator.deviceMemory <= 2);
+        if (isLowMem) {
+            document.body.classList.add('low-memory-mode');
+        }
+    } catch (e) {}
+
     let isNavigating = false;
     let isModalOpen = true;
     let idleTime = 0;
