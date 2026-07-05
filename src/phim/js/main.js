@@ -88,6 +88,17 @@ function initSpatialNavigation() {
 const CONTROLS_HIDE_DELAY = 3000;
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Khởi tạo tìm kiếm bằng giọng nói riêng cho PHIM
+    const movieSearchInput = document.getElementById('searchInput');
+    const movieVoiceBtn = document.getElementById('movie-voice-btn');
+    if (movieSearchInput && movieVoiceBtn) {
+        initVoiceSearch(movieSearchInput, movieVoiceBtn, (query) => {
+            if (typeof handleSearch === 'function') {
+                handleSearch();
+            }
+        });
+    }
+
     // ==================== HAMBURGER MENU ====================
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const mobileNavOverlay = document.getElementById('mobileNavOverlay');

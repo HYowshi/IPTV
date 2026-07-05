@@ -458,10 +458,12 @@ function initUIEvents() {
     // ==================== SEARCH ====================
     const searchContainer = document.getElementById('tv-search-container');
     const searchInput = document.getElementById('tv-search-input');
+    const tvVoiceBtn = document.getElementById('tv-voice-btn');
     let searchTimer;
 
     if (searchContainer && searchInput) {
-        searchContainer.addEventListener('click', () => {
+        searchContainer.addEventListener('click', (e) => {
+            if (e.target.closest('#tv-voice-btn')) return;
             searchInput.focus();
         });
     }
@@ -472,6 +474,12 @@ function initUIEvents() {
             searchTimer = setTimeout(() => {
                 applyFilters();
             }, 300); // Giảm từ 500ms xuống 300ms
+        });
+    }
+
+    if (searchInput && tvVoiceBtn) {
+        initVoiceSearch(searchInput, tvVoiceBtn, (query) => {
+            applyFilters();
         });
     }
 

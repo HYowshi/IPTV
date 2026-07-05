@@ -599,3 +599,27 @@ function goBackFromDetail() {
     // Cuộn mượt mà lên đầu trang
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+function goBackFromFilter() {
+    document.getElementById('filter-view').style.display = 'none';
+    document.getElementById('advanced-filter-bar').style.display = 'none';
+    document.getElementById('home-view').style.display = 'block';
+    document.getElementById('heroBanner').style.display = 'flex';
+    document.querySelector('.main-container').classList.add('with-hero');
+    
+    // Khởi chạy lại vòng lặp banner chính
+    if (typeof startHeroCarousel === 'function') {
+        startHeroCarousel();
+    }
+    
+    // Cập nhật lại lịch sử
+    if (typeof renderWatchHistory === 'function') {
+        renderWatchHistory();
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Focus lại vào nút đầu tiên của trang chủ
+    const firstCard = document.querySelector('#home-view .movie-card');
+    if (firstCard) firstCard.focus();
+}

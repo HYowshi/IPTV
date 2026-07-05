@@ -92,6 +92,7 @@
         <div class="header-right">
             <div class="search-box" id="searchBox">
                 <input type="text" placeholder="Tìm kiếm tác phẩm..." id="searchInput">
+                <button class="icon-btn" id="movie-voice-btn" title="Tìm bằng giọng nói"><span class="material-symbols-rounded" style="font-size:18px;">mic</span></button>
                 <button class="icon-btn" id="searchBtn"><span class="material-symbols-rounded" style="font-size:18px;">search</span></button>
             </div>
             <button class="icon-btn search-toggle-btn" id="searchToggleBtn" aria-label="Tìm kiếm" style="display:none;">
@@ -201,6 +202,7 @@
             </div>
 
             <div id="filter-view" style="display: none;">
+                <button class="btn-back" onclick="goBackFromFilter()"><span class="material-symbols-rounded" style="font-size:18px;">arrow_back</span> Quay lại trang chủ</button>
                 <div class="movie-section">
                     <h2 class="section-title" id="filter-title">Kết quả</h2>
                     <div class="movie-grid" id="grid-filter"></div>

@@ -305,3 +305,97 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// ==================== VOICE SEARCH UTILITY ====================
+function initVoiceSearch(inputEl, micBtnEl, onResultCallback) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        console.warn('[Voice Search] Web Speech API not supported in this browser.');
+        if (micBtnEl) micBtnEl.style.display = 'none';
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'vi-VN';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    let overlay = document.getElementById('voice-search-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'voice-search-overlay';
+        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(5,5,5,0.92);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:99999;opacity:0;pointer-events:none;transition:opacity 0.3s ease;';
+        overlay.innerHTML = `
+            <div class="voice-pulse-ring" style="
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                background: rgba(249, 25, 66, 0.2);
+                border: 4px solid #f91942;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                animation: voiceGlow 1.5s infinite;
+                margin-bottom: 25px;
+            ">
+                <span class="material-symbols-rounded" style="font-size: 46px; color: white;">mic</span>
+            </div>
+            <h2 style="color: white; font-size: 24px; font-weight: 800; margin-bottom: 10px; font-family: sans-serif;">Đang lắng nghe...</h2>
+            <p style="color: #888; font-size: 16px; font-family: sans-serif;">Hãy nói rõ từ khóa bạn muốn tìm kiếm</p>
+            <style>
+                @keyframes voiceGlow {
+                    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(249, 25, 66, 0.7); }
+                    70% { transform: scale(1); box-shadow: 0 0 0 30px rgba(249, 25, 66, 0); }
+                    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(249, 25, 66, 0); }
+                }
+            </style>
+        `;
+        document.body.appendChild(overlay);
+    }
+
+    let isRecording = false;
+
+    micBtnEl.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (isRecording) {
+            recognition.stop();
+        } else {
+            try {
+                recognition.start();
+            } catch (err) {
+                console.error('[Voice Search] Start error:', err);
+            }
+        }
+    };
+
+    recognition.onstart = () => {
+        isRecording = true;
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'auto';
+        if (micBtnEl) micBtnEl.classList.add('recording');
+    };
+
+    recognition.onresult = (event) => {
+        const text = event.results[0][0].transcript;
+        if (inputEl) {
+            inputEl.value = text;
+            inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        if (onResultCallback) onResultCallback(text);
+    };
+
+    recognition.onerror = (event) => {
+        console.error('[Voice Search] Recognition error:', event.error);
+        if (event.error === 'not-allowed') {
+            alert('Vui lòng cấp quyền truy cập Microphone cho ứng dụng.');
+        }
+    };
+
+    recognition.onend = () => {
+        isRecording = false;
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        if (micBtnEl) micBtnEl.classList.remove('recording');
+    };
+}
