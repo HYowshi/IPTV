@@ -663,7 +663,7 @@ function initUIEvents() {
     // Hardware volume keys từ remote Android TV — áp dụng cho cả TV player
     document.addEventListener('keydown', (e) => {
         let handled = false;
-        if (e.key === 'AudioVolumeUp' || e.keyCode === 175) {
+        if (e.key === 'AudioVolumeUp' || e.key === 'VolumeUp' || e.keyCode === 175 || e.keyCode === 24) {
             e.preventDefault();
             videoPlayer.muted = false;
             const newVol = Math.min(1, parseFloat((videoPlayer.volume + 0.1).toFixed(2)));
@@ -675,7 +675,7 @@ function initUIEvents() {
             }
             updateVolumeUI(newVol);
             handled = true;
-        } else if (e.key === 'AudioVolumeDown' || e.keyCode === 174) {
+        } else if (e.key === 'AudioVolumeDown' || e.key === 'VolumeDown' || e.keyCode === 174 || e.keyCode === 25) {
             e.preventDefault();
             const newVol = Math.max(0, parseFloat((videoPlayer.volume - 0.1).toFixed(2)));
             videoPlayer.volume = newVol;
@@ -686,7 +686,7 @@ function initUIEvents() {
             }
             updateVolumeUI(newVol);
             handled = true;
-        } else if (e.key === 'AudioVolumeMute' || e.keyCode === 173) {
+        } else if (e.key === 'AudioVolumeMute' || e.key === 'VolumeMute' || e.keyCode === 173 || e.keyCode === 164) {
             e.preventDefault();
             if (videoPlayer.volume > 0) {
                 videoPlayer.setAttribute('data-last-vol', videoPlayer.volume);

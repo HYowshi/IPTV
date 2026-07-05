@@ -677,16 +677,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!videoPlayer) return;
 
         let handled = false;
-        if (e.key === 'AudioVolumeUp' || e.keyCode === 175) {
+        if (e.key === 'AudioVolumeUp' || e.key === 'VolumeUp' || e.keyCode === 175 || e.keyCode === 24) {
             e.preventDefault();
             videoPlayer.muted = false;
             videoPlayer.volume = Math.min(1, parseFloat((videoPlayer.volume + 0.1).toFixed(2)));
             handled = true;
-        } else if (e.key === 'AudioVolumeDown' || e.keyCode === 174) {
+        } else if (e.key === 'AudioVolumeDown' || e.key === 'VolumeDown' || e.keyCode === 174 || e.keyCode === 25) {
             e.preventDefault();
             videoPlayer.volume = Math.max(0, parseFloat((videoPlayer.volume - 0.1).toFixed(2)));
             handled = true;
-        } else if (e.key === 'AudioVolumeMute' || e.keyCode === 173) {
+        } else if (e.key === 'AudioVolumeMute' || e.key === 'VolumeMute' || e.keyCode === 173 || e.keyCode === 164) {
             e.preventDefault();
             videoPlayer.muted = !videoPlayer.muted;
             // Nếu unmute mà volume = 0, set về 0.5
