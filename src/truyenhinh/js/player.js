@@ -63,7 +63,29 @@ async function autoFindNewYoutubeLive(channel) {
     if (tvLoader) tvLoader.style.display = 'flex';
     
     try {
-        const query = encodeURIComponent(channel.name + ' trực tiếp');
+        const normName = channel.name.toLowerCase();
+        let queryText = channel.name + ' trực tiếp';
+        let requiredKeywords = [];
+        let excludedKeywords = [];
+        let channelHandles = [];
+        
+        // Smart routing configurations
+        if (normName.includes('conan')) {
+            queryText = 'POPS Anime Conan trực tiếp';
+            requiredKeywords = ['conan'];
+            channelHandles = ['/@popsanime', 'pops anime'];
+        } else if (normName.includes('naruto')) {
+            queryText = 'POPS Anime Naruto trực tiếp';
+            requiredKeywords = ['naruto'];
+            channelHandles = ['/@popsanime', 'pops anime'];
+        } else if (normName.includes('doremon') || normName.includes('doraemon')) {
+            queryText = 'POPS Kids Doraemon trực tiếp';
+            requiredKeywords = ['doremon', 'doraemon'];
+            excludedKeywords = ['mechamato'];
+            channelHandles = ['/@popskids', 'pops kids'];
+        }
+        
+        const query = encodeURIComponent(queryText);
         const searchUrl = `https://www.youtube.com/results?search_query=${query}&sp=EgJAAQ%253D%253D`;
         
         let response;
@@ -76,16 +98,71 @@ async function autoFindNewYoutubeLive(channel) {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const html = await response.text();
         
-        // Find the first video ID from the search results
-        const match = html.match(/"videoId":"([a-zA-Z0-9_-]{11})"/);
-        if (match && match[1]) {
-            const newVideoId = match[1];
-            console.log(`[YouTube] Found new live stream for ${channel.name}: ${newVideoId}`);
-            // Update channel URL in memory so it doesn't auto-fetch again if replayed
-            channel.url = `https://www.youtube.com/watch?v=${newVideoId}`;
-            playYouTubeChannel(channel, newVideoId);
+        // Fast HTML Split Parser (O(N) CPU, low-memory friendly)
+        const videos = [];
+        const blocks = html.split('"videoRenderer":');
+        for (let i = 1; i < blocks.length; i++) {
+            const block = blocks[i].substring(0, 3000);
+            const idMatch = block.match(/^\{"videoId":"([a-zA-Z0-9_-]{11})"/);
+            if (!idMatch) continue;
+            
+            const videoId = idMatch[1];
+            const titleMatch = block.match(/"title":\s*\{\s*"runs":\s*\[\s*\{\s*"text":"(.*?)"\s*\}/);
+            const title = titleMatch ? titleMatch[1].toLowerCase() : "";
+            
+            const channelMatch = block.match(/"ownerText":\s*\{\s*"runs":\s*\[\s*\{\s*"text":"(.*?)"\s*\}/);
+            const channelName = channelMatch ? channelMatch[1].toLowerCase() : "";
+            
+            const handleMatch = block.match(/"canonicalBaseUrl":"(.*?)"/);
+            const channelHandle = handleMatch ? handleMatch[1].toLowerCase() : "";
+            
+            const isLive = block.includes('"style":"BADGE_STYLE_TYPE_LIVE"') || 
+                           block.includes('LIVE') || 
+                           block.includes('"label":"TRỰC TIẾP"') ||
+                           block.includes('"label":"LIVE"');
+            
+            videos.push({ id: videoId, title, channelName, channelHandle, isLive });
+        }
+        
+        // Filter the results using our smart rules
+        let targetVideoId = null;
+        for (const v of videos) {
+            if (!v.isLive) continue;
+            
+            // Check channel handles/names if configured
+            if (channelHandles.length > 0) {
+                const matchesChannel = channelHandles.some(h => v.channelHandle.includes(h) || v.channelName.includes(h));
+                if (!matchesChannel) continue;
+            }
+            
+            // Check required keywords (at least one must match)
+            if (requiredKeywords.length > 0) {
+                const matchesKeyword = requiredKeywords.some(k => v.title.includes(k));
+                if (!matchesKeyword) continue;
+            }
+            
+            // Check excluded keywords (must NOT match any)
+            if (excludedKeywords.length > 0) {
+                const matchesExcluded = excludedKeywords.some(k => v.title.includes(k));
+                if (matchesExcluded) continue;
+            }
+            
+            targetVideoId = v.id;
+            break;
+        }
+        
+        // Fallback to first video ID in the raw html match if filter failed
+        if (!targetVideoId) {
+            const rawMatch = html.match(/"videoId":"([a-zA-Z0-9_-]{11})"/);
+            if (rawMatch) targetVideoId = rawMatch[1];
+        }
+        
+        if (targetVideoId) {
+            console.log(`[YouTube Smart Search] Found video for ${channel.name}: ${targetVideoId}`);
+            channel.url = `https://www.youtube.com/watch?v=${targetVideoId}`;
+            playYouTubeChannel(channel, targetVideoId);
         } else {
-            throw new Error('No live video found in search results');
+            throw new Error('No matching live video found');
         }
     } catch (err) {
         console.error('[YouTube] Auto-find live failed:', err);
