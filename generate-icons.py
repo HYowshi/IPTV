@@ -69,6 +69,57 @@ def save_icon(img, path, force=False):
     log(f"  [gen]  {os.path.basename(path)} ({img.size[0]}x{img.size[1]})")
     return True
 
+def make_tv_banner(img, width, height):
+    """Create Android TV banner (logo centered on dark background)."""
+    result = Image.new('RGBA', (width, height), (5, 5, 5, 255))
+    logo_h = int(height * 0.60)
+    logo_w = int(img.width * (logo_h / img.height))
+    if logo_w > int(width * 0.70):
+        logo_w = int(width * 0.70)
+        logo_h = int(img.height * (logo_w / img.width))
+    logo = img.resize((logo_w, logo_h), Image.Resampling.LANCZOS)
+    x = (width - logo_w) // 2
+    y = (height - logo_h) // 2
+    result.paste(logo, (x, y), logo if logo.mode == 'RGBA' else None)
+    return result
+
+def patch_android_manifest():
+    manifest_path = "src-tauri/gen/android/app/src/main/AndroidManifest.xml"
+    if not os.path.exists(manifest_path):
+        print("  [Manifest] gen/android AndroidManifest.xml not found, skipping patch.")
+        return
+    with open(manifest_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    original_content = content
+    if 'android.software.leanback' not in content:
+        uses_feature_str = '\n  <uses-feature android:name="android.software.leanback" android:required="false" />\n  <uses-feature android:name="android.hardware.touchscreen" android:required="false" />'
+        manifest_tag_start = content.find('<manifest')
+        if manifest_tag_start != -1:
+            manifest_tag_end = content.find('>', manifest_tag_start)
+            if manifest_tag_end != -1:
+                content = content[:manifest_tag_end+1] + uses_feature_str + content[manifest_tag_end+1:]
+    if 'android:banner' not in content:
+        app_tag_idx = content.find('<application')
+        if app_tag_idx != -1:
+            app_tag_end_idx = content.find('>', app_tag_idx)
+            if app_tag_end_idx != -1:
+                app_tag_content = content[app_tag_idx:app_tag_end_idx]
+                if 'android:banner' not in app_tag_content:
+                    content = content[:app_tag_idx + 12] + ' android:banner="@mipmap/ic_banner"' + content[app_tag_idx + 12:]
+    if 'android.intent.category.LEANBACK_LAUNCHER' not in content:
+        launcher_idx = content.find('android.intent.category.LAUNCHER')
+        if launcher_idx != -1:
+            filter_end_idx = content.find('</intent-filter>', launcher_idx)
+            if filter_end_idx != -1:
+                leanback_filter = '\n        <intent-filter>\n            <action android:name="android.intent.action.MAIN" />\n            <category android:name="android.intent.category.LEANBACK_LAUNCHER" />\n        </intent-filter>'
+                content = content[:filter_end_idx + 16] + leanback_filter + content[filter_end_idx + 16:]
+    if content != original_content:
+        with open(manifest_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print("  [Manifest] Patched AndroidManifest.xml successfully for Android TV (Leanback banner & launcher).")
+    else:
+        print("  [Manifest] AndroidManifest.xml already patched or could not locate tags.")
+
 def main():
     parser = argparse.ArgumentParser(description='Generate app icons from logo.png')
     parser.add_argument('--force', action='store_true', help='Regenerate all icons even if they exist')
@@ -115,8 +166,9 @@ def main():
         if save_icon(resized, os.path.join(ICONS_DIR, name), force):
             count += 1
 
-    # Android (square + round + adaptive)
+    # Android (square + round + adaptive + TV banner)
     print("[Android]")
+    banner_heights = {"mipmap-mdpi":90, "mipmap-hdpi":135, "mipmap-xhdpi":180, "mipmap-xxhdpi":270, "mipmap-xxxhdpi":360}
     for folder, size in ANDROID_MIPMAPS.items():
         dp = os.path.join(ICONS_DIR, "android", folder)
         resized = img.resize((size, size), Image.Resampling.LANCZOS)
@@ -127,6 +179,12 @@ def main():
             count += 1
         adaptive = make_adaptive_icon(img, size)
         if save_icon(adaptive, os.path.join(dp, "ic_launcher_foreground.png"), force):
+            count += 1
+        # Generate TV Banner (16:9 aspect ratio)
+        b_h = banner_heights[folder]
+        b_w = int(b_h * 16 / 9)
+        banner = make_tv_banner(img, b_w, b_h)
+        if save_icon(banner, os.path.join(dp, "ic_banner.png"), force):
             count += 1
 
     # Android adaptive XML
@@ -280,6 +338,7 @@ def main():
             
             merge_copy(android_src_dir, android_res_dir)
             print("  [copy] Android icons merged to res/ directory successfully.")
+            patch_android_manifest()
 
     # Summary
     total = 0
