@@ -66,7 +66,6 @@ async function autoFindNewYoutubeLive(channel) {
         const normName = channel.name.toLowerCase();
         let queryText = channel.name + ' trực tiếp';
         let requiredKeywords = [];
-        let excludedKeywords = [];
         let channelHandles = [];
         
         // Smart routing configurations
@@ -81,7 +80,6 @@ async function autoFindNewYoutubeLive(channel) {
         } else if (normName.includes('doremon') || normName.includes('doraemon')) {
             queryText = 'POPS Kids Doraemon trực tiếp';
             requiredKeywords = ['doremon', 'doraemon'];
-            excludedKeywords = ['mechamato'];
             channelHandles = ['/@popskids', 'pops kids'];
         }
         
@@ -139,12 +137,6 @@ async function autoFindNewYoutubeLive(channel) {
             if (requiredKeywords.length > 0) {
                 const matchesKeyword = requiredKeywords.some(k => v.title.includes(k));
                 if (!matchesKeyword) continue;
-            }
-            
-            // Check excluded keywords (must NOT match any)
-            if (excludedKeywords.length > 0) {
-                const matchesExcluded = excludedKeywords.some(k => v.title.includes(k));
-                if (matchesExcluded) continue;
             }
             
             targetVideoId = v.id;
