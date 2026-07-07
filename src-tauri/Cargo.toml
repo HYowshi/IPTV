@@ -1,6 +1,6 @@
 [package]
 name = "phimtvapp"
-version = "0.2.0"
+version = "0.2.1"
 description = "Phim.tv - Ứng dụng Giải trí Đa phương tiện"
 authors = ["PhimTV Admin"]
 edition = "2021"

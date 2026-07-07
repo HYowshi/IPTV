@@ -501,3 +501,36 @@
     display: flex;
     gap: 15px;
 }
+
+/* Floating Next Episode Button */
+.btn-next-ep-floating {
+    position: absolute;
+    bottom: 80px;
+    right: 30px;
+    z-index: 1000;
+    background: rgba(249, 25, 66, 0.95);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: none; /* Controlled by JS */
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 10px 25px rgba(249, 25, 66, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-next-ep-floating:hover,
+.btn-next-ep-floating:focus {
+    transform: scale(1.05);
+    background: #ff2c55;
+    box-shadow: 0 15px 30px rgba(249, 25, 66, 0.6);
+    outline: none;
+}
+
+.btn-next-ep-floating .material-symbols-rounded {
+    font-size: 20px;
+}

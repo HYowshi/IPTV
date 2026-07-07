@@ -72,6 +72,24 @@ function updateWatchViewPlayer(ep, btnElement) {
         overlay.style.display = 'none';
     }
 
+    const btnFloating = document.getElementById('btn-next-ep-floating');
+    if (btnFloating) {
+        btnFloating.style.display = 'none';
+        btnFloating.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const watchEpisodeList = document.getElementById('watch-episode-list');
+            if (watchEpisodeList) {
+                const allBtns = Array.from(watchEpisodeList.querySelectorAll('.btn-episode'));
+                const activeIndex = allBtns.findIndex(btn => btn.classList.contains('active'));
+                if (activeIndex >= 0 && activeIndex < allBtns.length - 1) {
+                    btnFloating.style.display = 'none';
+                    allBtns[activeIndex + 1].click();
+                }
+            }
+        };
+    }
+
     const episodeListContainer = document.getElementById('watch-episode-list');
     const currentActive = episodeListContainer.querySelector('.active');
 
@@ -340,6 +358,37 @@ function updateWatchViewPlayer(ep, btnElement) {
     let _lastHistorySave = 0;
     videoPlayer.ontimeupdate = () => {
         const now = Date.now();
+
+        // Kiểm tra hiển thị nút "Tập tiếp theo" khi còn 5 phút (300s)
+        const duration = videoPlayer.duration;
+        const currentTime = videoPlayer.currentTime;
+        const btnFloating = document.getElementById('btn-next-ep-floating');
+        
+        if (btnFloating && duration && duration > 300) {
+            const timeLeft = duration - currentTime;
+            
+            // Kiểm tra xem có tập tiếp theo không
+            const watchEpisodeList = document.getElementById('watch-episode-list');
+            let hasNextEp = false;
+            if (watchEpisodeList) {
+                const allBtns = Array.from(watchEpisodeList.querySelectorAll('.btn-episode'));
+                const activeIndex = allBtns.findIndex(btn => btn.classList.contains('active'));
+                if (activeIndex >= 0 && activeIndex < allBtns.length - 1) {
+                    hasNextEp = true;
+                }
+            }
+            
+            if (hasNextEp && timeLeft <= 300 && timeLeft > 5) {
+                if (btnFloating.style.display === 'none') {
+                    btnFloating.style.display = 'flex';
+                }
+            } else {
+                if (btnFloating.style.display !== 'none') {
+                    btnFloating.style.display = 'none';
+                }
+            }
+        }
+
         if (now - _lastHistorySave < 10000) return;
         _lastHistorySave = now;
         if (!watchHistoryCache) {
