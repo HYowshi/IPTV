@@ -62,9 +62,9 @@ https://hoiquan.dpdns.org/VTVGo/?sctv1
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://i.imgur.com/8i5DXIg.png" tvg-id="SCTV2.vn@SD",SCTV2 (720p)
 https://tpninosaga.duckdns.org/source/tv360.m3u8?id=201&token=NinoExility
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv3.png" tvg-id="sctv3hd",SCTV3
-https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv3-hd-cf3adaca
+https://vmttv.dpdns.org/VTVGo/?sctv3
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv4.png" tvg-id="sctv4hd",SCTV4
-https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv4-ae779f7e
+https://vmttv.dpdns.org/VTVGo/?sctv4
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv4.png" tvg-id="sctv6hd",SCTV6
 https://live.fptplay53.net/epzhd2/film360_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv7.webp" tvg-id="sctv7hd",SCTV7
@@ -74,11 +74,11 @@ https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv8-c12d138b
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV10.jpg" tvg-id="sctv10hd",SCTV10
 https://hoiquan.dpdns.org/VTVGo/?sctv10
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv11.png" tvg-id="sctv11hd",SCTV11
-https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv11-1d565c47
+https://vmttv.dpdns.org/VTVGo/?sctv11
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv12.png" tvg-id="sctv12hd",SCTV12
-https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv12-b0d6c023
+https://vmttv.dpdns.org/VTVGo/?sctv12
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv13.png" tvg-id="sctv13hd",SCTV13
-https://vpsttt.vietanhtv.top/sctv/tv.php?id=sctv13-67f88fcb
+https://vmttv.dpdns.org/VTVGo/?sctv13
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv14.png" tvg-id="sctv14hd",SCTV14
 https://hoiquan.dpdns.org/VTVGo/?sctv14
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv14.png" tvg-id="SCTV16.vn@SD",SCTV16 (720p)
@@ -180,7 +180,10 @@ https://live.fptplay53.net/fnxhd2/kixhd_vhls.smil/chunklist_b5000000.m3u8
 
 # ================= QUỐC TẾ =================
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/outdoor-hd/KenhCoBan.png" tvg-id="", Outdoor HD
-http://vipmax.site:8080/OERXRGdCUExrankyVkxTNitZY2tXeUxjcUoxTlZDZnRuRitJVzlLZDV3Vm1NYUY5ZUFWcXl6b3psTUs0N01TNA?output=ts
+#KODIPROP:inputstream.adaptive.manifest_type=mpd
+#KODIPROP:inputstream.adaptive.license_type=clearkey
+#KODIPROP:inputstream.adaptive.license_key=a7c942778e874d43be92b8d0a0cd11b4:6d54358306571658ffdb952c6560688b
+https://livevlisctcdnw.seenow.vn/mean/OUTDOORCHANNEL/manifest.mpd
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/channel-news-asia/KenhCoBan.png" tvg-id="", Channel News Asia
 https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/channel-news-asia/KenhCoBan.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/nhk/KenhCoBan.png" tvg-id="", NHK
