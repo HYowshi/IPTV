@@ -23,10 +23,6 @@ https://HaNoiIPTV.short.gy/HaNoiIPTV-Animal_Planet
 https://s2129134.cdn.mytvnet.vn/pkg20/live_dzones/ap.smil/manifest.mpd
 
 #EXTINF:-1 tvg-id="543099" group-title="Kenh Giai Tri",ANIMAL PLANET
-#EXTVLCOPT:http-user-agent=VAVOO/2.6
-https://vavoo.to/vavoo-iptv/play/4014675700d8700b948984
-
-#EXTINF:-1 tvg-id="543099" group-title="Kenh Giai Tri",ANIMAL PLANET
 https://www.vavoo.to/play/1382048336/index.m3u8
 
 #EXTINF:-1 tvg-id="543099" group-title="Kenh Giai Tri",ANIMAL PLANET
@@ -71,28 +67,28 @@ https://xfireflix.fun/file/opplex/stream.m3u8?id=109975&e=.m3u8
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",ANIMAL PLANET FHD
 http://brpxon.online/live/no31jzd0dk/ghp9n97ltb/804.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri",ANIMAL PLANET HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri",ANIMAL PLANET HD
 http://brpxon.online/live/no31jzd0dk/ghp9n97ltb/3.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri",ANIMAL PLANET HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri",ANIMAL PLANET HD
 https://www.vavoo.to/play/1302672529/index.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri",ANIMAL PLANET HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri",ANIMAL PLANET HD
 https://www.vavoo.to/play/1537256341/index.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri",ANIMAL PLANET HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri",ANIMAL PLANET HD
 https://www.vavoo.to/play/2440347370/index.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri",ANIMAL PLANET HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri",ANIMAL PLANET HD
 https://www.vavoo.to/play/3225026685/index.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri",ANIMAL PLANET HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri",ANIMAL PLANET HD
 https://www.vavoo.to/play/3512328117/index.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri",ANIMAL PLANET HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri",ANIMAL PLANET HD
 https://www.vavoo.to/play/3888491987/index.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri",ANIMAL PLANET HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri",ANIMAL PLANET HD
 https://www.vavoo.to/play/3913298991/index.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",ANIMAL PLANET SD
@@ -239,7 +235,7 @@ https://www.vavoo.to/play/777626841/index.m3u8
 #EXTINF:-1 tvg-id="524076" group-title="Kenh Giai Tri" tvg-logo="https://i.ibb.co/QHzdjXX/ccaxn.webp",AXN
 udp://@225.1.2.225:30120
 
-#EXTINF:-1 tvg-id="AXN.br@SD" group-title="Kenh Giai Tri" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",AXN 720p por1 Portuguese Movies  720P
+#EXTINF:-1 tvg-id="AXN.br@SD" group-title="Kenh Giai Tri" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",AXN 720p  720P
 http://45.190.28.50/AXN_HD/index.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",AXN FHD
@@ -248,39 +244,45 @@ http://brpxon.online/live/no31jzd0dk/ghp9n97ltb/835.m3u8
 #EXTINF:-1 tvg-id="AXN.id" group-title="Kenh Giai Tri" tvg-logo="https://www.visionplus.id/images/repository/003/50003-SNAPSHOT-l.png",AXN FMX
 https://atemecdnbalancer-voe.sysln.id/live/eds/AXNHD/mpd/AXNHD.mpd
 
-#EXTINF:-1 tvg-id="557436" group-title="Kenh Giai Tri" tvg-logo="https://img.lichphatsong.xyz/logo/axn.png",AXN HD
+#EXTINF:-1 tvg-id="557636" group-title="Kenh Giai Tri" tvg-logo="https://img.lichphatsong.xyz/logo/axn.png",AXN HD
 http://103.77.241.152:1234/stream/axnhd/stream.m3u8
 
-#EXTINF:-1 tvg-id="557436" group-title="Kenh Giai Tri",AXN HD
+#EXTINF:-1 tvg-id="557636" group-title="Kenh Giai Tri",AXN HD
 http://brpxon.online/live/no31jzd0dk/ghp9n97ltb/4.m3u8
 
-#EXTINF:-1 tvg-id="557436" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/Dx1sycb.png",AXN HD
+#EXTINF:-1 tvg-id="557636" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/Dx1sycb.png",AXN HD
 http://play.dnsrot.vip:80/live/vanessanook/vinr390x8y/36991.ts
 
-#EXTINF:-1 tvg-id="557436" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/master/AXN%20HD.png",AXN HD
+#EXTINF:-1 tvg-id="557636" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/master/AXN%20HD.png",AXN HD
 https://HaNoiIPTV.short.gy/HaNoiIPTV-AXN_HD
 
-#EXTINF:-1 tvg-id="557436" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/PuteraPerlis74/MOVIES-LOGO/refs/heads/main/AXN%20HD.png",AXN HD
-#KODIPROP:inputstreamaddon=inputstream.adaptive
+#EXTINF:-1 tvg-id="557636" group-title="Kenh Giai Tri" tvg-logo="https://divign0fdw3sv.cloudfront.net/Images/ChannelLogo/contenthub/131_144.png",AXN HD
 #KODIPROP:inputstream.adaptive.manifest_type=dash
 #KODIPROP:inputstream.adaptive.license_type=org.w3.clearkey
-#KODIPROP:inputstream.adaptive.license_key={ "keys":[ { "kty":"oct", "k":"wyGv4WibB9W35VvQJcSDzg", "kid":"wkp4EdmrRrSLdGoOfiaSEA" } ], "type":"temporary" }
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Linux; Android 15; 23129RA5FL Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/134.0.6998.39 Mobile Safari/537.36
+#KODIPROP:inputstream.adaptive.license_key=c24a7811d9ab46b48b746a0e7e269210:c321afe1689b07d5b7e55bd025c483ce
+#KODIPROP:inputstream.adaptive.stream_headers=User-Agent=Mozilla/5.0 (Linux; Android 13; UltraBox Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/136.0.7103.61 Mobile Safari/537.36
 https://linearjitp-playback.astro.com.my/dash-wv/linear/2303/default_ott.mpd
 
-#EXTINF:-1 tvg-id="557436" group-title="Kenh Giai Tri",AXN HD
+#EXTINF:-1 tvg-id="557636" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/Logo/refs/heads/main/axn.png",AXN HD
+#EXTVLCOPT:http-user-agent=Dalvik/2.1.0
+#KODIPROP:inputstream.adaptive.manifest_type=mpd
+#KODIPROP:inputstream.adaptive.license_type=clearkey
+#KODIPROP:inputstream.adaptive.license_key=9d29f87efdec3c9fab368f724a62ad0e:6f1c09c035eab36323d60d1454db3d20
+https://s7771.cdn.mytvnet.vn/pkg20/live_dzones/axn.smil/manifest.mpd
+
+#EXTINF:-1 tvg-id="557636" group-title="Kenh Giai Tri",AXN HD
 https://www.vavoo.to/play/1774650965/index.m3u8
 
-#EXTINF:-1 tvg-id="557436" group-title="Kenh Giai Tri",AXN HD
+#EXTINF:-1 tvg-id="557636" group-title="Kenh Giai Tri",AXN HD
 https://www.vavoo.to/play/251250868/index.m3u8
 
-#EXTINF:-1 tvg-id="557436" group-title="Kenh Giai Tri",AXN HD
+#EXTINF:-1 tvg-id="557636" group-title="Kenh Giai Tri",AXN HD
 https://www.vavoo.to/play/3143462075/index.m3u8
 
-#EXTINF:-1 tvg-id="557436" group-title="Kenh Giai Tri",AXN HD
+#EXTINF:-1 tvg-id="557636" group-title="Kenh Giai Tri",AXN HD
 https://www.vavoo.to/play/3306956371/index.m3u8
 
-#EXTINF:-1 tvg-id="557436" group-title="Kenh Giai Tri",AXN HD
+#EXTINF:-1 tvg-id="557636" group-title="Kenh Giai Tri",AXN HD
 https://www.vavoo.to/play/3391115865/index.m3u8
 
 #EXTINF:-1 tvg-id="3c2a790bf61c257fcfcfc94a4a5b94c4" group-title="Kenh Giai Tri",AXN HD 4Mbps
@@ -294,13 +296,6 @@ http://pi.4g-internet.info.vn:9999/udp/225.1.4.9:30120
 
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/Rwm7Lod.png",AXN HD 4Mbps
 udp://@225.1.4.9:30120
-
-#EXTINF:-1 tvg-id="axnhd" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/Rwm7Lod.png",AXN HD 85Mbps
-#EXTVLCOPT:http-user-agent=Dalvik/2.1.0
-#KODIPROP:inputstream.adaptive.manifest_type=mpd
-#KODIPROP:inputstream.adaptive.license_type=clearkey
-#KODIPROP:inputstream.adaptive.license_key=9d29f87efdec3c9fab368f724a62ad0e:6f1c09c035eab36323d60d1454db3d20
-https://s7771.cdn.mytvnet.vn/pkg20/live_dzones/axn.smil/manifest.mpd
 
 #EXTINF:-1 tvg-id="3bbd8163b78b2746b675f663917bc8e0" group-title="Kenh Giai Tri",AXN HD 8Mbps
 http://homelab.nguyenvinh.id.vn:9981/stream/channelid/1669446971?auth=PcetW49VQ.Gr1Glc9TGqaQpoMhag&profile=pass
@@ -343,9 +338,6 @@ http://kws04u9a.rostelekom.xyz/iptv/MCHUP9AS7DBP5W/137/index.m3u8
 #EXTINF:-1 tvg-id="543099" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/YNPhY7d.png",Animal Planet
 http://play.dnsrot.vip:80/live/vanessanook/vinr390x8y/37128.ts
 
-#EXTINF:-1 tvg-id="543099" group-title="Kenh Giai Tri" tvg-logo="https://watchindia.net/images/channels/usa/Animal_Planet_HD.png",Animal Planet
-http://watchindia.net:8880/live/65138/11733/2039.ts
-
 #EXTINF:-1 tvg-id="543099" group-title="Kenh Giai Tri" tvg-logo="https://e7.pngegg.com/pngimages/694/46/png-clipart-animal-planet-logo-icons-logos-emojis-iconic-brands.png",Animal Planet
 #EXTVLCOPT:http-user-agent=ExoPlayerDemo/2.15.1 (Linux; Android 13) ExoPlayerLib/2.15.1
 #KODIPROP:inputstream.adaptive.license_type=clearkey
@@ -354,7 +346,7 @@ https://atemecdnbalancer-voe.sysln.id/live/eds/AnimalPlanetHD/mpd/AnimalPlanetHD
 
 #EXTINF:-1 tvg-id="543099" group-title="Kenh Giai Tri" tvg-logo="https://assets-prod.services.toffeelive.com/Ny61-JQBv9knK3AHgzZ7/posters/0909b36a-afd5-426a-93b3-4512800977db.webp",Animal Planet
 #EXTVLCOPT:http-user-agent=okhttp/5.1.0
-#EXTHTTP:{"cookie":"Edge-Cache-Cookie=URLPrefix=aHR0cHM6Ly9ibGRjbXByb2QtY2RuLnRvZmZlZWxpdmUuY29t:Expires=1784476846:KeyName=prod_linear:Signature=p3lsu4kYG5pFt74lZz4elezgqlmCh-RfZJdMLxSjwLI9du-9XtOa7M6pMGWLUo-VBT_IOm2e-9MSsdNvzdkdBQ"}
+#EXTHTTP:{"cookie":"Edge-Cache-Cookie=URLPrefix=aHR0cHM6Ly9ibGRjbXByb2QtY2RuLnRvZmZlZWxpdmUuY29t:Expires=1784563236:KeyName=prod_linear:Signature=K-rcgq9GNxavjS8ax_HgMO2ntAWcNe5ixe96dbrsLv5aPB2pQuDr_yJ_XZ8TJKqc7O8LomKPS9R8b-PzqaM3Aw"}
 https://bldcmprod-cdn.toffeelive.com/cdn/live/animal_planet_sd/playlist.m3u8
 
 #EXTINF:-1 tvg-id="543099" group-title="Kenh Giai Tri",Animal Planet
@@ -388,32 +380,32 @@ https://ucdn.mediaquest.com.ph/bpk-tv/cg_animal_planet_sd/default/index.mpd
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36
 udp://@225.1.1.231:30120
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri",Animal Planet HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri",Animal Planet HD
 http://45.159.74.22/AnimalPlanet/mono.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri",Animal Planet HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri",Animal Planet HD
 #EXTGRP:Познавательные
 http://kws04u9a.akciatv.ru/iptv/MCHUP9AS7DBP5W/218/index.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri",Animal Planet HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri",Animal Planet HD
 #EXTGRP:Познавательные
 http://kws04u9a.rostelekom.xyz/iptv/MCHUP9AS7DBP5W/218/index.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/YNPhY7d.png",Animal Planet HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/YNPhY7d.png",Animal Planet HD
 http://play.dnsrot.vip:80/live/vanessanook/vinr390x8y/36992.ts
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri" tvg-logo="https://assets-prod.services.toffeelive.com/Ni61-JQBv9knK3AHcDYc/posters/c16e8633-6b2a-401a-9cd6-ac26a4fcdedb.webp",Animal Planet HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri" tvg-logo="https://assets-prod.services.toffeelive.com/Ni61-JQBv9knK3AHcDYc/posters/c16e8633-6b2a-401a-9cd6-ac26a4fcdedb.webp",Animal Planet HD
 #EXTVLCOPT:http-user-agent=okhttp/5.1.0
-#EXTHTTP:{"cookie":"Edge-Cache-Cookie=URLPrefix=aHR0cHM6Ly9ibGRjbXByb2QtY2RuLnRvZmZlZWxpdmUuY29t:Expires=1784476846:KeyName=prod_linear:Signature=p3lsu4kYG5pFt74lZz4elezgqlmCh-RfZJdMLxSjwLI9du-9XtOa7M6pMGWLUo-VBT_IOm2e-9MSsdNvzdkdBQ"}
+#EXTHTTP:{"cookie":"Edge-Cache-Cookie=URLPrefix=aHR0cHM6Ly9ibGRjbXByb2QtY2RuLnRvZmZlZWxpdmUuY29t:Expires=1784563236:KeyName=prod_linear:Signature=K-rcgq9GNxavjS8ax_HgMO2ntAWcNe5ixe96dbrsLv5aPB2pQuDr_yJ_XZ8TJKqc7O8LomKPS9R8b-PzqaM3Aw"}
 https://bldcmprod-cdn.toffeelive.com/cdn/live/animal_planet_hd/playlist.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri" tvg-logo="https://tatalogo.pages.dev/130.png",Animal Planet HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri" tvg-logo="https://tatalogo.pages.dev/130.png",Animal Planet HD
 https://m3u.8088y.fun/jtvp/Animal_Planet_HD_Tamil.mpd?tk=testing
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/sqeIrMo.jpeg",Animal Planet HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/sqeIrMo.jpeg",Animal Planet HD
 https://tiger-hub.vercel.app@vodzong.mjunoon.tv:8087/streamtest/Animal-Planet-158-3/playlist.m3u8
 
-#EXTINF:-1 tvg-id="557476" group-title="Kenh Giai Tri" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/united-states/animal-planet-us.png?raw=true",Animal Planet HD
+#EXTINF:-1 tvg-id="557676" group-title="Kenh Giai Tri" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/united-states/animal-planet-us.png?raw=true",Animal Planet HD
 https://v13.thetvapp.to/hls/fallback/tracks-v1/mono.m3u8?token=0U1uJa7nfCl1GnlO3PIkig&expires=1780737874&user_id=MThOYUNRcG91R2RZWWlhWU9QOTRQZ1FianBLdVBzcjRQd3JRbVB1bg==
 
 #EXTINF:-1 tvg-id="27f3c5275dc012f492e061307a11f041" group-title="Kenh Giai Tri",Animal Planet HD 4Mbps
@@ -464,13 +456,6 @@ https://www.vavoo.to/play/543324777/index.m3u8
 #KODIPROP:inputstream.adaptive.license_key=a7c942778e874d43be92b8d0a0cd11b4:6d54358306571658ffdb952c6560688b
 https://HaNoiIPTV.short.gy/HaNoiIPTV-BOX_Hits_HD
 
-#EXTINF:-1 tvg-id="555915" group-title="Kenh Giai Tri" tvg-logo="https://vnepg.site/logos/134.png",BOX HITS HD
-#EXTVLCOPT:http-user-agent=Dalvik/2.1.0
-#KODIPROP:inputstream.adaptive.manifest_type=mpd
-#KODIPROP:inputstream.adaptive.license_type=clearkey
-#KODIPROP:inputstream.adaptive.license_key=http://truyenhinhvn18h1.mywebcommunity.org/vtvprime.php?id=vtvprime
-https://livevlisctcdnw.seenow.vn/mean/BOXHIT/manifest.mpd
-
 #EXTINF:-1 tvg-id="boxhits" group-title="Kenh Giai Tri" tvg-logo="https://106b9c59d.vws.vegacdn.vn/rBN9EfEEFSyoELIQDjEu/408x230x1710924772/cmc_new/img.live_channel/0/0/0/0/268.jpg",Box Hits
 http://103.77.241.166/wseQUBR4GQ/3zxpjdnHrK/38.m3u8
 
@@ -483,6 +468,13 @@ http://csm-e.tm.yospace.com/csm/extlive/boxplus01,boxhits-desktop.m3u8?yo.up=htt
 #KODIPROP:inputstream.adaptive.license_type=clearkey
 #KODIPROP:inputstream.adaptive.license_key=a7c942778e874d43be92b8d0a0cd11b4:6d54358306571658ffdb952c6560688b
 https://livevlisctcdnw.seenow.vn/livesnv2/BOXHIT/manifest.mpd
+
+#EXTINF:-1 tvg-id="boxhits" group-title="Kenh Giai Tri" tvg-logo="https://i.ibb.co/JsQ2W4Q/Box-Hits-cc.webp",Box Hits
+#EXTVLCOPT:http-user-agent=Dalvik/2.1.0
+#KODIPROP:inputstream.adaptive.manifest_type=mpd
+#KODIPROP:inputstream.adaptive.license_type=clearkey
+#KODIPROP:inputstream.adaptive.license_key=a7c942778e874d43be92b8d0a0cd11b4:6d54358306571658ffdb952c6560688b
+https://livevlisctcdnw.seenow.vn/mean/BOXHIT/manifest.mpd
 
 #EXTINF:-1 tvg-id="box-hits" group-title="Kenh Giai Tri" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/box-hits/KenhCoBan",Box Hits
 https://toiyeuvietnam.dpdns.org/CoBan/box-hits/TuyetDoiKhongKinhDoanh.m3u8
@@ -574,19 +566,19 @@ https://www.vavoo.to/play/3608745038/index.m3u8
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",CINEMAX FHD
 http://brpxon.online/live/no31jzd0dk/ghp9n97ltb/841.m3u8
 
-#EXTINF:-1 tvg-id="557524" group-title="Kenh Giai Tri" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f0/611-cinemax.png",CINEMAX HD
+#EXTINF:-1 tvg-id="557724" group-title="Kenh Giai Tri" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f0/611-cinemax.png",CINEMAX HD
 http://103.77.241.152:1234/stream/cinemaxhd/stream.m3u8
 
-#EXTINF:-1 tvg-id="557524" group-title="Kenh Giai Tri",CINEMAX HD
+#EXTINF:-1 tvg-id="557724" group-title="Kenh Giai Tri",CINEMAX HD
 http://brpxon.online/live/no31jzd0dk/ghp9n97ltb/9.m3u8
 
-#EXTINF:-1 tvg-id="557524" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/master/Max%20by%20HBO%20HD.png",CINEMAX HD
+#EXTINF:-1 tvg-id="557724" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/master/Max%20by%20HBO%20HD.png",CINEMAX HD
 https://HaNoiIPTV.short.gy/HaNoiIPTV-Cinemax_HD
 
-#EXTINF:-1 tvg-id="557524" group-title="Kenh Giai Tri",CINEMAX HD
+#EXTINF:-1 tvg-id="557724" group-title="Kenh Giai Tri",CINEMAX HD
 https://www.vavoo.to/play/2136721351/index.m3u8
 
-#EXTINF:-1 tvg-id="557524" group-title="Kenh Giai Tri",CINEMAX HD
+#EXTINF:-1 tvg-id="557724" group-title="Kenh Giai Tri",CINEMAX HD
 https://www.vavoo.to/play/484011633/index.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",CINEMAX SD
@@ -605,6 +597,9 @@ https://hls-gateway.vpstv.net/streams/709421.m3u8
 #KODIPROP:inputstream.adaptive.license_key=https://247.dpdns.org/AutoKey/admin
 https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/cinema-world/KenhCoBan.m3u8
 
+#EXTINF:-1 tvg-id="492823" group-title="Kenh Giai Tri" tvg-logo="https://i.ibb.co/ss7qbgg/Cinema-World-cc.png",Cinema World
+udp://@225.1.1.142:30120
+
 #EXTINF:-1 tvg-id="492823" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/vFVxJx4.png",Cinema World
 udp://@225.1.3.81:30120
 
@@ -613,9 +608,6 @@ http://khaitv.giize.com:8090/225.1.1.142:30120
 
 #EXTINF:-1 tvg-id="cinemaworldhd" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/vFVxJx4.png",Cinema World HD 8Mbps
 http://pi.4g-internet.info.vn:9999/udp/225.1.1.142:30120
-
-#EXTINF:-1 tvg-id="cinemaworld" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/vFVxJx4.png",Cinema World HD 8Mbps
-udp://@225.1.1.142:30120
 
 #EXTINF:-1 tvg-id="523277" group-title="Kenh Giai Tri" tvg-logo="https://divign0fdw3sv.cloudfront.net/Images/ChannelLogo/contenthub/337_144.png",Cinemax
 http://136.239.173.10:6610/001/2/ch00000090990000001108/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2BoD7Jkv0l3sE1jz6821dGRWytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001233&contentid=ch00000000000000001233&videoid=ch00000090990000001108&recommendtype=0&userid=1349825919509&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=LAO494UQ9QXXXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO
@@ -631,9 +623,6 @@ http://ott.udptv.net/stream/iptv/cinemax/master.m3u8?u=cocked&p=dd0abb52723d22ac
 
 #EXTINF:-1 tvg-id="523277" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/70Qi1wZ.png",Cinemax
 http://play.dnsrot.vip:80/live/vanessanook/vinr390x8y/37120.ts
-
-#EXTINF:-1 tvg-id="523277" group-title="Kenh Giai Tri" tvg-logo="https://watchindia.net/images/channels/usa/Cinemax.png",Cinemax
-http://watchindia.net:8880/live/65138/11733/2065.ts
 
 #EXTINF:-1 tvg-id="523277" group-title="Kenh Giai Tri" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f0/611-cinemax.png",Cinemax
 https://atemecdnbalancer-voe.sysln.id/live/eds/CinemaxHD/mpd/CinemaxHD.mpd
@@ -688,13 +677,16 @@ https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/cinemax/KenhCoBan.m3u8
 #KODIPROP:inputstream.adaptive.license_key=d7a9c5215e364b809f148c2d6a7e3045:c92a3b4a7fe9fab97c130468260b963f
 https://ucdn.mediaquest.com.ph/bpk-tv/cg_cinemax/default/index.mpd
 
+#EXTINF:-1 tvg-id="523277" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/pjnAxys.png",Cinemax
+udp://@225.1.2.86:30120
+
 #EXTINF:-1 tvg-id="523277" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/NzROY7r.png",Cinemax
 udp://@225.1.3.14:30120
 
-#EXTINF:-1 tvg-id="557524" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/70Qi1wZ.png",Cinemax HD
+#EXTINF:-1 tvg-id="557724" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/70Qi1wZ.png",Cinemax HD
 http://play.dnsrot.vip:80/live/vanessanook/vinr390x8y/36926.ts
 
-#EXTINF:-1 tvg-id="557524" group-title="Kenh Giai Tri" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/united-states/cinemax-us.png?raw=true",Cinemax HD
+#EXTINF:-1 tvg-id="557724" group-title="Kenh Giai Tri" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/united-states/cinemax-us.png?raw=true",Cinemax HD
 https://v17.thetvapp.to/hls/CinemaxEast/tracks-v1a1/mono.m3u8?token=l-Q2CCOK60hlges3zFbTEw&expires=1780738082&user_id=MThOYUNRcG91R2RZWWlhWU9QOTRQZ1FianBLdVBzcjRQd3JRbVB1bg==
 
 #EXTINF:-1 tvg-id="cinemaxhd" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/NzROY7r.png",Cinemax HD 8Mbps
@@ -702,9 +694,6 @@ http://khaitv.giize.com:8090/225.1.2.86:30120
 
 #EXTINF:-1 tvg-id="cinemaxhd" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/NzROY7r.png",Cinemax HD 8Mbps
 http://pi.4g-internet.info.vn:9999/udp/225.1.2.86:30120
-
-#EXTINF:-1 tvg-id="cinemaxhd" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/NzROY7r.png",Cinemax HD 8Mbps
-udp://@225.1.2.86:30120
 
 #EXTINF:-1 tvg-id="cinemax.br" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/70Qi1wZ.png",Cinemax HD L
 http://play.dnsrot.vip:80/live/vanessanook/vinr390x8y/221865.ts
@@ -717,12 +706,6 @@ http://125.227.210.55:8151/VideoInput/play.ts
 
 #EXTINF:-1 tvg-id="456519" group-title="Kenh Giai Tri",DISCOVERY
 http://umperisn.mywire.org/index.php?id=594675&token=DeaTHLesS
-
-#EXTINF:-1 tvg-id="456519" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/PuteraPerlis74/DOCUMENTARY-LOGO/refs/heads/main/DISCOVERY.png",DISCOVERY
-#KODIPROP:inputstream.adaptive.license_type=clearkey
-#KODIPROP:inputstream.adaptive.license_key={ "keys":[ { "kty":"oct", "k":"A++I3xpHZp5UWeEF47U1sQ", "kid":"J2dnpXiq4urLKEJHzNnrEA" } ], "type":"temporary" }
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Linux; Android 14; 27821-67832-42-315-4231-233-21-43-12-1312-321-23-21-232-) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36
-https://linearjitp-playback.astro.com.my/dash-wv/linear/2510/default_ott.mpd
 
 #EXTINF:-1 tvg-id="456519" group-title="Kenh Giai Tri" tvg-logo="https://vnepg.site/schedule/image.php?url=https%3A%2F%2Fvnepg.site%2Flogos%2F144.png&w=800",DISCOVERY
 #KODIPROP:inputstream.adaptive.manifest_type=mpd
@@ -760,7 +743,7 @@ http://linearjitp-playback.astro.com.my/dash-wv/linear/501/default_ott.mpd
 #KODIPROP:inputstream.adaptive.license_key=934907b134be3963a6263a453846924c:788e2835fb98568aed2f47bbdc091515
 https://s2129134.cdn.mytvnet.vn/pkg20/live_dzones/dscasia.smil/manifest.mpd
 
-#EXTINF:-1 tvg-id="557505" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/master/Discovery%20Asia%20HD.png",DISCOVERY ASIA HD
+#EXTINF:-1 tvg-id="557705" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/master/Discovery%20Asia%20HD.png",DISCOVERY ASIA HD
 https://HaNoiIPTV.short.gy/HaNoiIPTV-Discovery_Asia_HD
 
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",DISCOVERY ASIAmy
@@ -839,18 +822,11 @@ http://ventione.duckdns.org/index.php?id=120768&token=DeaTHLesS
 http://ventione.duckdns.org/index.php?id=488&token=DeaTHLesS
 
 #EXTINF:-1 tvg-id="543256" group-title="Kenh Giai Tri" tvg-logo="https://img.dsmartgo.com.tr/content/r/9C/11894/Thumbnail.png",DISCOVERY CHANNEL
-https://oevladi.testworker0y.workers.dev/channel/RGlzY292ZXJ5IENoYW5uZWw=?token=689d94bd1030d66c381c55257dfc4de7
-
-#EXTINF:-1 tvg-id="543256" group-title="Kenh Giai Tri" tvg-logo="https://img.dsmartgo.com.tr/content/r/9C/11894/Thumbnail.png",DISCOVERY CHANNEL
-https://oevladi.testworker0y.workers.dev/channel/RGlzY292ZXJ5IENoYW5uZWw=?token=aecd9a8437032151b803773f2a680683
+https://oevladi.testworker0y.workers.dev/channel/RGlzY292ZXJ5IENoYW5uZWw=?token=d338231bc51ac29f1d083f4b7b9b1e3e
 
 #EXTINF:-1 tvg-id="543256" group-title="Kenh Giai Tri" tvg-logo="https://logo.huhu.to/logo?c=4155381642.png",DISCOVERY CHANNEL
 #EXTVLCOPT:http-user-agent=VAVOO/2.6
 https://vavoo.to/vavoo-iptv/play/415538164205e5902b4d99
-
-#EXTINF:-1 tvg-id="543256" group-title="Kenh Giai Tri" tvg-logo="https://logo.huhu.to/logo?c=423810267.png",DISCOVERY CHANNEL
-#EXTVLCOPT:http-user-agent=VAVOO/2.6
-https://vavoo.to/vavoo-iptv/play/4238102676112912675d7
 
 #EXTINF:-1 tvg-id="543256" group-title="Kenh Giai Tri",DISCOVERY CHANNEL
 https://www.vavoo.to/play/1337595654/index.m3u8
@@ -939,9 +915,6 @@ https://www.vavoo.to/play/834680150/index.m3u8
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",DISCOVERY HDmy
 https://hls-gateway.vpstv.net/streams/709074.m3u8
 
-#EXTINF:-1 tvg-id="537139" group-title="Kenh Giai Tri",DREAMWORKS
-http://108.181.20.255:27347/livehttpplay?channel_id=23035
-
 #EXTINF:-1 tvg-id="537139" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/N69Cori.png",DREAMWORKS
 http://113.22.22.188:1234/udp/225.1.1.136:30120
 
@@ -966,7 +939,7 @@ https://hls-gateway.vpstv.net/streams/602239.m3u8
 #KODIPROP:inputstream.adaptive.license_key=67dae20527c63dadaaae609aa91577cb:59328f621d56767bc5ff9404a8940683
 https://s2129134.cdn.mytvnet.vn/pkg20/live_dzones/dreamwork.smil/manifest.mpd
 
-#EXTINF:-1 tvg-id="557529" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/master/Dreamworks.png",DREAMWORKS HD
+#EXTINF:-1 tvg-id="557729" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/master/Dreamworks.png",DREAMWORKS HD
 https://HaNoiIPTV.short.gy/HaNoiIPTV-Dreamworks_HD
 
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",DREAMWORKS TV
@@ -989,7 +962,7 @@ http://ott.watch/stream/E9LDH2ZCN7/146.m3u8
 
 #EXTINF:-1 tvg-id="456519" group-title="Kenh Giai Tri" tvg-logo="https://assets-prod.services.toffeelive.com/KS6x-JQBv9knK3AHwDZy/posters/6594d216-aaca-4eee-b6f5-bbc6b80feb15.webp",Discovery
 #EXTVLCOPT:http-user-agent=okhttp/5.1.0
-#EXTHTTP:{"cookie":"Edge-Cache-Cookie=URLPrefix=aHR0cHM6Ly9ibGRjbXByb2QtY2RuLnRvZmZlZWxpdmUuY29t:Expires=1784476846:KeyName=prod_linear:Signature=p3lsu4kYG5pFt74lZz4elezgqlmCh-RfZJdMLxSjwLI9du-9XtOa7M6pMGWLUo-VBT_IOm2e-9MSsdNvzdkdBQ"}
+#EXTHTTP:{"cookie":"Edge-Cache-Cookie=URLPrefix=aHR0cHM6Ly9ibGRjbXByb2QtY2RuLnRvZmZlZWxpdmUuY29t:Expires=1784563236:KeyName=prod_linear:Signature=K-rcgq9GNxavjS8ax_HgMO2ntAWcNe5ixe96dbrsLv5aPB2pQuDr_yJ_XZ8TJKqc7O8LomKPS9R8b-PzqaM3Aw"}
 https://bldcmprod-cdn.toffeelive.com/cdn/live/discovery_sd/playlist.m3u8
 
 #EXTINF:-1 tvg-id="456519" group-title="Kenh Giai Tri" tvg-logo="https://otapp.store/uploads/tv_image/sm/discovery.png",Discovery
@@ -998,6 +971,9 @@ https://book4u.top/worker/index.php?path=api/bc508cf627/playlist.m3u8
 
 #EXTINF:-1 tvg-id="456519" group-title="Kenh Giai Tri",Discovery
 https://hls-gateway.vpstv.net/streams/477746.m3u8
+
+#EXTINF:-1 tvg-id="456519" group-title="Kenh Giai Tri",Discovery
+https://proud-river-e20b.pantonum1.workers.dev/discovery.m3u8
 
 #EXTINF:-1 tvg-id="456671" group-title="Kenh Giai Tri" tvg-logo="https://s12.edge.cdn.sctvonline.vn/cdn-cgi/edge/v2/imaginary.endpoint.cdn.sctvonline.vn/nginx.s12.edge.cdn.sctvonline.vn/tenants/none_tenant/photos/12_cb8fc96b.jpg",Discovery Asia
 http://103.77.241.152:1234/stream/discoveryasia/stream.m3u8
@@ -1077,9 +1053,6 @@ http://kws04u9a.rostelekom.xyz/iptv/MCHUP9AS7DBP5W/140/index.m3u8
 #EXTINF:-1 tvg-id="543256" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/B1DjY6Y.png",Discovery Channel
 http://play.dnsrot.vip:80/live/vanessanook/vinr390x8y/37116.ts
 
-#EXTINF:-1 tvg-id="543256" group-title="Kenh Giai Tri" tvg-logo="https://watchindia.net/images/channels/usa/Discovery_Channel.png",Discovery Channel
-http://watchindia.net:8880/live/65138/11733/2036.ts
-
 #EXTINF:-1 tvg-id="543256" group-title="Kenh Giai Tri" tvg-logo="https://w7.pngwing.com/pngs/482/735/png-transparent-discovery-channel-television-channel-logo-television-show-others-television-globe-logo.png",Discovery Channel
 #EXTVLCOPT:http-user-agent=ExoPlayerDemo/2.15.1 (Linux; Android 13) ExoPlayerLib/2.15.1
 #KODIPROP:inputstream.adaptive.license_type=clearkey
@@ -1101,6 +1074,14 @@ https://hls-gateway.vpstv.net/streams/477713.m3u8
 
 #EXTINF:-1 tvg-id="543256" group-title="Kenh Giai Tri",Discovery Channel
 https://hls-gateway.vpstv.net/streams/709300.m3u8
+
+#EXTINF:-1 tvg-id="543256" group-title="Kenh Giai Tri" tvg-logo="https://cantseeus.com/wp-content/uploads/2023/10/discov.png",Discovery Channel
+#KODIPROP:inputstreamaddon=inputstream.adaptive
+#KODIPROP:inputstream.adaptive.manifest_type=dash
+#KODIPROP:inputstream.adaptive.license_type=clearkey
+#KODIPROP:inputstream.adaptive.license_key={ "keys":[ { "kty":"oct", "k":"A++I3xpHZp5UWeEF47U1sQ", "kid":"J2dnpXiq4urLKEJHzNnrEA" } ], "type":"temporary" }
+#KODIPROP:inputstream.adaptive.stream_headers=User-Agent=Mozilla/5.0 (Linux; Android 13; UltraBox Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/136.0.7103.61 Mobile Safari/537.36
+https://linearjitp-playback.astro.com.my/dash-wv/linear/2510/default_ott.mpd
 
 #EXTINF:-1 tvg-id="543256" group-title="Kenh Giai Tri" tvg-logo="https://static.wikia.nocookie.net/logopedia/images/6/6d/Discovery_white_2019.svg/revision/latest?cb=20210804150956",Discovery Channel
 #KODIPROP:inputstream.adaptive.license_type=clearkey
@@ -1184,7 +1165,7 @@ http://178.217.72.66:8080/Discovery_HD/video.m3u8
 
 #EXTINF:-1 tvg-id="545367" group-title="Kenh Giai Tri" tvg-logo="https://assets-prod.services.toffeelive.com/KC6x-JQBv9knK3AHqjYc/posters/55e554f1-dbbb-47bd-97fe-fca878726c4c.webp",Discovery HD
 #EXTVLCOPT:http-user-agent=okhttp/5.1.0
-#EXTHTTP:{"cookie":"Edge-Cache-Cookie=URLPrefix=aHR0cHM6Ly9ibGRjbXByb2QtY2RuLnRvZmZlZWxpdmUuY29t:Expires=1784476846:KeyName=prod_linear:Signature=p3lsu4kYG5pFt74lZz4elezgqlmCh-RfZJdMLxSjwLI9du-9XtOa7M6pMGWLUo-VBT_IOm2e-9MSsdNvzdkdBQ"}
+#EXTHTTP:{"cookie":"Edge-Cache-Cookie=URLPrefix=aHR0cHM6Ly9ibGRjbXByb2QtY2RuLnRvZmZlZWxpdmUuY29t:Expires=1784563236:KeyName=prod_linear:Signature=K-rcgq9GNxavjS8ax_HgMO2ntAWcNe5ixe96dbrsLv5aPB2pQuDr_yJ_XZ8TJKqc7O8LomKPS9R8b-PzqaM3Aw"}
 https://bldcmprod-cdn.toffeelive.com/cdn/live/discovery_hd/playlist.m3u8
 
 #EXTINF:-1 tvg-id="545367" group-title="Kenh Giai Tri" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/united-states/discovery-channel-icon-2-us.png?raw=true",Discovery HD
@@ -1228,12 +1209,12 @@ https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/dreamworks/KenhCoBan.m3u8
 #KODIPROP:inputstream.adaptive.license_key=6f9c3a218d454b70a2187e5c3d6f9042:337ca7b74b462dd1ba7441553614538a
 https://ucdn.mediaquest.com.ph/bpk-tv/cg_dreamworktag/default/index.mpd
 
-#EXTINF:-1 tvg-id="557529" group-title="Kenh Giai Tri" tvg-logo="https://qp-pldt-image-resizer-cloud-prod.akamaized.net/image/E55A5698-C9E1-11EC-9D64-0242AC120002/0-16x9.jpg?width=1980",DreamWorks HD
+#EXTINF:-1 tvg-id="557729" group-title="Kenh Giai Tri" tvg-logo="https://qp-pldt-image-resizer-cloud-prod.akamaized.net/image/E55A5698-C9E1-11EC-9D64-0242AC120002/0-16x9.jpg?width=1980",DreamWorks HD
 #KODIPROP:inputstream.adaptive.license_type=clearkey
 #KODIPROP:inputstream.adaptive.license_key=1f7c9a425d864e30b2198a3c6f7d5041:b392ee3cd42686a8cff3070eef614745
 https://qp-pldt-live-bpk-ucd-prod.akamaized.net/bpk-tv/cg_dreamworks_hd1/default/index.mpd
 
-#EXTINF:-1 tvg-id="557529" group-title="Kenh Giai Tri" tvg-logo="https://qp-pldt-image-resizer-cloud-prod.akamaized.net/image/E55A5698-C9E1-11EC-9D64-0242AC120002/0-16x9.jpg?width=1980",DreamWorks HD
+#EXTINF:-1 tvg-id="557729" group-title="Kenh Giai Tri" tvg-logo="https://qp-pldt-image-resizer-cloud-prod.akamaized.net/image/E55A5698-C9E1-11EC-9D64-0242AC120002/0-16x9.jpg?width=1980",DreamWorks HD
 #KODIPROP:inputstream.adaptive.license_type=clearkey
 #KODIPROP:inputstream.adaptive.license_key=1f7c9a425d864e30b2198a3c6f7d5041:b392ee3cd42686a8cff3070eef614745
 https://ucdn.mediaquest.com.ph/bpk-tv/cg_dreamworks_hd1/default/index.mpd
@@ -1241,7 +1222,7 @@ https://ucdn.mediaquest.com.ph/bpk-tv/cg_dreamworks_hd1/default/index.mpd
 #EXTINF:-1 tvg-id="537139" group-title="Kenh Giai Tri",Dreamworks
 udp://@225.1.1.136:30120
 
-#EXTINF:-1 tvg-id="557529" group-title="Kenh Giai Tri" tvg-logo="https://e7.pngegg.com/pngimages/393/234/png-clipart-dreamworks-animation-animated-film-logo-dreamworks-poppy-text-film.png",Dreamworks HD
+#EXTINF:-1 tvg-id="557729" group-title="Kenh Giai Tri" tvg-logo="https://e7.pngegg.com/pngimages/393/234/png-clipart-dreamworks-animation-animated-film-logo-dreamworks-poppy-text-film.png",Dreamworks HD
 #EXTVLCOPT:http-user-agent=ExoPlayerDemo/2.15.1 (Linux; Android 13) ExoPlayerLib/2.15.1
 #KODIPROP:inputstream.adaptive.license_type=org.w3.clearkey
 #KODIPROP:inputstream.adaptive.license_key=f08c30b7ee114399b72e77b0c099244b:a33d496875d04510a9b3116ba51ae65d
@@ -1641,16 +1622,13 @@ https://www.vavoo.to/play/64410831/index.m3u8
 #EXTINF:-1 tvg-id="456567" group-title="Kenh Giai Tri" tvg-logo="https://i.ibb.co/3Bt20YR/HBO-cc.png",HBO
 udp://@225.1.1.112:30120
 
-#EXTINF:-1 tvg-id="523290" group-title="Kenh Giai Tri",HBO FAMILY
-http://108.181.20.255:27347/livehttpplay?channel_id=23049
-
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",HBO FAMILY FHD
 http://brpxon.online/live/no31jzd0dk/ghp9n97ltb/795.m3u8
 
-#EXTINF:-1 tvg-id="557441" group-title="Kenh Giai Tri",HBO FAMILY HD
+#EXTINF:-1 tvg-id="557641" group-title="Kenh Giai Tri",HBO FAMILY HD
 http://brpxon.online/live/no31jzd0dk/ghp9n97ltb/40.m3u8
 
-#EXTINF:-1 tvg-id="557441" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/PuteraPerlis74/MOVIES-LOGO/refs/heads/main/HBO%20FAMILY%20HD.png",HBO FAMILY HD
+#EXTINF:-1 tvg-id="557641" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/PuteraPerlis74/MOVIES-LOGO/refs/heads/main/HBO%20FAMILY%20HD.png",HBO FAMILY HD
 #KODIPROP:inputstreamaddon=inputstream.adaptive
 #KODIPROP:inputstream.adaptive.manifest_type=dash
 #KODIPROP:inputstream.adaptive.license_type=org.w3.clearkey
@@ -1725,44 +1703,44 @@ https://qp-pldt-live-bpk-ucd-prod.akamaized.net/bpk-tv/cg_hbofam/default/index.m
 #KODIPROP:inputstream.adaptive.license_key=c6e4b9218f534a709d165c3a7e2f8048:87c0e7cf73324aea32dada7b5f33063d
 https://ucdn.mediaquest.com.ph/bpk-tv/cg_hbofam/default/index.mpd
 
-#EXTINF:-1 tvg-id="557441" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/f181m4I.png",HBO Family HD
+#EXTINF:-1 tvg-id="557641" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/f181m4I.png",HBO Family HD
 http://play.dnsrot.vip:80/live/vanessanook/vinr390x8y/36965.ts
 
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",HBO Familymy
 https://hls-gateway.vpstv.net/streams/709079.m3u8
 
-#EXTINF:-1 tvg-id="557525" group-title="Kenh Giai Tri" tvg-logo="https://static2.vieon.vn/vieplay-image/thumbnail_v4/2024/04/09/rtj1fwg1_ngang-hbo5488cb97fc2af048dc243a9fd848ce17_296_168.png",HBO HD
+#EXTINF:-1 tvg-id="557725" group-title="Kenh Giai Tri" tvg-logo="https://static2.vieon.vn/vieplay-image/thumbnail_v4/2024/04/09/rtj1fwg1_ngang-hbo5488cb97fc2af048dc243a9fd848ce17_296_168.png",HBO HD
 http://103.77.241.152:1234/stream/hbo/stream.m3u8
 
-#EXTINF:-1 tvg-id="557525" group-title="Kenh Giai Tri",HBO HD
+#EXTINF:-1 tvg-id="557725" group-title="Kenh Giai Tri",HBO HD
 http://brpxon.online/live/no31jzd0dk/ghp9n97ltb/41.m3u8
 
-#EXTINF:-1 tvg-id="557525" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/U5LrKAW.png",HBO HD
+#EXTINF:-1 tvg-id="557725" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/U5LrKAW.png",HBO HD
 http://play.dnsrot.vip:80/live/vanessanook/vinr390x8y/36964.ts
 
-#EXTINF:-1 tvg-id="557525" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/master/HBO%20HD.png",HBO HD
+#EXTINF:-1 tvg-id="557725" group-title="Kenh Giai Tri" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/master/HBO%20HD.png",HBO HD
 https://HaNoiIPTV.short.gy/HaNoiIPTV-HBO_HD
 
-#EXTINF:-1 tvg-id="557525" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/EnA2RcD.png",HBO HD
+#EXTINF:-1 tvg-id="557725" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/EnA2RcD.png",HBO HD
 https://ott.udptv.net/stream/iptv/hbohd/master.m3u8?u=cocked&p=dd0abb52723d22acc0f97fe0336480feaa88a37ecda55a138a8d5e0ee14b0664
 
-#EXTINF:-1 tvg-id="557525" group-title="Kenh Giai Tri" tvg-logo="https://qp-pldt-image-resizer-cloud-prod.akamaized.net/image/B741DD7A-A7F8-4F8A-A549-9EF411020F9D/0-16x9.jpg?width=1980",HBO HD
+#EXTINF:-1 tvg-id="557725" group-title="Kenh Giai Tri" tvg-logo="https://qp-pldt-image-resizer-cloud-prod.akamaized.net/image/B741DD7A-A7F8-4F8A-A549-9EF411020F9D/0-16x9.jpg?width=1980",HBO HD
 #KODIPROP:inputstream.adaptive.license_type=clearkey
 #KODIPROP:inputstream.adaptive.license_key=d7f3c8215a944e068b176c9d2a5f3048:93c0a798243d6443864d1a7ff3e42c05
 https://qp-pldt-live-bpk-ucd-prod.akamaized.net/bpk-tv/cg_hbohd/default/index.mpd
 
-#EXTINF:-1 tvg-id="557525" group-title="Kenh Giai Tri" tvg-logo="https://qp-pldt-image-resizer-cloud-prod.akamaized.net/image/B741DD7A-A7F8-4F8A-A549-9EF411020F9D/0-16x9.jpg?width=1980",HBO HD
+#EXTINF:-1 tvg-id="557725" group-title="Kenh Giai Tri" tvg-logo="https://qp-pldt-image-resizer-cloud-prod.akamaized.net/image/B741DD7A-A7F8-4F8A-A549-9EF411020F9D/0-16x9.jpg?width=1980",HBO HD
 #KODIPROP:inputstream.adaptive.license_type=clearkey
 #KODIPROP:inputstream.adaptive.license_key=d7f3c8215a944e068b176c9d2a5f3048:93c0a798243d6443864d1a7ff3e42c05
 https://ucdn.mediaquest.com.ph/bpk-tv/cg_hbohd/default/index.mpd
 
-#EXTINF:-1 tvg-id="557525" group-title="Kenh Giai Tri",HBO HD
+#EXTINF:-1 tvg-id="557725" group-title="Kenh Giai Tri",HBO HD
 https://www.vavoo.to/play/1525351276/index.m3u8
 
-#EXTINF:-1 tvg-id="557525" group-title="Kenh Giai Tri",HBO HD
+#EXTINF:-1 tvg-id="557725" group-title="Kenh Giai Tri",HBO HD
 https://www.vavoo.to/play/1620501998/index.m3u8
 
-#EXTINF:-1 tvg-id="557525" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/Fx6qJIj.png",HBO HD
+#EXTINF:-1 tvg-id="557725" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/Fx6qJIj.png",HBO HD
 #KODIPROP:inputstream.adaptive.license_type=clearkey
 #KODIPROP:inputstream.adaptive.license_key=df18f6a05bab28d89e5dc01d88f4deb8:baceb525467c0db22ba83090616c1ad0
 https://zap-live1-ott.izzigo.tv/5/out/u/dash/HBO-HD/default.mpd
@@ -1880,7 +1858,7 @@ https://www.vavoo.to/play/833992424/index.m3u8
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",HBO SIGNATURE FHD
 http://brpxon.online/live/no31jzd0dk/ghp9n97ltb/796.m3u8
 
-#EXTINF:-1 tvg-id="557446" group-title="Kenh Giai Tri",HBO SIGNATURE HD
+#EXTINF:-1 tvg-id="557646" group-title="Kenh Giai Tri",HBO SIGNATURE HD
 http://brpxon.online/live/no31jzd0dk/ghp9n97ltb/43.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",HBO SIGNATURE SD
@@ -1935,13 +1913,13 @@ https://qp-pldt-live-bpk-ucd-prod.akamaized.net/bpk-tv/cg_hbosign/default/index.
 #KODIPROP:inputstream.adaptive.license_key=74d8f5916c234b80a9179e5d3c7a2046:f8d2753ff54579efc01d3373acf21f96
 https://ucdn.mediaquest.com.ph/bpk-tv/cg_hbosign/default/index.mpd
 
-#EXTINF:-1 tvg-id="557446" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/yR8vTk8.png",HBO Signature HD
+#EXTINF:-1 tvg-id="557646" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/yR8vTk8.png",HBO Signature HD
 http://play.dnsrot.vip:80/live/vanessanook/vinr390x8y/36962.ts
 
-#EXTINF:-1 tvg-id="557446" group-title="Kenh Giai Tri" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/5f/HBO_3_logo.png",HBO Signature HD
+#EXTINF:-1 tvg-id="557646" group-title="Kenh Giai Tri" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/5f/HBO_3_logo.png",HBO Signature HD
 https://v16.thetvapp.to/hls/HBOSignatureEast/tracks-v1a1/mono.m3u8?token=OfdHXfqoAsffodX3pqjrow&expires=1780738838&user_id=MThOYUNRcG91R2RZWWlhWU9QOTRQZ1FianBLdVBzcjRQd3JRbVB1bg==
 
-#EXTINF:-1 tvg-id="557446" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/xDsrjlD.png",HBO Signature HD
+#EXTINF:-1 tvg-id="557646" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/xDsrjlD.png",HBO Signature HD
 #KODIPROP:inputstream.adaptive.license_type=clearkey
 #KODIPROP:inputstream.adaptive.license_key=5782156290f035ef28ae66cca252eedd:10d8bb6d9f9852747298487ab3c4afa3
 https://zap-live1-ott.izzigo.tv/5/out/u/dash/HBO-SIGNATURE-HD/default.mpd
@@ -1986,10 +1964,7 @@ http://storetvx.xyz:2095/Enes.9461/Nes.9461/57679
 http://umperisn.mywire.org/index.php?id=594677&token=DeaTHLesS
 
 #EXTINF:-1 tvg-id="543108" group-title="Kenh Giai Tri" tvg-logo="https://a.prectv67.lol/uploads/cache/channel_thumb/uploads/jpg/666cbc1feac437aea3fc2c8218b9539e.jpg",NATIONAL GEOGRAPHIC
-https://oevladi.testworker0y.workers.dev/channel/TmF0aW9uYWwgR2VvZ3JhcGhpYw==?token=689d94bd1030d66c381c55257dfc4de7
-
-#EXTINF:-1 tvg-id="543108" group-title="Kenh Giai Tri" tvg-logo="https://a.prectv67.lol/uploads/cache/channel_thumb/uploads/jpg/666cbc1feac437aea3fc2c8218b9539e.jpg",NATIONAL GEOGRAPHIC
-https://oevladi.testworker0y.workers.dev/channel/TmF0aW9uYWwgR2VvZ3JhcGhpYw==?token=aecd9a8437032151b803773f2a680683
+https://oevladi.testworker0y.workers.dev/channel/TmF0aW9uYWwgR2VvZ3JhcGhpYw==?token=d338231bc51ac29f1d083f4b7b9b1e3e
 
 #EXTINF:-1 tvg-id="543108" group-title="Kenh Giai Tri",NATIONAL GEOGRAPHIC
 #EXTVLCOPT:http-user-agent=VAVOO/2.6
@@ -2054,9 +2029,6 @@ http://ventione.duckdns.org/index.php?id=17121&token=DeaTHLesS
 #EXTINF:-1 tvg-id="543108" group-title="Kenh Giai Tri",National Geographic
 http://ventione.duckdns.org/index.php?id=67570&token=DeaTHLesS
 
-#EXTINF:-1 tvg-id="543108" group-title="Kenh Giai Tri" tvg-logo="https://watchindia.net/images/channels/usa/NAT_GEO_HD.png",National Geographic
-http://watchindia.net:8880/live/65138/11733/2037.ts
-
 #EXTINF:-1 tvg-id="543108" group-title="Kenh Giai Tri" tvg-logo="https://jiotv.catchup.cdn.jio.com/dare_images/images/National_Geographic.png",National Geographic
 #KODIPROP:inputstream.adaptive.license_type=clearkey
 #KODIPROP:inputstream.adaptive.license_key=https://alex4528.site/jplus/license
@@ -2099,9 +2071,6 @@ http://kws04u9a.akciatv.ru/iptv/MCHUP9AS7DBP5W/14001/index.m3u8
 #EXTINF:-1 tvg-id="543180" group-title="Kenh Giai Tri",National Geographic HD
 #EXTGRP:Познавательные
 http://kws04u9a.rostelekom.xyz/iptv/MCHUP9AS7DBP5W/14001/index.m3u8
-
-#EXTINF:-1 tvg-id="543180" group-title="Kenh Giai Tri" tvg-logo="https://watchindia.net/images/channels/hindi/National_Geographic_HD.png",National Geographic HD
-http://watchindia.net:8880/live/65138/11733/790.ts
 
 #EXTINF:-1 tvg-id="543180" group-title="Kenh Giai Tri" tvg-logo="https://jiotv.catchup.cdn.jio.com/dare_images/images/National_Geographic_HD.png",National Geographic HD
 #KODIPROP:inputstream.adaptive.license_type=clearkey
@@ -2163,14 +2132,15 @@ http://23.237.104.106:8080/USA_OUTDOOR/mpegts
 #EXTGRP:Познавательные
 http://kws04u9a.akciatv.ru/iptv/MCHUP9AS7DBP5W/119/index.m3u8
 
-#EXTINF:-1 tvg-id="524153" group-title="Kenh Giai Tri" tvg-logo="http://watchindia.net/images/channels/usa/Outdoor_Channel.png",Outdoor Channel
-http://watchindia.net:8880/live/65138/11733/2119.ts
-
 #EXTINF:-1 tvg-id="524153" group-title="Kenh Giai Tri" tvg-logo="https://iili.io/JmoCZ5g.png",Outdoor Channel
 https://cdn-apse1-prod.tsv2.amagi.tv/linear/amg00718-outdoorchannela-outdoortvnz-samsungnz/playlist.m3u8
 
 #EXTINF:-1 tvg-id="524153" group-title="Kenh Giai Tri" tvg-logo="https://a.jsrdn.com/hls/23208/outdoor-channel/logo_20250911_181607_70.png",Outdoor Channel
 https://d3ehdya3kqqd52.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/DistroTV-MuxIP-OutdoorChannelV2/455.m3u8
+
+#EXTINF:-1 tvg-id="524153" group-title="Kenh Giai Tri" tvg-logo="https://images.fptplay53.net/media/channels/icon_channel_outdoor-channel_165649323545.png",Outdoor Channel
+#EXTVLCOPT:http-user-agent=VThanhTivi
+https://live.fptplay53.net/epzhd2/outdoorfhd_vhls.smil/chunklist_b5000000.m3u8
 
 #EXTINF:-1 tvg-id="524153" group-title="Kenh Giai Tri" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/united-states/outdoor-channel-us.png?raw=true",Outdoor Channel
 https://ott.udptv.xyz/stream/udptvus/outdoorchannel/master.m3u8?u=cocked&p=dd0abb52723d22acc0f97fe0336480feaa88a37ecda55a138a8d5e0ee14b0664
@@ -2183,9 +2153,6 @@ https://amg00718-outdoorchannela-outdoortv-samsungau-uc7mp.amagi.tv/playlist/amg
 
 #EXTINF:-1 tvg-id="" group-title="Kenh Giai Tri",Outdoor Channel AU
 https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00718-outdoorchannela-outdoorchannel-lgau/playlist.m3u8
-
-#EXTINF:-1 tvg-id="524111" group-title="Kenh Giai Tri" tvg-logo="https://i.imgur.com/x4zXtYX.png",Outdoor Channel HD
-https://live.fptplay53.net/epzhd2/outdoorfhd_vhls.smil/chunklist_b5000000.m3u8
 
 #EXTINF:-1 tvg-id="524111" group-title="Kenh Giai Tri" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/united-states/outdoor-channel-us.png?raw=true",Outdoor Channel HD
 https://v15.thetvapp.to/hls/OutdoorChannel/tracks-v1a1/mono.m3u8?token=ERXxu-aw_DSiMLpsR1JdfA&expires=1780739368&user_id=MThOYUNRcG91R2RZWWlhWU9QOTRQZ1FianBLdVBzcjRQd3JRbVB1bg==
@@ -2271,7 +2238,7 @@ https://vtvgolive-vtv.vtvdigital.vn/i_D88YdpVKGfG89UJGrPCg/1770066010/vtvgo/viet
 #EXTINF:-1 tvg-id="vietnamtoday" group-title="Kenh VTV" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/master/Vietnam%20Today%20HD.png",VIETNAM TODAY HD
 https://HaNoiIPTV.short.gy/HaNoiIPTV-Vietnam_Today_HD
 
-#EXTINF:-1 tvg-id="vietnamtoday" group-title="Kenh VTV" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250905/2025090515/S1CWNGr2gI-VIETNAMTODAY-THUMBNAIL-KENHVTVgo-500x281.webp",VIETNAM TODAY HD
+#EXTINF:-1 tvg-id="vietnamtoday" group-title="Kenh VTV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/d8/VietnamTodayVTV.svg",VIETNAM TODAY HD
 https://rg.pipitv,top/vntoday
 
 #EXTINF:-1 tvg-id="vietnam-today-hd" group-title="Kenh VTV" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/channel/20250905/2025090515/S1CWNGr2gI-VIETNAMTODAY-THUMBNAIL-KENHVTVgo-500x281.webp",VIETNAM TODAY HD
@@ -2396,11 +2363,8 @@ https://live.fptplay53.net/live/media/VTV1HD/live_hls_avc/index.m3u8
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/nfkmvAY.png",VTV1
 https://live.fptplay53.net/live/media/vtv1/live247-hls-avc/index.m3u8
 
-#EXTINF:-1 tvg-id="vtv1hd" group-title="Kenh VTV" tvg-logo="https://vnepg.site/logos/1.png",VTV1
+#EXTINF:-1 tvg-id="vtv1hd" group-title="Kenh VTV" tvg-logo="https://i.ytimg.com/vi/dGohEWXz7Sk/maxresdefault.jpg",VTV1
 https://live.fptplay53.net/live/media/vtv1/live247-hls-avc/vtv1-avc1_5600000=10000-mp4a_131600=20000.m3u8
-
-#EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/nfkmvAY.png",VTV1
-https://live.fptplay53.net/live/media/vtv1/live247-hls-avc/vtv1.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/logo/VTV1_150x902_1675159127.webp",VTV1
 #EXTVLCOPT:http-user-agent=Mozilla AppleWebKit Chrome Safari
@@ -2411,6 +2375,9 @@ udp://@225.1.2.249:30120
 
 #EXTINF:-1 tvg-id="vtv1hd" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/nfkmvAY.png",VTV1
 udp://@225.1.3.1:30120
+
+#EXTINF:-1 tvg-id="vtv1hd" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/nfkmvAY.png",VTV1 FPT Play
+https://live.fptplay53.net/live/media/vtv1/live247-hls-avc/vtv1.m3u8
 
 #EXTINF:-1 tvg-id="411383" group-title="Kenh VTV" tvg-logo="http://iptv.nhadai.org/img/vtv1-hd.png",VTV1 HD
 #EXTVLCOPT:http-user-agent=Mozilla AppleWebKit Chrome Safari
@@ -2484,12 +2451,15 @@ http://pcriptv.ddns.net:9981/stream/channelid/809295875?ticket=30FEB8DFA095C20F2
 https://e8.endpoint.cdn.sctvonline.vn/hls/vtv2/index.m3u8
 
 #EXTINF:-1 tvg-id="vtv2hd" group-title="Kenh VTV" tvg-logo="https://i.ytimg.com/vi/Cim-egsLkqw/maxresdefault.jpg",VTV2
+https://event-a.fptplay53.net/live/media/v2abr/live247-hls-avc/v2abr-avc1_5600000=10000-mp4a_131600=20000.m3u8
+
+#EXTINF:-1 tvg-id="vtv2hd" group-title="Kenh VTV" tvg-logo="https://i.ytimg.com/vi/Cim-egsLkqw/maxresdefault.jpg",VTV2
 https://live.fptplay53.net/fnxch2/vtv2hd_abr.smil/chunklist.m3u8
 
 #EXTINF:-1 tvg-id="vtv2hd" group-title="Kenh VTV" tvg-logo="https://vnepg.site/logos/2.png",VTV2
 https://live.fptplay53.net/fnxch2/vtv2hd_abr.smil/chunklist_b4200000.m3u8
 
-#EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/BVwi3K3.png",VTV2
+#EXTINF:-1 tvg-id="vtv2hd" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/BVwi3K3.png",VTV2
 https://live.fptplay53.net/live/media/v2abr/live247-hls-avc/v2abr-avc1_5600000=10000-mp4a_131600=20000.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/BVwi3K3.png",VTV2
@@ -2590,6 +2560,9 @@ https://247.dpdns.org/module/IPTV/?id=vtv3&accKenh=nactha
 https://e8.endpoint.cdn.sctvonline.vn/hls/vtv3/index.m3u8
 
 #EXTINF:-1 tvg-id="vtv3hd" group-title="Kenh VTV" tvg-logo="https://i.ytimg.com/vi/4jr8Y13NSME/maxresdefault.jpg",VTV3
+https://event-a.fptplay53.net/live/media/v3abr/live247-hls-avc/v3abr-avc1_5600000=10000-mp4a_131600=20000.m3u8
+
+#EXTINF:-1 tvg-id="vtv3hd" group-title="Kenh VTV" tvg-logo="https://i.ytimg.com/vi/4jr8Y13NSME/maxresdefault.jpg",VTV3
 https://live-a.fptplay53.net/live/media/VTV3HD/live_hls_avc/index.m3u8
 
 #EXTINF:-1 tvg-id="vtv3hd" group-title="Kenh VTV" tvg-logo="https://vnepg.site/logos/3.png",VTV3
@@ -2601,7 +2574,7 @@ https://live.fptplay53.net/fnxhd1/vtv3hd_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 tvg-id="vtv3hd" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/7rLCvgS.png",VTV3
 https://live.fptplay53.net/live/media/VTV3HD/live_hls_avc/index.m3u8
 
-#EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/7rLCvgS.png",VTV3
+#EXTINF:-1 tvg-id="vtv3hd" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/7rLCvgS.png",VTV3
 https://live.fptplay53.net/live/media/v3abr/live247-hls-avc/v3abr-avc1_5600000=10000-mp4a_131600=20000.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/7rLCvgS.png",VTV3
@@ -2706,7 +2679,7 @@ https://live.fptplay53.net/live/media/VTV4HD/live_hls_avc/index.m3u8
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/9zVTtsA.png",VTV4
 https://live.fptplay53.net/live/media/vtv4/live247-hls-avc/index.m3u8
 
-#EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/9zVTtsA.png",VTV4
+#EXTINF:-1 tvg-id="vtv4hd" group-title="Kenh VTV" tvg-logo="https://i.ytimg.com/vi/Opv4PmUyi8g/maxresdefault.jpg",VTV4
 https://live.fptplay53.net/live/media/vtv4/live247-hls-avc/vtv4-avc1_5600000=10000-mp4a_131600=20000.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/logo/VTV4_150x901_1675158857.webp",VTV4
@@ -2798,7 +2771,8 @@ https://live.fptplay53.net/epzch2/vtv5hd_abr.smil/chunklist_b4200000.m3u8
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/7qPKNFU.png",VTV5
 https://live.fptplay53.net/live/media/vtv5/live247-hls-avc/index.m3u8
 
-#EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/7qPKNFU.png",VTV5
+#EXTINF:-1 tvg-id="vtv5hd" group-title="Kenh VTV" tvg-logo="https://s12811.cdn.mytvnet.vn/vimages/b5/5c/cc/c2/22/29/b5cc2-pvtv5hd-channel-unkn.png",VTV5
+#EXTVLCOPT:http-user-agent=cvmedia/1.1.0
 https://live.fptplay53.net/live/media/vtv5/live247-hls-avc/vtv5-avc1_5600000=10000-mp4a_131600=20000.m3u8
 
 #EXTINF:-1 tvg-id="vtv5hd" group-title="Kenh VTV" tvg-logo="https://i.postimg.cc/MKVV56Gh/VTV5.png",VTV5
@@ -2918,7 +2892,7 @@ https://live.fptplay53.net/fnxhd1/vtv5tnb_vhls.smil/chunklist_b5000000.m3u8
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/mIUWkDx.png",VTV5 Ty Nam B
 https://live.fptplay53.net/live/media/vtv5tnb/live-hls-avc/index.m3u8
 
-#EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/mIUWkDx.png",VTV5 Ty Nam B
+#EXTINF:-1 tvg-id="vtv5hdtnb" group-title="Kenh VTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/maxresdefault.jpg",VTV5 Ty Nam B
 https://live.fptplay53.net/live/media/vtv5tnb/live-hls-avc/vtv5tnb-avc1_4000000=10000-mp4a_131600=20000.m3u8
 
 #EXTINF:-1 tvg-id="vtv5-tay-nam-bo" group-title="Kenh VTV" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtv5-tay-nam-bo/KenhCoBan.png",VTV5 Ty Nam B
@@ -2983,7 +2957,7 @@ https://live.fptplay53.net/live/media/vtv5tn/live-hls-avc/vtv5tn-avc1_4000000=10
 #EXTINF:-1 tvg-id="vtv5-tay-nguyen" group-title="Kenh VTV" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/vtv5-tay-nguyen/KenhCoBan.png",VTV5 Ty Nguyn
 https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/vtv5-tay-nguyen/KenhCoBan.m3u8
 
-#EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/R8c2swd.png",VTV5 Ty Nguyn
+#EXTINF:-1 tvg-id="vtv5hdtn" group-title="Kenh VTV" tvg-logo="https://s7730.cdn.mytvnet.vn/vimages/d4/46/61/1c/cf/f6/d461c-pvtv5tynguynhd-channel-unkn.png",VTV5 Ty Nguyn
 https://vips-livecdn.fptplay.net/live/media/vtv5tn/live-hls-avc/vtv5tn-avc1_4000000=10000-mp4a_131600=20000.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://vtvgo-assets.vtvdigital.vn/assets/images/v2/logo/vtv5-tay-nguyen1.jpg",VTV5 Ty Nguyn
@@ -3035,7 +3009,10 @@ http://pi.4g-internet.info.vn:9999/udp/225.1.1.108:30120
 #EXTINF:-1 tvg-id="vtv6hd" group-title="Kenh VTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/Logo/refs/heads/main/VTV6.png",VTV6
 https://247.dpdns.org/module/IPTV/?id=vtv6&accKenh=nactha
 
-#EXTINF:-1 tvg-id="vtv6hd" group-title="Kenh VTV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/VTV6_logo_2026_final.svg/960px-VTV6_logo_2026_final.svg.png",VTV6
+#EXTINF:-1 tvg-id="vtv6hd" group-title="Kenh VTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/Logo/refs/heads/main/VTV6.png",VTV6
+https://event-a.fptplay53.net/live/media/v6abr/live247-hls-avc/v6abr-avc1_5600000=10000-mp4a_131600=20000.m3u8
+
+#EXTINF:-1 tvg-id="vtv6hd" group-title="Kenh VTV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/VTV6_logo_2026_final.svg/1920px-VTV6_logo_2026_final.svg.png",VTV6
 https://live.fptplay53.net/live/media/v6abr/live247-hls-avc/v6abr-avc1_5600000=10000-mp4a_131600=20000.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://raw.githubusercontent.com/ntd249/logochannel/refs/heads/main/VTV6.png",VTV6
@@ -3088,14 +3065,14 @@ https://e2.endpoint.cdn.sctvonline.vn/hls/vtv7/index.m3u8
 #EXTINF:-1 tvg-id="vtv7hd" group-title="Kenh VTV" tvg-logo="https://i.postimg.cc/wBTN9Dkp/VTV7.png",VTV7
 https://e2.endpoint.cdn.sctvonline.vn/hls/vtv7/index.m3u8?|Referer=http://sctvonline.vn/
 
+#EXTINF:-1 tvg-id="vtv7hd" group-title="Kenh VTV" tvg-logo="https://i.ytimg.com/vi/hWt5JN_B66Y/maxresdefault.jpg",VTV7
+https://event-a.fptplay53.net/live/media/v7abr/live247-hls-avc/v7abr-avc1_5600000=10000-mp4a_131600=20000.m3u8
+
 #EXTINF:-1 tvg-id="vtv7hd" group-title="Kenh VTV" tvg-logo="https://vnepg.site/logos/9.png",VTV7
 https://live.fptplay53.net/fnxhd1/vtv7hd_vhls.smil/chunklist_b5000000.m3u8
 
-#EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/AgamSNe.png",VTV7
+#EXTINF:-1 tvg-id="vtv7hd" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/AgamSNe.png",VTV7
 https://live.fptplay53.net/live/media/v7abr/live247-hls-avc/v7abr-avc1_5600000=10000-mp4a_131600=20000.m3u8
-
-#EXTINF:-1 tvg-id="vtv7hd" group-title="Kenh VTV" tvg-logo="https://i.ytimg.com/vi/hWt5JN_B66Y/maxresdefault.jpg",VTV7
-https://live.fptplay53.net/live/media/v7abr/live247-hls-avc/v7abr-avc1_5600000=10000-mp4a_140800_vie=20000.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/AgamSNe.png",VTV7
 https://live.fptplay53.net/live/media/vtv7/live247-hls-avc/index.m3u8
@@ -3192,7 +3169,7 @@ https://e3.endpoint.cdn.sctvonline.vn/hls/vtv8/index.m3u8?|Referer=http://sctvon
 #EXTINF:-1 tvg-id="vtv8hd" group-title="Kenh VTV" tvg-logo="https://vnepg.site/logos/10.png",VTV8
 https://live.fptplay53.net/epzhd1/vtv8hd_vhls.smil/chunklist_b5000000.m3u8
 
-#EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/lpcltL9.png",VTV8
+#EXTINF:-1 tvg-id="vtv8hd" group-title="Kenh VTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/vtv8.jpg",VTV8
 https://live.fptplay53.net/fnxhd1/vtv8hd_vhls.smil/chunklist_b5000000.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/lpcltL9.png",VTV8
@@ -3281,17 +3258,17 @@ https://e2.endpoint.cdn.sctvonline.vn/hls/vtv9/index.m3u8
 #EXTINF:-1 tvg-id="vtv9hd" group-title="Kenh VTV" tvg-logo="https://i.postimg.cc/5t7CyjPF/VTV9.png",VTV9
 https://e2.endpoint.cdn.sctvonline.vn/hls/vtv9/index.m3u8?|Referer=http://sctvonline.vn/
 
+#EXTINF:-1 tvg-id="vtv9hd" group-title="Kenh VTV" tvg-logo="https://i.ytimg.com/vi/APl10jiVAlQ/maxresdefault.jpg",VTV9
+https://event-a.fptplay53.net/live/media/v9abr/live247-hls-avc/v9abr-avc1_5600000=10000-mp4a_131600=20000.m3u8
+
 #EXTINF:-1 tvg-id="vtv9hd" group-title="Kenh VTV" tvg-logo="https://vnepg.site/logos/11.png",VTV9
 https://live.fptplay53.net/epzch2/vtv9hd_abr.smil/chunklist_b4200000.m3u8
 
 #EXTINF:-1 tvg-id="vtv9hd" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/Ex1VkGQ.png",VTV9
 https://live.fptplay53.net/fnxhd1/vtv9_vhls.smil/chunklist_b5000000.m3u8
 
-#EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/Ex1VkGQ.png",VTV9
+#EXTINF:-1 tvg-id="vtv9hd" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/Ex1VkGQ.png",VTV9
 https://live.fptplay53.net/live/media/v9abr/live247-hls-avc/v9abr-avc1_5600000=10000-mp4a_131600=20000.m3u8
-
-#EXTINF:-1 tvg-id="vtv9hd" group-title="Kenh VTV" tvg-logo="https://i.ytimg.com/vi/APl10jiVAlQ/maxresdefault.jpg",VTV9
-https://live.fptplay53.net/live/media/v9abr/live247-hls-avc/v9abr-avc1_5600000=10000-mp4a_140800_vie=20000.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="Kenh VTV" tvg-logo="https://i.imgur.com/Ex1VkGQ.png",VTV9
 https://live.fptplay53.net/live/media/vtv9/live247-hls-avc/index.m3u8
