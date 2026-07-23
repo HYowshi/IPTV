@@ -26,7 +26,7 @@ http://pi.4g-internet.info.vn:9999/udp/225.1.3.30:30120
 #EXTINF:-1 tvg-id="vtvcantho" group-title="Kenh VTV" tvg-logo="https://vnepg.site/logos/8.png",VTV_Can_Tho
 http://pi.4g-internet.info.vn:9999/udp/225.1.2.245:30120
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/fe6f00dd-e418-44bf-9c0a-ae47cec1a67c.jpg?width=500" tvg-id="vtv7.vn@HD",VTV7 HD (1080p)
-http://pi.4g-internet.info.vn:9999/udp/225.1.3.15:30120
+https://247.dpdns.org/VIP/vtv7/nactha
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/447aba67-bee4-443a-ac5b-f6e457ff4abe.jpg?width=500" tvg-id="vtv8.vn@HD",VTV8 (1080p)
 http://pi.4g-internet.info.vn:9999/udp/225.1.2.166:30120
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/7f951ab0-a128-44a9-84cd-ba8faf108ad3.jpg?width=500" tvg-id="vtv9.vn@HD",VTV9 (1080p)
