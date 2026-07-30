@@ -88,7 +88,7 @@ https://vmttv.dpdns.org/VTVGo/?sctv18
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/sctv19.png" tvg-id="sctv19hd",SCTV19
 https://liveh34.vtvprime.vn/hls/SCTV19/03.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV20.png" tvg-id="sctv20hd",SCTV20
-https://liveh34.vtvprime.vn/hls/SCTV20/03.m3u8
+https://vmttv.dpdns.org/VTVGo/?sctv20
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV21.png" tvg-id="sctv21hd",SCTV21 - Việt Nam Ký Ức
 https://liveh34.vtvprime.vn/hls/SCTV21/03.m3u8
 #EXTINF:-1 group-title="SCTV" tvg-logo="https://raw.githubusercontent.com/vuminhthanh12/vuminhthanh12/refs/heads/main/SCTV22.png" tvg-id="sctv22hd",:SCTV22
