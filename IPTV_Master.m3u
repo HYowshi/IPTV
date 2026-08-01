@@ -191,7 +191,7 @@ https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/nhk/KenhCoBan.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/kbs-world/KenhCoBan.png" tvg-id="", KBS World
 https://freem3u.xyz/api/live/play.m3u8?vid=213
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://toiyeuvietnam.dpdns.org/Logo/history-hd/KenhCoBan.png" tvg-id="", History HD
-https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/history-hd/KenhCoBan.m3u8
+https://freem3u.xyz/api/live/play.m3u8?vid=9856
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://images.fptplay53.net/media/channels/icon_channel_da-vinci-learning_165655659384.png" tvg-id="", Davinci HD
 https://toiyeuvietnam.dpdns.org/TuyetDoiKhongKinhDoanh/davinci-hd/KenhCoBan.m3u8
 #EXTINF:-1 group-title="Quốc Tế" tvg-logo="https://i.vimeocdn.com/video/852785228-36403e3d29153c02a4acfcf0ca4182b0be0bef3e5b43355eafc33614ee972a9b-d?f=webp" tvg-id="", Asian Food Network
