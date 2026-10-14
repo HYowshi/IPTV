@@ -151,7 +151,7 @@ http://118.107.85.5:1935/live/smil:LTV.smil/chunklist.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="https://img-ali1.tv360.vn/image1/2023/05/16/03/1684183176485/baf863bc2690_640_360.png" tvg-id="langson",Lạng SƠn
 https://stream.langsontv.vn/live/285c78da0c246524c90917842f8de03bd21/playlist.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="https://media.baoquangninh.vn/upload/files/logo/QTV1.jpg" tvg-id="quangninh1",QTV1 HD - Báo và PTTH Quảng Ninh
-https://live.baoquangninh.vn/qtvlive/tv1live.m3u8
+https://cdn.baoquangninh.vn/live/285f5e4256ea38d48eebdc6175909c847fe/chunklist.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo=" https://i.ytimg.com/vi/cTNt-U1akXw/hq720.jpg" tvg-id="quangninh3",QTV3 HD - Báo và PTTH Quảng Ninh
 https://live.baoquangninh.vn/qtvlive/tv3live.m3u8
 #EXTINF:-1 group-title="Địa phương" tvg-logo="https://thainguyentv.vn/modules/frontend/themes/ptthtn/images/logo.png" tvg-id="ThaiNguyenTV.vn@SD",Thái Nguyên TV (720p)
