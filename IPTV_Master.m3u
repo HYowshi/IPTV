@@ -26,11 +26,11 @@ https://vmttv.dpdns.org/tv360/?id=vtv5-tay-nguyen
 #EXTINF:-1 tvg-id="vtvcantho" group-title="Kenh VTV" tvg-logo="https://vnepg.site/logos/8.png",VTV_Can_Tho
 https://live.fptplay53.net/fnxch2/vtvcantho_abr.smil/chunklist_b4200000.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/fe6f00dd-e418-44bf-9c0a-ae47cec1a67c.jpg?width=500" tvg-id="vtv7.vn@HD",VTV7 HD (1080p)
-https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/vtv7/master.m3u8
+https://vmttv.dpdns.org/tv360/?id=vtv7
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/447aba67-bee4-443a-ac5b-f6e457ff4abe.jpg?width=500" tvg-id="vtv8.vn@HD",VTV8 (1080p)
 https://dethich.pw/vtv8/index.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/7f951ab0-a128-44a9-84cd-ba8faf108ad3.jpg?width=500" tvg-id="vtv9.vn@HD",VTV9 (1080p)
-https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/vtv9/master.m3u8
+https://vmttv.dpdns.org/tv360/?id=vtv9
 
 # ================= Hoạt Hình =================
 #EXTINF:-1 group-title="Hoạt hình" tvg-logo="https://wallpaperaccess.com/full/2391927.jpg" tvg-id="",Conan (1080p)
