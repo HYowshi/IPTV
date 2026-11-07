@@ -12,7 +12,7 @@ https://freem3u.xyz/api/live/play.m3u8?vid=20
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5de59236-89a2-4387-8664-f2fc27608093.jpg?width=500" tvg-id="VTV1.vn@HD",VTV1 (1080p)
 https://freem3u.xyz/api/live/play.m3u8?vid=2
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/5ac4a9fb-6da7-4785-aab5-ae85e471d869.jpg?width=500" tvg-id="VTV2.vn@HD",VTV2 (1080p)
-https://vmttv.dpdns.org/tv360/?id=vtv2
+http://125hvt.ddns.net:21585/vtv2/playlist.m3u8
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/292a3f4e-c6ee-4858-9c49-f61dde69a854.jpg?width=500" tvg-id="VTV3.vn@HD",VTV3 (1080p)
 https://vmttv.dpdns.org/tv360/?id=vtv3
 #EXTINF:-1 group-title="Kenh VTV" tvg-logo="https://vtvgo-images.vtvdigital.vn/images/20230626/f161041d-3a3f-4c0a-88f2-ae97f8052ee7.jpg?width=500" tvg-id="VTV4.vn@HD",VTV4 (1080p)
